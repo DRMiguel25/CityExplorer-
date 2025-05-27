@@ -23,6 +23,7 @@ import { VistaDetalladaDestinoComponent } from './components/vista-detallada-des
 import { AyudaComponent } from './components/ayuda/ayuda.component';
 
 import { PagoAnuncioComponent } from './components/pagar-anuncio/pagar-anuncio.component';
+import { UsuarioComponent } from './components/usuario/usuario.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { PagoAnuncioComponent } from './components/pagar-anuncio/pagar-anuncio.c
     DestinosVistaComponent,
     VistaDetalladaDestinoComponent,
     AyudaComponent,
-    PagoAnuncioComponent
+    PagoAnuncioComponent,
+    UsuarioComponent
   ],
   imports: [
     CommonModule,
