@@ -43,33 +43,24 @@ export class RegistroComponent {
     const payload = this.registroForm.value;
     const rolId = Number(payload.id_rol); // Convertimos a número para evitar comparaciones fallidas
   
-    // Validación para roles no habilitados
-    if (rolId === 1 || rolId === 3) {
-      Swal.fire({
-        icon: 'info',
-        title: 'Función no disponible',
-        text: 'El rol seleccionado aún no está habilitado. Por favor, selecciona otro.',
-        confirmButtonText: 'Entendido'
-      });
-      return;
-    } else {
-      console.log('Enviando JSON al backend:', payload);
+    // Validación para roles no habilitadosÇ
+    console.log('Enviando JSON al backend:', payload);
     
-      this.service.Service_Post('user', 'register', payload).subscribe({
-        next: (data: any) => {
-          if (data.estatus) {
-            Swal.fire('¡Éxito!', 'Usuario registrado correctamente', 'success');
-            this.router.navigate(['/inicio-sesion']);
-          } else {
-            Swal.fire('Error', data.mensaje || 'No se pudo registrar el usuario', 'error');
-          }
-        },
-        error: (err) => {
-          console.error(err);
-          Swal.fire('Error', 'Ocurrió un error en la conexión con el servidor', 'error');
+    this.service.Service_Post('user', 'register', payload).subscribe({
+      next: (data: any) => {
+        if (data.estatus) {
+          Swal.fire('¡Éxito!', 'Usuario registrado correctamente', 'success');
+          this.router.navigate(['/inicio-sesion']);
+        } else {
+          Swal.fire('Error', data.mensaje || 'No se pudo registrar el usuario', 'error');
         }
-      });
-    }
+      },
+      error: (err) => {
+        console.error(err);
+        Swal.fire('Error', 'Ocurrió un error en la conexión con el servidor', 'error');
+      }
+    });
+    
   }
   
 

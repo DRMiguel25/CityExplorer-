@@ -1,6 +1,6 @@
 import { LocalstorageService } from '../../../localstorage.service';
 import { HttpLaravelService } from "../../../http.service";
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from '../../../auth.service';
@@ -14,8 +14,9 @@ import Swal from 'sweetalert2';
   templateUrl: './inicio-sesion.component.html',
   styleUrls: ['./inicio-sesion.component.scss'],
 })
-export class InicioSesionComponent {
+export class InicioSesionComponent implements OnInit {
   InicioSesionFormulario: FormGroup;
+  listaUsuarios: any[] = [];  // 👈 Aquí se guardará la lista
 
   constructor(
     private fb: FormBuilder,
@@ -35,57 +36,72 @@ export class InicioSesionComponent {
     }
   }
 
-  onLoggedin() {
-    if (this.InicioSesionFormulario.invalid) {
-      this.InicioSesionFormulario.markAllAsTouched();
-      return;
-    }
-
-    console.log(this.InicioSesionFormulario.value);
-    
-    this.service.Service_Post('user', 'login', this.InicioSesionFormulario.value).subscribe({
-      next: (data: any) => {
-        console.log(data);
-        if (data.estatus) {
-          // ✅ Guardar token correctamente
-          console.log('👉 Token recibido del backend:', data.access_token);
-          localStorage.setItem('access_token', data.access_token);
-          console.log('✅ access_token guardado en localStorage');
-
-          // 🚀 Redirigir después del login exitoso
-          const userId = data.data?.id_usuario;
-
-          if (userId != null) {
-            // 🚀 Redirigir con el ID del usuario como parámetro
-            console.log('👉 ID de usuario recibido:', userId);
-              // 👇 Aquí lo guardas para todo el app
-            this.authService.setIdUsuario(userId);
-            console.log('✅ ID de usuario guardado en AuthService:', userId);
-            this.router.navigate(['/home-anunciante', userId]);
-          } else {
-            console.warn('⚠️ No se recibió el ID del usuario en la respuesta');
-          }
-        }
-        else {
-          Swal.fire({
-            icon: "error",
-            title: "Error en el inicio de sesión",
-            text: data.mensaje || "Credenciales incorrectas",
-            showConfirmButton: true,
-          });
-        }
+  ngOnInit(): void {
+    this.service.Service_Get('usuarios', '').subscribe({
+      next: (usuarios) => {
+        this.listaUsuarios = usuarios;  // 👈 Guarda los usuarios en la variable global
+        console.log('📦 Lista de usuarios:', this.listaUsuarios);
       },
-      error: (error) => {
-        console.error(error);
+      error: (err) => {
+        console.error('❌ Error al obtener usuarios públicos:', err);
+      }
+    });
+  }
+  
+onLoggedin() {
+  if (this.InicioSesionFormulario.invalid) {
+    this.InicioSesionFormulario.markAllAsTouched();
+    return;
+  }
+
+  this.service.Service_Post('user', 'login', this.InicioSesionFormulario.value).subscribe({
+    next: (data: any) => {
+      if (data.estatus) {
+        localStorage.setItem('access_token', data.access_token);
+
+        const userId = data.data?.id_usuario;
+        const rolId = data.data?.id_rol;  // Asegúrate que este campo venga en la respuesta
+
+        if (!userId || !rolId) {
+          console.warn('⚠️ No se recibieron id_usuario o id_rol en la respuesta');
+          return;
+        }
+
+        switch (rolId) {
+          case 1: // Usuario
+            this.router.navigate([`/home-usuario/${userId}`]);
+            break;
+          case 2: // Anunciante
+            this.router.navigate([`/home-anunciante/${userId}`]);
+            break;
+          case 3: // Administrador
+            this.router.navigate([`/home-administrador/${userId}`]);
+            break;
+          default:
+            console.warn('⚠️ Rol desconocido, redirigiendo a login');
+            this.router.navigate(['/login']);
+            break;
+        }
+      } else {
         Swal.fire({
-          icon: "error",
-          title: "Error de conexión",
-          text: "No se pudo conectar con el servidor",
+          icon: 'error',
+          title: 'Error en el inicio de sesión',
+          text: data.mensaje || 'Credenciales incorrectas',
           showConfirmButton: true,
         });
       }
-    });    
-  }
+    },
+    error: (error) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error de conexión',
+        text: 'No se pudo conectar con el servidor',
+        showConfirmButton: true,
+      });
+    }
+  });
+}
+
 
   isValid(field: string): boolean {
     return !!this.InicioSesionFormulario.get(field)?.invalid && !!this.InicioSesionFormulario.get(field)?.touched;

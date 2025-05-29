@@ -41,7 +41,7 @@ var registerWrapper = function registerWrapper2(stripe, startTime) {
   }
   stripe._registerWrapper({
     name: "stripe-js",
-    version: "7.2.0",
+    version: "7.3.0",
     startTime
   });
 };
@@ -116,7 +116,7 @@ var initStripe = function initStripe2(maybeStripe, args, startTime) {
   var version = runtimeVersionToUrlVersion(maybeStripe.version);
   var expectedVersion = RELEASE_TRAIN;
   if (isTestKey && version !== expectedVersion) {
-    console.warn("Stripe.js@".concat(version, " was loaded on the page, but @stripe/stripe-js@").concat("7.2.0", " expected Stripe.js@").concat(expectedVersion, ". This may result in unexpected behavior. For more information, see https://docs.stripe.com/sdks/stripejs-versioning"));
+    console.warn("Stripe.js@".concat(version, " was loaded on the page, but @stripe/stripe-js@").concat("7.3.0", " expected Stripe.js@").concat(expectedVersion, ". This may result in unexpected behavior. For more information, see https://docs.stripe.com/sdks/stripejs-versioning"));
   }
   var stripe = maybeStripe.apply(void 0, args);
   registerWrapper(stripe, startTime);
