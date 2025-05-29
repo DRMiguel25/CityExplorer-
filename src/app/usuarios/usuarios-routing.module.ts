@@ -16,6 +16,9 @@ import { VistaDetalladaAnuncioComponent } from '../vistas/components/vista-detal
 import { AyudaComponent } from '../vistas/components/ayuda/ayuda.component';
 import { PagoAnuncioComponent } from '../vistas/components/pagar-anuncio/pagar-anuncio.component';
 
+import {HomeAdministradorComponent} from '../vistas/components/home-administrador/home-administrador.component';
+import {HomeUsuarioComponent} from '../vistas/components/home-usuario/home-usuario.component';
+
 const routes: Routes = [
   { path: 'inicio-sesion', component: InicioSesionComponent },
   { path: 'registro', component: RegistroComponent },
@@ -25,7 +28,9 @@ const routes: Routes = [
   { path: 'categoria-vista/:categoria', component: CategoriaVistaComponent },
   { path: 'categorias', component: CategoriasComponent },
   { path: 'vista-detallada-destino/:id', component: VistaDetalladaDestinoComponent },
-  { path: 'home-anunciante/:id_usuario', component: HomeAnuncianteComponent }, 
+  { path: 'home-anunciante/:id_usuario', component: HomeAnuncianteComponent },
+  { path: 'home-administrador/:id_usuario', component: HomeAdministradorComponent },
+  { path: 'home-usuario/:id_usuario', component: HomeUsuarioComponent },
   { path: 'crear-actualizar-anuncio', component: CrearActualizarAnuncioComponent },
   { path: 'crear-actualizar-anuncio/:id', component: CrearActualizarAnuncioComponent },
   { path: 'vista-detallada-anuncio/:id', component: VistaDetalladaAnuncioComponent },

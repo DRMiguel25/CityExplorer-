@@ -22,12 +22,20 @@
     "@angular/router": "^19.0.0",
     "@angular/ssr": "^19.0.4",
     "@stripe/stripe-js": "^7.3.0",
+<<<<<<< HEAD
     "bootstrap": "^5.3.5",
+=======
+    "bootstrap": "^5.3.6",
+>>>>>>> e42be63c8243086bda215cd53602cac9e1c70e19
     "express": "^4.18.2",
     "primeicons": "^7.0.0",
     "primeng": "^19.0.10",
     "rxjs": "~7.8.0",
+<<<<<<< HEAD
     "sweetalert2": "^11.21.2",
+=======
+    "sweetalert2": "^11.22.0",
+>>>>>>> e42be63c8243086bda215cd53602cac9e1c70e19
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },
