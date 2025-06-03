@@ -25,6 +25,10 @@ import { AyudaComponent } from './components/ayuda/ayuda.component';
 import { PagoAnuncioComponent } from './components/pagar-anuncio/pagar-anuncio.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 
+import { navbarUsuarioComponent } from '../vistas/components/navbar-usuario/navbar-usuario.component';
+
+import { HomeAdministradorComponent } from './components/home-administrador/home-administrador.component';
+import { HomeUsuarioComponent } from './components/home-usuario/home-usuario.component';
 @NgModule({
   declarations: [
     CategoriasComponent,
@@ -38,7 +42,10 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
     VistaDetalladaDestinoComponent,
     AyudaComponent,
     PagoAnuncioComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    navbarUsuarioComponent,
+    HomeAdministradorComponent,
+    HomeUsuarioComponent
   ],
   imports: [
     CommonModule,

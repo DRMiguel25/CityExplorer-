@@ -19,6 +19,8 @@ import { PagoAnuncioComponent } from '../vistas/components/pagar-anuncio/pagar-a
 import {HomeAdministradorComponent} from '../vistas/components/home-administrador/home-administrador.component';
 import {HomeUsuarioComponent} from '../vistas/components/home-usuario/home-usuario.component';
 
+import { navbarUsuarioComponent } from '../vistas/components/navbar-usuario/navbar-usuario.component';
+
 const routes: Routes = [
   { path: 'inicio-sesion', component: InicioSesionComponent },
   { path: 'registro', component: RegistroComponent },
@@ -35,6 +37,7 @@ const routes: Routes = [
   { path: 'crear-actualizar-anuncio/:id', component: CrearActualizarAnuncioComponent },
   { path: 'vista-detallada-anuncio/:id', component: VistaDetalladaAnuncioComponent },
   { path: 'navbar', component: navbarComponent },
+  { path: 'navbar-usuario', component: navbarUsuarioComponent },
   { path: 'ayuda', component: AyudaComponent },
   { path: 'pagar-anuncio/:id_anuncio', component: PagoAnuncioComponent },
 

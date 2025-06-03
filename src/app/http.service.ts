@@ -84,5 +84,11 @@ export class HttpLaravelService {
   
     return this.http.post(`${this._url}/pago/pagar`, body, { headers });
   }
+
+  Service_Post_FormData(controller: string, endpoint: string, data: FormData) {
+  const url = `${this._url}/${controller}/${endpoint}`;
+  return this.http.post(url, data);
+}
+
     
 }

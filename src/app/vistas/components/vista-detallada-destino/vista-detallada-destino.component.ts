@@ -93,9 +93,3 @@ export class VistaDetalladaDestinoComponent implements OnInit {
    return 'Categoría desconocida'; // Si no encuentra la categoría, muestra este texto
  }
 }
-
-
-
-
-
-

@@ -79,20 +79,3 @@ export class CategoriaVistaComponent implements OnInit {
    this.router.navigate(['/vista-detallada-destino', idEntero]);
  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
