@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'navbar-invitado-usuario',
@@ -9,42 +10,46 @@ import Swal from 'sweetalert2';
   styleUrls: ['./navbar-invitado-usuario.component.scss']
 })
 export class navbarInvitadoUsuarioComponent {
-  constructor(private router: Router) {}
+  id_usuario: number = 0;
+
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id_usuario');
+      this.id_usuario = id ? Number(id) : 0;
+      console.log('👤 ID de usuario desde la URL:', this.id_usuario);
+    });
+  }
 
   goHome(): void {
-    console.log('Navegando a app-home...');
-    this.router.navigate(['/app-home']);
+    console.log('Navegando a home-invitado-usuario', this.id_usuario);
+    this.router.navigate(['/home-invitado-usuario', this.id_usuario]);
   }
 
-  mostrarAlerta(): void {
-    Swal.fire({
-      icon: 'info',
-      title: '¡Necesitas una cuenta!',
-      text: 'Para acceder a esta opción, por favor, crea una cuenta o inicia sesión.',
-      confirmButtonText: 'Entendido',
-      confirmButtonColor: '#3085d6',
-      background: '#f9f9f9',
-      iconColor: '#3085d6'
-    });
-  }
+
 
   mostrarAlertaCrearCuenta(): void {
-    Swal.fire({
-      icon: 'info',
-      title: '¿Ya tienes una cuenta?',
-      text: 'Para acceder a esta opción necesitas iniciar sesión o crear una cuenta. ¿Deseas ir a la página de inicio de sesión?',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, quiero iniciar sesión',
-      cancelButtonText: 'No, gracias',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      background: '#f9f9f9',
-      iconColor: '#3085d6'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.router.navigate(['/login']);
-      }
-    });
+    if (this.id_usuario === 0) {
+      Swal.fire({
+        icon: 'info',
+        title: '¿Ya tienes una cuenta?',
+        text: 'Para acceder a esta opción necesitas iniciar sesión o crear una cuenta. ¿Deseas ir a la página de inicio de sesión?',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, quiero iniciar sesión',
+        cancelButtonText: 'No, gracias',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        background: '#f9f9f9',
+        iconColor: '#3085d6'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']);
+        }
+      });
+    } else {
+      this.router.navigate(['/info-usuario', this.id_usuario]);
+    }
   }
 
   toggleMenu(): void {

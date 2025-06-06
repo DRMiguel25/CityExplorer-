@@ -16,16 +16,18 @@ import { VistaDetalladaAnuncioComponent } from '../vistas/components/Vistas-Aunu
 import { AyudaComponent } from '../vistas/components/Vistas-Usuario-Invitado/ayuda/ayuda.component';
 import { PagoAnuncioComponent } from '../vistas/components/Vistas-Aunuciante/pagar-anuncio/pagar-anuncio.component';
 
-import {HomeAdministradorComponent} from '../vistas/components/Vistas-Administrador/home-administrador/home-administrador.component';
+import { HomeAdministradorComponent } from '../vistas/components/Vistas-Administrador/home-administrador/home-administrador.component';
 import { FavoritosUsuariosComponent } from '../vistas/components/Vistas-Usuario-Invitado/favoritos-usuarios/favoritos-usuarios.component';
-
+import { InfoUsuarioComponent } from '../vistas/components/Vistas-Usuario-Invitado/info-usuario/info-usuario.component';
 const routes: Routes = [
   { path: 'inicio-sesion', component: InicioSesionComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'login', component: LoginComponent },
   { path: 'destino-vista', component: DestinosVistaComponent },
+  { path: 'destino-vista/:id_usuario', component: DestinosVistaComponent },
   { path: 'categoria-vista/:categoria', component: CategoriaVistaComponent },
   { path: 'categorias', component: CategoriasComponent },
+  { path: 'categorias/:id_usuario', component: CategoriasComponent },
   { path: 'vista-detallada-destino/:id', component: VistaDetalladaDestinoComponent },
   { path: 'home-anunciante/:id_usuario', component: HomeAnuncianteComponent },
   { path: 'home-administrador/:id_usuario', component: HomeAdministradorComponent },
@@ -36,8 +38,10 @@ const routes: Routes = [
   { path: 'vista-detallada-anuncio/:id', component: VistaDetalladaAnuncioComponent },
   { path: 'navbar-invitado-usuario', component: navbarInvitadoUsuarioComponent },
   { path: 'ayuda', component: AyudaComponent },
+  { path: 'ayuda/:id_usuario', component: AyudaComponent },
   { path: 'pagar-anuncio/:id_anuncio', component: PagoAnuncioComponent },
-  { path: 'favoritos-usuarios', component: FavoritosUsuariosComponent },
+  { path: 'favoritos-usuarios/:id_usuario', component: FavoritosUsuariosComponent },
+  { path: 'info-usuario/:id_usuario', component: InfoUsuarioComponent },
 
   { path: '', redirectTo: 'login', pathMatch: 'full' },  // ✅ Ruta por defecto al login
 ];

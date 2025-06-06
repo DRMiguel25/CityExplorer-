@@ -1,0 +1,184 @@
+/* Reset y configuración base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Contenedor principal de la ventana */
+.profile-popup {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    width: 360px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Botón de cerrar */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #5f6368;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.close-btn:hover {
+    background-color: #f1f3f4;
+}
+
+/* Header del perfil */
+.profile-header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #e8eaed;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6f00, #ff8f00);
+    color: white;
+    font-size: 36px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+}
+
+.profile-name {
+    font-size: 20px;
+    font-weight: 500;
+    color: #202124;
+    margin-bottom: 4px;
+}
+
+.profile-email {
+    font-size: 14px;
+    color: #5f6368;
+    margin-bottom: 16px;
+}
+
+.manage-account-btn {
+    background: #1a73e8;
+    color: white;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: background-color 0.2s ease;
+}
+
+.manage-account-btn:hover {
+    background: #1557b0;
+}
+
+/* Acciones del perfil */
+.profile-actions {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.action-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #202124;
+    transition: background-color 0.2s ease;
+}
+
+.action-item:hover {
+    background-color: #f1f3f4;
+}
+
+.action-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Footer */
+.footer-links {
+    padding: 16px 20px;
+    border-top: 1px solid #e8eaed;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    align-items: center;
+}
+
+.footer-link {
+    font-size: 12px;
+    color: #5f6368;
+    text-decoration: none;
+    transition: text-decoration 0.2s ease;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+.separator {
+    color: #dadce0;
+    font-size: 12px;
+}
+
+/* Estados de oculto/visible */
+.hidden {
+    display: none !important;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .profile-popup {
+        right: 10px;
+        width: calc(100vw - 20px);
+        max-width: 360px;
+    }
+}

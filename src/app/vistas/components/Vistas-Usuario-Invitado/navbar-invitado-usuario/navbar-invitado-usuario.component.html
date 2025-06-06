@@ -16,12 +16,15 @@
 
   <!-- Menú de navegación -->
   <nav class="nav-menu">
-    <a routerLink="/home-invitado-usuario/:id_usuario" routerLinkActive="active">Inicio</a>
-    <a routerLink="/destino-vista/:id_usuario" routerLinkActive="active">Destinos</a>
-    <a routerLink="/categorias/:id_usuario" routerLinkActive="active">Categorías</a>
-    <a (click)="mostrarAlerta()">Favoritos</a>
-    <a routerLink="/ayuda" routerLinkActive="active">Ayuda</a>
+    <a [routerLink]="['/home-invitado-usuario', id_usuario]" routerLinkActive="active">Inicio</a>
+    <a [routerLink]="['/destino-vista', id_usuario]" routerLinkActive="active">Destinos</a>
+    <a [routerLink]="['/categorias', id_usuario]" routerLinkActive="active">Categorías</a>
+    <a *ngIf="id_usuario !== 0" [routerLink]="['/favoritos-usuarios', id_usuario]" routerLinkActive="active">
+      Favoritos
+    </a>
+    <a [routerLink]="['/ayuda', id_usuario]" routerLinkActive="active">Ayuda</a>
   </nav>
+
 
   <div class="user-icon" (click)="mostrarAlertaCrearCuenta()">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

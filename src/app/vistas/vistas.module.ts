@@ -28,6 +28,7 @@ import { PagoAnuncioComponent } from './components/Vistas-Aunuciante/pagar-anunc
 import { HomeAdministradorComponent } from './components/Vistas-Administrador/home-administrador/home-administrador.component';
 
 import { FavoritosUsuariosComponent } from './components/Vistas-Usuario-Invitado/favoritos-usuarios/favoritos-usuarios.component';
+import { InfoUsuarioComponent } from './components/Vistas-Usuario-Invitado/info-usuario/info-usuario.component'; // Asegúrate de que esta ruta sea correcta
 @NgModule({
   declarations: [
     CategoriasComponent,
@@ -42,7 +43,8 @@ import { FavoritosUsuariosComponent } from './components/Vistas-Usuario-Invitado
     AyudaComponent,
     PagoAnuncioComponent,
     HomeAdministradorComponent,
-    FavoritosUsuariosComponent
+    FavoritosUsuariosComponent,
+    InfoUsuarioComponent
   ],
   imports: [
     CommonModule,
