@@ -6,46 +6,43 @@ import { PaginatorModule } from 'primeng/paginator';
 import { VistasRoutingModule } from './vistas-routing.module'; // ✅ Importar el módulo de rutas
 
 //vistas
-import { CategoriaVistaComponent } from './components/categoria-vista/categoria-vista.component';
-import { CategoriasComponent } from './components/categorias/categorias.component';
+import { CategoriaVistaComponent } from './components/Vistas-Usuario-Invitado/categoria-vista/categoria-vista.component';
+import { CategoriasComponent } from './components/Vistas-Usuario-Invitado/categorias/categorias.component';
 
-import { CrearActualizarAnuncioComponent } from './components/crear-actualizar-anuncio/crear-actualizar-anuncio.component';
-import { DestinosVistaComponent } from './components/destinos/destinos.component';
+import { CrearActualizarAnuncioComponent } from './components/Vistas-Aunuciante/crear-actualizar-anuncio/crear-actualizar-anuncio.component';
+import { DestinosVistaComponent } from './components/Vistas-Usuario-Invitado/destinos/destinos.component';
 
 
-import { HomeComponent } from './components/home/home.component';
-import { HomeAnuncianteComponent } from './components/home-anunciante/home-anunciante.component';
+import { HomeInvitadoUsuarioComponent } from './components/Vistas-Usuario-Invitado/home-invitado-usuario/home-invitado-usuario.component';
+import { HomeAnuncianteComponent } from './components/Vistas-Aunuciante/home-anunciante/home-anunciante.component';
 
-import { navbarComponent } from './components/navbar/navbar.component';
-import { VistaDetalladaAnuncioComponent } from './components/vista-detallada-anuncio/vista-detallada-anuncio.component';
+import { navbarInvitadoUsuarioComponent } from './components/Vistas-Usuario-Invitado/navbar-invitado-usuario/navbar-invitado-usuario.component';
+import { VistaDetalladaAnuncioComponent } from './components/Vistas-Aunuciante/vista-detallada-anuncio/vista-detallada-anuncio.component';
 
-import { VistaDetalladaDestinoComponent } from './components/vista-detallada-destino/vista-detallada-destino.component';
-import { AyudaComponent } from './components/ayuda/ayuda.component';
+import { VistaDetalladaDestinoComponent } from './components/Vistas-Usuario-Invitado/vista-detallada-destino/vista-detallada-destino.component';
+import { AyudaComponent } from './components/Vistas-Usuario-Invitado/ayuda/ayuda.component';
 
-import { PagoAnuncioComponent } from './components/pagar-anuncio/pagar-anuncio.component';
-import { UsuarioComponent } from './components/usuario/usuario.component';
+import { PagoAnuncioComponent } from './components/Vistas-Aunuciante/pagar-anuncio/pagar-anuncio.component';
 
-import { navbarUsuarioComponent } from '../vistas/components/navbar-usuario/navbar-usuario.component';
 
-import { HomeAdministradorComponent } from './components/home-administrador/home-administrador.component';
-import { HomeUsuarioComponent } from './components/home-usuario/home-usuario.component';
+import { HomeAdministradorComponent } from './components/Vistas-Administrador/home-administrador/home-administrador.component';
+
+import { FavoritosUsuariosComponent } from './components/Vistas-Usuario-Invitado/favoritos-usuarios/favoritos-usuarios.component';
 @NgModule({
   declarations: [
     CategoriasComponent,
-    HomeComponent,
+    HomeInvitadoUsuarioComponent,
     HomeAnuncianteComponent,
     CrearActualizarAnuncioComponent,
     VistaDetalladaAnuncioComponent,
-    navbarComponent,
+    navbarInvitadoUsuarioComponent,
     CategoriaVistaComponent,
     DestinosVistaComponent,
     VistaDetalladaDestinoComponent,
     AyudaComponent,
     PagoAnuncioComponent,
-    UsuarioComponent,
-    navbarUsuarioComponent,
     HomeAdministradorComponent,
-    HomeUsuarioComponent
+    FavoritosUsuariosComponent
   ],
   imports: [
     CommonModule,

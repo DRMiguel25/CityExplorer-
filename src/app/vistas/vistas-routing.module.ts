@@ -3,21 +3,21 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../auth.guard';  // Asegúrate de importar el AuthGuard
 
 // Vistas
-import { CategoriaVistaComponent } from './components/categoria-vista/categoria-vista.component';
-import { CategoriasComponent } from './components/categorias/categorias.component';
-import { CrearActualizarAnuncioComponent } from './components/crear-actualizar-anuncio/crear-actualizar-anuncio.component';
-import { DestinosVistaComponent } from './components/destinos/destinos.component';
-import { HomeComponent } from './components/home/home.component';
-import { HomeAnuncianteComponent } from './components/home-anunciante/home-anunciante.component';
-import { navbarComponent } from './components/navbar/navbar.component';
-import { VistaDetalladaAnuncioComponent } from './components/vista-detallada-anuncio/vista-detallada-anuncio.component';
-import { VistaDetalladaDestinoComponent } from './components/vista-detallada-destino/vista-detallada-destino.component';
-import { AyudaComponent } from './components/ayuda/ayuda.component';
-import { PagoAnuncioComponent } from './components/pagar-anuncio/pagar-anuncio.component';
+import { CategoriaVistaComponent } from './components/Vistas-Usuario-Invitado/categoria-vista/categoria-vista.component';
+import { CategoriasComponent } from './components/Vistas-Usuario-Invitado/categorias/categorias.component';
+import { CrearActualizarAnuncioComponent } from './components/Vistas-Aunuciante/crear-actualizar-anuncio/crear-actualizar-anuncio.component';
+import { DestinosVistaComponent } from './components/Vistas-Usuario-Invitado/destinos/destinos.component';
+import { HomeInvitadoUsuarioComponent } from './components/Vistas-Usuario-Invitado/home-invitado-usuario/home-invitado-usuario.component';
+import { HomeAnuncianteComponent } from './components/Vistas-Aunuciante/home-anunciante/home-anunciante.component';
+import { navbarInvitadoUsuarioComponent } from './components/Vistas-Usuario-Invitado/navbar-invitado-usuario/navbar-invitado-usuario.component';
+import { VistaDetalladaAnuncioComponent } from './components/Vistas-Aunuciante/vista-detallada-anuncio/vista-detallada-anuncio.component';
+import { VistaDetalladaDestinoComponent } from './components/Vistas-Usuario-Invitado/vista-detallada-destino/vista-detallada-destino.component';
+import { AyudaComponent } from './components/Vistas-Usuario-Invitado/ayuda/ayuda.component';
+import { PagoAnuncioComponent } from './components/Vistas-Aunuciante/pagar-anuncio/pagar-anuncio.component';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent, 
+    component: HomeInvitadoUsuarioComponent, 
     canActivate: [AuthGuard], // Protege esta ruta
   },
   {
@@ -43,8 +43,8 @@ const routes: Routes = [
     component: DestinosVistaComponent,
   },
   {
-    path: 'app-home', 
-    component: HomeComponent,
+    path: 'home-invitado-usuario', 
+    component: HomeInvitadoUsuarioComponent,
   },
   {
     path: 'home-anunciante/:id_usuario', 
@@ -52,8 +52,8 @@ const routes: Routes = [
     canActivate: [AuthGuard], // Protege esta ruta
   },
   {
-    path: 'navbar', 
-    component: navbarComponent,
+    path: 'navbar-invitado-usuario', 
+    component: navbarInvitadoUsuarioComponent,
   },
   {
     path: 'vista-detallada-anuncio/:id', 

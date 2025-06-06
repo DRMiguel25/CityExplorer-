@@ -8,7 +8,7 @@ import { errorInterceptor } from './error.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';  // Para directivas comunes como ngClass, ngIf
 
-import { UsuariosModule } from './usuarios/usuarios.module';
+import { UsuariosModule } from './CRUD-Usuarios/usuarios.module';
 import { VistasModule } from './vistas/vistas.module'; // ✅ Importar el módulo de vistas
 
 @NgModule({
