@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button'; // para los botones del diálogo
+
 
 import { VistasRoutingModule } from './vistas-routing.module'; // ✅ Importar el módulo de rutas
 
@@ -28,7 +31,11 @@ import { PagoAnuncioComponent } from './components/Vistas-Aunuciante/pagar-anunc
 import { HomeAdministradorComponent } from './components/Vistas-Administrador/home-administrador/home-administrador.component';
 
 import { FavoritosUsuariosComponent } from './components/Vistas-Usuario-Invitado/favoritos-usuarios/favoritos-usuarios.component';
-import { InfoUsuarioComponent } from './components/Vistas-Usuario-Invitado/info-usuario/info-usuario.component'; // Asegúrate de que esta ruta sea correcta
+import { InfoUsuarioComponent } from './components/Vistas-Usuario-Invitado/info-usuario/info-usuario.component';
+import { AlertaInfoUsuarioComponent } from './components/Vistas-Usuario-Invitado/alerta-info-usuario/alerta-info-usuario.component';
+
+import { ReseniaUsuarioComponent } from './components/Vistas-Usuario-Invitado/resenia-usuario/resenia-usuario.component'; // Asegúrate de importar el componente ReseniaUsuarioComponent
+
 @NgModule({
   declarations: [
     CategoriasComponent,
@@ -44,14 +51,18 @@ import { InfoUsuarioComponent } from './components/Vistas-Usuario-Invitado/info-
     PagoAnuncioComponent,
     HomeAdministradorComponent,
     FavoritosUsuariosComponent,
-    InfoUsuarioComponent
+    InfoUsuarioComponent,
+    AlertaInfoUsuarioComponent,
+    ReseniaUsuarioComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     PaginatorModule,
-    VistasRoutingModule
+    VistasRoutingModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
 })
 export class VistasModule { }

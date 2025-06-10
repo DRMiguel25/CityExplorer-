@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertaInfoUsuarioComponent } from '../alerta-info-usuario/alerta-info-usuario.component';
 
 @Component({
   selector: 'navbar-invitado-usuario',
@@ -12,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class navbarInvitadoUsuarioComponent {
   id_usuario: number = 0;
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private route: ActivatedRoute, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -48,7 +50,11 @@ export class navbarInvitadoUsuarioComponent {
         }
       });
     } else {
-      this.router.navigate(['/info-usuario', this.id_usuario]);
+      this.dialog.open(AlertaInfoUsuarioComponent, {
+            width: '400px',
+            data: { id_usuario: this.id_usuario },
+            autoFocus: true // opcional: enfoca al abrir
+      });
     }
   }
 

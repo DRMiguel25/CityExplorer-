@@ -92,4 +92,9 @@ export class VistaDetalladaDestinoComponent implements OnInit {
    }
    return 'Categoría desconocida'; // Si no encuentra la categoría, muestra este texto
  }
+
+ crearResenia(): void {
+    console.log('Navegando a la reseña del usuario para el lugar con ID:', this.lugar.id);
+    this.router.navigate(['/resenia-usuario', this.lugar.id]);
+ }
 }

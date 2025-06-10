@@ -1,47 +1,108 @@
-<div>
-  <div class="background-slideshow"></div>
-<div class="overlay"></div>
-    <button class="back-button" (click)="goBack()">&#8592;</button>
-    <!-- Botón de retroceso -->
-    <div class="container" *ngIf="!isLoading && lugar">
-      <div class="card">
-        <div class="card-content">
-          <!-- Imagen -->
-          <div class="image-container">
-            <img [src]="lugar.url" alt="Imagen del Lugar">
-          </div>
-  
-          <h1>{{ lugar.nombre }}</h1>
-  
-          <!-- Descripción -->
-          <h2>Descripción</h2>
-          <p>{{ lugar.descripcion }}</p>
-  
-          <!-- Características -->
-          <h2>Características</h2>
-          <ul class="details">
-            <li><strong>Nombre del Lugar:</strong> {{ lugar.nombre }}</li>
-            <li><strong>Página Web: </strong> <a [href]="lugar.paginaWeb" target="_blank">{{ lugar.paginaWeb }}</a></li>
-            <li><strong>Número Telefónico:</strong> {{ lugar.num_telefonico }}</li>
-            <li><strong>Horario de Apertura:</strong> {{ lugar.horario_apertura }}</li>
-            <li><strong>Horario de Cierre:</strong> {{ lugar.horario_cierre }}</li>
-            <li><strong>Días de Servicio:</strong> {{ lugar.dias_servicio.join(', ') }}</li>
-            <li><strong>Categoría:</strong> {{ obtenerCategoriaNombre(lugar.id_categoria) }}</li>
-  
-            <!-- Dirección -->
-            <li *ngIf="direccion">
-              <strong>Dirección:</strong>
-              {{ direccion.calle }} {{ direccion.numero_ext }} 
-              <span *ngIf="direccion.numero_int">, {{ direccion.numero_int }}</span>,
-              {{ direccion.colonia }},
-              C.P. {{ direccion.codigo_postal }}
-            </li>
-          </ul>
+<!-- Header con botón de salir -->
+<div class="header">
+  <div class="logo"><div class="shipping-info">
+      <p>{{ lugar.nombre }}</p>
+    </div></div>
+  <button class="exit-btn" onclick="window.history.back()">
+    <span class="material-symbols-outlined"> logout </span>
+  </button>
+</div>
 
+<div class="container">
+  <div class="thumbnail-list">
+    <div class="thumbnail active">
+      <img
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Crect width='72' height='72' fill='%23f0f0f0'/%3E%3Ctext x='36' y='40' text-anchor='middle' font-size='12' fill='%23999'%3EImg 1%3C/text%3E%3C/svg%3E"
+        alt="Thumbnail 1"
+      />
+    </div>
+    <div class="thumbnail">
+      <img
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Crect width='72' height='72' fill='%23f0f0f0'/%3E%3Ctext x='36' y='40' text-anchor='middle' font-size='12' fill='%23999'%3EImg 2%3C/text%3E%3C/svg%3E"
+        alt="Thumbnail 2"
+      />
+    </div>
+    <div class="thumbnail">
+      <img
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Crect width='72' height='72' fill='%23f0f0f0'/%3E%3Ctext x='36' y='40' text-anchor='middle' font-size='12' fill='%23999'%3EImg 3%3C/text%3E%3C/svg%3E"
+        alt="Thumbnail 3"
+      />
+    </div>
+    <div class="thumbnail">
+      <img
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Crect width='72' height='72' fill='%23f0f0f0'/%3E%3Ctext x='36' y='40' text-anchor='middle' font-size='12' fill='%23999'%3EImg 4%3C/text%3E%3C/svg%3E"
+        alt="Thumbnail 4"
+      />
+    </div>
+  </div>
+
+  <div class="main-image">
+    <img [src]="lugar.url" />
+    <div class="nav-arrows">
+      <div class="nav-arrow">‹</div>
+      <div class="nav-arrow">›</div>
+    </div>
+  </div>
+
+  <div class="product-info">
+    <button class="favorites-btn">
+      <span class="material-symbols-outlined">favorite</span>
+      <span>Agregar a favoritos</span>
+    </button>
+
+    <div class="product-details">
+      <ul>
+        <li><strong>Nombre del Lugar:</strong> {{ lugar.nombre }}</li>
+        <li>{{ lugar.descripcion }} </li>
+        <li>
+          <strong>Página Web: </strong>
+          <a [href]="lugar.paginaWeb" target="_blank">{{ lugar.paginaWeb }}</a>
+        </li>
+        <li><strong>Número Telefónico:</strong> {{ lugar.num_telefonico }}</li>
+        <li>
+          <strong>Horario de Apertura:</strong> {{ lugar.horario_apertura }}
+        </li>
+        <li><strong>Horario de Cierre:</strong> {{ lugar.horario_cierre }}</li>
+        <li>
+          <strong>Días de Servicio:</strong>
+          {{ lugar.dias_servicio.join(", ") }}
+        </li>
+        <li>
+          <strong>Categoría:</strong>
+          {{ obtenerCategoriaNombre(lugar.id_categoria) }}
+        </li>
+        <li *ngIf="direccion">
+          <strong>Dirección:</strong>
+          {{ direccion.calle }} {{ direccion.numero_ext }}
+          <span *ngIf="direccion.numero_int">, {{ direccion.numero_int }}</span
+          >, {{ direccion.colonia }}, C.P. {{ direccion.codigo_postal }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="reviews-section">
+      <div class="reviews-header">
+        <h3 class="reviews-title">Reseñas (215)</h3>
+        <span class="chevron down">›</span>
+      </div>
+
+      <div class="rating-summary">
+        <span class="stars">★★★★★</span>
+        <span class="rating-text">4.7 estrellas</span>
+      </div>
+
+      <button class="write-review-btn" (click)="crearResenia()">Escribe una evaluación</button>
+
+      <div class="review">
+        <div class="review-rating">★★★★★</div>
+        <div class="review-author">gabriela8851573 - 08 jun 2025</div>
+        <div class="review-text">
+          Excelente lugar, muy cómodo y muy bonito. La combinación de sabores es
+          increíble, de verdad es un lugar que va con todo y en cada momento te
+          puede sorprender.
         </div>
+        <div class="review-helpful">Más</div>
       </div>
     </div>
   </div>
-  
-  <div *ngIf="isLoading">Cargando datos...</div>
-  
+</div>

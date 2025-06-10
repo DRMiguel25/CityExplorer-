@@ -1,108 +1,281 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Roboto', Arial, sans-serif;
-}
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* Fondo slideshow */
-.background-slideshow {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('https://i.imgur.com/26rx3ZV.png') no-repeat center center fixed;
-  background-size: cover;
-  filter: blur(8px); /* Aumentar el blur */
-  z-index: -2;
-}
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #ffffff;
+            color: #111;
+        }
 
-/* Capa oscura */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.5); /* Capas de color claro */
-  z-index: -1;
-}
+        /* Header con botón de salir */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid #e5e5e5;
+        }
 
-/* Estilo de la tarjeta */
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-.card {
-  width: 320px; /* Fixed width */
-  border: 1px solid #eee;
-  border-radius: 8px;
-  overflow: hidden; /* This prevents content from spilling out */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  background-color: white;
-  margin: 20px auto; /* Center the card */
-}
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15), 0 10px 30px rgba(0, 0, 0, 0.15);
-}
+        .exit-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: 1px solid #ccc;
+            border-radius: 24px;
+            background-color: white;
+            cursor: pointer;
+            font-size: 14px;
+            color: #111;
+            transition: all 0.2s;
+        }
 
-/* Contenido dentro de la tarjeta */
-.image-container {
-  text-align: center;
-}
-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-h1, h2, h3 {
-  color: #333;
-  margin: 0 0 10px;
-}
-.details {
-  margin-top: 20px;
-}
-.button-group {
-  text-align: center;
-  margin-top: 20px;
-}
-.button-group button {
-  padding: 10px 20px;
-  margin: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-}
-.edit-btn {
-  background-color: #4CAF50;
-  color: white;
-}
-.pay-btn {
-  background-color: #FF9800;
-  color: white;
-}
-.delete-btn {
-  background-color: #F44336;
-  color: white;
-}
+        .exit-btn:hover {
+            background-color: #f5f5f5;
+            border-color: #999;
+        }
 
-/* Botón de Retroceso */
-.back-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #333;
-  transition: color 0.3s ease;
-}
-.back-button:hover {
-  color: #007BFF;
-}
+        /* Container principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 80px 1fr 400px;
+            gap: 24px;
+        }
 
-/* Espaciado adicional */
-.card-content {
-  padding: 20px;
-}
+        /* Thumbnails */
+        .thumbnail-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .thumbnail {
+            width: 72px;
+            height: 72px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .thumbnail.active {
+            border-color: #111;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Imagen principal */
+        .main-image {
+            position: relative;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .nav-arrows {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-arrow {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Información del producto */
+        .product-info {
+            padding: 0 24px;
+        }
+
+        .favorites-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: 1px solid #ccc;
+            border-radius: 24px;
+            background-color: white;
+            cursor: pointer;
+            margin-bottom: 24px;
+            width: fit-content;
+        }
+
+        .shipping-info {
+            margin-bottom: 24px;
+        }
+
+        .product-description {
+            margin-bottom: 24px;
+        }
+
+        .product-description p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .product-details {
+            margin-bottom: 24px;
+        }
+
+        .product-details ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .product-details li {
+            font-size: 14px;
+            margin-bottom: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .product-details li:last-child {
+            border-bottom: none;
+        }
+
+        .product-details a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        .product-details a:hover {
+            text-decoration: underline;
+        }
+
+        /* Sección de reseñas */
+        .reviews-section {
+            border-top: 1px solid #e5e5e5;
+            padding-top: 16px;
+        }
+
+        .reviews-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .reviews-title {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .stars {
+            color: #111;
+            font-size: 16px;
+        }
+
+        .rating-text {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .write-review-btn {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .review {
+            border-bottom: 1px solid #e5e5e5;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+        }
+
+        .review:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .review-rating {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .review-author {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .review-text {
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .review-helpful {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .chevron {
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+
+        .chevron.down {
+            transform: rotate(90deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .thumbnail-list {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
