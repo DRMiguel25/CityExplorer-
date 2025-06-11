@@ -1,4 +1,3 @@
-<body>
     <div class="container">
         <h1>Editar perfil</h1>
         
@@ -18,30 +17,29 @@
             </div>
 
             <div class="form-group">
-                <label for="email">Nombre</label>
-                <input type="email" id="email" placeholder="Tu Nombre">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu Nombre" [(ngModel)]="usuario.data.nombre" required>
             </div>
 
-             <div class="form-group">
-                <label for="email">Apellido paterno</label>
-                <input type="email" id="email" placeholder="Tu apellido paterno">
+            <div class="form-group">
+                <label for="apellidoP">Apellido paterno</label>
+                <input type="text" id="apellidoP" name="apellidoP" placeholder="Tu apellido paterno" [(ngModel)]="usuario.data.apellidoP" required>
             </div>
 
-             <div class="form-group">
-                <label for="email">Apellido materno</label>
-                <input type="email" id="email" placeholder="Tu apellido materno">
+            <div class="form-group">
+                <label for="apellidoM">Apellido materno</label>
+                <input type="text" id="apellidoM" name="apellidoM" placeholder="Tu apellido materno" [(ngModel)]="usuario.data.apellidoM">
             </div>
 
-             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Tu dirección de email">
+            <div class="form-group">
+                <label for="correo">Email</label>
+                <input type="email" id="correo" name="correo" placeholder="Tu dirección de email" [(ngModel)]="usuario.data.correo" required email>
             </div>
-           
+
 
             <div class="button-container">
-                <button type="button" class="btn btn-cancel">Cancelar</button>
+                <button type="button" class="btn btn-cancel" (click)="cancelar()">Cancelar</button>
                 <button type="submit" class="btn btn-save">Guardar perfil</button>
             </div>
         </form>
     </div>
-</body>

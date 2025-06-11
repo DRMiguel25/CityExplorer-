@@ -14,7 +14,7 @@ export class VistaDetalladaDestinoComponent implements OnInit {
  lugar: any; // Aquí guardaremos los datos del lugar
  direccion: any; // Aquí guardamos los datos de la dirección
  isLoading = true;
-
+ id_usuario: string | null = null; // Aquí guardamos el ID del usuario
 
  private categoriaMap: { [key: string]: number } = {
   'Restaurantes': 1,
@@ -37,16 +37,17 @@ export class VistaDetalladaDestinoComponent implements OnInit {
 
 
  ngOnInit(): void {
-   const id = this.route.snapshot.paramMap.get('id');
-   if (id) {
-     this.obtenerLugar(+id);
+   const id_destino = this.route.snapshot.paramMap.get('id_destino');
+   this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
+   if (id_destino) {
+     this.obtenerLugar(+id_destino);
    }
  }
 
 
  // Método para obtener la información del lugar
- obtenerLugar(id: number): void {
-   this.httpLaravelService.Service_Get(`lugar/${id}`, '').subscribe(
+ obtenerLugar(id_destino: number): void {
+   this.httpLaravelService.Service_Get(`lugar/${id_destino}`, '').subscribe(
      (data) => {
        this.lugar = data;
        this.isLoading = false;
@@ -54,6 +55,7 @@ export class VistaDetalladaDestinoComponent implements OnInit {
        this.obtenerDireccion(this.lugar.id_direccion); // Llamada para obtener la dirección
      },
      (error) => {
+       console.log("id_destino:", id_destino);
        console.error('Error al cargar el lugar:', error);
        Swal.fire('Error', 'No se pudo cargar la información del lugar. Intenta más tarde.', 'error');
        this.isLoading = false;

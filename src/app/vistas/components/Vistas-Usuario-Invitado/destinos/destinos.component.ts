@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Router } from '@angular/router';
 import { HttpLaravelService } from '../../../../http.service';
 import { Lugar } from '../../Vistas-Aunuciante/home-anunciante/lugar.interface';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'destino-vista',
@@ -13,6 +13,9 @@ import { Lugar } from '../../Vistas-Aunuciante/home-anunciante/lugar.interface';
 export class DestinosVistaComponent implements OnInit, OnDestroy {
   lugares: Lugar[] = [];
   private slideshowInterval: any;
+  id_usuario: string | null = null; // Aquí guardamos el ID del usuario
+  id_destino: string | null = null; // Aquí guardamos el ID del usuario
+
 
   // Lista de imágenes para el fondo animado
   images = [
@@ -25,10 +28,15 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private router: Router,
+    private route: ActivatedRoute,
     private httpLaravelService: HttpLaravelService
   ) {}
 
   ngOnInit(): void {
+    this.id_destino = this.route.snapshot.paramMap.get('id_destino');
+    this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
+    console.log('ID del usuario:', this.id_usuario);
+    console.log('ID del destino:', this.id_destino);
     this.httpLaravelService.Service_Get_Lugares_Publico().subscribe({
       next: (data) => {
         this.lugares = data.filter((lugar: any) => lugar.activo);
@@ -61,7 +69,7 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.router.navigate(['/vista-detallada-destino', idEntero]);
+    this.router.navigate(['/vista-detallada-destino', idEntero, this.id_usuario]);
   }
 
   private initBackgroundChange(): void {

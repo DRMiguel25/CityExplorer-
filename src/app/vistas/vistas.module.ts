@@ -31,10 +31,12 @@ import { PagoAnuncioComponent } from './components/Vistas-Aunuciante/pagar-anunc
 import { HomeAdministradorComponent } from './components/Vistas-Administrador/home-administrador/home-administrador.component';
 
 import { FavoritosUsuariosComponent } from './components/Vistas-Usuario-Invitado/favoritos-usuarios/favoritos-usuarios.component';
-import { InfoUsuarioComponent } from './components/Vistas-Usuario-Invitado/info-usuario/info-usuario.component';
+import { ModificarInfoUsuarioComponent } from './components/Vistas-Usuario-Invitado/modificar-info-usuario/modificar-info-usuario.component';
 import { AlertaInfoUsuarioComponent } from './components/Vistas-Usuario-Invitado/alerta-info-usuario/alerta-info-usuario.component';
 
 import { ReseniaUsuarioComponent } from './components/Vistas-Usuario-Invitado/resenia-usuario/resenia-usuario.component'; // Asegúrate de importar el componente ReseniaUsuarioComponent
+import { TerminosDelServicioComponent } from './components/Vistas-Usuario-Invitado/terminos-del-servicio/terminos-del-servicio.component'; // Asegúrate de importar el componente TerminosDelServicioComponent
+import { PoliticasDePrivacidadComponent } from './components/Vistas-Usuario-Invitado/Politicas-de-privacidad/politicas-de-privacidad.component'; // Asegúrate de importar el componente PoliticasDePrivacidadComponent
 
 @NgModule({
   declarations: [
@@ -51,9 +53,11 @@ import { ReseniaUsuarioComponent } from './components/Vistas-Usuario-Invitado/re
     PagoAnuncioComponent,
     HomeAdministradorComponent,
     FavoritosUsuariosComponent,
-    InfoUsuarioComponent,
+    ModificarInfoUsuarioComponent,
     AlertaInfoUsuarioComponent,
-    ReseniaUsuarioComponent
+    ReseniaUsuarioComponent,
+    TerminosDelServicioComponent,
+    PoliticasDePrivacidadComponent
   ],
   imports: [
     CommonModule,

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'categorias',
@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class CategoriasComponent implements OnInit, OnDestroy {
   private slideshowInterval: any;
+  private id: string | null = null; // Variable para almacenar el ID de la ruta
 
   images = [
     'https://a.travel-assets.com/findyours-php/viewfinder/images/res60/200000/200753-Guanajuato.jpg',
@@ -17,10 +18,11 @@ export class CategoriasComponent implements OnInit, OnDestroy {
     'https://a.travel-assets.com/findyours-php/viewfinder/images/res60/201000/201398-Juarez-Park.jpg'
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute,) {}
 
   ngOnInit(): void {
     this.initBackgroundChange();
+    this.id = this.route.snapshot.paramMap.get('id_usuario');
   }
 
   ngOnDestroy(): void {
@@ -33,10 +35,11 @@ export class CategoriasComponent implements OnInit, OnDestroy {
     if (categorias === 'Ayuda') {
       this.router.navigate(['/ayuda']);
     } else {
-      this.router.navigate(['/categoria-vista', categorias]);
+      console.log('Navegando a la vista de categorías:', categorias, 'con ID de usuario:', this.id);
+      this.router.navigate(['/categoria-vista', categorias, this.id]);
     }
   }
-  
+
 
   private initBackgroundChange(): void {
     const slideshow = document.querySelector('.background-slideshow') as HTMLElement;

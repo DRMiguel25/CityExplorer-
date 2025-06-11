@@ -18,21 +18,23 @@ import { PagoAnuncioComponent } from '../vistas/components/Vistas-Aunuciante/pag
 
 import { HomeAdministradorComponent } from '../vistas/components/Vistas-Administrador/home-administrador/home-administrador.component';
 import { FavoritosUsuariosComponent } from '../vistas/components/Vistas-Usuario-Invitado/favoritos-usuarios/favoritos-usuarios.component';
-import { InfoUsuarioComponent } from '../vistas/components/Vistas-Usuario-Invitado/info-usuario/info-usuario.component';
+import { ModificarInfoUsuarioComponent } from '../vistas/components/Vistas-Usuario-Invitado/modificar-info-usuario/modificar-info-usuario.component';
 import { AlertaInfoUsuarioComponent } from '../vistas/components/Vistas-Usuario-Invitado/alerta-info-usuario/alerta-info-usuario.component';
 
 import { ReseniaUsuarioComponent } from '../vistas/components/Vistas-Usuario-Invitado/resenia-usuario/resenia-usuario.component'; // Asegúrate de importar el componente ReseniaUsuarioComponent
-
+import { TerminosDelServicioComponent } from '../vistas/components/Vistas-Usuario-Invitado/terminos-del-servicio/terminos-del-servicio.component'; // Asegúrate de importar el componente TerminosDelServicioComponent
+import { PoliticasDePrivacidadComponent } from '../vistas/components/Vistas-Usuario-Invitado/Politicas-de-privacidad/politicas-de-privacidad.component'; // Asegúrate de importar el componente PoliticasDePrivacidadComponent
 const routes: Routes = [
   { path: 'inicio-sesion', component: InicioSesionComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'login', component: LoginComponent },
   { path: 'destino-vista', component: DestinosVistaComponent },
   { path: 'destino-vista/:id_usuario', component: DestinosVistaComponent },
-  { path: 'categoria-vista/:categoria', component: CategoriaVistaComponent },
+  { path: 'categoria-vista/:categoria/:id_usuario', component: CategoriaVistaComponent },
   { path: 'categorias', component: CategoriasComponent },
   { path: 'categorias/:id_usuario', component: CategoriasComponent },
-  { path: 'vista-detallada-destino/:id', component: VistaDetalladaDestinoComponent },
+  { path: 'vista-detallada-destino/:id_destino/:id_usuario', component: VistaDetalladaDestinoComponent },
+  { path: 'vista-detallada-destino/:id_destino', component: VistaDetalladaDestinoComponent },
   { path: 'home-anunciante/:id_usuario', component: HomeAnuncianteComponent },
   { path: 'home-administrador/:id_usuario', component: HomeAdministradorComponent },
   { path: 'home-invitado-usuario/:id_usuario', component: HomeInvitadoUsuarioComponent },
@@ -45,9 +47,11 @@ const routes: Routes = [
   { path: 'ayuda/:id_usuario', component: AyudaComponent },
   { path: 'pagar-anuncio/:id_anuncio', component: PagoAnuncioComponent },
   { path: 'favoritos-usuarios/:id_usuario', component: FavoritosUsuariosComponent },
-  { path: 'info-usuario/:id_usuario', component: InfoUsuarioComponent },
+  { path: 'modificar-info-usuario/:id_usuario', component: ModificarInfoUsuarioComponent },
   { path: 'alerta-info-usuario/:id_usuario', component: AlertaInfoUsuarioComponent },
   { path: 'resenia-usuario/:id_anuncio', component: ReseniaUsuarioComponent },
+  { path: 'terminos-del-servicio', component: TerminosDelServicioComponent },
+  { path: 'politicas-de-privacidad', component: PoliticasDePrivacidadComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },  // ✅ Ruta por defecto al login
 ];
 

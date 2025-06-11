@@ -41,12 +41,31 @@ export class AlertaInfoUsuarioComponent implements OnInit {
   }
 
   vistaInfoUsuario(): void {
-    console.log('Navegando a info usuario ' + this.data.id_usuario + '...');
-    this.router.navigate(['/info-usuario', this.data.id_usuario]).then(() => {
+    console.log('Navegando a modificar información del usuario ' + this.data.id_usuario + '...');
+    this.router.navigate(['/modificar-info-usuario', this.data.id_usuario]).then(() => {
       this.dialogRef.close(); // Cierra el diálogo solo si la navegación fue exitosa
     }).catch(err => {
       console.error('Error al navegar a info-usuario:', err);
     });
   }
+
+    politicasDePrivacidad(): void {
+    console.log('Navegando a políticas de privacidad');
+    this.router.navigate(['/politicas-de-privacidad']).then(() => {
+      this.dialogRef.close(); // Cierra el diálogo solo si la navegación fue exitosa
+    }).catch(err => {
+      console.error('Error al navegar a políticas de privacidad:', err);
+    });
+  }
+
+  terminosDelServicio(): void {
+    console.log('Navegando a términos del servicio');
+    this.router.navigate(['/terminos-del-servicio']).then(() => {
+      this.dialogRef.close(); // Cierra el diálogo solo si la navegación fue exitosa
+    }).catch(err => {
+      console.error('Error al navegar a términos del servicio:', err);
+    });
+  }
+
 
 }
