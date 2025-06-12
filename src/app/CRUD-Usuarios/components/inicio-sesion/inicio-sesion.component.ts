@@ -58,6 +58,7 @@ onLoggedin() {
     next: (data: any) => {
       if (data.estatus) {
         localStorage.setItem('access_token', data.access_token);
+        console.log('✅ access token:', data.access_token);
 
         const userId = data.data?.id_usuario;
         const rolId = data.data?.id_rol;  // Asegúrate que este campo venga en la respuesta

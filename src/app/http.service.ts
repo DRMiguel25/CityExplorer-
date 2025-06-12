@@ -86,9 +86,25 @@ export class HttpLaravelService {
   }
 
   Service_Post_FormData(controller: string, endpoint: string, data: FormData) {
-  const url = `${this._url}/${controller}/${endpoint}`;
-  return this.http.post(url, data);
-}
+    const url = `${this._url}/${controller}/${endpoint}`;
+    return this.http.post(url, data);
+  }
 
-    
+  Service_Patch_FormData(controller: string, endpoint: number, data: FormData) {
+    const url = `${this._url}/${controller}/${endpoint}`;
+
+    const token = this.storage.getItem('access_token'); // o tu token fijo para pruebas
+
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/json'
+    });
+
+    console.log(`Enviando PATCH a ${url} con datos:`, data);
+
+    // Importante: cuando envías FormData, **no pongas Content-Type explícito** para que Angular lo asigne automáticamente
+    return this.http.patch(url, data, { headers });
+  }
+
 }
