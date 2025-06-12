@@ -9,7 +9,7 @@ import {
   isFakeMousedownFromScreenReader,
   isFakeTouchstartFromScreenReader,
   normalizePassiveListenerOptions
-} from "./chunk-JMJLFZGC.js";
+} from "./chunk-7YWRF2M4.js";
 import "./chunk-Y4MVQBVQ.js";
 import {
   DOCUMENT

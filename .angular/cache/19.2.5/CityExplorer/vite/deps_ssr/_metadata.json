@@ -1,121 +1,197 @@
 {
-  "hash": "895dadd9",
-  "configHash": "34149a30",
-  "lockfileHash": "f1ae454a",
-  "browserHash": "e391b030",
+  "hash": "b480efcd",
+  "configHash": "090e42f4",
+  "lockfileHash": "219937e7",
+  "browserHash": "d4260721",
   "optimized": {
     "@angular/cdk/bidi": {
       "src": "../../../../../../node_modules/@angular/cdk/fesm2022/bidi.mjs",
       "file": "@angular_cdk_bidi.js",
+<<<<<<< Updated upstream
       "fileHash": "5d940c7d",
+=======
+      "fileHash": "eaeadd0c",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
+<<<<<<< Updated upstream
       "fileHash": "b9ad9953",
+=======
+      "fileHash": "392fd96d",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
+<<<<<<< Updated upstream
       "fileHash": "a646b42f",
+=======
+      "fileHash": "72f780de",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
+<<<<<<< Updated upstream
       "fileHash": "58b8037a",
+=======
+      "fileHash": "f87ece4e",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
+<<<<<<< Updated upstream
       "fileHash": "6b617b4d",
+=======
+      "fileHash": "a4f651d4",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/material/button": {
       "src": "../../../../../../node_modules/@angular/material/fesm2022/button.mjs",
       "file": "@angular_material_button.js",
+<<<<<<< Updated upstream
       "fileHash": "ae01d9af",
+=======
+      "fileHash": "f3e849f3",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/material/dialog": {
       "src": "../../../../../../node_modules/@angular/material/fesm2022/dialog.mjs",
       "file": "@angular_material_dialog.js",
+<<<<<<< Updated upstream
       "fileHash": "c9720f6d",
+=======
+      "fileHash": "2a6664fa",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
+<<<<<<< Updated upstream
       "fileHash": "a23df911",
+=======
+      "fileHash": "9126c1e6",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/platform-browser/animations": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/animations.mjs",
       "file": "@angular_platform-browser_animations.js",
+<<<<<<< Updated upstream
       "fileHash": "9d24b530",
+=======
+      "fileHash": "ed16eae3",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/platform-server": {
       "src": "../../../../../../node_modules/@angular/platform-server/fesm2022/platform-server.mjs",
       "file": "@angular_platform-server.js",
+<<<<<<< Updated upstream
       "fileHash": "3810e2cd",
+=======
+      "fileHash": "6f782838",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
+<<<<<<< Updated upstream
       "fileHash": "44a70f2b",
+=======
+      "fileHash": "23ec5e10",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/ssr": {
       "src": "../../../../../../node_modules/@angular/ssr/fesm2022/ssr.mjs",
       "file": "@angular_ssr.js",
+<<<<<<< Updated upstream
       "fileHash": "e5cb827a",
+=======
+      "fileHash": "24327b16",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/ssr/node": {
       "src": "../../../../../../node_modules/@angular/ssr/fesm2022/node.mjs",
       "file": "@angular_ssr_node.js",
+<<<<<<< Updated upstream
       "fileHash": "31703744",
+=======
+      "fileHash": "a25569e2",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@stripe/stripe-js": {
       "src": "../../../../../../node_modules/@stripe/stripe-js/lib/index.mjs",
       "file": "@stripe_stripe-js.js",
+<<<<<<< Updated upstream
       "fileHash": "d1eb1bd7",
+=======
+      "fileHash": "89c831d2",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "express": {
       "src": "../../../../../../node_modules/express/index.js",
       "file": "express.js",
+<<<<<<< Updated upstream
       "fileHash": "e1a27c20",
+=======
+      "fileHash": "62cb00eb",
+>>>>>>> Stashed changes
       "needsInterop": true
     },
     "primeng/api": {
       "src": "../../../../../../node_modules/primeng/fesm2022/primeng-api.mjs",
       "file": "primeng_api.js",
+<<<<<<< Updated upstream
       "fileHash": "c240570d",
+=======
+      "fileHash": "8d661b36",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "primeng/paginator": {
       "src": "../../../../../../node_modules/primeng/fesm2022/primeng-paginator.mjs",
       "file": "primeng_paginator.js",
+<<<<<<< Updated upstream
       "fileHash": "154a73ba",
+=======
+      "fileHash": "2d4c352b",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "rxjs": {
       "src": "../../../../../../node_modules/rxjs/dist/cjs/index.js",
       "file": "rxjs.js",
+<<<<<<< Updated upstream
       "fileHash": "f7554359",
+=======
+      "fileHash": "7960637d",
+>>>>>>> Stashed changes
       "needsInterop": true
     },
     "sweetalert2": {
       "src": "../../../../../../node_modules/sweetalert2/dist/sweetalert2.esm.all.js",
       "file": "sweetalert2.js",
+<<<<<<< Updated upstream
       "fileHash": "2316d019",
+=======
+      "fileHash": "2849fc5c",
+>>>>>>> Stashed changes
       "needsInterop": false
     }
   },
@@ -123,6 +199,7 @@
     "xhr2-TXIMV6CV": {
       "file": "xhr2-TXIMV6CV.js"
     },
+<<<<<<< Updated upstream
     "chunk-UAFSZFDF": {
       "file": "chunk-UAFSZFDF.js"
     },
@@ -140,18 +217,37 @@
     },
     "chunk-BYNL2OZP": {
       "file": "chunk-BYNL2OZP.js"
+=======
+    "chunk-5GV2XB44": {
+      "file": "chunk-5GV2XB44.js"
     },
-    "chunk-2QIWS2RN": {
-      "file": "chunk-2QIWS2RN.js"
+    "chunk-7LCR3MDU": {
+      "file": "chunk-7LCR3MDU.js"
+    },
+    "chunk-X3JMHZ3I": {
+      "file": "chunk-X3JMHZ3I.js"
+    },
+    "chunk-UAFSZFDF": {
+      "file": "chunk-UAFSZFDF.js"
     },
     "chunk-B4GG5ZDJ": {
       "file": "chunk-B4GG5ZDJ.js"
+>>>>>>> Stashed changes
+    },
+    "chunk-2QIWS2RN": {
+      "file": "chunk-2QIWS2RN.js"
     },
     "chunk-ESRX6X2N": {
       "file": "chunk-ESRX6X2N.js"
     },
     "chunk-DQGFSWYO": {
       "file": "chunk-DQGFSWYO.js"
+    },
+    "chunk-U42CI6GS": {
+      "file": "chunk-U42CI6GS.js"
+    },
+    "chunk-QBQSPOVY": {
+      "file": "chunk-QBQSPOVY.js"
     },
     "chunk-PP6FLZSN": {
       "file": "chunk-PP6FLZSN.js"

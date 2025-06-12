@@ -21,7 +21,7 @@ import {
   getRtlScrollAxisType,
   hasModifierKey,
   supportsScrollBehavior
-} from "./chunk-FUM54M6H.js";
+} from "./chunk-U42CI6GS.js";
 import {
   BidiModule,
   Directionality

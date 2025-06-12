@@ -1,0 +1,138 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    font-size: 32px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 40px;
+}
+
+.place-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Reducido de 250px */
+    gap: 20px; /* Reducido de 30px */
+}
+
+.place-card {
+    background: white;
+    border-radius: 10px; /* Reducido de 12px */
+    overflow: hidden;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08); /* Sombra más pequeña */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.place-card:hover {
+    transform: translateY(-3px); /* Reducido de -5px */
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15); /* Sombra hover más pequeña */
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 12px; /* Reducido de 15px */
+    right: 12px; /* Reducido de 15px */
+    width: 35px; /* Reducido de 40px */
+    height: 35px; /* Reducido de 40px */
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.favorite-btn:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+}
+
+.favorite-btn.active {
+    background: #ff4757;
+    color: white;
+}
+
+.heart-icon {
+    width: 18px; /* Reducido de 20px */
+    height: 18px; /* Reducido de 20px */
+    fill: currentColor;
+}
+
+.place-image {
+    width: 100%;
+    height: 180px; /* Reducido de 220px */
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.sneaker-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.place-card:hover .sneaker-image {
+    transform: scale(1.05);
+}
+
+.place-info {
+    padding: 20px; /* Reducido de 25px */
+}
+
+.place-name {
+    font-size: 16px; /* Reducido de 18px */
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px; /* Reducido de 8px */
+    line-height: 1.3;
+}
+
+.place-category {
+    font-size: 13px; /* Reducido de 14px */
+    color: #666;
+    margin-bottom: 8px; /* Reducido de 10px */
+}
+
+.place-schedule {
+    font-size: 13px; /* Reducido de 14px */
+    color: #444;
+}
+
+@media (max-width: 768px) {
+    .header {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+    
+    .place-grid {
+        grid-template-columns: 1fr;
+        gap: 15px; /* Reducido de 20px */
+    }
+    
+    .place-image {
+        height: 160px; /* Reducido de 250px */
+    }
+}
