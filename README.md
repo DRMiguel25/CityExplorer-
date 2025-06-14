@@ -26,7 +26,7 @@ Sigue estos pasos para configurar el proyecto en tu entorno local:
 ### 1. Clonar el repositorio frontend
 
 ```bash
-git clone https://github.com/DRMiguel25/CityExplorer.git
+https://github.com/DRMiguel25/CityExplorer-.git
 ```
 
 ### 2. Clonar el repositorio backend
