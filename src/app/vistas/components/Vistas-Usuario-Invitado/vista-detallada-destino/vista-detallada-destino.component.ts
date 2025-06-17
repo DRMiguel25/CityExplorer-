@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpLaravelService } from '../../../../http.service';
 import Swal from 'sweetalert2';
 
-
 @Component({
  selector: 'vista-detallada-destino',
  standalone: false,
@@ -13,8 +12,15 @@ import Swal from 'sweetalert2';
 export class VistaDetalladaDestinoComponent implements OnInit {
  lugar: any; // Aquí guardaremos los datos del lugar
  direccion: any; // Aquí guardamos los datos de la dirección
+ ultimoComentario: any = null; // Aquí guardamos el último comentario
+ promedioValoracion: any = null; // Aquí guardamos el promedio de valoraciones
+ totalComentarios: any = null; // Aquí guardamos el total de comentarios
+
  isLoading = true;
+ 
  id_usuario: string | null = null; // Aquí guardamos el ID del usuario
+ id_destino: string | null = null; // Aquí guardamos el ID del destino
+ 
 
  private categoriaMap: { [key: string]: number } = {
   'Restaurantes': 1,
@@ -32,15 +38,16 @@ export class VistaDetalladaDestinoComponent implements OnInit {
  constructor(
    private router: Router,
    private route: ActivatedRoute,
-   private httpLaravelService: HttpLaravelService
+   private httpLaravelService: HttpLaravelService,
  ) {}
 
 
  ngOnInit(): void {
-   const id_destino = this.route.snapshot.paramMap.get('id_destino');
+   this.id_destino = this.route.snapshot.paramMap.get('id_destino');
    this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
-   if (id_destino) {
-     this.obtenerLugar(+id_destino);
+   if (this.id_destino) {
+     this.obtenerLugar(+this.id_destino);
+     this.obtenerValoraciones(); // Llamada para obtener las valoraciones del lugar
    }
  }
 
@@ -81,7 +88,7 @@ export class VistaDetalladaDestinoComponent implements OnInit {
 
  // Método de retroceso
  goBack() {
-   this.router.navigate(['/destino-vista']);
+   this.router.navigate(['/home-invitado-usuario', this.id_usuario]); // Navega a la página de inicio del usuario invitado
  }
 
 
@@ -95,8 +102,94 @@ export class VistaDetalladaDestinoComponent implements OnInit {
    return 'Categoría desconocida'; // Si no encuentra la categoría, muestra este texto
  }
 
- crearResenia(): void {
-    console.log('Navegando a la reseña del usuario para el lugar con ID:', this.lugar.id);
-    this.router.navigate(['/resenia-usuario', this.lugar.id]);
- }
+crearResenia(): void {
+  if (this.id_usuario != "0") {
+    console.log('Navegando a la reseña del usuario para el lugar con ID:', this.id_destino, 'y usuario con ID:', this.id_usuario);
+    this.router.navigate(['/resenia-usuario', this.id_destino, this.id_usuario]);
+  }
+  else {
+    Swal.fire({
+      icon: 'info',
+      title: '¿Ya tienes una cuenta?',
+      text: 'Para acceder a esta opción necesitas iniciar sesión o crear una cuenta. ¿Deseas ir a la página de inicio de sesión?',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, quiero iniciar sesión',
+      cancelButtonText: 'No, gracias',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      background: '#f9f9f9',
+      iconColor: '#3085d6'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/login']);
+      }
+    });
+  }
+}
+
+obtenerValoraciones(): void {
+  const modelo = 'lugar';
+  const dato = `${this.id_destino}/comentarios`;
+
+  this.httpLaravelService.Service_Get(modelo, dato).subscribe({
+    next: (respuesta: any) => {
+      const comentarios = respuesta?.data || [];
+
+      if (Array.isArray(comentarios) && comentarios.length > 0) {
+        const ordenados = comentarios.sort((a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+        this.ultimoComentario = ordenados[0];
+
+        const suma = comentarios.reduce((acc, c) => acc + (c.valoracion || 0), 0);
+        this.promedioValoracion = suma / comentarios.length;
+
+        this.totalComentarios = comentarios.length; // Aquí guardas el total
+      } else {
+        this.ultimoComentario = null;
+        this.promedioValoracion = null;
+        this.totalComentarios = 0;
+      }
+    },
+    error: (error) => {
+      console.error('❌ Error al obtener los comentarios:', error);
+      this.ultimoComentario = null;
+      this.promedioValoracion = null;
+      this.totalComentarios = 0;
+    }
+  });
+}
+
+
+getEstrellas(valoracion: number): string {
+  const estrellasLlenas = '★'.repeat(valoracion);
+  const estrellasVacias = '☆'.repeat(5 - valoracion);
+  return estrellasLlenas + estrellasVacias;
+}
+
+listarComentarios(): void {
+  if (this.id_usuario != "0") {
+    console.log('Navegando a la lista de comentarios para el lugar con ID:', this.id_destino);
+    this.router.navigate(['/vista-lista-comentarios', this.id_destino]);
+  }
+  else {
+    Swal.fire({
+      icon: 'info',
+      title: '¿Ya tienes una cuenta?',
+      text: 'Para acceder a esta opción necesitas iniciar sesión o crear una cuenta. ¿Deseas ir a la página de inicio de sesión?',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, quiero iniciar sesión',
+      cancelButtonText: 'No, gracias',
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    background: '#f9f9f9',
+    iconColor: '#3085d6'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.router.navigate(['/login']);
+    }
+  });
+  }
+}
+
 }

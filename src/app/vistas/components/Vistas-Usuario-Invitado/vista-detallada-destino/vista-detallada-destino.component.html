@@ -3,7 +3,7 @@
   <div class="logo"><div class="shipping-info">
       <p>{{ lugar.nombre }}</p>
     </div></div>
-  <button class="exit-btn" onclick="window.history.back()">
+  <button class="exit-btn" (click)="goBack()">
     <span class="material-symbols-outlined"> logout </span>
   </button>
 </div>
@@ -82,27 +82,29 @@
 
     <div class="reviews-section">
       <div class="reviews-header">
-        <h3 class="reviews-title">Reseñas (215)</h3>
+        <h3 class="reviews-title">Reseñas ({{ totalComentarios }})</h3>
         <span class="chevron down">›</span>
       </div>
 
       <div class="rating-summary">
-        <span class="stars">★★★★★</span>
-        <span class="rating-text">4.7 estrellas</span>
+        <span class="stars">{{ getEstrellas(promedioValoracion) }}</span>
+        <span class="rating-text">{{ promedioValoracion.toFixed(1) }} estrellas</span>
       </div>
-
       <button class="write-review-btn" (click)="crearResenia()">Escribe una evaluación</button>
 
-      <div class="review">
-        <div class="review-rating">★★★★★</div>
-        <div class="review-author">gabriela8851573 - 08 jun 2025</div>
-        <div class="review-text">
-          Excelente lugar, muy cómodo y muy bonito. La combinación de sabores es
-          increíble, de verdad es un lugar que va con todo y en cada momento te
-          puede sorprender.
-        </div>
-        <div class="review-helpful">Más</div>
+      <div class="review" *ngIf="ultimoComentario">
+      <div class="review-rating">
+        {{ getEstrellas(ultimoComentario.valoracion) }}
       </div>
+        <div class="review-author">{{ ultimoComentario.usuario?.nombre ?? 'Usuario anónimo' }}</div>
+        <div class="review-text">{{ ultimoComentario.contenido }}</div>
+        <div class="review-helpful" (click)="listarComentarios()">Más</div>
+      </div>
+
+      <div class="no-reviews" *ngIf="!ultimoComentario">
+        <p>No hay reseñas disponibles.</p>
+      </div>
+
     </div>
   </div>
 </div>

@@ -31,8 +31,9 @@
 
     <div class="form-group">
       <label for="correo">Email</label>
-      <input type="email" id="correo" name="correo" [(ngModel)]="usuario.data.correo" required>
+      <input type="email" id="correo" name="correo" [(ngModel)]="usuario.data.correo" required disabled>
     </div>
+
 
     <div class="button-container">
       <button type="button" class="btn btn-cancel" (click)="cancelar()">Cancelar</button>

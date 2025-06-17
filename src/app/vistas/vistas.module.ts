@@ -37,6 +37,7 @@ import { AlertaInfoUsuarioComponent } from './components/Vistas-Usuario-Invitado
 import { ReseniaUsuarioComponent } from './components/Vistas-Usuario-Invitado/resenia-usuario/resenia-usuario.component'; // Asegúrate de importar el componente ReseniaUsuarioComponent
 import { TerminosDelServicioComponent } from './components/Vistas-Usuario-Invitado/terminos-del-servicio/terminos-del-servicio.component'; // Asegúrate de importar el componente TerminosDelServicioComponent
 import { PoliticasDePrivacidadComponent } from './components/Vistas-Usuario-Invitado/Politicas-de-privacidad/politicas-de-privacidad.component'; // Asegúrate de importar el componente PoliticasDePrivacidadComponent
+import { VistaListaComentariosComponent } from './components/Vistas-Usuario-Invitado/vista-lista-comentarios/vista-lista-comentarios.component'; // Asegúrate de importar el componente VistaListaComentariosComponent
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { PoliticasDePrivacidadComponent } from './components/Vistas-Usuario-Invi
     AlertaInfoUsuarioComponent,
     ReseniaUsuarioComponent,
     TerminosDelServicioComponent,
-    PoliticasDePrivacidadComponent
+    PoliticasDePrivacidadComponent,
+    VistaListaComentariosComponent,
   ],
   imports: [
     CommonModule,

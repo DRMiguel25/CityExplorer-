@@ -96,15 +96,7 @@ throw new Error('Method not implemented.');
             text: 'El pago se realizó con éxito. ¡Gracias por tu compra!'
           });
           this.vistaDetalladaAnuncio(this.id_lugar);
-        },  
-        error: (error) => {
-          console.error('Error al procesar el pago', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Hubo un problema al procesar tu pago. Intenta nuevamente.'
-          });
-        }
+        },
       });
   }
 
