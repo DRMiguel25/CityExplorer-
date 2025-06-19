@@ -14,7 +14,11 @@ import { AlertaInfoUsuarioComponent } from '../alerta-info-usuario/alerta-info-u
 export class navbarInvitadoUsuarioComponent {
   id_usuario: number = 0;
 
-  constructor(private router: Router, private route: ActivatedRoute, private dialog: MatDialog) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {

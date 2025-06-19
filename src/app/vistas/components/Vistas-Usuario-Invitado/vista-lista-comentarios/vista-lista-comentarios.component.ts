@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HttpLaravelService } from '../../../../http.service';
 import Swal from 'sweetalert2';
 
@@ -9,37 +9,62 @@ import Swal from 'sweetalert2';
   templateUrl: './vista-lista-comentarios.component.html',
   styleUrls: ['./vista-lista-comentarios.component.scss']
 })
-export class VistaListaComentariosComponent implements OnInit{
+export class VistaListaComentariosComponent implements OnInit {
 
-  id_destino: string | null = null; // Aquí guardamos el ID del destino
+  id_destino: string | null = null; // ID del destino
+  listaComentarios: any[] = [];
+  promedioValoracion: number | null = null;
+  totalComentarios: number = 0;
 
-
- constructor(
-   private router: Router,
-   private route: ActivatedRoute,
-   private httpLaravelService: HttpLaravelService,
- ) {}
+  constructor(
+    private route: ActivatedRoute,
+    private httpLaravelService: HttpLaravelService,
+  ) {}
 
   ngOnInit(): void {
     this.id_destino = this.route.snapshot.paramMap.get('id_destino');
 
     if (this.id_destino) {
       this.obtenerComentarios();
+    } else {
+      console.error('❌ No se recibió id_destino en la ruta');
     }
   }
 
-    obtenerComentarios(): void {
+  obtenerComentarios(): void {
     const modelo = 'lugar';
-    const dato = `${this.id_destino}/comentarios`; // ← Armamos el endpoint completo como string
+    const dato = `${this.id_destino}/comentarios`;
 
     this.httpLaravelService.Service_Get(modelo, dato).subscribe({
-      next: (comentarios) => {
-        console.log('✅ Reseñas del lugar:', comentarios);
+      next: (respuesta: any) => {
+        const comentarios = respuesta?.data || [];
+
+        if (Array.isArray(comentarios) && comentarios.length > 0) {
+          this.listaComentarios = comentarios.sort((a, b) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
+
+          const suma = comentarios.reduce((acc, c) => acc + (c.valoracion || 0), 0);
+          this.promedioValoracion = +(suma / comentarios.length).toFixed(1);
+          this.totalComentarios = comentarios.length;
+
+          console.log('✅ Lista de comentarios:', this.listaComentarios);
+          console.log(`⭐ Promedio: ${this.promedioValoracion} estrellas`);
+          console.log(`📝 Total comentarios: ${this.totalComentarios}`);
+        } else {
+          this.listaComentarios = [];
+          this.promedioValoracion = null;
+          this.totalComentarios = 0;
+
+          console.warn('⚠️ No hay comentarios disponibles o formato inesperado');
+        }
       },
       error: (error) => {
         console.error('❌ Error al obtener los comentarios del lugar:', error);
+        this.listaComentarios = [];
+        this.promedioValoracion = null;
+        this.totalComentarios = 0;
       }
     });
   }
-
 }

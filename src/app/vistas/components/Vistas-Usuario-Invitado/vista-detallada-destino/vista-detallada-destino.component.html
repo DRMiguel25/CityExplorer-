@@ -45,9 +45,9 @@
   </div>
 
   <div class="product-info">
-    <button class="favorites-btn">
+    <button class="favorites-btn" (click)="toggleFavorito()">
       <span class="material-symbols-outlined">favorite</span>
-      <span>Agregar a favoritos</span>
+      <span>{{ lugar?.esFavorito ? 'Quitar de favoritos' : 'Agregar a favoritos' }}</span>
     </button>
 
     <div class="product-details">

@@ -192,4 +192,49 @@ listarComentarios(): void {
   }
 }
 
+toggleFavorito(): void {
+  if (!this.id_usuario || this.id_usuario === "0") {
+    Swal.fire({
+      icon: 'info',
+      title: '¿Ya tienes una cuenta?',
+      text: 'Debes iniciar sesión para agregar favoritos. ¿Deseas ir al login?',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, iniciar sesión',
+      cancelButtonText: 'No, gracias',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      background: '#f9f9f9',
+      iconColor: '#3085d6'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/login']);
+      }
+    });
+    return;
+  }
+
+  const body = { id_lugar: +this.id_destino! };
+
+  this.httpLaravelService.Service_Post('favoritos', 'toggle', body).subscribe({
+    next: (res) => {
+      console.log('✅ Favorito toggle:', res);
+      const fueAgregado = res.action === 'added';
+      this.lugar.esFavorito = fueAgregado; // opcional, puedes marcar esto en tu objeto para cambiar el icono
+
+      Swal.fire({
+        icon: 'success',
+        title: fueAgregado ? 'Agregado a Favoritos' : 'Eliminado de Favoritos',
+        text: res.message,
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    },
+    error: (err) => {
+      console.error('❌ Error al hacer toggle favorito:', err);
+      Swal.fire('Error', 'No se pudo actualizar el favorito.', 'error');
+    }
+  });
+}
+
+
 }

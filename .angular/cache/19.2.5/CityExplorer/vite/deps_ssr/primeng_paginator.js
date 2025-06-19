@@ -1,23 +1,5 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-<<<<<<< Updated upstream
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-  NgControl,
-  NgControlStatus,
-  NgModel
-} from "./chunk-UAFSZFDF.js";
-import {
-  animate,
-  animation,
-  style,
-  transition,
-  trigger,
-  useAnimation
-} from "./chunk-X3JMHZ3I.js";
-import {
-=======
->>>>>>> Stashed changes
   EventBus,
   FilterMatchMode,
   FilterService,
@@ -73,6 +55,13 @@ import {
   uuid
 } from "./chunk-7LCR3MDU.js";
 import {
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  NgControl,
+  NgControlStatus,
+  NgModel
+} from "./chunk-UAFSZFDF.js";
+import {
   animate,
   animation,
   style,
@@ -80,13 +69,6 @@ import {
   trigger,
   useAnimation
 } from "./chunk-X3JMHZ3I.js";
-import {
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-  NgControl,
-  NgControlStatus,
-  NgModel
-} from "./chunk-UAFSZFDF.js";
 import {
   CommonModule,
   DOCUMENT,

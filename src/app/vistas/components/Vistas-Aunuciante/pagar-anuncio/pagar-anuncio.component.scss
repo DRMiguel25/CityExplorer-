@@ -1,255 +1,431 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Roboto', Arial, sans-serif;
-}
+.mi-componente-pago {
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', Arial, sans-serif;
+  }
 
-/* Fondo slideshow */
-.background-slideshow {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('https://i.imgur.com/FswIles.png') no-repeat center center fixed;
-  background-size: cover;
-  filter: blur(8px); /* Aumentar el blur */
-  z-index: -2;
-}
-
-/* Capa oscura */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.5); /* Capas de color claro */
-  z-index: -1;
-}
-
-/* Estilos para el botón de regreso */
-.back-button {
-  background: gray;
-  border: none;
-  font-size: 25px;
-  font-weight: bold;
-  cursor: pointer;
-  position: absolute;
-  left: 15px;
-  top: 15px;
-  color: #003366;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.571);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.3s ease, background-color 0.3s ease;
-}
-.back-button:hover {
-  color: #007bff;
-  transform: scale(1.05);
-}
-
-.circle-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ffcc00, #fefefe); /* Degradado claro */
-  color: white;
-  font-size: 22px;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.circle-icon:hover {
-  background: linear-gradient(135deg, #ff9966, #ffcc00); /* Degradado del hover */
-  transform: translateX(-3px);
-}
-
-/* Contenedor de pago */
-.pago-container {
-  position: relative;
-  top: 50px; /* Mueve el contenedor hacia abajo */
-  max-width: 550px;
-  margin: 0 auto;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.925), rgba(255, 247, 239, 0.8)); /* Degradado claro */
-  border-radius: 16px;
-  padding: 80px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra más clara */
-}
-
-/* Estilos del formulario */
-.form-group {
-  margin-bottom: 25px;
-}
-
-label {
-  display: block;
-  font-size: 16px;
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 10px;
-}
-
-.form-control {
-  width: 100%;
-  padding: 12px 15px;
-  border: 1px solid #d1c4e9; /* Color de borde más claro */
-  border-radius: 8px;
-  font-size: 15px;
-  transition: border-color 0.2s;
-  background-color: #ffffff; /* Fondo de entrada claro */
-}
-
-.form-control:focus {
-  border-color: #9fd836;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
-}
-
-select.form-control {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-}
-
-/* Elemento de tarjeta de Stripe */
-.stripe-element {
-  padding: 15px;
-  border: 1px solid #9fd836; /* Borde claro */
-  border-radius: 8px;
-  background-color: #ffffff; /* Fondo claro */
-}
-
-/* Botón de pago */
-.btn-primary {
-  background-color: #f9c74f; /* Color claro */
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 14px 28px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  min-width: 200px;
-}
-
-.btn-primary:hover {
-  background-color: #ffcc00; /* Hover más brillante */
-  transform: translateY(-1px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-}
-
-.btn-primary:disabled {
-  background-color: #d1d5db;
-  cursor: not-allowed;
-}
-
-/* Para el botón "Usar link" */
-.link-button {
-  background-color: #adbdef; /* Color claro */
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 15px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  margin-left: 8px;
-}
-
-/* Mensajes de error */
-.text-danger {
-  color: #ef4444;
-  font-size: 13px;
-  margin-top: 5px;
-}
-
-@media (max-width: 768px) {
-  .pago-container {
-    padding: 40px 20px;
-    margin: 20px;
+  /* Fondo slideshow */
+  .background-slideshow {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    z-index: -2;
   }
 
-  .form-control,
-  .stripe-element {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  .btn-primary {
-    font-size: 15px;
-    padding: 12px 20px;
+  /* Capa oscura */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: -1;
   }
 
-  .link-button {
-    font-size: 13px;
-    padding: 6px 10px;
+  /* Título principal */
+  .payment-title {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: 300;
   }
 
-  label {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 576px) {
+  /* Botón de regreso */
   .back-button {
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-    top: 10px;
-    left: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
   }
 
+  /* Contenedor de pago */
   .pago-container {
-    margin-top: 90px; // valor base
-  
-    @media (max-width: 768px) {
-      margin-top: 100px;
+    position: relative;
+    top: 50px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px;
+    min-height: 100vh;
+  }
+
+  /* === Tarjeta 3D === */
+  .card-container {
+    perspective: 1000px;
+    max-width: 450px;
+    margin: 0 auto 40px auto;
+  }
+
+  .credit-card {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    border-radius: 20px;
+    cursor: pointer;
+
+    &.flipped {
+      transform: rotateY(180deg);
     }
-  
-    @media (max-width: 576px) {
-      margin-top: 140px;
+
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      padding: 30px;
+      box-sizing: border-box;
+      background: linear-gradient(135deg, #2d5a87, #1e3c55, #0f2a3f);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-front {
+      background: linear-gradient(135deg, #4a90a4, #357a96, #1e5f74);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+      background: linear-gradient(135deg, #1e5f74, #0f2a3f);
+    }
+
+    /* Logo de círculos */
+    .card-logo {
+      align-self: flex-start;
+    }
+
+    .logo-circles {
+      display: flex;
+      gap: 8px;
+
+      .circle {
+        width: 12px;
+        height: 12px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.9;
+      }
+    }
+
+    /* Sección del número */
+    .card-number-section {
+      margin: 20px 0;
+    }
+
+    .card-label {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 12px;
+      font-weight: 400;
+      margin-bottom: 8px;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .card-number-display {
+      color: white;
+      font-size: 24px;
+      font-weight: 300;
+      letter-spacing: 3px;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* Detalles de la tarjeta */
+    .card-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .card-holder-section,
+    .card-exp-section,
+    .card-cvv-section {
+      flex: 1;
+    }
+
+    .card-holder-name,
+    .card-exp-date,
+    .card-cvv-display {
+      color: white;
+      font-size: 16px;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    .card-cvv-section {
+      text-align: right;
+      max-width: 80px;
+    }
+
+    /* Parte trasera */
+    .magnetic-strip {
+      width: 100%;
+      height: 50px;
+      background: linear-gradient(to right, #333, #666, #333);
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+
+    .cvv-section {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 30px;
+
+      .cvv-box {
+        background: white;
+        color: #333;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        font-size: 16px;
+        min-width: 50px;
+        text-align: center;
+      }
     }
   }
-  
+
+  /* === Formulario === */
+  .form-section {
+    max-width: 450px;
+    margin: 0 auto;
+  }
 
   .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+
+    &.active {
+      opacity: 1;
+    }
+
+    &.disabled {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 15px 20px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      backdrop-filter: blur(10px);
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      &:focus {
+        border-color: #4a90a4;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(74, 144, 164, 0.2);
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+
+    select.form-control {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 15px center;
+      padding-right: 45px;
+    }
+
+    .cvv-input {
+      max-width: 120px;
+    }
   }
 
-  .card-input-container {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .card-input-container .stripe-element {
-    width: 100%;
-  }
-
-  .link-button {
-    margin-left: 0;
-    margin-top: 10px;
-    width: 100%;
-  }
-
+  /* Botón de pago */
   .btn-primary {
-    padding: 12px;
-    font-size: 14px;
-    width: 100%;
+    background: linear-gradient(135deg, #4a90a4, #357a96);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 18px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 200px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, #357a96, #1e5f74);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(74, 144, 164, 0.3);
+    }
+
+    &:disabled {
+      background: rgba(255, 255, 255, 0.2);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
   }
+
+  /* Mensajes de error */
+  .text-danger {
+    color: #ff6b6b;
+    font-size: 12px;
+    margin-top: 8px;
+    display: block;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .pago-container {
+      padding: 20px;
+      top: 20px;
+    }
+
+    .payment-title {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .credit-card {
+      height: 240px;
+      
+      .card-front,
+      .card-back {
+        padding: 20px;
+      }
+
+      .card-number-display {
+        font-size: 20px;
+      }
+
+      .card-holder-name,
+      .card-exp-date,
+      .card-cvv-display {
+        font-size: 14px;
+      }
+    }
+
+    .form-group .form-control {
+      padding: 12px 15px;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 15px;
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .back-button {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      top: 10px;
+      left: 10px;
+    }
+
+    .pago-container {
+      top: 60px;
+    }
+
+    .card-container {
+      margin-bottom: 30px;
+    }
+
+    .credit-card {
+      height: 220px;
+      
+      .card-number-display {
+        font-size: 18px;
+        letter-spacing: 2px;
+      }
+    }
+  }
+}
+  /* === NUEVO: Estilo específico para el input de código postal === */
+  .postal-input {
+    max-width: 150px; // Opcional: limitar ancho
+  }
+/* === Stripe Elements custom styles === */
+.stripe-element-wrapper {
+  width: 100%;
+  padding: 15px 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+
+  &.StripeElement--focus {
+    border-color: #4a90a4;
+    box-shadow: 0 0 0 3px rgba(74, 144, 164, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  &.StripeElement--invalid {
+    border-color: #ff6b6b;
+  }
+}
+
+#card-number-element,
+#card-expiry-element,
+#card-cvc-element {
+  width: 100%;
+  height: 100%;
 }

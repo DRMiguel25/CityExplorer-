@@ -1,118 +1,124 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
-import { HttpLaravelService } from "../../../../http.service";
-import { ActivatedRoute } from '@angular/router';
+import { loadStripe, Stripe, StripeElements, StripeCardNumberElement } from '@stripe/stripe-js';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import Swal from 'sweetalert2'; // ✅ Importa SweetAlert2
+import { ActivatedRoute } from '@angular/router';
+import { HttpLaravelService } from '../../../../http.service';
+import Swal from 'sweetalert2';
+import { catchError, tap } from 'rxjs';
 
 @Component({
   selector: 'pagar-anuncio',
-  standalone: false,
+   standalone: false, // <- activa si lo usarás como standalone
   templateUrl: './pagar-anuncio.component.html',
   styleUrls: ['./pagar-anuncio.component.scss']
 })
-export class PagoAnuncioComponent implements AfterViewInit {
-goBack() {
-throw new Error('Method not implemented.');
-}
-  stripe!: Stripe;
-  card!: StripeCardElement;
-
-  id_lugar: number = 0;
-  id_metodo_pago: number = 1;
-  stripeToken!: string;
-
+export class PagoAnuncioComponent implements AfterViewInit, OnDestroy {
   formularioPago!: FormGroup;
-  formaDePagosOpciones: string[] = ['Tarjeta de crédito', 'Tarjeta de débito'];
+
+  stripe!: Stripe;
+  elements!: StripeElements;
+  cardNumber!: StripeCardNumberElement;
+
+  id_lugar = 0;
+  id_metodo_pago = 1;
+  stripeToken = '';
+  isProcessing = false;
+
+  currentStep: 'name' | 'number' | 'exp' | 'cvv' | 'postal' | 'complete' = 'name';
+  completedSteps: Set<string> = new Set();
 
   constructor(
-    private router: Router,
-    private servicio: HttpLaravelService,
-    private route: ActivatedRoute,
     private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private servicio: HttpLaravelService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     const idAnuncio = this.route.snapshot.paramMap.get('id_anuncio');
     this.id_lugar = Number(idAnuncio);
-    if (!idAnuncio) {
-      console.error('ID de anuncio no proporcionado en la URL');
-      return;
-    }
 
     this.formularioPago = this.fb.group({
+      cardName: ['', [Validators.required, Validators.minLength(2)]],
+      cardPostal: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
       formaDePago: ['', Validators.required]
     });
   }
 
-  async ngAfterViewInit() {
+  async ngAfterViewInit(): Promise<void> {
     this.stripe = await loadStripe('pk_test_51RCMhO2aCGcFLodxRpMdLgzxVD0wupm9PzVZk2AZ28qjkqbssx45coJ9PI8GV5PgGrbWIYWNzq3IzXD4fGY60uSE00ZlKg9bSD') as Stripe;
-    const elements = this.stripe.elements();
-    this.card = elements.create('card');
-    this.card.mount('#card-element');
-  }
+    this.elements = this.stripe.elements();
 
-  // Método para procesar el pago
-  // Método para procesar el pago
-  async handlePayment(event: Event) {
-    event.preventDefault();
-
-    // Validación del campo de tarjeta visualmente
-    const { token, error } = await this.stripe?.createToken(this.card) || {};
-    
-    if (error) {
-      console.error('Error al generar token:', error.message);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Ocurrió un error al generar el token. Intenta nuevamente.'
-      });
-      return;
-    }
-    
-    this.stripeToken = token?.id as string;
-
-    // Ahora hacemos la solicitud para procesar el pago
-    this.realizarPago();
-  }
-
-  // Método para hacer la solicitud de pago
-  realizarPago() {
-    const payload = {
-      id_lugar: this.id_lugar,
-      id_metodo_pago: this.id_metodo_pago,
-      stripeToken: this.stripeToken
+    const style = {
+      base: {
+        color: '#ffffff',
+        fontSize: '16px',
+        '::placeholder': { color: '#ffffff99' }
+      },
+      invalid: {
+        color: '#ff6b6b'
+      }
     };
 
+    this.cardNumber = this.elements.create('cardNumber', { style });
+    this.cardNumber.mount('#card-number-element');
+
+    this.elements.create('cardExpiry', { style }).mount('#card-expiry-element');
+    this.elements.create('cardCvc', { style }).mount('#card-cvc-element');
+  }
+
+  ngOnDestroy(): void {
+    if (this.cardNumber) this.cardNumber.unmount();
+  }
+
+  async handlePayment(event: Event): Promise<void> {
+    event.preventDefault();
+    if (this.isProcessing) return;
+    this.isProcessing = true;
+
+    if (this.formularioPago.invalid) {
+      Swal.fire('Error', 'Completa todos los campos correctamente.', 'error');
+      this.isProcessing = false;
+      return;
+    }
+
+    const name = this.formularioPago.get('cardName')?.value;
+    const address_zip = this.formularioPago.get('cardPostal')?.value;
+
+    const { token, error } = await this.stripe.createToken(this.cardNumber, {
+      name,
+      address_zip
+    });
+
+    if (error || !token) {
+      Swal.fire('Error', error?.message || 'Error desconocido al crear el token.', 'error');
+      this.isProcessing = false;
+      return;
+    }
+
+    this.stripeToken = token.id;
+
     this.servicio.Service_Post_Pago(this.id_lugar, this.id_metodo_pago, this.stripeToken)
-      .subscribe({
-        next: (response) => {
-          console.log('Pago realizado con éxito', response);
-          Swal.fire({
-            icon: 'success',
-            title: 'Pago realizado',
-            text: 'El pago se realizó con éxito. ¡Gracias por tu compra!'
-          });
-          this.vistaDetalladaAnuncio(this.id_lugar);
-        },
-      });
+      .pipe(
+        tap(() => {
+          Swal.fire('Éxito', 'El pago fue realizado con éxito.', 'success');
+          this.router.navigate(['/vista-detallada-anuncio', this.id_lugar]);
+        }),
+        catchError(err => {
+          Swal.fire('Error', 'No se pudo procesar el pago.', 'error');
+          throw err;
+        })
+      )
+      .subscribe(() => this.isProcessing = false);
   }
 
   isInvalid(controlName: string): boolean {
     const control = this.formularioPago.get(controlName);
-    return control ? control.invalid && (control.dirty || control.touched) : false;
+    return !!control && control.invalid && (control.dirty || control.touched);
   }
 
-  vistaDetalladaAnuncio(id: number | string) {
-    const idEntero = parseInt(id.toString(), 10);
-  
-    if (isNaN(idEntero)) {
-      console.error('ID inválido:', id);
-      return;
-    }
-  
-    this.router.navigate(['/vista-detallada-anuncio', idEntero]);
+  goBack(): void {
+    this.router.navigate(['/anuncios']);
   }
 }

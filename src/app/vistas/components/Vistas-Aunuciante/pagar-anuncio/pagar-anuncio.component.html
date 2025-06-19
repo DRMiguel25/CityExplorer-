@@ -1,34 +1,123 @@
-<div class="background-slideshow"></div>
-<div class="overlay"></div>
+<div class="mi-componente-pago">
+  <div class="background-slideshow"></div>
+  <div class="overlay"></div>
 
-<button class="back-button" (click)="goBack()">&#8592;</button>
+  <button class="back-button" (click)="goBack()">&#8592;</button>
 
-<!-- Contenedor principal del formulario de pago -->
-<div class="pago-container">
-  <form [formGroup]="formularioPago" (ngSubmit)="handlePayment($event)">
-    <!-- Forma de Pago -->
-    <div class="form-group">
-      <label for="formaDePago">Forma de pago</label>
-      <select id="formaDePago" class="form-control" formControlName="formaDePago">
-        <option value="">Selecciona una forma de pago</option>
-        <option *ngFor="let forma of formaDePagosOpciones" [value]="forma">{{ forma }}</option>
-      </select>
-      <div *ngIf="isInvalid('formaDePago')" class="text-danger textRequerido">
-        Selecciona una forma de pago válida.
+  <div class="pago-container">
+    <h2 class="payment-title">Por favor ingresa los datos de tu tarjeta</h2>
+
+    <form [formGroup]="formularioPago" (ngSubmit)="handlePayment($event)">
+      <!-- Tarjeta giratoria -->
+      <div class="card-container">
+        <div class="credit-card">
+          <!-- CARA FRONTAL -->
+          <div class="card-front">
+            <div class="card-logo">
+              <div class="logo-circles">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+              </div>
+            </div>
+
+            <div class="card-number-section">
+              <label class="card-label">Número de Tarjeta</label>
+              <div id="card-number-element" class="form-control"></div>
+            </div>
+
+            <div class="card-details">
+              <div class="card-holder-section">
+                <label class="card-label">Titular</label>
+                <div class="card-holder-name">{{ formularioPago.get('cardName')?.value?.toUpperCase() || 'JOSEFEO' }}</div>
+              </div>
+              <div class="card-exp-section">
+                <label class="card-label">Expira</label>
+                <div class="card-exp-date">MM/YY</div>
+              </div>
+              <div class="card-cvv-section">
+                <label class="card-label">CVV</label>
+                <div class="card-cvv-display">•••</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARA POSTERIOR -->
+          <div class="card-back">
+            <div class="magnetic-strip"></div>
+            <div class="cvv-section">
+              <div class="cvv-box">•••</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- Elemento de tarjeta -->
-    <div class="form-group mt-3 card-input-container">
-      <div id="card-element" class="stripe-element"></div>
-      <button type="button" class="link-button">Usar link</button>
-    </div>
+      <!-- Formulario de entrada -->
+      <div class="form-section">
+        <!-- Nombre del titular -->
+        <div class="form-group active">
+          <label for="cardName">Nombre del titular</label>
+          <input id="cardName"
+                 type="text"
+                 class="form-control"
+                 formControlName="cardName"
+                 placeholder="Ingresa tu nombre completo"
+                 maxlength="50" />
+          <div *ngIf="isInvalid('cardName')" class="text-danger">
+            El nombre es requerido.
+          </div>
+        </div>
 
-    <!-- Botón de pago -->
-    <div class="form-group mt-4 text-center">
-      <button type="submit" class="btn btn-primary" [disabled]="formularioPago.invalid">
-        💳 Pagar ahora
-      </button>
-    </div>
-  </form>
+        <!-- Expiración -->
+        <div class="form-group active">
+          <label for="cardExpiry">Fecha de expiración</label>
+          <div id="card-expiry-element" class="form-control"></div>
+        </div>
+
+        <!-- CVV -->
+        <div class="form-group active">
+          <label for="cardCvc">CVV</label>
+          <div id="card-cvc-element" class="form-control cvv-input"></div>
+        </div>
+
+        <!-- Código Postal -->
+        <div class="form-group active">
+          <label for="cardPostal">Código Postal</label>
+          <input id="cardPostal"
+                 type="text"
+                 class="form-control postal-input"
+                 formControlName="cardPostal"
+                 placeholder="Ej: 10001"
+                 maxlength="10" />
+          <div *ngIf="isInvalid('cardPostal')" class="text-danger">
+            Ingresa un código postal válido.
+          </div>
+        </div>
+
+        <!-- Forma de Pago -->
+        <div class="form-group">
+          <label for="formaDePago">Forma de pago</label>
+          <select id="formaDePago" class="form-control" formControlName="formaDePago">
+            <option value="">Selecciona una forma de pago</option>
+            <option value="Tarjeta de crédito">Tarjeta de crédito</option>
+            <option value="Tarjeta de débito">Tarjeta de débito</option>
+          </select>
+          <div *ngIf="isInvalid('formaDePago')" class="text-danger">
+            Selecciona una forma de pago válida.
+          </div>
+        </div>
+
+        <!-- Botón de pago -->
+        <div class="form-group text-center">
+          <button type="submit"
+                  class="btn btn-primary"
+                  [disabled]="formularioPago.invalid || isProcessing">
+            <span *ngIf="isProcessing">Procesando...</span>
+            <span *ngIf="!isProcessing">💳 Pagar ahora</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
