@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { AyudaComponent } from './vistas/components/Vistas-Usuario-Invitado/ayuda/ayuda.component';
-import { VistaDetalladaAnuncioComponent } from './vistas/components/Vistas-Aunuciante/vista-detallada-anuncio/vista-detallada-anuncio.component';
+import { VistaDetalladaAnuncioComponent } from './vistas/components/Vistas-Anuciante/vista-detallada-anuncio/vista-detallada-anuncio.component';
 
 const routes: Routes = [
   {

@@ -1,6 +1,6 @@
 import "./chunk-WDMUDEB6.js";
 
-// node_modules/@stripe/stripe-js/dist/index.mjs
+// ../../node_modules/@stripe/stripe-js/dist/index.mjs
 var RELEASE_TRAIN = "basil";
 var runtimeVersionToUrlVersion = function runtimeVersionToUrlVersion2(version) {
   return version === 3 ? "v3" : version;

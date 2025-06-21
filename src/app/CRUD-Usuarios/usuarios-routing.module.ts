@@ -8,13 +8,13 @@ import { DestinosVistaComponent } from '../vistas/components/Vistas-Usuario-Invi
 import { CategoriaVistaComponent } from '../vistas/components/Vistas-Usuario-Invitado/categoria-vista/categoria-vista.component';
 import { CategoriasComponent } from '../vistas/components/Vistas-Usuario-Invitado/categorias/categorias.component';
 import { VistaDetalladaDestinoComponent } from '../vistas/components/Vistas-Usuario-Invitado/vista-detallada-destino/vista-detallada-destino.component';
-import { HomeAnuncianteComponent } from '../vistas/components/Vistas-Aunuciante/home-anunciante/home-anunciante.component';
+import { HomeAnuncianteComponent } from '../vistas/components/Vistas-Anuciante/home-anunciante/home-anunciante.component';
 
-import { CrearActualizarAnuncioComponent } from '../vistas/components/Vistas-Aunuciante/crear-actualizar-anuncio/crear-actualizar-anuncio.component';
+import { CrearActualizarAnuncioComponent } from '../vistas/components/Vistas-Anuciante/crear-actualizar-anuncio/crear-actualizar-anuncio.component';
 import { navbarInvitadoUsuarioComponent } from '../vistas/components/Vistas-Usuario-Invitado/navbar-invitado-usuario/navbar-invitado-usuario.component';
-import { VistaDetalladaAnuncioComponent } from '../vistas/components/Vistas-Aunuciante/vista-detallada-anuncio/vista-detallada-anuncio.component';
+import { VistaDetalladaAnuncioComponent } from '../vistas/components/Vistas-Anuciante/vista-detallada-anuncio/vista-detallada-anuncio.component';
 import { AyudaComponent } from '../vistas/components/Vistas-Usuario-Invitado/ayuda/ayuda.component';
-import { PagoAnuncioComponent } from '../vistas/components/Vistas-Aunuciante/pagar-anuncio/pagar-anuncio.component';
+import { PagoAnuncioComponent } from '../vistas/components/Vistas-Anuciante/pagar-anuncio/pagar-anuncio.component';
 
 import { HomeAdministradorComponent } from '../vistas/components/Vistas-Administrador/home-administrador/home-administrador.component';
 import { FavoritosUsuariosComponent } from '../vistas/components/Vistas-Usuario-Invitado/favoritos-usuarios/favoritos-usuarios.component';

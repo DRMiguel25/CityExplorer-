@@ -28,6 +28,9 @@ export class FavoritosUsuariosComponent implements OnInit {
     if (this.id_usuario) {
       this.obtenerFavoritos();
     }
+
+    this.logLoadTime();  // 👈 mide tiempo de carga
+
   }
 
   obtenerFavoritos(): void {
@@ -79,6 +82,22 @@ export class FavoritosUsuariosComponent implements OnInit {
   }
 
   this.router.navigate(['/vista-detallada-destino', idEntero, this.id_usuario]);
+}
+
+logLoadTime() {
+  window.addEventListener('load', () => {
+    const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+    if (navEntry) {
+      console.log('⏱️ Tiempo total de carga en favoritos usuarios (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
+      console.log('🧱 Tiempo de render en favoritos usuarios (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
+      console.log('🌐 Tiempo de respuesta favoritos usuarios (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
+    } else {
+      // Fallback para navegadores antiguos
+      const timing = performance.timing;
+      const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
+      console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
+    }
+  });
 }
 
 }

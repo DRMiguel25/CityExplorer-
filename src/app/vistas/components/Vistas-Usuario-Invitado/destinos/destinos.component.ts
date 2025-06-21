@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpLaravelService } from '../../../../http.service';
-import { Lugar } from '../../Vistas-Aunuciante/home-anunciante/lugar.interface';
+import { Lugar } from '../../Vistas-Anuciante/home-anunciante/lugar.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -51,6 +51,8 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       this.initBackgroundChange();
     }
+
+    this.logLoadTime();  // 👈 mide tiempo de carga
   }
 
   ngOnDestroy(): void {
@@ -104,4 +106,20 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
       console.warn('Elemento de slideshow no encontrado.');
     }
   }
+
+  logLoadTime() {
+  window.addEventListener('load', () => {
+    const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+    if (navEntry) {
+      console.log('⏱️ Tiempo total de carga en destinos (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
+      console.log('🧱 Tiempo de render en destinos (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
+      console.log('🌐 Tiempo de respuesta destinos (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
+    } else {
+      // Fallback para navegadores antiguos
+      const timing = performance.timing;
+      const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
+      console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
+    }
+  });
+}
 }

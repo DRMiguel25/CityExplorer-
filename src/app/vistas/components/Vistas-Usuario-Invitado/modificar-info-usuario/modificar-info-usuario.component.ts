@@ -29,6 +29,9 @@ export class ModificarInfoUsuarioComponent implements OnInit {
     } else {
       console.error('ID de usuario no válido:', idNum);
     }
+
+    this.logLoadTime();  // 👈 mide tiempo de carga
+
   }
 
   cargarUsuario(id: number): void {
@@ -89,8 +92,6 @@ export class ModificarInfoUsuarioComponent implements OnInit {
       });
   }
 
-
-
   cancelar(): void {
     this.router.navigate(['/home-invitado-usuario', this.ID]);
   }
@@ -102,4 +103,21 @@ export class ModificarInfoUsuarioComponent implements OnInit {
       console.log('Foto seleccionada:', file);
     }
   }
+
+  logLoadTime() {
+  window.addEventListener('load', () => {
+    const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+    if (navEntry) {
+      console.log('⏱️ Tiempo total de carga en modificar informacion usuario (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
+      console.log('🧱 Tiempo de render en modificar informacion usuario (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
+      console.log('🌐 Tiempo de respuesta modificar informacion usuario (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
+    } else {
+      // Fallback para navegadores antiguos
+      const timing = performance.timing;
+      const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
+      console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
+    }
+  });
+}
+
 }

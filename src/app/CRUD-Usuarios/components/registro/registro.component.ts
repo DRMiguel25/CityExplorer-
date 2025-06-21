@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpLaravelService } from "../../../http.service";
@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.scss']
 })
-export class RegistroComponent {
+export class RegistroComponent implements OnInit{
   registroForm: FormGroup;
 
   roles = [
@@ -33,6 +33,10 @@ export class RegistroComponent {
       id_rol: ['', Validators.required],
       foto_perfil: [null, Validators.required] // Nuevo campo
     });
+  }
+
+  ngOnInit(): void {
+    this.logLoadTime();  // 👈 mide tiempo de carga
   }
 
   onFileChange(event: any) {
@@ -88,4 +92,21 @@ export class RegistroComponent {
   isInvalid(field: string): boolean {
     return this.f[field].invalid && this.f[field].touched;
   }
+
+  logLoadTime() {
+  window.addEventListener('load', () => {
+    const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+    if (navEntry) {
+      console.log('⏱️ Tiempo total de carga en registro (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
+      console.log('🧱 Tiempo de render en registro (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
+      console.log('🌐 Tiempo de respuesta registro (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
+    } else {
+      // Fallback para navegadores antiguos
+      const timing = performance.timing;
+      const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
+      console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
+    }
+  });
+}
+
 }

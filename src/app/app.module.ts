@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';  // Para directivas comunes como
 import { UsuariosModule } from './CRUD-Usuarios/usuarios.module';
 import { VistasModule } from './vistas/vistas.module'; // ✅ Importar el módulo de vistas
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [

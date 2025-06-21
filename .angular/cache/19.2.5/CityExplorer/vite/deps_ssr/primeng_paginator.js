@@ -1,5 +1,13 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
+  animate,
+  animation,
+  style,
+  transition,
+  trigger,
+  useAnimation
+} from "./chunk-X3JMHZ3I.js";
+import {
   EventBus,
   FilterMatchMode,
   FilterService,
@@ -61,14 +69,6 @@ import {
   NgControlStatus,
   NgModel
 } from "./chunk-UAFSZFDF.js";
-import {
-  animate,
-  animation,
-  style,
-  transition,
-  trigger,
-  useAnimation
-} from "./chunk-X3JMHZ3I.js";
 import {
   CommonModule,
   DOCUMENT,

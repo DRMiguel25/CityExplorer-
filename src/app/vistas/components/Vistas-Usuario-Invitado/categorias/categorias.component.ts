@@ -23,6 +23,8 @@ export class CategoriasComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initBackgroundChange();
     this.id = this.route.snapshot.paramMap.get('id_usuario');
+
+    this.logLoadTime();  // 👈 mide tiempo de carga
   }
 
   ngOnDestroy(): void {
@@ -66,4 +68,20 @@ export class CategoriasComponent implements OnInit, OnDestroy {
       console.warn('Elemento de slideshow no encontrado.');
     }
   }
+
+  logLoadTime() {
+  window.addEventListener('load', () => {
+    const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+    if (navEntry) {
+      console.log('⏱️ Tiempo total de carga en categorias (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
+      console.log('🧱 Tiempo de render en categorias (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
+      console.log('🌐 Tiempo de respuesta categorias (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
+    } else {
+      // Fallback para navegadores antiguos
+      const timing = performance.timing;
+      const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
+      console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
+    }
+  });
+}
 }

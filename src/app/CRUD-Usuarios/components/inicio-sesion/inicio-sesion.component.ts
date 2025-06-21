@@ -37,6 +37,9 @@ export class InicioSesionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.logLoadTime();  // 👈 mide tiempo de carga
+
     this.service.Service_Get('usuarios', '').subscribe({
       next: (usuarios) => {
         this.listaUsuarios = usuarios;  // 👈 Guarda los usuarios en la variable global
@@ -54,14 +57,19 @@ onLoggedin() {
     return;
   }
 
+  const startTime = Date.now();  // ⏱️ inicio del request
+
   this.service.Service_Post('user', 'login', this.InicioSesionFormulario.value).subscribe({
     next: (data: any) => {
+      const duration = Date.now() - startTime;  // ⏱️ fin
+      console.log('⚡ Tiempo de respuesta login:', duration, 'ms');
+
       if (data.estatus) {
         localStorage.setItem('access_token', data.access_token);
         console.log('✅ access token:', data.access_token);
 
         const userId = data.data?.id_usuario;
-        const rolId = data.data?.id_rol;  // Asegúrate que este campo venga en la respuesta
+        const rolId = data.data?.id_rol;
 
         if (!userId || !rolId) {
           console.warn('⚠️ No se recibieron id_usuario o id_rol en la respuesta');
@@ -69,13 +77,13 @@ onLoggedin() {
         }
 
         switch (rolId) {
-          case 1: // Usuario
+          case 1:
             this.router.navigate([`/home-invitado-usuario/${userId}`]);
             break;
-          case 2: // Anunciante
+          case 2:
             this.router.navigate([`/home-anunciante/${userId}`]);
             break;
-          case 3: // Administrador
+          case 3:
             this.router.navigate([`/home-administrador/${userId}`]);
             break;
           default:
@@ -93,6 +101,9 @@ onLoggedin() {
       }
     },
     error: (error) => {
+      const duration = Date.now() - startTime;
+      console.warn('⚠️ Tiempo fallido de respuesta login:', duration, 'ms');
+
       Swal.fire({
         icon: 'error',
         title: 'Error de conexión',
@@ -102,6 +113,7 @@ onLoggedin() {
     }
   });
 }
+
 
 
   isValid(field: string): boolean {
@@ -132,4 +144,20 @@ onLoggedin() {
     });
   }
   
+  logLoadTime() {
+    window.addEventListener('load', () => {
+      const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+      if (navEntry) {
+        console.log('⏱️ Tiempo total de carga en inicio de sesion (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
+        console.log('🧱 Tiempo de render en inicio de sesion (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
+        console.log('🌐 Tiempo de respuesta inicial en inicio de sesion (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
+      } else {
+        // Fallback para navegadores antiguos
+        const timing = performance.timing;
+        const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
+        console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
+      }
+    });
+  }
+
 }

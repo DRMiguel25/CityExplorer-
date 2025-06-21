@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Lugar } from './vistas/components/Vistas-Aunuciante/home-anunciante/lugar.interface';
+import { Lugar } from './vistas/components/Vistas-Anuciante/home-anunciante/lugar.interface';
 import { LocalstorageService } from './localstorage.service'; // Importa tu servicio de storage
 
 @Injectable({

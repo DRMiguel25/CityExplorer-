@@ -5,15 +5,15 @@ import { AuthGuard } from '../auth.guard';  // Asegúrate de importar el AuthGua
 // Vistas
 import { CategoriaVistaComponent } from './components/Vistas-Usuario-Invitado/categoria-vista/categoria-vista.component';
 import { CategoriasComponent } from './components/Vistas-Usuario-Invitado/categorias/categorias.component';
-import { CrearActualizarAnuncioComponent } from './components/Vistas-Aunuciante/crear-actualizar-anuncio/crear-actualizar-anuncio.component';
+import { CrearActualizarAnuncioComponent } from './components/Vistas-Anuciante/crear-actualizar-anuncio/crear-actualizar-anuncio.component';
 import { DestinosVistaComponent } from './components/Vistas-Usuario-Invitado/destinos/destinos.component';
 import { HomeInvitadoUsuarioComponent } from './components/Vistas-Usuario-Invitado/home-invitado-usuario/home-invitado-usuario.component';
-import { HomeAnuncianteComponent } from './components/Vistas-Aunuciante/home-anunciante/home-anunciante.component';
+import { HomeAnuncianteComponent } from './components/Vistas-Anuciante/home-anunciante/home-anunciante.component';
 import { navbarInvitadoUsuarioComponent } from './components/Vistas-Usuario-Invitado/navbar-invitado-usuario/navbar-invitado-usuario.component';
-import { VistaDetalladaAnuncioComponent } from './components/Vistas-Aunuciante/vista-detallada-anuncio/vista-detallada-anuncio.component';
+import { VistaDetalladaAnuncioComponent } from './components/Vistas-Anuciante/vista-detallada-anuncio/vista-detallada-anuncio.component';
 import { VistaDetalladaDestinoComponent } from './components/Vistas-Usuario-Invitado/vista-detallada-destino/vista-detallada-destino.component';
 import { AyudaComponent } from './components/Vistas-Usuario-Invitado/ayuda/ayuda.component';
-import { PagoAnuncioComponent } from './components/Vistas-Aunuciante/pagar-anuncio/pagar-anuncio.component';
+import { PagoAnuncioComponent } from './components/Vistas-Anuciante/pagar-anuncio/pagar-anuncio.component';
 const routes: Routes = [
   {
     path: '',
