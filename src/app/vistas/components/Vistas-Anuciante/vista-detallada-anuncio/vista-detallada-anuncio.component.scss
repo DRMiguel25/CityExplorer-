@@ -1,182 +1,382 @@
-/* Reset */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* Fondo slideshow */
-.background-slideshow {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('https://i.imgur.com/FswIles.png') no-repeat center center fixed;
-  background-size: cover;
-  filter: blur(4px);
-  z-index: -2;
-}
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #ffffff;
+            color: #111;
+        }
 
-/* Capa oscura */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.381);
-  z-index: -1;
-}
+        /* Header con botón de salir */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid #e5e5e5;
+        }
 
-.container {
-  max-width: 1000px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.512);
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-.card {
-  background-color: rgba(255, 255, 255, 0.25);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border-radius: 15px;
-  padding: 1.5rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
+        .exit-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: 1px solid #ccc;
+            border-radius: 24px;
+            background-color: white;
+            cursor: pointer;
+            font-size: 14px;
+            color: #111;
+            transition: all 0.2s;
+        }
 
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.35);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-  }
-}
+        .exit-btn:hover {
+            background-color: #f5f5f5;
+            border-color: #999;
+        }
 
-.info-container {
-  display: flex;
-  gap: 20px;
-  width: 100%;
-}
+        /* Container principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 80px 1fr 400px;
+            gap: 24px;
+        }
 
-.image-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+        /* Thumbnails */
+        .thumbnail-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
 
-.image-container img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  transition: transform 0.3s ease; /* Efecto de transición al hacer hover */
-}
+        .thumbnail {
+            width: 72px;
+            height: 72px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
 
-.image-container img:hover {
-  transform: scale(1.05); /* Efecto de zoom al pasar el cursor */
-}
+        .thumbnail.active {
+            border-color: #111;
+        }
 
-.info-section {
-  flex: 2;
-  background-color: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  padding: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-h1, h2 {
-  color: #2c3e50;
-}
+        /* Imagen principal */
+        .main-image {
+            position: relative;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-h1 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-h2 {
-  font-size: 18px;
-  margin: 20px 0 10px;
-}
+        .nav-arrows {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            display: flex;
+            gap: 8px;
+        }
 
-p {
-  margin-bottom: 15px;
-  line-height: 1.6;
-  color: #333;
-}
+        .nav-arrow {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(204, 204, 204, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            backdrop-filter: blur(4px);
+            transition: all 0.2s ease;
+        }
 
-.details {
-  list-style: none;
-  padding-left: 0;
-}
+        .nav-arrow:hover {
+            background-color: rgba(255, 255, 255, 0.6);
+            border-color: rgba(204, 204, 204, 0.4);
+            transform: scale(1.05);
+        }
 
-.details li {
-  margin-bottom: 8px;
-  color: #444;
-}
+        /* Información del producto */
+        .product-info {
+            padding: 0 24px;
+        }
 
-.button-group {
-  text-align: center;
-  margin-top: 20px;
-}
+        .favorites-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: 1px solid #ccc;
+            border-radius: 24px;
+            background-color: white;
+            cursor: pointer;
+            margin-bottom: 24px;
+            width: fit-content;
+        }
 
-.button-container {
-  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
-  border-radius: 8px; /* Esquinas redondeadas */
-  padding: 10px; /* Espaciado interno */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
-  display: inline-block; /* Para que sólo ocupe el espacio del contenido */
-}
+        .shipping-info {
+            margin-bottom: 24px;
+        }
 
-.button-group button {
-  padding: 10px 20px;
-  margin: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-}
+        .product-description {
+            margin-bottom: 24px;
+        }
 
-.edit-btn {
-  background-color: #4CAF50;
-  color: white;
-}
+        .product-description p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
 
-.pay-btn {
-  background-color: #007bff;
-  color: white;
-}
+        .product-details {
+            margin-bottom: 24px;
+        }
 
-.delete-btn {
-  background-color: #F44336;
-  color: white;
-}
+        .product-details ul {
+            list-style: none;
+            padding-left: 0;
+        }
 
-.back-button {
-  background: gray;
-  border: none;
-  font-size: 25px;
-  font-weight: bold;
-  cursor: pointer;
-  position: absolute;
-  left: 15px;
-  top: 15px;
-  color: #003366;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.571);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.3s ease, background-color 0.3s ease;
-}
+        .product-details li {
+            font-size: 14px;
+            margin-bottom: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
 
-.back-button:hover {
-  color: #007bff;
-  transform: scale(1.05);
-}
+        .product-details li:last-child {
+            border-bottom: none;
+        }
+
+        .product-details a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        .product-details a:hover {
+            text-decoration: underline;
+        }
+
+        /* Botones de acción */
+        .button-group {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .button-container button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        /* Botón Editar - Azul */
+        .edit-btn {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background-color: #1976D2;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+        }
+
+        .edit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Botón Pagar - Verde */
+        .pay-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .pay-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+        }
+
+        .pay-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Botón Eliminar - Rojo */
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: #d32f2f;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
+        }
+
+        .delete-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Sección de reseñas */
+        .reviews-section {
+            border-top: 1px solid #e5e5e5;
+            padding-top: 16px;
+        }
+
+        .reviews-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .reviews-title {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .stars {
+            color: #111;
+            font-size: 16px;
+        }
+
+        .rating-text {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .write-review-btn {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .review {
+            border-bottom: 1px solid #e5e5e5;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+        }
+
+        .review:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .review-rating {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .review-author {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .review-text {
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .review-helpful {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .chevron {
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+
+        .chevron.down {
+            transform: rotate(90deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .thumbnail-list {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .button-container {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .button-container {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .button-container button {
+                padding: 10px 16px;
+                font-size: 14px;
+                width: 100%;
+                min-width: unset;
+            }
+        }
