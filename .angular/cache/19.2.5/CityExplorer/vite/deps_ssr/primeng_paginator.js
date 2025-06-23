@@ -1,5 +1,12 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  NgControl,
+  NgControlStatus,
+  NgModel
+} from "./chunk-UAFSZFDF.js";
+import {
   animate,
   animation,
   style,
@@ -62,13 +69,6 @@ import {
   unblockBodyScroll,
   uuid
 } from "./chunk-7LCR3MDU.js";
-import {
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-  NgControl,
-  NgControlStatus,
-  NgModel
-} from "./chunk-UAFSZFDF.js";
 import {
   CommonModule,
   DOCUMENT,

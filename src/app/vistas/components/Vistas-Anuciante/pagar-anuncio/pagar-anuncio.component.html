@@ -30,7 +30,7 @@
             <div class="card-details">
               <div class="card-holder-section">
                 <label class="card-label">Titular</label>
-                <div class="card-holder-name">{{ formularioPago.get('cardName')?.value?.toUpperCase() || 'JOSEFEO' }}</div>
+                <div class="card-holder-name">{{ formularioPago.get('cardName')?.value?.toUpperCase() || 'Mi nombre ejemplo' }}</div>
               </div>
               <div class="card-exp-section">
                 <label class="card-label">Expira</label>
@@ -69,31 +69,48 @@
           </div>
         </div>
 
-        <!-- Expiración -->
-        <div class="form-group active">
-          <label for="cardExpiry">Fecha de expiración</label>
-          <div id="card-expiry-element" class="form-control"></div>
-        </div>
+<!-- Expiración -->
+<div class="form-group active">
+  <label for="cardExpiry">Fecha de expiración</label>
+  <input id="cardExpiry"
+         type="text"
+         class="form-control"
+         formControlName="cardExpiry"
+         placeholder="Ej: MM/AA"
+         maxlength="5" />
+  <div *ngIf="isInvalid('cardExpiry')" class="text-danger">
+    Ingresa una fecha de expiración válida.
+  </div>
+</div>
 
-        <!-- CVV -->
-        <div class="form-group active">
-          <label for="cardCvc">CVV</label>
-          <div id="card-cvc-element" class="form-control cvv-input"></div>
-        </div>
+<!-- CVV -->
+<div class="form-group active">
+  <label for="cardCvc">CVV</label>
+  <input id="cardCvc"
+         type="text"
+         class="form-control cvv-input"
+         formControlName="cardCvc"
+         placeholder="Ej: 123"
+         maxlength="4" />
+  <div *ngIf="isInvalid('cardCvc')" class="text-danger">
+    Ingresa un CVV válido.
+  </div>
+</div>
 
-        <!-- Código Postal -->
-        <div class="form-group active">
-          <label for="cardPostal">Código Postal</label>
-          <input id="cardPostal"
-                 type="text"
-                 class="form-control postal-input"
-                 formControlName="cardPostal"
-                 placeholder="Ej: 10001"
-                 maxlength="10" />
-          <div *ngIf="isInvalid('cardPostal')" class="text-danger">
-            Ingresa un código postal válido.
-          </div>
-        </div>
+<!-- Código Postal -->
+<div class="form-group active">
+  <label for="cardPostal">Código Postal</label>
+  <input id="cardPostal"
+         type="text"
+         class="form-control postal-input"
+         formControlName="cardPostal"
+         placeholder="Ej: 10001"
+         maxlength="10" />
+  <div *ngIf="isInvalid('cardPostal')" class="text-danger">
+    Ingresa un código postal válido.
+  </div>
+</div>
+
 
         <!-- Forma de Pago -->
         <div class="form-group">

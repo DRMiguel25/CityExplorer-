@@ -1,5 +1,18 @@
+/* Paleta clara azulada */
+:root {
+  --blanco-hielo: #F0F8FF;
+  --blanco-glaciar: #EAF6FB;
+  --blanco-artico: #E6F1F7;
+  --perla-azulada: #F3F7FA;
+  --niebla-azul: #EDF3F9;
+  --azul-palido: #E6F0FA;
+  --humo-azul-claro: #F5F9FD;
+  --polar-white: #F2F8FC;
+  --blanco-boreal: #EEF7FB;
+  --azul-entrada: #cceeff; /* Nueva variable para el color de fondo de los inputs */
+}
+
 .mi-componente-pago {
-  
   * {
     margin: 0;
     padding: 0;
@@ -14,7 +27,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    background: linear-gradient(135deg, var(--polar-white), var(--blanco-glaciar), var(--azul-palido));
     z-index: -2;
   }
 
@@ -25,30 +38,30 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to bottom right, rgba(240, 248, 255, 0.7), rgba(230, 240, 250, 0.9));
     z-index: -1;
   }
 
   /* Título principal */
   .payment-title {
-    color: white;
+    color: #1a365d; /* Título en azul */
     text-align: center;
     margin-bottom: 30px;
     font-size: 24px;
-    font-weight: 300;
+    font-weight: 600;
   }
 
   /* Botón de regreso */
   .back-button {
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
+    background: rgba(74, 144, 164, 0.1);
+    border: 1px solid rgba(74, 144, 164, 0.3);
     font-size: 25px;
     font-weight: bold;
     cursor: pointer;
     position: absolute;
     left: 15px;
     top: 15px;
-    color: white;
+    color: #1a365d; /* Cambiado a azul */
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -59,7 +72,8 @@
     backdrop-filter: blur(10px);
 
     &:hover {
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(74, 144, 164, 0.2);
+      color: #1a365d;
       transform: scale(1.05);
     }
   }
@@ -72,6 +86,9 @@
     margin: 0 auto;
     padding: 40px;
     min-height: 100vh;
+    background: var(--blanco-boreal);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   }
 
   /* === Tarjeta 3D === */
@@ -103,12 +120,12 @@
       border-radius: 20px;
       padding: 30px;
       box-sizing: border-box;
-      background: linear-gradient(135deg, #2d5a87, #1e3c55, #0f2a3f);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, #a0c4ff, #bde0fe);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     }
 
     .card-front {
-      background: linear-gradient(135deg, #4a90a4, #357a96, #1e5f74);
+      background: linear-gradient(135deg, #a0c4ff, #bde0fe);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -116,12 +133,13 @@
 
     .card-back {
       transform: rotateY(180deg);
-      background: linear-gradient(135deg, #1e5f74, #0f2a3f);
+      background: linear-gradient(135deg, #86b7fe, #a0c4ff);
     }
 
     /* Logo de círculos */
     .card-logo {
       align-self: flex-start;
+      color: #1a365d; /* Cambiar a azul */
     }
 
     .logo-circles {
@@ -143,9 +161,9 @@
     }
 
     .card-label {
-      color: rgba(255, 255, 255, 0.7);
+      color: #1a365d; /* Cambiado a azul */
       font-size: 12px;
-      font-weight: 400;
+      font-weight: 500;
       margin-bottom: 8px;
       display: block;
       text-transform: uppercase;
@@ -153,11 +171,12 @@
     }
 
     .card-number-display {
-      color: white;
+      color: #1a365d; /* Cambiado a azul */
       font-size: 24px;
-      font-weight: 300;
+      font-weight: 600;
       letter-spacing: 3px;
       font-family: 'Courier New', monospace;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
     }
 
     /* Detalles de la tarjeta */
@@ -176,10 +195,11 @@
     .card-holder-name,
     .card-exp-date,
     .card-cvv-display {
-      color: white;
+      color: #1a365d; /* Cambiado a azul */
       font-size: 16px;
-      font-weight: 400;
+      font-weight: 600;
       text-transform: uppercase;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
     }
 
     .card-cvv-section {
@@ -191,7 +211,7 @@
     .magnetic-strip {
       width: 100%;
       height: 50px;
-      background: linear-gradient(to right, #333, #666, #333);
+      background: linear-gradient(to right, #666, #999, #666);
       margin: 20px 0;
       border-radius: 4px;
     }
@@ -203,7 +223,7 @@
 
       .cvv-box {
         background: white;
-        color: #333;
+        color: #1a365d; /* Cambiar a azul */
         padding: 8px 12px;
         border-radius: 4px;
         font-family: 'Courier New', monospace;
@@ -222,7 +242,7 @@
 
   .form-group {
     margin-bottom: 25px;
-    opacity: 0.6;
+    opacity: 1;
     transition: opacity 0.3s ease;
 
     &.active {
@@ -237,8 +257,8 @@
     label {
       display: block;
       font-size: 14px;
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.9);
+      font-weight: 600;
+      color: #1a365d; /* Cambiado a azul */
       margin-bottom: 8px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -247,23 +267,23 @@
     .form-control {
       width: 100%;
       padding: 15px 20px;
-      border: 2px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid #cdd7e0;
       border-radius: 12px;
       font-size: 16px;
       transition: all 0.3s ease;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      backdrop-filter: blur(10px);
+      background: var(--azul-entrada); /* Cambié el fondo a azul */
+      color: #1a365d; /* Texto en azul */
 
       &::placeholder {
-        color: rgba(255, 255, 255, 0.5);
+        color: rgba(26, 54, 93, 0.6); /* Placeholder en un tono azul */
       }
 
       &:focus {
         border-color: #4a90a4;
         outline: none;
-        box-shadow: 0 0 0 3px rgba(74, 144, 164, 0.2);
-        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 0 0 3px rgba(74, 144, 164, 0.3);
+        background: var(--azul-palido);
+        color: #1a365d; /* Color del texto en azul */
       }
 
       &:disabled {
@@ -274,7 +294,7 @@
 
     select.form-control {
       appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231a365d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 15px center;
       padding-right: 45px;
@@ -299,15 +319,17 @@
     min-width: 200px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(74, 144, 164, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 
     &:hover:not(:disabled) {
       background: linear-gradient(135deg, #357a96, #1e5f74);
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(74, 144, 164, 0.3);
+      box-shadow: 0 6px 16px rgba(74, 144, 164, 0.4);
     }
 
     &:disabled {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(74, 144, 164, 0.4);
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
@@ -316,7 +338,7 @@
 
   /* Mensajes de error */
   .text-danger {
-    color: #ff6b6b;
+    color: #1a365d; /* Mensajes de error en azul */
     font-size: 12px;
     margin-top: 8px;
     display: block;
@@ -340,7 +362,6 @@
 
     .credit-card {
       height: 240px;
-      
       .card-front,
       .card-back {
         padding: 20px;
@@ -388,44 +409,45 @@
 
     .credit-card {
       height: 220px;
-      
       .card-number-display {
         font-size: 18px;
         letter-spacing: 2px;
       }
     }
   }
-}
+
   /* === NUEVO: Estilo específico para el input de código postal === */
   .postal-input {
-    max-width: 150px; // Opcional: limitar ancho
-  }
-/* === Stripe Elements custom styles === */
-.stripe-element-wrapper {
-  width: 100%;
-  padding: 15px 20px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  font-size: 16px;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-
-  &.StripeElement--focus {
-    border-color: #4a90a4;
-    box-shadow: 0 0 0 3px rgba(74, 144, 164, 0.2);
-    background: rgba(255, 255, 255, 0.15);
+    max-width: 150px;
   }
 
-  &.StripeElement--invalid {
-    border-color: #ff6b6b;
-  }
-}
+  /* === Stripe Elements custom styles === */
+  .stripe-element-wrapper {
+    width: 100%;
+    padding: 15px 20px;
+    border: 1px solid #4a90a4;
+    border-radius: 12px;
+    font-size: 16px;
+    background: var(--azul-entrada); /* Cambié el fondo a azul para Stripe */
+    color: #1a365d; /* Texto en azul */
+    transition: all 0.3s ease;
 
-#card-number-element,
-#card-expiry-element,
-#card-cvc-element {
-  width: 100%;
-  height: 100%;
+    &.StripeElement--focus {
+      border-color: #4a90a4;
+      box-shadow: 0 0 0 3px rgba(74, 144, 164, 0.3);
+      background: var(--azul-palido);
+    }
+
+    &.StripeElement--invalid {
+      border-color: #e53e3e;
+    }
+  }
+
+  #card-number-element,
+  #card-expiry-element,
+  #card-cvc-element {
+    width: 100%;
+    height: 100%;
+    color: #1a365d; /* Asegurando que el input también sea azul */
+  }
 }
