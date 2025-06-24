@@ -8,7 +8,7 @@ import { LocalstorageService } from './localstorage.service'; // Importa tu serv
   providedIn: 'root'
 })
 export class HttpLaravelService {
-  private _url = 'http://127.0.0.1:8000/api';
+  private _url = 'http://127.0.0.1:8001/api';
 
   constructor(
     public http: HttpClient,
@@ -105,6 +105,19 @@ export class HttpLaravelService {
 
     // Importante: cuando envías FormData, **no pongas Content-Type explícito** para que Angular lo asigne automáticamente
     return this.http.patch(url, data, { headers });
+  }
+
+  // 🔐 Método con token y FormData
+  Service_Post_FormData_Auth(controller: string, metodo: string, formData: FormData) {
+    const token = localStorage.getItem('token'); // o donde sea que guardes tu token
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    const url = `${this._url}/${controller}/${metodo}`;
+    console.log("📡 POST Auth a:", url);
+
+    return this.http.post(url, formData, { headers });
   }
 
 }

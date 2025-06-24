@@ -54,6 +54,13 @@ import {
   uuid
 } from "./chunk-4YQPG4EH.js";
 import {
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  NgControl,
+  NgControlStatus,
+  NgModel
+} from "./chunk-STO4THXD.js";
+import {
   animate,
   animation,
   style,
@@ -61,13 +68,6 @@ import {
   trigger,
   useAnimation
 } from "./chunk-6JSXEL3Z.js";
-import {
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-  NgControl,
-  NgControlStatus,
-  NgModel
-} from "./chunk-STO4THXD.js";
 import {
   CommonModule,
   DOCUMENT,

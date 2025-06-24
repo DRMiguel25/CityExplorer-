@@ -49,33 +49,6 @@ import {
   __toESM
 } from "./chunk-YHCV7DAQ.js";
 
-// node_modules/@angular/cdk/fesm2022/element-15999318.mjs
-function coerceNumberProperty(value, fallbackValue = 0) {
-  if (_isNumberValue(value)) {
-    return Number(value);
-  }
-  return arguments.length === 2 ? fallbackValue : 0;
-}
-function _isNumberValue(value) {
-  return !isNaN(parseFloat(value)) && !isNaN(Number(value));
-}
-function coerceElement(elementOrRef) {
-  return elementOrRef instanceof ElementRef ? elementOrRef.nativeElement : elementOrRef;
-}
-
-// node_modules/@angular/cdk/fesm2022/array-6239d2f8.mjs
-function coerceArray(value) {
-  return Array.isArray(value) ? value : [value];
-}
-
-// node_modules/@angular/cdk/fesm2022/css-pixel-value-5d0cae55.mjs
-function coerceCssPixelValue(value) {
-  if (value == null) {
-    return "";
-  }
-  return typeof value === "string" ? value : `${value}px`;
-}
-
 // node_modules/@angular/cdk/fesm2022/focus-monitor-28b6c826.mjs
 var import_rxjs = __toESM(require_cjs(), 1);
 var import_operators = __toESM(require_operators(), 1);
@@ -225,6 +198,20 @@ function supportsPassiveEventListeners() {
 }
 function normalizePassiveListenerOptions(options) {
   return supportsPassiveEventListeners() ? options : !!options.capture;
+}
+
+// node_modules/@angular/cdk/fesm2022/element-15999318.mjs
+function coerceNumberProperty(value, fallbackValue = 0) {
+  if (_isNumberValue(value)) {
+    return Number(value);
+  }
+  return arguments.length === 2 ? fallbackValue : 0;
+}
+function _isNumberValue(value) {
+  return !isNaN(parseFloat(value)) && !isNaN(Number(value));
+}
+function coerceElement(elementOrRef) {
+  return elementOrRef instanceof ElementRef ? elementOrRef.nativeElement : elementOrRef;
 }
 
 // node_modules/@angular/cdk/fesm2022/focus-monitor-28b6c826.mjs
@@ -797,6 +784,13 @@ var _VisuallyHiddenLoader = class __VisuallyHiddenLoader {
 // node_modules/@angular/cdk/fesm2022/breakpoints-observer-8e7409df.mjs
 var import_rxjs2 = __toESM(require_cjs(), 1);
 var import_operators2 = __toESM(require_operators(), 1);
+
+// node_modules/@angular/cdk/fesm2022/array-6239d2f8.mjs
+function coerceArray(value) {
+  return Array.isArray(value) ? value : [value];
+}
+
+// node_modules/@angular/cdk/fesm2022/breakpoints-observer-8e7409df.mjs
 var mediaQueriesForWebkitCompatibility = /* @__PURE__ */ new Set();
 var mediaQueryStyleNode;
 var MediaMatcher = class _MediaMatcher {
@@ -2866,6 +2860,14 @@ var ConfigurableFocusTrapFactory = class _ConfigurableFocusTrapFactory {
   }], () => [], null);
 })();
 
+// node_modules/@angular/cdk/fesm2022/css-pixel-value-5d0cae55.mjs
+function coerceCssPixelValue(value) {
+  if (value == null) {
+    return "";
+  }
+  return typeof value === "string" ? value : `${value}px`;
+}
+
 // node_modules/@angular/material/fesm2022/common-module-5a9c16bb.mjs
 var MATERIAL_SANITY_CHECKS = new InjectionToken("mat-sanity-checks", {
   providedIn: "root",
@@ -2896,17 +2898,6 @@ var MatCommonModule = class _MatCommonModule {
     }]
   }], () => [], null);
 })();
-
-// node_modules/@angular/cdk/fesm2022/test-environment-f6f8bc13.mjs
-function _isTestEnvironment() {
-  return (
-    // @ts-ignore
-    typeof __karma__ !== "undefined" && !!__karma__ || // @ts-ignore
-    typeof jasmine !== "undefined" && !!jasmine || // @ts-ignore
-    typeof jest !== "undefined" && !!jest || // @ts-ignore
-    typeof Mocha !== "undefined" && !!Mocha
-  );
-}
 
 // node_modules/@angular/cdk/fesm2022/scrolling-59340c46.mjs
 var RtlScrollAxisType;
@@ -2965,6 +2956,17 @@ function getRtlScrollAxisType() {
   return rtlScrollAxisType;
 }
 
+// node_modules/@angular/cdk/fesm2022/test-environment-f6f8bc13.mjs
+function _isTestEnvironment() {
+  return (
+    // @ts-ignore
+    typeof __karma__ !== "undefined" && !!__karma__ || // @ts-ignore
+    typeof jasmine !== "undefined" && !!jasmine || // @ts-ignore
+    typeof jest !== "undefined" && !!jest || // @ts-ignore
+    typeof Mocha !== "undefined" && !!Mocha
+  );
+}
+
 export {
   isFakeMousedownFromScreenReader,
   isFakeTouchstartFromScreenReader,
@@ -2982,13 +2984,13 @@ export {
   InteractivityChecker,
   FocusTrapFactory,
   A11yModule,
-  _isTestEnvironment,
-  coerceCssPixelValue,
+  _IdGenerator,
+  hasModifierKey,
   RtlScrollAxisType,
   supportsScrollBehavior,
   getRtlScrollAxisType,
-  _IdGenerator,
-  hasModifierKey,
+  _isTestEnvironment,
+  coerceCssPixelValue,
   MatCommonModule
 };
-//# sourceMappingURL=chunk-ND373TNB.js.map
+//# sourceMappingURL=chunk-FUM54M6H.js.map

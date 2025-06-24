@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpLaravelService } from "../../../../http.service";
 
 @Component({
   selector: 'categorias',
@@ -11,6 +12,8 @@ export class CategoriasComponent implements OnInit, OnDestroy {
   private slideshowInterval: any;
   private id: string | null = null; // Variable para almacenar el ID de la ruta
 
+  listaCategorias: any[] = [];
+
   images = [
     'https://a.travel-assets.com/findyours-php/viewfinder/images/res60/200000/200753-Guanajuato.jpg',
     'https://a.travel-assets.com/findyours-php/viewfinder/images/res60/201000/201316-El-Charco-Del-Ingenio.jpg',
@@ -18,9 +21,10 @@ export class CategoriasComponent implements OnInit, OnDestroy {
     'https://a.travel-assets.com/findyours-php/viewfinder/images/res60/201000/201398-Juarez-Park.jpg'
   ];
 
-  constructor(private router: Router, private route: ActivatedRoute,) {}
+  constructor(private router: Router, private route: ActivatedRoute, private service: HttpLaravelService,) {}
 
   ngOnInit(): void {
+    this.obtenerCategoriasDesdeAPI();
     this.initBackgroundChange();
     this.id = this.route.snapshot.paramMap.get('id_usuario');
 
@@ -70,18 +74,30 @@ export class CategoriasComponent implements OnInit, OnDestroy {
   }
 
   logLoadTime() {
-  window.addEventListener('load', () => {
-    const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
-    if (navEntry) {
-      console.log('⏱️ Tiempo total de carga en categorias (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
-      console.log('🧱 Tiempo de render en categorias (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
-      console.log('🌐 Tiempo de respuesta categorias (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
-    } else {
-      // Fallback para navegadores antiguos
-      const timing = performance.timing;
-      const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
-      console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
+    window.addEventListener('load', () => {
+      const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+      if (navEntry) {
+        console.log('⏱️ Tiempo total de carga en categorias (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
+        console.log('🧱 Tiempo de render en categorias (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
+        console.log('🌐 Tiempo de respuesta categorias (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
+      } else {
+        // Fallback para navegadores antiguos
+        const timing = performance.timing;
+        const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
+        console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
+      }
+    });
+  }
+
+  obtenerCategoriasDesdeAPI(): void {
+      this.service.Service_Get('categorias', '').subscribe({
+        next: (resp: any) => {
+          this.listaCategorias = resp.data; // <- solo tomamos el array
+          console.log('📦 Lista de categorías obtenidas:', this.listaCategorias);
+        },
+        error: (error) => {
+          console.error('❌ Error al obtener categorías:', error);
+        }
+      });
     }
-  });
-}
 }
