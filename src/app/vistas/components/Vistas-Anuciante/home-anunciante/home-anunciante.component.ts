@@ -55,7 +55,7 @@ export class HomeAnuncianteComponent implements OnInit {
   }
 
   crearAnuncio() {
-    this.router.navigate(['/crear-actualizar-anuncio']);
+    this.router.navigate(['/crear-actualizar-anuncio', this.idUsuario]);
   }
 
   cerrarSesion() {
@@ -70,7 +70,7 @@ export class HomeAnuncianteComponent implements OnInit {
       return;
     }
   
-    this.router.navigate(['/vista-detallada-anuncio', idEntero]);
+    this.router.navigate(['/vista-detallada-anuncio', idEntero, this.idUsuario]);
   }
 
   logLoadTime() {

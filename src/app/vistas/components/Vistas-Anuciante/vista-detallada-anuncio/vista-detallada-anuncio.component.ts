@@ -18,6 +18,9 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
  direccion: any; // Aquí guardamos los datos de la dirección
  isLoading = true;
 
+  id_anuncio: number | null = null;
+  id_usuario: string | null = null; // Aquí guardamos el ID del usuario
+
 
  private categoriaMap: { [key: string]: number } = {
    'Restaurantes': 1,
@@ -41,12 +44,20 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
 
 
  ngOnInit(): void {
-   const id = this.route.snapshot.paramMap.get('id');
-   if (id) {
-     this.obtenerLugar(+id);
-   }
 
-    this.logLoadTime();  // 👈 mide tiempo de carga
+  this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
+
+  const id = this.route.snapshot.paramMap.get('id_anuncio');
+
+  console.log('ID Usuario:', this.id_usuario);
+  console.log('ID Anuncio:', id);
+
+  if (id) {
+    this.id_anuncio = +id;
+    this.obtenerLugar(+id);
+  }
+
+  this.logLoadTime();  // 👈 mide tiempo de carga
 
  }
 
@@ -87,7 +98,7 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
      console.error('ID de usuario inválido');
      return;
    } else {
-     this.router.navigate([`/home-anunciante`, id_usuario]);
+     this.router.navigate([`/home-anunciante`, this.id_usuario]);
    }
  }
 
@@ -104,9 +115,9 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
 
 
  modificarAnuncio(): void {
-   if (this.lugar && this.lugar.id_lugar) {
-     console.log('modificar anuncio con el id: ', this.lugar.id_lugar, '...');
-     this.router.navigate(['/crear-actualizar-anuncio', this.lugar.id_lugar]);
+   if (this.id_anuncio && this.lugar.id_lugar) {
+     console.log('modificar anuncio con el id del anuncio: ', this.id_anuncio, '. y el id del usuario: '+this.id_usuario+'...');
+     this.router.navigate(['/crear-actualizar-anuncio', this.id_anuncio, this.id_usuario]);
    } else {
      console.error('El objeto lugar no está disponible o no tiene un id válido.');
    }
@@ -146,6 +157,7 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
      }
    });
  }
+
   confirmarPago(): void {
    Swal.fire({
      title: '¿Estás seguro?',

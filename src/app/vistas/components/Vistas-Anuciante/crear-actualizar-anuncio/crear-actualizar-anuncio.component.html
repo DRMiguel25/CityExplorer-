@@ -8,7 +8,7 @@
     </button>
 
     <div class="header">
-      <h1>{{ ID ? 'Editar Anuncio:' : 'Crear Anuncio:' }}</h1>
+      <h1>{{ id_anuncio ? 'Editar Anuncio:' : 'Crear Anuncio:' }}</h1>
     </div>
 
     <div class="form-group">
@@ -26,6 +26,16 @@
     <div class="form-group">
       <label for="imagenes">Selecciona Imágenes*</label>
       <input type="file" id="imagenes" (change)="onImagenesSeleccionadas($event)" multiple accept="image/*">
+    </div>
+
+    <div class="form-group" *ngIf="imagenesActuales.length > 0">
+      <label>Imágenes Actuales:</label>
+      <div class="imagenes-actuales">
+        <div *ngFor="let img of imagenesActuales" class="imagen-item">
+          <img [src]="img.url" alt="Imagen actual" class="imagen-preview">
+          <button type="button" (click)="eliminarImagen(img.id)" class="btn-eliminar">Eliminar</button>
+        </div>
+      </div>
     </div>
 
     <div class="form-group">
@@ -65,7 +75,7 @@
       <label for="categoria">Categoría*</label>
       <select id="categoria" formControlName="categoria">
         <option value="">Seleccionar categoría</option>
-        <option *ngFor="let cat of categoriasOpciones" [value]="cat.nombre">{{ cat.nombre }}</option>
+        <option *ngFor="let cat of categoriasOpciones" [value]="cat.id_categoria">{{ cat.nombre }}</option>
       </select>
       <div *ngIf="isInvalid('categoria')" class="text-danger">Selecciona una categoría</div>
     </div>
@@ -101,7 +111,7 @@
     </div>
 
     <div class="buttons">
-      <button type="submit">{{ ID ? 'Actualizar Anuncio' : 'Crear Anuncio' }}</button>
+      <button type="submit">{{ id_anuncio ? 'Actualizar Anuncio' : 'Crear Anuncio' }}</button>
     </div>
   </form>
 </div>

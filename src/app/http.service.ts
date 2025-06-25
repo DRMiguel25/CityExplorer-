@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Lugar } from './vistas/components/Vistas-Anuciante/home-anunciante/lugar.interface';
 import { LocalstorageService } from './localstorage.service'; // Importa tu servicio de storage
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class HttpLaravelService {
 
   constructor(
     public http: HttpClient,
-    private storage: LocalstorageService // Inyéctalo aquí
+    private storage: LocalstorageService, // Inyéctalo aquí
+    private authService: AuthService  // 👈 AÑADE ESTO
   ) {}
 
   private getHeaders(): HttpHeaders {
@@ -109,9 +111,11 @@ export class HttpLaravelService {
 
   // 🔐 Método con token y FormData
   Service_Post_FormData_Auth(controller: string, metodo: string, formData: FormData) {
-    const token = localStorage.getItem('token'); // o donde sea que guardes tu token
+    const token = this.authService.getToken();  // ✅ Ahora si
+
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json'
     });
 
     const url = `${this._url}/${controller}/${metodo}`;
@@ -119,5 +123,4 @@ export class HttpLaravelService {
 
     return this.http.post(url, formData, { headers });
   }
-
 }

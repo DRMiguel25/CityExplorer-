@@ -13,11 +13,17 @@ import { AuthService } from '../../../../auth.service';
 })
 export class CrearActualizarAnuncioComponent implements OnInit {
   anuncioForm: FormGroup;
-  ID: number | null = null;
+  id_anuncio: string | null = null;
   direccion: any;
   imagenesSeleccionadas: File[] = [];
   categoriasOpciones: any[] = [];
   diasServicioOpciones: string[] = [];
+
+  id_usuario: string | null = null;
+
+  imagenesActuales: any[] = [];  // Las imágenes que ya tenía el anuncio (con sus IDs del backend)
+  imagenesAEliminar: number[] = [];  // Para guardar IDs de imágenes que el usuario quiere borrar
+
 
   constructor(
     private fb: FormBuilder,
@@ -47,60 +53,92 @@ export class CrearActualizarAnuncioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.obtenerCategoriasDesdeAPI();
-    this.diasServicioOpciones = [
-      'Lunes-Viernes', 'Lunes-Sábado', 'Lunes-Domingo',
-      'Jueves-Domingo', 'Viernes-Domingo', 'Sabado-Domingo'
-    ];
+  this.obtenerCategoriasDesdeAPI();
+  this.diasServicioOpciones = [
+    'Lunes-Viernes', 'Lunes-Sábado', 'Lunes-Domingo',
+    'Jueves-Domingo', 'Viernes-Domingo', 'Sabado-Domingo'
+  ];
 
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.ID = +id;
-      this.cargarAnuncio(this.ID);
+  this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
+  this.id_anuncio = this.route.snapshot.paramMap.get('id_anuncio');
+
+  console.log('📌 ID Usuario:', this.id_usuario);
+  console.log('📌 ID Anuncio:', this.id_anuncio);
+
+  if (this.id_anuncio != null && this.id_anuncio !== '0') {
+    console.log('🔎 Buscando información del anuncio...');
+    this.cargarAnuncio(this.id_anuncio);
+  }
+
+  this.logLoadTime();
+}
+
+cargarAnuncio(id: string): void {
+  console.log(`🔁 Haciendo GET a: lugar/${id}`);
+
+  this.service.Service_Get('lugar', id).subscribe({
+    next: (anuncio: any) => {
+      console.log('✅ Anuncio recibido del backend:', anuncio);
+
+      if (!anuncio) {
+        console.warn('⚠️ No se encontró anuncio con ese ID.');
+        return;
+      }
+
+      // Si el backend te devuelve las imágenes:
+      if (anuncio.imagenes) {
+        this.imagenesActuales = anuncio.imagenes;
+        console.log('🖼️ Imágenes actuales:', this.imagenesActuales);
+      }
+
+      // Ahora carga la dirección
+      console.log(`🔁 Haciendo GET a: direccion/${anuncio.id_direccion}`);
+      this.service.Service_Get('direccion', anuncio.id_direccion).subscribe({
+        next: (direccion: any) => {
+          console.log('✅ Dirección recibida:', direccion);
+
+          // Setear valores en el formulario
+          this.anuncioForm.patchValue({
+            nombre: anuncio.nombre,
+            descripcion: anuncio.descripcion,
+            paginaWeb: anuncio.paginaWeb,
+            num_telefonico: anuncio.num_telefonico,
+            horario_apertura: anuncio.horario_apertura.length === 8
+              ? anuncio.horario_apertura.substring(0, 5)
+              : anuncio.horario_apertura,
+            horario_cierre: anuncio.horario_cierre.length === 8
+              ? anuncio.horario_cierre.substring(0, 5)
+              : anuncio.horario_cierre,
+            dias_servicio: Array.isArray(anuncio.dias_servicio)
+              ? anuncio.dias_servicio.join('-')
+              : anuncio.dias_servicio,
+            categoria: anuncio.id_categoria,
+            direccion: {
+              calle: direccion.calle,
+              numero_ext: direccion.numero_ext,
+              numero_int: direccion.numero_int || '',
+              colonia: direccion.colonia,
+              codigo_postal: direccion.codigo_postal
+            }
+          });
+
+          console.log('✅ Formulario rellenado correctamente con datos del anuncio.');
+        },
+        error: (error) => {
+          console.error('❌ Error al cargar la dirección:', error);
+        }
+      });
+    },
+    error: (error) => {
+      console.error('❌ Error al cargar el anuncio:', error);
     }
-
-    this.logLoadTime();
-  }
-
-  cargarAnuncio(id: number): void {
-    this.service.Service_Get('lugar', id).subscribe((anuncioArr: any[]) => {
-      const anuncio = anuncioArr[0]; // Primer elemento del array
-
-      this.service.Service_Get('direccion', anuncio.id_direccion).subscribe((direccionArr: any[]) => {
-        const direccion = direccionArr[0]; // Primer elemento del array
-
-        this.direccion = direccion;
-
-        this.anuncioForm.patchValue({
-          nombre: anuncio.nombre,
-          descripcion: anuncio.descripcion,
-          paginaWeb: anuncio.paginaWeb,
-          num_telefonico: anuncio.num_telefonico,
-          horario_apertura: anuncio.horario_apertura,
-          horario_cierre: anuncio.horario_cierre,
-          dias_servicio: anuncio.dias_servicio,
-          categoria: this.obtenerNombreCategoriaPorId(anuncio.categoria_id), // Aquí usamos el nombre
-          direccion: {
-            calle: direccion.calle,
-            numero_ext: direccion.numero_ext,
-            numero_int: direccion.numero_int || '',
-            colonia: direccion.colonia,
-            codigo_postal: direccion.codigo_postal
-          }
-        });
-      }, (error) => console.error('❌ Error al cargar la dirección:', error));
-    }, (error) => console.error('❌ Error al cargar el anuncio:', error));
-  }
-
-  obtenerNombreCategoriaPorId(id: number): string {
-    const categoria = this.categoriasOpciones.find(cat => cat.id_categoria === id);
-    return categoria ? categoria.nombre : '';
-  }
+  });
+}
 
   obtenerCategoriasDesdeAPI(): void {
     this.service.Service_Get('categorias', '').subscribe({
       next: (resp: any) => {
-        this.categoriasOpciones = resp.data; // <- solo tomamos el array
+        this.categoriasOpciones = resp.data;
         console.log('📦 Categorías obtenidas:', this.categoriasOpciones);
       },
       error: (error) => {
@@ -116,6 +154,50 @@ export class CrearActualizarAnuncioComponent implements OnInit {
       return;
     }
 
+    if (this.id_anuncio && this.id_anuncio !== '0') {
+      this.actualizarAnuncio();
+    } else {
+      this.crearAnuncio();
+    }
+  }
+
+  crearAnuncio(): void {
+    const formData = this.prepararFormData();
+
+    this.service.Service_Post_FormData_Auth('lugar', 'con-direccion', formData).subscribe({
+      next: (response) => {
+        Swal.fire('¡Éxito!', 'Lugar creado correctamente', 'success');
+        this.router.navigate([`/home-anunciante`, this.id_usuario]);
+      },
+      error: (error) => {
+        console.error('❌ Error al crear el lugar:', error);
+        Swal.fire('Error', 'Ocurrió un error al crear el anuncio', 'error');
+      }
+    });
+  }
+
+  actualizarAnuncio(): void {
+    const formData = this.prepararFormData();
+
+    // 👉 Agregar imágenes a eliminar si el usuario marcó alguna
+    this.imagenesAEliminar.forEach((id: number) => {
+      formData.append('imagenes_a_eliminar[]', id.toString());
+    });
+
+    this.service.Service_Post_FormData_Auth('lugar', this.id_anuncio!, formData).subscribe({
+      next: (response) => {
+        Swal.fire('¡Actualizado!', 'Anuncio actualizado correctamente', 'success');
+        this.router.navigate([`/home-anunciante`, this.id_usuario]);
+      },
+      error: (error) => {
+        console.error('❌ Error al actualizar el lugar:', error);
+        Swal.fire('Error', 'Ocurrió un error al actualizar el anuncio', 'error');
+      }
+    });
+  }
+
+
+  private prepararFormData(): FormData {
     const formData = this.anuncioForm.value;
     const data = new FormData();
 
@@ -150,7 +232,7 @@ export class CrearActualizarAnuncioComponent implements OnInit {
     data.append('lugar[horario_apertura]', horarioApertura);
     data.append('lugar[horario_cierre]', horarioCierre);
     data.append('lugar[id_categoria]', formData.categoria.toString());
-    data.append('lugar[activo]', '1');
+    data.append('lugar[activo]', '0');
 
     diasServicio.forEach((dia: string) => {
       data.append('lugar[dias_servicio][]', dia);
@@ -160,17 +242,9 @@ export class CrearActualizarAnuncioComponent implements OnInit {
       data.append('imagenes[]', img);
     });
 
-    this.service.Service_Post_FormData_Auth('lugar', 'con-direccion', data).subscribe({
-      next: (response) => {
-        Swal.fire('¡Éxito!', 'Lugar creado correctamente', 'success');
-        this.router.navigate([`/home-anunciante`, this.authService.getIdUsuario()]);
-      },
-      error: (error) => {
-        console.error('❌ Error al crear el lugar:', error);
-        Swal.fire('Error', 'Ocurrió un error al enviar los datos', 'error');
-      }
-    });
+    return data;
   }
+
 
   onImagenesSeleccionadas(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -204,8 +278,7 @@ export class CrearActualizarAnuncioComponent implements OnInit {
   }
 
   goBack(): void {
-    const id_usuario = this.authService.getIdUsuario();
-    this.router.navigate([`/home-anunciante`, id_usuario]);
+    this.router.navigate([`/home-anunciante`, this.id_usuario]);
   }
 
   private logErroresFormulario(form: FormGroup, nivel: string = ''): void {
@@ -233,4 +306,11 @@ export class CrearActualizarAnuncioComponent implements OnInit {
       }
     });
   }
+
+  eliminarImagen(idImagen: number): void {
+    this.imagenesAEliminar.push(idImagen);
+    this.imagenesActuales = this.imagenesActuales.filter(img => img.id !== idImagen);
+    console.log('🗑️ Imágenes marcadas para eliminar:', this.imagenesAEliminar);
+  }
+
 }
