@@ -21,6 +21,9 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
   id_anuncio: number | null = null;
   id_usuario: string | null = null; // Aquí guardamos el ID del usuario
 
+  imagenes: any[] = [];
+
+  currentImageIndex: number = 0;
 
  private categoriaMap: { [key: string]: number } = {
    'Restaurantes': 1,
@@ -55,6 +58,7 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
   if (id) {
     this.id_anuncio = +id;
     this.obtenerLugar(+id);
+    this.obtenerImagenes(this.id_anuncio);
   }
 
   this.logLoadTime();  // 👈 mide tiempo de carga
@@ -189,6 +193,26 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
     }
   });
 }
+
+obtenerImagenes(idLugar: number): void {
+  this.httpLaravelService.Service_Get(`lugar/${idLugar}`, 'imagenes').subscribe({
+    next: (data) => {
+      if (Array.isArray(data)) {
+        console.log('🖼️ Imágenes del lugar:', data);
+        this.imagenes = data;
+      }
+    },
+    error: (error) => {
+      console.error('❌ Error al obtener imágenes:', error);
+    }
+  });
+}
+
+changeImage(direction: number): void {
+  const total = this.imagenes.length;
+  this.currentImageIndex = (this.currentImageIndex + direction + total) % total;
+}
+
 
  }
 

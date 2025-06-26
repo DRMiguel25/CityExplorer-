@@ -380,3 +380,18 @@
                 min-width: unset;
             }
         }
+
+        .thumbnail {
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.thumbnail.active {
+  opacity: 1;
+  border: 2px solid #007bff;
+}
+
+.thumbnail:hover {
+  opacity: 1;
+}

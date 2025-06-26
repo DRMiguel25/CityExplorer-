@@ -9,37 +9,26 @@
 </div>
 
 <div class="container">
+  <!-- Thumbnails dinámicos -->
   <div class="thumbnail-list">
-    <div class="thumbnail active">
-      <img [src]="lugar.url" />
-    </div>
-    <div class="thumbnail">
-      <img
-        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Crect width='72' height='72' fill='%23f0f0f0'/%3E%3Ctext x='36' y='40' text-anchor='middle' font-size='12' fill='%23999'%3EImg 2%3C/text%3E%3C/svg%3E"
-        alt="Thumbnail 2"
-      />
-    </div>
-    <div class="thumbnail">
-      <img
-        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Crect width='72' height='72' fill='%23f0f0f0'/%3E%3Ctext x='36' y='40' text-anchor='middle' font-size='12' fill='%23999'%3EImg 3%3C/text%3E%3C/svg%3E"
-        alt="Thumbnail 3"
-      />
-    </div>
-    <div class="thumbnail">
-      <img
-        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Crect width='72' height='72' fill='%23f0f0f0'/%3E%3Ctext x='36' y='40' text-anchor='middle' font-size='12' fill='%23999'%3EImg 4%3C/text%3E%3C/svg%3E"
-        alt="Thumbnail 4"
-      />
+    <div *ngFor="let img of imagenes; let i = index" class="thumbnail" (click)="currentImageIndex = i" [class.active]="i === currentImageIndex">
+      <img [src]="img.url" alt="Imagen del lugar" />
     </div>
   </div>
 
-  <div class="main-image">
-    <img [src]="lugar.url" />
+  <!-- Imagen principal -->
+  <div class="main-image" *ngIf="imagenes.length > 0">
+    <img [src]="imagenes[currentImageIndex].url" alt="Imagen principal del lugar" />
     <div class="nav-arrows">
-      <div class="nav-arrow">‹</div>
-      <div class="nav-arrow">›</div>
+      <div class="nav-arrow" (click)="changeImage(-1)">‹</div>
+      <div class="nav-arrow" (click)="changeImage(1)">›</div>
     </div>
   </div>
+
+  <div *ngIf="imagenes.length === 0">
+    <p>Este lugar aún no tiene imágenes cargadas.</p>
+  </div>
+
 
   <div class="product-info">
     

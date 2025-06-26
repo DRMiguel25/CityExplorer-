@@ -280,5 +280,17 @@
             }
         }
 
+.thumbnail.active {
+  border-color: #111;
+  opacity: 1;
+}
+.thumbnail {
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+.thumbnail:hover {
+  opacity: 1;
+}
 
    

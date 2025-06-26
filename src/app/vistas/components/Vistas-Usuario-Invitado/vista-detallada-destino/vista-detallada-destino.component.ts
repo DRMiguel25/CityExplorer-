@@ -16,6 +16,9 @@ export class VistaDetalladaDestinoComponent implements OnInit {
  promedioValoracion: any = null; // Aquí guardamos el promedio de valoraciones
  totalComentarios: any = null; // Aquí guardamos el total de comentarios
 
+ imagenes: any[] = [];
+ currentImageIndex: number = 0;
+
  isLoading = true;
  
  id_usuario: string | null = null; // Aquí guardamos el ID del usuario
@@ -48,6 +51,7 @@ export class VistaDetalladaDestinoComponent implements OnInit {
    if (this.id_destino) {
      this.obtenerLugar(+this.id_destino);
      this.obtenerValoraciones(); // Llamada para obtener las valoraciones del lugar
+     this.obtenerImagenes(+this.id_destino);
    }
 
     this.logLoadTime();  // 👈 mide tiempo de carga
@@ -254,4 +258,23 @@ logLoadTime() {
     }
   });
 }
+obtenerImagenes(idLugar: number): void {
+  this.httpLaravelService.Service_Get(`lugar/${idLugar}`, 'imagenes').subscribe({
+    next: (data) => {
+      if (Array.isArray(data)) {
+        console.log('🖼️ Imágenes del lugar:', data);
+        this.imagenes = data;
+      }
+    },
+    error: (error) => {
+      console.error('❌ Error al obtener imágenes:', error);
+    }
+  });
+}
+
+changeImage(direction: number): void {
+  const total = this.imagenes.length;
+  this.currentImageIndex = (this.currentImageIndex + direction + total) % total;
+}
+
 }
