@@ -145,7 +145,7 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
                console.error('ID de usuario inválido');
                return;
              } else {
-               this.router.navigate([`/home-anunciante`, id_usuario]);
+               this.router.navigate([`/home-anunciante`, this.id_usuario]);
              }
            });
          },
