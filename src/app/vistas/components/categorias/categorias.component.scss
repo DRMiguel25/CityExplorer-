@@ -1,0 +1,134 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  
+}
+
+.background-slideshow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Asegura que esté detrás del contenido */
+ // background-image: url('blob:https://imgur.com/1e10994c-c64e-4a9e-97dd-536a3d4d7237'); /* Imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  //background-color: rgb(252, 19, 19); /* Color de respaldo (opcional) */
+  transition: opacity 1s ease-in-out; /* Transición suave */
+  opacity: 1;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); // puedes ajustar la opacidad
+  z-index: -1;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  margin: 0;
+  z-index: 1;
+  position: relative;
+  color: #fff; // si lo deseas más visible sobre el fondo
+}
+
+.header {
+  text-align: center;
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  font-size: 24px;
+  margin: 0;
+  font-weight: normal;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  max-width: 100%;
+  margin: 80px auto;
+}
+
+.category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.category-item:hover {
+  transform: translateY(-5px);
+}
+
+.category-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  opacity: 0.7;
+}
+
+.category-button {
+  background-color: #66a5edbc;
+  border: none;
+  padding: 12px 20px;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.3s;
+}
+
+.category-button:hover {
+  background-color: #3e7ab8;
+  transform: translateY(-2px);
+}
+
+.material-symbols-outlined {
+  font-size: 28px;
+}
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .category-button {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-button {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .category-icon {
+    width: 40px;
+    height: 40px;
+  }
+}

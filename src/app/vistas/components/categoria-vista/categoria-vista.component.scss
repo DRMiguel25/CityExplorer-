@@ -1,0 +1,154 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+/* Fondo slideshow */
+.background-slideshow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://i.imgur.com/26rx3ZV.png') no-repeat center center fixed;
+  background-size: cover;
+  filter: blur(8px); /* Aumentar el blur */
+  z-index: -2;
+}
+
+/* Capa oscura */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5); /* Capas de color claro */
+  z-index: -1;
+}
+/* Header and navigation styling */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #b8e0e9; /* Light blue background as shown in the image */
+}
+.main-content {
+  padding-top: 70px; /* asegúrate que sea mayor al height de la navbar */
+}
+ 
+.logo {
+  width: 60px;
+  height: 60px;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #333;
+  position: relative;
+}
+
+.nav-menu a.active {
+  font-weight: bold;
+}
+
+.nav-menu a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #333;
+}
+
+.user-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Cards styling */
+.announcements-title {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+.card {
+  width: 320px; /* Fixed width */
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden; /* This prevents content from spilling out */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background-color: white;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background-color: #f9f9f9;
+}
+
+.card-date {
+  color: #888;
+  font-size: 0.9em;
+}
+
+.card-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  margin-bottom: 15px;
+  /* Add to ensure text wrapping */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.btn-delete {
+  background-color: #f0f0f0;
+}
+
+.btn-edit {
+  background-color: #f0f0f0;
+}

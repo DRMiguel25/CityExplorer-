@@ -1,34 +1,64 @@
 <navbar-invitado-usuario></navbar-invitado-usuario>
+<body>
+  <main class="main-content">
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs"></div>
 
-<!-- Fondo animado -->
-<div class="background-slideshow"></div>
-<div class="overlay"></div>
+    <!-- Page Title -->
+   <h1 class="page-title" style="color: #5BA7F7;">Destinos Increíbles</h1>
 
-<div class="main-content">
-  <h2 class="announcements-title">Destinos</h2>
-  <div class="cards-container">
 
-    <!-- Verificar si hay lugares -->
-    <div *ngIf="lugares.length === 0">
-      <h3 class="announcements-title">No se encontraron destinos.</h3>
+    <!-- Filters Section -->
+    <div class="filters-section">
+      <div class="search-box">
+        <input type="text" class="search-input" placeholder="Buscar destinos...">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+
+      <div class="filter-tags">
+        <span class="filter-tag active">Todos</span>
+        <span class="filter-tag">5 Estrellas</span> 
+        <span class="filter-tag">4 Estrellas</span>
+        <span class="filter-tag">3 Estrellas</span>
+        <span class="filter-tag">2 Estrellas</span>
+        <span class="filter-tag">1 Estrella </span>
+      </div>
     </div>
-    <div class="card" *ngFor="let lugar of lugares">
-      <div (click)="vistaDetalladaDestino(lugar.id_lugar)">
+
+    <!-- Cards Container -->
+    <div class="cards-container">
+      <div class="card" *ngFor="let lugar of lugares" (click)="vistaDetalladaDestino(lugar.id_lugar)">
         <div class="card-header">
           <div>{{ lugar.nombre }}</div>
         </div>
-        <img
-          [src]="lugar.url || 'https://via.placeholder.com/300x200.png?text=Sin+Imagen'"
-          alt="{{ lugar.nombre }}"
-          class="card-img"
-        />
+
+        <div class="card-img-container">
+          <img
+            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=250&fit=crop"
+            alt="{{ lugar.nombre }}"
+            class="card-img">
+          <div class="category-tags">
+            <span class="category-tag">MONTAÑA</span>
+          </div>
+        </div>
+
         <div class="card-body">
           <div class="card-title">Descripción</div>
           <div class="card-text">
             {{ lugar.descripcion || 'No hay descripción disponible.' }}
           </div>
+          <div class="card-info">
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span>4.2</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </main>
+</body>

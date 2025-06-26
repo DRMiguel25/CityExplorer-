@@ -1,0 +1,111 @@
+/* Fondo animado */
+.background-slideshow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Asegura que esté detrás del contenido */
+  background-image: url('https://a.travel-assets.com/findyours-php/viewfinder/images/res60/201000/201249-Parish-Church-Of-San-Miguel-Arcangel.jpg'); /* Imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  //background-color: rgb(252, 19, 19); /* Color de respaldo (opcional) */
+  transition: opacity 1s ease-in-out; /* Transición suave */
+  opacity: 1;
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); /* Capa oscura para mejorar contraste */
+  z-index: 0; /* Asegura que esté debajo del contenido principal */
+  pointer-events: none;
+}
+
+/* Contenido principal */
+.main-content {
+  padding-top: 70px; /* Asegúrate de que sea mayor al height de la navbar */
+  position: relative;
+  z-index: 1; /* Asegura que el contenido esté sobre el fondo */
+}
+
+/* Título de anuncios */
+.announcements-title {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 2rem;
+  color: #fff; /* Texto claro para destacar sobre el fondo oscuro */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Contenedor de tarjetas */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 0 20px;
+}
+/* Tarjetas */
+.card {
+  width: 320px; /* Ancho fijo */
+  border-radius: 12px; /* Bordes redondeados más suaves */
+  overflow: hidden; /* Evita que el contenido se desborde */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
+  background-color: rgba(255, 255, 255, 0.5); /* Fondo semi-transparente */
+  backdrop-filter: blur(10px); /* Efecto de desenfoque para mejorar la transparencia */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-10px); /* Efecto de elevación */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Sombra más intensa */
+  }
+}
+
+/* Encabezado de la tarjeta */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: rgba(255, 255, 255, 0.7); /* Fondo semi-transparente */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Borde más sutil */
+}
+
+/* Imagen de la tarjeta */
+.card-img {
+  width: 100%;
+  height: 200px; /* Altura fija para mantener consistencia */
+  display: block;
+  object-fit: cover; /* Ajusta la imagen correctamente */
+  aspect-ratio: 16 / 9; /* Proporción de aspecto uniforme */
+}
+
+/* Cuerpo de la tarjeta */
+.card-body {
+  padding: 15px;
+  color: #fff; /* Texto claro para destacar sobre el fondo oscuro */
+}
+
+/* Título de la tarjeta */
+.card-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #fff; /* Texto claro para destacar sobre el fondo oscuro */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Sombra para mejorar legibilidad */
+}
+
+/* Texto de la tarjeta */
+.card-text {
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #fff; /* Texto claro para destacar sobre el fondo oscuro */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
