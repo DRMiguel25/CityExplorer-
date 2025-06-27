@@ -47,7 +47,7 @@ const routes: Routes = [
   { path: 'navbar-invitado-usuario', component: navbarInvitadoUsuarioComponent },
   { path: 'ayuda', component: AyudaComponent },
   { path: 'ayuda/:id_usuario', component: AyudaComponent },
-  { path: 'pagar-anuncio/:id_anuncio', component: PagoAnuncioComponent },
+  { path: 'pagar-anuncio/:id_anuncio/:id_usuario', component: PagoAnuncioComponent },
   { path: 'favoritos-usuarios/:id_usuario', component: FavoritosUsuariosComponent },
   { path: 'modificar-info-usuario/:id_usuario', component: ModificarInfoUsuarioComponent },
   { path: 'alerta-info-usuario/:id_usuario', component: AlertaInfoUsuarioComponent },

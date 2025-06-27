@@ -173,7 +173,7 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
      confirmButtonColor: '#3085d6',
      cancelButtonColor: '#d33'
    }).then((result) => {
-     this.router.navigate(['/pagar-anuncio', this.lugar.id_lugar]);
+     this.router.navigate(['/pagar-anuncio', this.lugar.id_lugar, this.id_usuario]);
      console.log("Pagar anuncio con el id: ", this.lugar.id_lugar, "...");
    });
  }
