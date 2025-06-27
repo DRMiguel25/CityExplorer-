@@ -23,19 +23,9 @@ export class VistaDetalladaDestinoComponent implements OnInit {
  
  id_usuario: string | null = null; // Aquí guardamos el ID del usuario
  id_destino: string | null = null; // Aquí guardamos el ID del destino
- 
 
- private categoriaMap: { [key: string]: number } = {
-  'Restaurantes': 1,
-   'Parques': 2,
-   'Iglesias': 3,
-   'Mercados': 6,
-   'Supermercados': 7,
-   'Plazas': 4,
-   'Tiendas': 8,
-   'Antros': 5,
-   'Puestos_Locales': 9
- };
+ categoriasOpciones: any[] = []; 
+
 
 
  constructor(
@@ -53,6 +43,8 @@ export class VistaDetalladaDestinoComponent implements OnInit {
      this.obtenerValoraciones(); // Llamada para obtener las valoraciones del lugar
      this.obtenerImagenes(+this.id_destino);
    }
+
+    this.obtenerCategoriasDesdeAPI();
 
     this.logLoadTime();  // 👈 mide tiempo de carga
 
@@ -101,13 +93,10 @@ export class VistaDetalladaDestinoComponent implements OnInit {
 
  // Método para obtener el nombre de la categoría basado en el ID
  obtenerCategoriaNombre(idCategoria: number): string {
-   for (const categoria in this.categoriaMap) {
-     if (this.categoriaMap[categoria] === idCategoria) {
-       return categoria.charAt(0).toUpperCase() + categoria.slice(1).replace('_', ' '); // Capitaliza la primera letra y reemplaza _ por espacios
-     }
-   }
-   return 'Categoría desconocida'; // Si no encuentra la categoría, muestra este texto
- }
+  const categoria = this.categoriasOpciones.find(c => c.id_categoria === idCategoria);
+  return categoria ? categoria.nombre : 'Categoría desconocida';
+}
+
 
 crearResenia(): void {
   if (this.id_usuario != "0") {
@@ -276,5 +265,17 @@ changeImage(direction: number): void {
   const total = this.imagenes.length;
   this.currentImageIndex = (this.currentImageIndex + direction + total) % total;
 }
+
+obtenerCategoriasDesdeAPI(): void {
+    this.httpLaravelService.Service_Get('categorias', '').subscribe({
+      next: (resp: any) => {
+        this.categoriasOpciones = resp.data;
+        console.log('📦 Categorías obtenidas:', this.categoriasOpciones);
+      },
+      error: (error) => {
+        console.error('❌ Error al obtener categorías:', error);
+      }
+    });
+  }
 
 }
