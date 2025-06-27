@@ -97,7 +97,6 @@ export class VistaDetalladaDestinoComponent implements OnInit {
   return categoria ? categoria.nombre : 'Categoría desconocida';
 }
 
-
 crearResenia(): void {
   if (this.id_usuario != "0") {
     console.log('Navegando a la reseña del usuario para el lugar con ID:', this.id_destino, 'y usuario con ID:', this.id_usuario);
