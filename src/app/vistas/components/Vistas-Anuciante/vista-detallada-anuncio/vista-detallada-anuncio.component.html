@@ -1,79 +1,113 @@
-       <!-- Header con botón de salir -->
-<div class="header">
-  <div class="logo"><div class="shipping-info">
-      <p>{{ lugar.nombre }}</p>
-    </div></div>
-  <button class="exit-btn" (click)="goBack()">
-    <span class="material-symbols-outlined"> logout </span>
-  </button>
-</div>
-
-<div class="container">
-  <!-- Thumbnails dinámicos -->
-  <div class="thumbnail-list">
-    <div *ngFor="let img of imagenes; let i = index" class="thumbnail" (click)="currentImageIndex = i" [class.active]="i === currentImageIndex">
-      <img [src]="img.url" alt="Imagen del lugar" />
-    </div>
-  </div>
-
-  <!-- Imagen principal -->
-  <div class="main-image" *ngIf="imagenes.length > 0">
-    <img [src]="imagenes[currentImageIndex].url" alt="Imagen principal del lugar" />
-    <div class="nav-arrows">
-      <div class="nav-arrow" (click)="changeImage(-1)">‹</div>
-      <div class="nav-arrow" (click)="changeImage(1)">›</div>
-    </div>
-  </div>
-
-  <div *ngIf="imagenes.length === 0">
-    <p>Este lugar aún no tiene imágenes cargadas.</p>
-  </div>
-
-
-  <div class="product-info">
-    
-    <div class="product-details">
-      <ul>
-        <li><strong>Nombre del Lugar:</strong> {{ lugar.nombre }}</li>
-        <li>{{ lugar.descripcion }} </li>
-        <li>
-          <strong>Página Web: </strong>
-          <a [href]="lugar.paginaWeb" target="_blank">{{ lugar.paginaWeb }}</a>
-        </li>
-        <li><strong>Número Telefónico:</strong> {{ lugar.num_telefonico }}</li>
-        <li>
-          <strong>Horario de Apertura:</strong> {{ lugar.horario_apertura }}
-        </li>
-        <li><strong>Horario de Cierre:</strong> {{ lugar.horario_cierre }}</li>
-        <li>
-          <strong>Días de Servicio:</strong>
-          {{ lugar.dias_servicio.join(", ") }}
-        </li>
-        <li>
-          <strong>Categoría:</strong>
-          {{ obtenerCategoriaNombre(lugar.id_categoria) }}
-        </li>
-        <li *ngIf="direccion">
-          <strong>Dirección:</strong>
-          {{ direccion.calle }} {{ direccion.numero_ext }}
-          <span *ngIf="direccion.numero_int">, {{ direccion.numero_int }}</span
-          >, {{ direccion.colonia }}, C.P. {{ direccion.codigo_postal }}
-        </li>
-        
-      </ul>
+<body>
+  <div class="container">
+    <!-- Header con botón de volver y favoritos -->
+    <div class="header">
+      <button class="back-btn" (click)="goBack()">
+        <span class="material-symbols-outlined"> arrow_back </span>
+      </button>
     </div>
 
-   
+    <!-- Título y subtítulo -->
+    <h1 class="title">{{ lugar.nombre }}</h1>
+    <p class="subtitle">
+      {{ lugar.descripcionBreve }} •
+      {{ obtenerCategoriaNombre(lugar.id_categoria) }}
+    </p>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+      <!-- Galería de imágenes -->
+      <div class="gallery-section">
+        <div class="main-image" *ngIf="imagenes.length > 0">
+          <img
+            [src]="imagenes[currentImageIndex].url"
+            alt="Imagen principal del lugar"
+          />
+          <div class="nav-arrows">
+            <div class="nav-arrow" (click)="changeImage(-1)">‹</div>
+            <div class="nav-arrow" (click)="changeImage(1)">›</div>
+          </div>
+        </div>
+        <div *ngIf="imagenes.length === 0">
+          <p>Este lugar aún no tiene imágenes cargadas.</p>
+        </div>
+        <div class="thumbnail-grid">
+          <div
+            *ngFor="let img of imagenes; let i = index"
+            class="thumbnail"
+            [class.active]="i === currentImageIndex"
+            (click)="currentImageIndex = i"
+          >
+            <img [src]="img.url" alt="Miniatura de imagen" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Información del lugar -->
+      <div class="info-section">
+        <div class="description">
+          {{ lugar.descripcion }}
+        </div>
+
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="info-label">Sitio Web</div>
+            <a [href]="lugar.paginaWeb" target="_blank" class="website-link">{{
+              lugar.paginaWeb
+            }}</a>
+          </div>
+          <div class="contact-item">
+            <div class="info-label">Teléfono</div>
+            <div class="info-value">{{ lugar.num_telefonico }}</div>
+          </div>
+        </div>
+
+        <div class="hours-grid">
+          <div class="schedule-item">
+            <div class="info-label">Horario de Apertura</div>
+            <div class="info-value">{{ lugar.horario_apertura }}</div>
+          </div>
+          <div class="schedule-item">
+            <div class="info-label">Horario de Cierre</div>
+            <div class="info-value">{{ lugar.horario_cierre }}</div>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Días de Servicio</div>
+          <div class="info-value">{{ lugar.dias_servicio.join(", ") }}</div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Categoría</div>
+          <div class="info-value">
+            {{ obtenerCategoriaNombre(lugar.id_categoria) }}
+          </div>
+        </div>
+
+        <div class="info-item" *ngIf="direccion">
+          <div class="info-label">Dirección</div>
+          <div class="info-value">
+            {{ direccion.calle }} {{ direccion.numero_ext }}
+            <span *ngIf="direccion.numero_int"
+              >, {{ direccion.numero_int }}</span
+            >, {{ direccion.colonia }}, C.P. {{ direccion.codigo_postal }}
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="button-group">
-    <div class="button-container">
-      <button class="edit-btn" (click)="modificarAnuncio()">Editar</button>
-      <button class="pay-btn" (click)="confirmarPago()">Pagar</button>
-      <button class="delete-btn" (click)="eliminarAnuncio()">Eliminar</button>
+      <div class="button-container">
+        <button class="edit-btn" (click)="modificarAnuncio()">Editar</button>
+        <button class="pay-btn" (click)="confirmarPago()">Pagar</button>
+        <button class="delete-btn" (click)="eliminarAnuncio()">Eliminar</button>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading">Cargando datos...</div>
+    <div *ngIf="!isLoading && !lugar">
+      No se pudo cargar la información del lugar. Intenta de nuevo más tarde.
     </div>
   </div>
-
-  <div *ngIf="isLoading">Cargando datos...</div>
-  <div *ngIf="!isLoading && !lugar">No se pudo cargar la información del lugar. Intenta de nuevo más tarde.</div>
- </div>
-  </div>
+</body>
