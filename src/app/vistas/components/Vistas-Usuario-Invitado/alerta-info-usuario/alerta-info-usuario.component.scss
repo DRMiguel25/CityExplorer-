@@ -182,3 +182,13 @@ body {
         max-width: 360px;
     }
 }
+
+.perfil-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: default;
+  border: 2px solid #2E5BBA;
+  transition: all 0.3s ease;
+}

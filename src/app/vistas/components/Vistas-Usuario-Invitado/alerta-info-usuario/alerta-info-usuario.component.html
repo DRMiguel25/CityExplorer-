@@ -2,8 +2,15 @@
 
   <div class="profile-header">
     <div class="profile-avatar">
-      {{ usuario?.data?.nombre?.charAt(0) }}
+      <ng-container *ngIf="usuario?.data?.foto_perfil; else inicialUsuario">
+        <img [src]="'http://localhost:8001/storage/' + usuario.data.foto_perfil" alt="Foto de perfil" class="perfil-img">
+      </ng-container>
+
+      <ng-template #inicialUsuario>
+        {{ usuario?.data?.nombre?.charAt(0) }}
+      </ng-template>
     </div>
+
     <div class="profile-name">
       ¡Hola, {{ usuario?.data?.nombre + ' ' + usuario?.data?.apellidoP + ' ' + usuario?.data?.apellidoM }}!
     </div>

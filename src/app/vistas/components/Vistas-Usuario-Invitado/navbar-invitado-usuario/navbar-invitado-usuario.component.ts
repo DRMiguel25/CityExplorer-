@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertaInfoUsuarioComponent } from '../alerta-info-usuario/alerta-info-usuario.component';
+import { HttpLaravelService } from '../../../../http.service';
 
 @Component({
   selector: 'navbar-invitado-usuario',
@@ -13,11 +14,13 @@ import { AlertaInfoUsuarioComponent } from '../alerta-info-usuario/alerta-info-u
 })
 export class navbarInvitadoUsuarioComponent {
   id_usuario: number = 0;
+  usuario: any = null; // Aquí vamos a guardar la info para mostrarla en el HTML
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
+    private apiService: HttpLaravelService,
   ) {}
 
   ngOnInit(): void {
@@ -25,6 +28,7 @@ export class navbarInvitadoUsuarioComponent {
       const id = params.get('id_usuario');
       this.id_usuario = id ? Number(id) : 0;
       console.log('👤 ID de usuario desde la URL:', this.id_usuario);
+      this.cargarInfoUsuario();
     });
 
     this.logLoadTime();  // 👈 mide tiempo de carga
@@ -79,18 +83,35 @@ export class navbarInvitadoUsuarioComponent {
   }
 
   logLoadTime() {
-  window.addEventListener('load', () => {
-    const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
-    if (navEntry) {
-      console.log('⏱️ Tiempo total de carga en navbar invitado usuario (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
-      console.log('🧱 Tiempo de render en navbar invitado usuario (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
-      console.log('🌐 Tiempo de respuesta navbar invitado usuario (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
-    } else {
-      // Fallback para navegadores antiguos
-      const timing = performance.timing;
-      const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
-      console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
+    window.addEventListener('load', () => {
+      const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+      if (navEntry) {
+        console.log('⏱️ Tiempo total de carga en navbar invitado usuario (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
+        console.log('🧱 Tiempo de render en navbar invitado usuario (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
+        console.log('🌐 Tiempo de respuesta navbar invitado usuario (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
+      } else {
+        // Fallback para navegadores antiguos
+        const timing = performance.timing;
+        const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
+        console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
+      }
+    });
+  }
+
+  cargarInfoUsuario() {
+  this.apiService.Service_Get('usuario', this.id_usuario).subscribe(
+    (respuesta: any) => {  // 👈 Cast a any aquí, no tocamos el servicio
+      if (respuesta.estatus === 1) {
+        this.usuario = respuesta.data;
+        console.log('✅ Usuario:', this.usuario);
+      } else {
+        console.warn('⚠️ La API respondió sin éxito:', respuesta);
+      }
+    },
+    error => {
+      console.error('❌ Error al obtener usuario:', error);
     }
-  });
+  );
 }
+
 }

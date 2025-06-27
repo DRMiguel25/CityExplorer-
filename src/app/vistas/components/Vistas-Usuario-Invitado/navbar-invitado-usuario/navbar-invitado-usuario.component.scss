@@ -296,3 +296,43 @@ body {
     padding-top: 65px;
   }
 }
+
+.perfil-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.user-icon {
+  cursor: pointer;
+  padding: 0;                          /* 👈 Quitamos padding */
+  border-radius: 50%;
+  background: transparent;             /* 👈 Fondo transparente por defecto */
+  border: 2px solid #4A90E2; /* Opcional, para que combine con el SVG original */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  position: relative;
+}
+
+.user-icon:hover {
+  background: transparent;             /* 👈 Sin cambio al pasar el mouse */
+  border-color: transparent;
+  transform: scale(1.05);
+  box-shadow: none;
+}
+
+.user-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+/* Solo si quieres mantener estilos para el SVG */
+.user-icon:hover svg circle,
+.user-icon:hover svg path {
+  stroke: #4A90E2 !important;
+}
