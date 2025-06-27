@@ -99,10 +99,33 @@ export class VistaDetalladaDestinoComponent implements OnInit {
 
 crearResenia(): void {
   if (this.id_usuario != "0") {
-    console.log('Navegando a la reseña del usuario para el lugar con ID:', this.id_destino, 'y usuario con ID:', this.id_usuario);
-    this.router.navigate(['/resenia-usuario', this.id_destino, this.id_usuario]);
-  }
-  else {
+    console.log('🔎 Buscando si el usuario ya tiene reseña previa...');
+
+    const modelo = 'lugar';
+    const dato = `${this.id_destino}/comentarios`;
+
+    this.httpLaravelService.Service_Get(modelo, dato).subscribe({
+      next: (respuesta: any) => {
+        const comentarios = respuesta?.data || [];
+
+        // Buscar si el usuario ya tiene una reseña en ese lugar
+        const comentarioDelUsuario = comentarios.find(
+          (comentario: any) => comentario.id_usuario == this.id_usuario
+        );
+
+        const idResenia = comentarioDelUsuario ? comentarioDelUsuario.id_comentario : 0;
+
+        console.log(`📝 Redirigiendo con id_resenia: ${idResenia}`);
+
+        this.router.navigate(['/resenia-usuario', this.id_destino, this.id_usuario, idResenia]);
+      },
+      error: (error) => {
+        console.error('❌ Error al verificar reseñas del usuario:', error);
+        Swal.fire('Error', 'No se pudo verificar si ya tienes una reseña. Intenta más tarde.', 'error');
+      }
+    });
+
+  } else {
     Swal.fire({
       icon: 'info',
       title: '¿Ya tienes una cuenta?',
@@ -122,25 +145,45 @@ crearResenia(): void {
   }
 }
 
+
 obtenerValoraciones(): void {
   const modelo = 'lugar';
   const dato = `${this.id_destino}/comentarios`;
 
+  console.log('📥 Consultando valoraciones para:', modelo, dato);
+
   this.httpLaravelService.Service_Get(modelo, dato).subscribe({
     next: (respuesta: any) => {
+      console.log('✅ Respuesta recibida de valoraciones:', respuesta);
+
       const comentarios = respuesta?.data || [];
+      console.log('📝 Total de comentarios recibidos:', comentarios.length);
+      console.log('📃 Lista de comentarios:', comentarios);
 
       if (Array.isArray(comentarios) && comentarios.length > 0) {
+        // Ordenar comentarios por fecha
         const ordenados = comentarios.sort((a, b) =>
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
         );
-        this.ultimoComentario = ordenados[0];
 
+        console.log('📅 Comentarios ordenados por fecha descendente:', ordenados);
+
+        // Obtener el último comentario
+        this.ultimoComentario = ordenados[0];
+        console.log('⭐ Último comentario seleccionado:', this.ultimoComentario);
+
+        // Calcular promedio de valoraciones
         const suma = comentarios.reduce((acc, c) => acc + (c.valoracion || 0), 0);
         this.promedioValoracion = suma / comentarios.length;
 
-        this.totalComentarios = comentarios.length; // Aquí guardas el total
+        console.log('🔢 Suma total de valoraciones:', suma);
+        console.log('📊 Promedio de valoraciones:', this.promedioValoracion);
+
+        // Total de comentarios
+        this.totalComentarios = comentarios.length;
+        console.log('🔢 Total de comentarios:', this.totalComentarios);
       } else {
+        console.warn('⚠️ No hay comentarios disponibles.');
         this.ultimoComentario = null;
         this.promedioValoracion = null;
         this.totalComentarios = 0;
@@ -154,6 +197,7 @@ obtenerValoraciones(): void {
     }
   });
 }
+
 
 
 getEstrellas(valoracion: number): string {

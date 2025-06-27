@@ -123,4 +123,11 @@ export class HttpLaravelService {
 
     return this.http.post(url, formData, { headers });
   }
+
+  Service_Put(Modelo: string, Dato: string | number, Parametros: any): Observable<any> {
+  return this.http.put(`${this._url}/${Modelo}/${Dato}`, Parametros, {
+    headers: this.getHeaders()
+  });
+}
+
 }

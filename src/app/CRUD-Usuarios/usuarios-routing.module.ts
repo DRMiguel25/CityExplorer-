@@ -51,7 +51,7 @@ const routes: Routes = [
   { path: 'favoritos-usuarios/:id_usuario', component: FavoritosUsuariosComponent },
   { path: 'modificar-info-usuario/:id_usuario', component: ModificarInfoUsuarioComponent },
   { path: 'alerta-info-usuario/:id_usuario', component: AlertaInfoUsuarioComponent },
-  { path: 'resenia-usuario/:id_destino/:id_usuario', component: ReseniaUsuarioComponent },
+  { path: 'resenia-usuario/:id_destino/:id_usuario/:id_resenia', component: ReseniaUsuarioComponent },
   { path: 'terminos-del-servicio', component: TerminosDelServicioComponent },
   { path: 'politicas-de-privacidad', component: PoliticasDePrivacidadComponent },
   { path: 'vista-lista-comentarios/:id_destino', component: VistaListaComentariosComponent },

@@ -108,7 +108,6 @@
         <div class="review-rating">{{ getEstrellas(ultimoComentario.valoracion) }}</div>
         <div class="review-author">{{ ultimoComentario.usuario?.nombre ?? 'Usuario anónimo' }}</div>
         <div class="review-text">{{ ultimoComentario.contenido }}</div>
-        <div class="review-helpful" (click)="listarComentarios()">Más</div>
       </div>
 
       <div class="no-reviews" *ngIf="!ultimoComentario">

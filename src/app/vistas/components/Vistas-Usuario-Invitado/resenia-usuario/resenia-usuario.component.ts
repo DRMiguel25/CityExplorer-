@@ -12,10 +12,13 @@ import Swal from 'sweetalert2';
 export class ReseniaUsuarioComponent implements OnInit{
   id_usuario: string | null = null; // Aquí guardamos el ID del usuario
   id_destino: string | null = null; // Aquí guardamos el ID del destino
+  id_resenia: string | null = null; // Aquí guardamos el ID de la reseña
 
   contenido: string = '';
   valoracion: number = 0;
   charCount: number = 0;
+
+  tituloResenia: string = 'Crear una reseña';
 
 
   private icons: { [key: string]: number } = {
@@ -42,9 +45,18 @@ export class ReseniaUsuarioComponent implements OnInit{
   ngOnInit(): void {
     this.id_destino = this.route.snapshot.paramMap.get('id_destino');
     this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
+    this.id_resenia = this.route.snapshot.paramMap.get('id_resenia');
 
     console.log('ID Usuario:', this.id_usuario);
     console.log('ID Destino:', this.id_destino);
+    console.log('ID Reseña:', this.id_resenia);
+
+    // Cambiar el título dependiendo si es creación o edición
+    if (this.id_resenia === "0") {
+      this.tituloResenia = "Crear una reseña";
+    } else {
+      this.tituloResenia = "Modificar tu reseña";
+    }
 
     if (this.id_destino) {
       this.obtenerLugar();
@@ -53,8 +65,8 @@ export class ReseniaUsuarioComponent implements OnInit{
     }
 
     this.logLoadTime();  // 👈 mide tiempo de carga
-
   }
+
 
   obtenerLugar(): void {
     if (!this.id_destino) return;
@@ -84,28 +96,47 @@ export class ReseniaUsuarioComponent implements OnInit{
     return icono ? icono[0] : 'help';
   }
 
-  enviarResenia(): void {
-    const comentario = {
-      contenido: this.contenido,
-      valoracion: this.valoracion,
-      id_lugar: this.id_destino
-    };
+ enviarResenia(): void {
+  const comentario = {
+    contenido: this.contenido,
+    valoracion: this.valoracion,
+    id_lugar: Number(this.id_destino)
+  };
 
+  if (this.id_resenia && this.id_resenia !== "0") {
+    // Actualizar reseña existente
+    this.httpLaravelService.Service_Put('comentarios', this.id_resenia, comentario).subscribe({
+      next: (respuesta) => {
+        console.log('Reseña actualizada correctamente:', respuesta);
+        Swal.fire({
+          icon: 'success',
+          title: '¡Reseña modificada!',
+          text: 'Tu opinión fue actualizada exitosamente.',
+          confirmButtonColor: '#3085d6'
+        });
+        this.router.navigate(['/vista-detallada-destino', this.id_destino, this.id_usuario]);
+      },
+      error: (error) => {
+        console.error('Error al actualizar la reseña:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Ocurrió un error al actualizar tu reseña. Intenta de nuevo.',
+          confirmButtonColor: '#d33'
+        });
+      }
+    });
+  } else {
+    // Crear nueva reseña
     this.httpLaravelService.Service_Post('comentarios', '', comentario).subscribe({
       next: (respuesta) => {
         console.log('Reseña enviada correctamente:', respuesta);
-
         Swal.fire({
           icon: 'success',
           title: '¡Reseña enviada!',
           text: 'Gracias por compartir tu opinión.',
           confirmButtonColor: '#3085d6'
         });
-
-        this.contenido = '';
-        this.valoracion = 0;
-        this.charCount = 0;
-
         this.router.navigate(['/vista-detallada-destino', this.id_destino, this.id_usuario]);
       },
       error: (error) => {
@@ -119,6 +150,7 @@ export class ReseniaUsuarioComponent implements OnInit{
       }
     });
   }
+}
 
 
   closeModal(): void {
