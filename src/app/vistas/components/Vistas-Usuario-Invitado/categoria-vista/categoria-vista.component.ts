@@ -15,6 +15,7 @@ export class CategoriaVistaComponent implements OnInit {
  categoriaSeleccionada = '';
  tituloCategoria = '';
 
+  id_usuario: string | null = null; // Aquí guardamos el ID del usuario
 
  private categoriaMap: { [key: string]: number } = {
    'Restaurantes': 1,
@@ -39,6 +40,8 @@ export class CategoriaVistaComponent implements OnInit {
 
 
  ngOnInit(): void {
+
+    this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
    this.route.paramMap.subscribe(params => {
      const nombreCategoria = params.get('categoria');
      if (nombreCategoria) {
@@ -79,7 +82,8 @@ export class CategoriaVistaComponent implements OnInit {
      console.error('ID inválido:', id);
      return;
    }
-   this.router.navigate(['/vista-detallada-destino', idEntero]);
+   console.log("navegando a vista-detallada-destino", idEntero, this.id_usuario);
+   this.router.navigate(['/vista-detallada-destino', idEntero, this.id_usuario]);
  }
 
  logLoadTime() {
