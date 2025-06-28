@@ -87,6 +87,7 @@ export class VistaDetalladaDestinoComponent implements OnInit {
 
  // Método de retroceso
  goBack() {
+  console.log("navegardo a home-invitado-usuario", this.id_usuario);
    this.router.navigate(['/home-invitado-usuario', this.id_usuario]); // Navega a la página de inicio del usuario invitado
  }
 
