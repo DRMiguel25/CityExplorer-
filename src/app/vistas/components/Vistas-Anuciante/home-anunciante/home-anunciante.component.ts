@@ -11,48 +11,54 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./home-anunciante.component.scss']
 })
 export class HomeAnuncianteComponent implements OnInit {
-
   lugares: Lugar[] = [];
   isLoading = true;
   errorMessage = '';
-  idUsuario: number = 0;  // Asignar un valor por defecto
+  idUsuario: number = 0;
+
+  // Nuevo: para manejar imágenes por lugar
+  imagenesPorLugar: { [idLugar: number]: any[] } = {};
+  imagenActualIndexPorLugar: { [idLugar: number]: number } = {};
 
   constructor(
     private router: Router,
     private httpLaravelService: HttpLaravelService,
-    private route: ActivatedRoute // Para leer los parámetros de la URL
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    // Obtener el id_usuario desde la URL
     this.idUsuario = Number(this.route.snapshot.paramMap.get('id_usuario'));
-
     if (isNaN(this.idUsuario)) {
       console.error('ID de usuario inválido en la URL');
       return;
     }
-
     this.loadLugares();
-
-    this.logLoadTime();  // 👈 mide tiempo de carga
-
+    this.logLoadTime();
   }
+  
+loadLugares(): void {
+  this.httpLaravelService.Service_Get('lugar', '').subscribe(
+    (data: Lugar[]) => {
+      console.log('📍 Data de lugares recibida:', data);
 
-  loadLugares(): void {
-    this.httpLaravelService.Service_Get('lugar', '').subscribe(
-      (data: Lugar[]) => {
-        // Filtrar los lugares solo para el usuario con el id_usuario obtenido
-        this.lugares = data.filter(lugar => lugar.id_usuario === this.idUsuario);
-        console.log('Lugares del usuario:', this.lugares);
-        this.isLoading = false;
-      },
-      (error) => {
-        this.isLoading = false;
-        this.errorMessage = 'Error al cargar los lugares, por favor intente nuevamente.';
-        console.error(error);
-      }
-    );
-  }
+      this.lugares = data.filter(lugar => lugar.id_usuario === this.idUsuario);
+
+      console.log('✅ Lugares filtrados por usuario:', this.lugares);
+
+      // Cargar imágenes para cada lugar
+      this.lugares.forEach(lugar => {
+        this.cargarImagenesLugar(lugar);
+      });
+
+      this.isLoading = false;
+    },
+    (error) => {
+      this.isLoading = false;
+      this.errorMessage = 'Error al cargar los lugares, por favor intente nuevamente.';
+      console.error('❌ Error en Service_Get(lugar):', error);
+    }
+  );
+}
 
   crearAnuncio() {
     this.router.navigate(['/crear-actualizar-anuncio', this.idUsuario]);
@@ -88,4 +94,37 @@ export class HomeAnuncianteComponent implements OnInit {
     }
   });
 }
+
+
+  cargarImagenesLugar(lugar: Lugar): void {
+    this.httpLaravelService.Service_GetImagenes(lugar.id_lugar).subscribe({
+      next: (imagenes: any[]) => {
+        if (imagenes && imagenes.length > 0) {
+          this.imagenesPorLugar[lugar.id_lugar] = imagenes;
+          this.imagenActualIndexPorLugar[lugar.id_lugar] = 0;
+          lugar.url = imagenes[0].url; // muestra la primera imagen por defecto
+        } else {
+          lugar.url = 'assets/img/placeholder.png';
+        }
+      },
+      error: (error) => {
+        console.error(`Error cargando imágenes para lugar ${lugar.id_lugar}`, error);
+        lugar.url = 'assets/img/placeholder.png';
+      }
+    });
+  }
+
+  cambiarImagen(lugar: Lugar, direccion: number) {
+    const id = lugar.id_lugar;
+    const imgs = this.imagenesPorLugar[id];
+    if (!imgs || imgs.length === 0) return;
+
+    let currentIndex = this.imagenActualIndexPorLugar[id] ?? 0;
+    const total = imgs.length;
+
+    currentIndex = (currentIndex + direccion + total) % total;
+    this.imagenActualIndexPorLugar[id] = currentIndex;
+    lugar.url = imgs[currentIndex].url;
+  }
+
 }

@@ -130,4 +130,11 @@ export class HttpLaravelService {
   });
 }
 
+Service_GetImagenes(idLugar: number) {
+  return this.http.get<any[]>(`${this._url}/lugar/${idLugar}/imagenes`, {
+    headers: this.getHeaders()
+  });
+}
+
+
 }

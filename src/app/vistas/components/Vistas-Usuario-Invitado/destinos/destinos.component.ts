@@ -12,9 +12,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class DestinosVistaComponent implements OnInit, OnDestroy {
   lugares: Lugar[] = [];
+  imagenesPorLugar: { [idLugar: number]: any[] } = {};
+  imagenActualIndexPorLugar: { [idLugar: number]: number } = {};
+
+  listaCategorias: any[] = [];
+
   private slideshowInterval: any;
+
   id_usuario: string | null = null; // Aquí guardamos el ID del usuario
-  id_destino: string | null = null; // Aquí guardamos el ID del usuario
 
 
   // Lista de imágenes para el fondo animado
@@ -33,19 +38,12 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.id_destino = this.route.snapshot.paramMap.get('id_destino');
     this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
     console.log('ID del usuario:', this.id_usuario);
-    console.log('ID del destino:', this.id_destino);
-    this.httpLaravelService.Service_Get_Lugares_Publico().subscribe({
-      next: (data) => {
-        this.lugares = data.filter((lugar: any) => lugar.activo);
-        console.log('Lugares activos cargados:', this.lugares);
-      },
-      error: (err) => {
-        console.error('Error al cargar lugares públicos:', err);
-      }
-    });
+
+    this.obtenerCategoriasDesdeAPI();
+    
+    this.loadLugares();
 
     // Inicializar el cambio de imágenes SOLO en el navegador
     if (isPlatformBrowser(this.platformId)) {
@@ -122,4 +120,68 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
     }
   });
 }
+
+  loadLugares(): void {
+    this.httpLaravelService.Service_Get('lugar', '').subscribe({
+      next: (data: Lugar[]) => {
+        this.lugares = data;
+
+        this.lugares.forEach(lugar => {
+          this.cargarImagenesLugar(lugar);
+        });
+      },
+      error: (error) => {
+        console.error('❌ Error al cargar lugares:', error);
+      }
+    });
+  }
+
+  cargarImagenesLugar(lugar: Lugar): void {
+    this.httpLaravelService.Service_GetImagenes(lugar.id_lugar).subscribe({
+      next: (imagenes: any[]) => {
+        if (imagenes && imagenes.length > 0) {
+          this.imagenesPorLugar[lugar.id_lugar] = imagenes;
+          this.imagenActualIndexPorLugar[lugar.id_lugar] = 0;
+          lugar.url = imagenes[0].url;  // Primera imagen
+        } else {
+          lugar.url = 'assets/img/placeholder.png';
+        }
+      },
+      error: (error) => {
+        console.error(`❌ Error cargando imágenes para lugar ${lugar.id_lugar}:`, error);
+        lugar.url = 'assets/img/placeholder.png';
+      }
+    });
+  }
+
+  cambiarImagen(lugar: Lugar, direccion: number): void {
+    const id = lugar.id_lugar;
+    const imgs = this.imagenesPorLugar[id];
+    if (!imgs || imgs.length === 0) return;
+
+    let index = this.imagenActualIndexPorLugar[id] ?? 0;
+    const total = imgs.length;
+
+    index = (index + direccion + total) % total;
+    this.imagenActualIndexPorLugar[id] = index;
+    lugar.url = imgs[index].url;
+  }
+
+    obtenerCategoriasDesdeAPI(): void {
+      this.httpLaravelService.Service_Get('categorias', '').subscribe({
+        next: (resp: any) => {
+          this.listaCategorias = resp.data; // <- solo tomamos el array
+          console.log('📦 Lista de categorías obtenidas:', this.listaCategorias);
+        },
+        error: (error) => {
+          console.error('❌ Error al obtener categorías:', error);
+        }
+      });
+    }
+
+getNombreCategoria(idCategoria: number): string {
+  const categoria = this.listaCategorias.find(cat => cat.id_categoria === idCategoria);
+  return categoria ? categoria.nombre : 'Sin Categoría';
+}
+
 }

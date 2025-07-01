@@ -1,1384 +1,410 @@
 /* Estilos para el componente de pago */
 .mi-componente-pago {
- position: relative;
- min-height: 100vh;
- display: flex;
- align-items: center;
- justify-content: center;
- padding: 20px;
- overflow: hidden;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
 }
 
-
-/* Fondo animado con gradiente */
+/* Fondo con gradiente fijo */
 .background-slideshow {
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
- animation: gradientShift 8s ease infinite;
- z-index: -2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+background: linear-gradient(135deg, #F0F8FF 0%, #EAF6FB 100%);
+
 }
 
-
-@keyframes gradientShift {
- 0%, 100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
- 25% { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
- 50% { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
- 75% { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-}
-
-
+/* Capa oscura encima del fondo */
 .overlay {
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- background: rgba(0, 0, 0, 0.3);
- z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: -1;
 }
-
 
 /* Botón de regresar */
 .back-button {
- position: absolute;
- top: 30px;
- left: 30px;
- background: rgba(255, 255, 255, 0.2);
- border: 2px solid rgba(255, 255, 255, 0.3);
- color: white;
- padding: 12px 16px;
- border-radius: 50%;
- cursor: pointer;
- font-size: 20px;
- font-weight: bold;
- transition: all 0.3s ease;
- backdrop-filter: blur(10px);
- z-index: 10;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.458);
+  color: rgb(0, 0, 0);
+  padding: 12px 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  z-index: 10;
 }
-
 
 .back-button:hover {
- background: rgba(255, 255, 255, 0.3);
- border-color: rgba(255, 255, 255, 0.5);
- transform: translateX(-5px);
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateX(-5px);
 }
-
 
 /* Contenedor principal */
 .pago-container {
- background: rgba(255, 255, 255, 0.95);
- border-radius: 20px;
- padding: 40px;
- max-width: 800px;
- width: 100%;
- box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
- backdrop-filter: blur(10px);
- border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
-
 
 .payment-title {
- text-align: center;
- color: #2c3e50;
- font-size: 2rem;
- font-weight: 600;
- margin-bottom: 40px;
- text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  color: #2c3e50;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 40px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 
 /* Contenedor de la tarjeta */
 .card-container {
- perspective: 1000px;
- margin-bottom: 40px;
- display: flex;
- justify-content: center;
+  perspective: 1000px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
 }
-
 
 .credit-card {
- position: relative;
- width: 350px;
- height: 220px;
- transform-style: preserve-3d;
- transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
- cursor: pointer;
+  position: relative;
+  width: 350px;
+  height: 220px;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
 }
-
 
 .credit-card.flipped {
- transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
-
 
 .card-front,
 .card-back {
- position: absolute;
- width: 100%;
- height: 100%;
- backface-visibility: hidden;
- border-radius: 15px;
- padding: 25px;
- box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
- background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
- color: white;
- display: flex;
- flex-direction: column;
- justify-content: space-between;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-
 
 .card-back {
- transform: rotateY(180deg);
- background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
 }
-
 
 /* Logo de la tarjeta */
 .card-logo {
- display: flex;
- justify-content: flex-end;
- margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
 }
-
 
 .logo-circles {
- display: flex;
- gap: -8px;
+  display: flex;
+  gap: -8px;
 }
-
 
 .logo-circles .circle {
- width: 20px;
- height: 20px;
- border-radius: 50%;
- margin-left: -8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: -8px;
 }
-
 
 .logo-circles .circle:nth-child(1) { background: #ff5f00; }
 .logo-circles .circle:nth-child(2) { background: #eb001b; }
 .logo-circles .circle:nth-child(3) { background: #f79e1b; }
 .logo-circles .circle:nth-child(4) { background: #00a2e5; }
 
-
-/* Sección del número de tarjeta */
+/* Información de tarjeta */
 .card-number-section {
- margin-bottom: 25px;
+  margin-bottom: 25px;
 }
-
 
 .card-label {
- font-size: 11px;
- text-transform: uppercase;
- letter-spacing: 1px;
- color: rgba(255, 255, 255, 0.8);
- margin-bottom: 5px;
- display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 5px;
+  display: block;
 }
 
-
-/* Número de tarjeta en la cara frontal */
 .card-number-display {
- font-size: 20px;
- font-weight: 500;
- text-transform: uppercase;
- letter-spacing: 2px;
- margin-top: 5px;
- font-family: 'Courier New', monospace;
- color: white;
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 5px;
+  font-family: 'Courier New', monospace;
+  color: white;
 }
 
-
-/* Detalles de la tarjeta */
 .card-details {
- display: grid;
- grid-template-columns: 2fr 1fr 1fr;
- gap: 20px;
- align-items: end;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 20px;
+  align-items: end;
 }
-
 
 .card-holder-name,
 .card-exp-date,
 .card-cvv-display {
- font-size: 14px;
- font-weight: 500;
- text-transform: uppercase;
- letter-spacing: 1px;
- margin-top: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 5px;
 }
 
-
-/* Parte trasera de la tarjeta */
+/* Parte trasera */
 .magnetic-strip {
- width: 100%;
- height: 40px;
- background: #000;
- margin: 20px 0;
- border-radius: 3px;
+  width: 100%;
+  height: 40px;
+  background: #000;
+  margin: 20px 0;
+  border-radius: 3px;
 }
-
 
 .cvv-section {
- display: flex;
- justify-content: flex-end;
- align-items: center;
- margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px;
 }
-
 
 .cvv-box {
- background: rgba(255, 255, 255, 0.9);
- color: #333;
- padding: 8px 15px;
- border-radius: 5px;
- font-family: 'Courier New', monospace;
- font-size: 16px;
- font-weight: bold;
- letter-spacing: 2px;
- min-width: 50px;
- text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  min-width: 50px;
+  text-align: center;
 }
 
-
-/* Sección del formulario */
+/* Formulario */
 .form-section {
- display: grid;
- gap: 25px;
+  display: grid;
+  gap: 25px;
 }
-
 
 .form-group {
- position: relative;
- opacity: 0;
- transform: translateY(20px);
- animation: fadeInUp 0.6s ease forwards;
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
 }
 
-
-.form-group.active {
- animation-delay: 0.1s;
-}
-
-
+.form-group.active { animation-delay: 0.1s; }
 .form-group:nth-child(2).active { animation-delay: 0.2s; }
 .form-group:nth-child(3).active { animation-delay: 0.3s; }
 .form-group:nth-child(4).active { animation-delay: 0.4s; }
 .form-group:nth-child(5).active { animation-delay: 0.5s; }
 
-
 @keyframes fadeInUp {
- to {
-   opacity: 1;
-   transform: translateY(0);
- }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
 
 .form-group label {
- display: block;
- margin-bottom: 8px;
- color: #2c3e50;
- font-weight: 500;
- font-size: 14px;
- text-transform: uppercase;
- letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 8px;
+  color: #2c3e50;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
-
 
 .form-control {
- width: 100%;
- padding: 15px 20px;
- border: 2px solid #e1e8ed;
- border-radius: 10px;
- font-size: 16px;
- transition: all 0.3s ease;
- background: white;
- box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  padding: 15px 20px;
+  border: 2px solid #e1e8ed;
+  border-radius: 10px;
+  font-size: 16px;
+  background: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
-
 
 .form-control:focus {
- outline: none;
- border-color: #667eea;
- box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
- transform: translateY(-2px);
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
 }
-
 
 .stripe-element.form-control {
- padding: 15px 20px;
- border: 2px solid #e1e8ed;
- border-radius: 10px;
- background: white;
- transition: all 0.3s ease;
+  padding: 15px 20px;
+  border: 2px solid #e1e8ed;
+  border-radius: 10px;
+  background: white;
+  transition: all 0.3s ease;
 }
-
 
 .stripe-element.form-control:focus-within {
- border-color: #667eea;
- box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
- transform: translateY(-2px);
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
 }
 
-
-/* Estilos especiales para inputs */
+/* Inputs */
 .postal-input {
- text-transform: uppercase;
+  text-transform: uppercase;
 }
-
 
 select.form-control {
- cursor: pointer;
- background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
- background-position: right 12px center;
- background-repeat: no-repeat;
- background-size: 16px;
- padding-right: 40px;
- appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 40px;
+  appearance: none;
 }
-
 
 /* Mensajes de error */
 .text-danger {
- color: #e74c3c;
- font-size: 13px;
- margin-top: 5px;
- font-weight: 500;
- animation: shake 0.5s ease-in-out;
+  color: #e74c3c;
+  font-size: 13px;
+  margin-top: 5px;
+  font-weight: 500;
+  animation: shake 0.5s ease-in-out;
 }
-
 
 @keyframes shake {
- 0%, 100% { transform: translateX(0); }
- 25% { transform: translateX(-5px); }
- 75% { transform: translateX(5px); }
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
 }
-
 
 /* Botón de pago */
 .btn-primary {
- background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
- border: none;
- padding: 18px 40px;
- border-radius: 50px;
- font-size: 18px;
- font-weight: 600;
- color: white;
- cursor: pointer;
- transition: all 0.3s ease;
- text-transform: uppercase;
- letter-spacing: 1px;
- box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
- position: relative;
- overflow: hidden;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  padding: 18px 40px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
 }
-
 
 .btn-primary:hover:not(:disabled) {
- transform: translateY(-3px);
- box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
 }
-
 
 .btn-primary:active {
- transform: translateY(-1px);
+  transform: translateY(-1px);
 }
-
 
 .btn-primary:disabled {
- opacity: 0.7;
- cursor: not-allowed;
- transform: none;
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
 }
 
-
-/* Efectos adicionales */
 .btn-primary::before {
- content: '';
- position: absolute;
- top: 0;
- left: -100%;
- width: 100%;
- height: 100%;
- background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
- transition: left 0.5s;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
 }
-
 
 .btn-primary:hover::before {
- left: 100%;
+  left: 100%;
 }
 
-
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
- .pago-container {
-   padding: 20px;
-   margin: 10px;
- }
-  .credit-card {
-   width: 300px;
-   height: 190px;
- }
-  .payment-title {
-   font-size: 1.5rem;
- }
-  .card-details {
-   grid-template-columns: 1fr;
-   gap: 15px;
- }
-  .back-button {
-   top: 20px;
-   left: 20px;
-   padding: 10px 14px;
-   font-size: 16px;
- }
-}
+  .pago-container {
+    padding: 20px;
+    margin: 10px;
+  }
 
+  .credit-card {
+    width: 300px;
+    height: 190px;
+  }
+
+  .payment-title {
+    font-size: 1.5rem;
+  }
+
+  .card-details {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .back-button {
+    top: 20px;
+    left: 20px;
+    padding: 10px 14px;
+    font-size: 16px;
+  }
+}
 
 @media (max-width: 480px) {
- .credit-card {
-   width: 280px;
-   height: 175px;
- }
-  .card-front,
- .card-back {
-   padding: 20px;
- }
-  .form-control {
-   padding: 12px 16px;
-   font-size: 14px;
- }
-  .btn-primary {
-   padding: 15px 30px;
-   font-size: 16px;
- }
-}/* Estilos para el componente de pago */
-.mi-componente-pago {
- position: relative;
- min-height: 100vh;
- display: flex;
- align-items: center;
- justify-content: center;
- padding: 20px;
- overflow: hidden;
-}
-
-
-/* Fondo animado con gradiente */
-.background-slideshow {
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
- animation: gradientShift 8s ease infinite;
- z-index: -2;
-}
-
-
-@keyframes gradientShift {
- 0%, 100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
- 25% { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
- 50% { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
- 75% { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-}
-
-
-.overlay {
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- background: rgba(0, 0, 0, 0.3);
- z-index: -1;
-}
-
-
-/* Botón de regresar */
-.back-button {
- position: absolute;
- top: 30px;
- left: 30px;
- background: rgba(255, 255, 255, 0.2);
- border: 2px solid rgba(255, 255, 255, 0.3);
- color: white;
- padding: 12px 16px;
- border-radius: 50%;
- cursor: pointer;
- font-size: 20px;
- font-weight: bold;
- transition: all 0.3s ease;
- backdrop-filter: blur(10px);
- z-index: 10;
-}
-
-
-.back-button:hover {
- background: rgba(255, 255, 255, 0.3);
- border-color: rgba(255, 255, 255, 0.5);
- transform: translateX(-5px);
-}
-
-
-/* Contenedor principal */
-.pago-container {
- background: rgba(255, 255, 255, 0.95);
- border-radius: 20px;
- padding: 40px;
- max-width: 800px;
- width: 100%;
- box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
- backdrop-filter: blur(10px);
- border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-
-.payment-title {
- text-align: center;
- color: #2c3e50;
- font-size: 2rem;
- font-weight: 600;
- margin-bottom: 40px;
- text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-
-/* Contenedor de la tarjeta */
-.card-container {
- perspective: 1000px;
- margin-bottom: 40px;
- display: flex;
- justify-content: center;
-}
-
-
-.credit-card {
- position: relative;
- width: 350px;
- height: 220px;
- transform-style: preserve-3d;
- transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
- cursor: pointer;
-}
-
-
-.credit-card.flipped {
- transform: rotateY(180deg);
-}
-
-
-.card-front,
-.card-back {
- position: absolute;
- width: 100%;
- height: 100%;
- backface-visibility: hidden;
- border-radius: 15px;
- padding: 25px;
- box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
- background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
- color: white;
- display: flex;
- flex-direction: column;
- justify-content: space-between;
-}
-
-
-.card-back {
- transform: rotateY(180deg);
- background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
-}
-
-
-/* Logo de la tarjeta */
-.card-logo {
- display: flex;
- justify-content: flex-end;
- margin-bottom: 20px;
-}
-
-
-.logo-circles {
- display: flex;
- gap: -8px;
-}
-
-
-.logo-circles .circle {
- width: 20px;
- height: 20px;
- border-radius: 50%;
- margin-left: -8px;
-}
-
-
-.logo-circles .circle:nth-child(1) { background: #ff5f00; }
-.logo-circles .circle:nth-child(2) { background: #eb001b; }
-.logo-circles .circle:nth-child(3) { background: #f79e1b; }
-.logo-circles .circle:nth-child(4) { background: #00a2e5; }
-
-
-/* Sección del número de tarjeta */
-.card-number-section {
- margin-bottom: 25px;
-}
-
-
-.card-label {
- font-size: 11px;
- text-transform: uppercase;
- letter-spacing: 1px;
- color: rgba(255, 255, 255, 0.8);
- margin-bottom: 5px;
- display: block;
-}
-
-
-/* Número de tarjeta en la cara frontal */
-.card-number-display {
- font-size: 20px;
- font-weight: 500;
- text-transform: uppercase;
- letter-spacing: 2px;
- margin-top: 5px;
- font-family: 'Courier New', monospace;
- color: white;
-}
-
-
-/* Detalles de la tarjeta */
-.card-details {
- display: grid;
- grid-template-columns: 2fr 1fr 1fr;
- gap: 20px;
- align-items: end;
-}
-
-
-.card-holder-name,
-.card-exp-date,
-.card-cvv-display {
- font-size: 14px;
- font-weight: 500;
- text-transform: uppercase;
- letter-spacing: 1px;
- margin-top: 5px;
-}
-
-
-/* Parte trasera de la tarjeta */
-.magnetic-strip {
- width: 100%;
- height: 40px;
- background: #000;
- margin: 20px 0;
- border-radius: 3px;
-}
-
-
-.cvv-section {
- display: flex;
- justify-content: flex-end;
- align-items: center;
- margin-top: 20px;
-}
-
-
-.cvv-box {
- background: rgba(255, 255, 255, 0.9);
- color: #333;
- padding: 8px 15px;
- border-radius: 5px;
- font-family: 'Courier New', monospace;
- font-size: 16px;
- font-weight: bold;
- letter-spacing: 2px;
- min-width: 50px;
- text-align: center;
-}
-
-
-/* Sección del formulario */
-.form-section {
- display: grid;
- gap: 25px;
-}
-
-
-.form-group {
- position: relative;
- opacity: 0;
- transform: translateY(20px);
- animation: fadeInUp 0.6s ease forwards;
-}
-
-
-.form-group.active {
- animation-delay: 0.1s;
-}
-
-
-.form-group:nth-child(2).active { animation-delay: 0.2s; }
-.form-group:nth-child(3).active { animation-delay: 0.3s; }
-.form-group:nth-child(4).active { animation-delay: 0.4s; }
-.form-group:nth-child(5).active { animation-delay: 0.5s; }
-
-
-@keyframes fadeInUp {
- to {
-   opacity: 1;
-   transform: translateY(0);
- }
-}
-
-
-.form-group label {
- display: block;
- margin-bottom: 8px;
- color: #2c3e50;
- font-weight: 500;
- font-size: 14px;
- text-transform: uppercase;
- letter-spacing: 0.5px;
-}
-
-
-.form-control {
- width: 100%;
- padding: 15px 20px;
- border: 2px solid #e1e8ed;
- border-radius: 10px;
- font-size: 16px;
- transition: all 0.3s ease;
- background: white;
- box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-
-.form-control:focus {
- outline: none;
- border-color: #667eea;
- box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
- transform: translateY(-2px);
-}
-
-
-.stripe-element.form-control {
- padding: 15px 20px;
- border: 2px solid #e1e8ed;
- border-radius: 10px;
- background: white;
- transition: all 0.3s ease;
-}
-
-
-.stripe-element.form-control:focus-within {
- border-color: #667eea;
- box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
- transform: translateY(-2px);
-}
-
-
-/* Estilos especiales para inputs */
-.postal-input {
- text-transform: uppercase;
-}
-
-
-select.form-control {
- cursor: pointer;
- background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
- background-position: right 12px center;
- background-repeat: no-repeat;
- background-size: 16px;
- padding-right: 40px;
- appearance: none;
-}
-
-
-/* Mensajes de error */
-.text-danger {
- color: #e74c3c;
- font-size: 13px;
- margin-top: 5px;
- font-weight: 500;
- animation: shake 0.5s ease-in-out;
-}
-
-
-@keyframes shake {
- 0%, 100% { transform: translateX(0); }
- 25% { transform: translateX(-5px); }
- 75% { transform: translateX(5px); }
-}
-
-
-/* Botón de pago */
-.btn-primary {
- background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
- border: none;
- padding: 18px 40px;
- border-radius: 50px;
- font-size: 18px;
- font-weight: 600;
- color: white;
- cursor: pointer;
- transition: all 0.3s ease;
- text-transform: uppercase;
- letter-spacing: 1px;
- box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
- position: relative;
- overflow: hidden;
-}
-
-
-.btn-primary:hover:not(:disabled) {
- transform: translateY(-3px);
- box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
-}
-
-
-.btn-primary:active {
- transform: translateY(-1px);
-}
-
-
-.btn-primary:disabled {
- opacity: 0.7;
- cursor: not-allowed;
- transform: none;
-}
-
-
-/* Efectos adicionales */
-.btn-primary::before {
- content: '';
- position: absolute;
- top: 0;
- left: -100%;
- width: 100%;
- height: 100%;
- background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
- transition: left 0.5s;
-}
-
-
-.btn-primary:hover::before {
- left: 100%;
-}
-
-
-/* Responsive Design */
-@media (max-width: 768px) {
- .pago-container {
-   padding: 20px;
-   margin: 10px;
- }
   .credit-card {
-   width: 300px;
-   height: 190px;
- }
-  .payment-title {
-   font-size: 1.5rem;
- }
-  .card-details {
-   grid-template-columns: 1fr;
-   gap: 15px;
- }
-  .back-button {
-   top: 20px;
-   left: 20px;
-   padding: 10px 14px;
-   font-size: 16px;
- }
-}
+    width: 280px;
+    height: 175px;
+  }
 
-
-@media (max-width: 480px) {
- .credit-card {
-   width: 280px;
-   height: 175px;
- }
   .card-front,
- .card-back {
-   padding: 20px;
- }
+  .card-back {
+    padding: 20px;
+  }
+
   .form-control {
-   padding: 12px 16px;
-   font-size: 14px;
- }
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
   .btn-primary {
-   padding: 15px 30px;
-   font-size: 16px;
- }
-}/* Estilos para el componente de pago */
-.mi-componente-pago {
- position: relative;
- min-height: 100vh;
- display: flex;
- align-items: center;
- justify-content: center;
- padding: 20px;
- overflow: hidden;
-}
-
-
-/* Fondo animado con gradiente */
-.background-slideshow {
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
- animation: gradientShift 8s ease infinite;
- z-index: -2;
-}
-
-
-@keyframes gradientShift {
- 0%, 100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
- 25% { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
- 50% { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
- 75% { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-}
-
-
-.overlay {
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- background: rgba(0, 0, 0, 0.3);
- z-index: -1;
-}
-
-
-/* Botón de regresar */
-.back-button {
- position: absolute;
- top: 30px;
- left: 30px;
- background: rgba(255, 255, 255, 0.2);
- border: 2px solid rgba(255, 255, 255, 0.3);
- color: white;
- padding: 12px 16px;
- border-radius: 50%;
- cursor: pointer;
- font-size: 20px;
- font-weight: bold;
- transition: all 0.3s ease;
- backdrop-filter: blur(10px);
- z-index: 10;
-}
-
-
-.back-button:hover {
- background: rgba(255, 255, 255, 0.3);
- border-color: rgba(255, 255, 255, 0.5);
- transform: translateX(-5px);
-}
-
-
-/* Contenedor principal */
-.pago-container {
- background: rgba(255, 255, 255, 0.95);
- border-radius: 20px;
- padding: 40px;
- max-width: 800px;
- width: 100%;
- box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
- backdrop-filter: blur(10px);
- border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-
-.payment-title {
- text-align: center;
- color: #2c3e50;
- font-size: 2rem;
- font-weight: 600;
- margin-bottom: 40px;
- text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-
-/* Contenedor de la tarjeta */
-.card-container {
- perspective: 1000px;
- margin-bottom: 40px;
- display: flex;
- justify-content: center;
-}
-
-
-.credit-card {
- position: relative;
- width: 350px;
- height: 220px;
- transform-style: preserve-3d;
- transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
- cursor: pointer;
-}
-
-
-.credit-card.flipped {
- transform: rotateY(180deg);
-}
-
-
-.card-front,
-.card-back {
- position: absolute;
- width: 100%;
- height: 100%;
- backface-visibility: hidden;
- border-radius: 15px;
- padding: 25px;
- box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
- background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
- color: white;
- display: flex;
- flex-direction: column;
- justify-content: space-between;
-}
-
-
-.card-back {
- transform: rotateY(180deg);
- background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
-}
-
-
-/* Logo de la tarjeta */
-.card-logo {
- display: flex;
- justify-content: flex-end;
- margin-bottom: 20px;
-}
-
-
-.logo-circles {
- display: flex;
- gap: -8px;
-}
-
-
-.logo-circles .circle {
- width: 20px;
- height: 20px;
- border-radius: 50%;
- margin-left: -8px;
-}
-
-
-.logo-circles .circle:nth-child(1) { background: #ff5f00; }
-.logo-circles .circle:nth-child(2) { background: #eb001b; }
-.logo-circles .circle:nth-child(3) { background: #f79e1b; }
-.logo-circles .circle:nth-child(4) { background: #00a2e5; }
-
-
-/* Sección del número de tarjeta */
-.card-number-section {
- margin-bottom: 25px;
-}
-
-
-.card-label {
- font-size: 11px;
- text-transform: uppercase;
- letter-spacing: 1px;
- color: rgba(255, 255, 255, 0.8);
- margin-bottom: 5px;
- display: block;
-}
-
-
-/* Número de tarjeta en la cara frontal */
-.card-number-display {
- font-size: 20px;
- font-weight: 500;
- text-transform: uppercase;
- letter-spacing: 2px;
- margin-top: 5px;
- font-family: 'Courier New', monospace;
- color: white;
-}
-
-
-/* Detalles de la tarjeta */
-.card-details {
- display: grid;
- grid-template-columns: 2fr 1fr 1fr;
- gap: 20px;
- align-items: end;
-}
-
-
-.card-holder-name,
-.card-exp-date,
-.card-cvv-display {
- font-size: 14px;
- font-weight: 500;
- text-transform: uppercase;
- letter-spacing: 1px;
- margin-top: 5px;
-}
-
-
-/* Parte trasera de la tarjeta */
-.magnetic-strip {
- width: 100%;
- height: 40px;
- background: #000;
- margin: 20px 0;
- border-radius: 3px;
-}
-
-
-.cvv-section {
- display: flex;
- justify-content: flex-end;
- align-items: center;
- margin-top: 20px;
-}
-
-
-.cvv-box {
- background: rgba(255, 255, 255, 0.9);
- color: #333;
- padding: 8px 15px;
- border-radius: 5px;
- font-family: 'Courier New', monospace;
- font-size: 16px;
- font-weight: bold;
- letter-spacing: 2px;
- min-width: 50px;
- text-align: center;
-}
-
-
-/* Sección del formulario */
-.form-section {
- display: grid;
- gap: 25px;
-}
-
-
-.form-group {
- position: relative;
- opacity: 0;
- transform: translateY(20px);
- animation: fadeInUp 0.6s ease forwards;
-}
-
-
-.form-group.active {
- animation-delay: 0.1s;
-}
-
-
-.form-group:nth-child(2).active { animation-delay: 0.2s; }
-.form-group:nth-child(3).active { animation-delay: 0.3s; }
-.form-group:nth-child(4).active { animation-delay: 0.4s; }
-.form-group:nth-child(5).active { animation-delay: 0.5s; }
-
-
-@keyframes fadeInUp {
- to {
-   opacity: 1;
-   transform: translateY(0);
- }
-}
-
-
-.form-group label {
- display: block;
- margin-bottom: 8px;
- color: #2c3e50;
- font-weight: 500;
- font-size: 14px;
- text-transform: uppercase;
- letter-spacing: 0.5px;
-}
-
-
-.form-control {
- width: 100%;
- padding: 15px 20px;
- border: 2px solid #e1e8ed;
- border-radius: 10px;
- font-size: 16px;
- transition: all 0.3s ease;
- background: white;
- box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-
-.form-control:focus {
- outline: none;
- border-color: #667eea;
- box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
- transform: translateY(-2px);
-}
-
-
-.stripe-element.form-control {
- padding: 15px 20px;
- border: 2px solid #e1e8ed;
- border-radius: 10px;
- background: white;
- transition: all 0.3s ease;
-}
-
-
-.stripe-element.form-control:focus-within {
- border-color: #667eea;
- box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
- transform: translateY(-2px);
-}
-
-
-/* Estilos especiales para inputs */
-.postal-input {
- text-transform: uppercase;
-}
-
-
-select.form-control {
- cursor: pointer;
- background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
- background-position: right 12px center;
- background-repeat: no-repeat;
- background-size: 16px;
- padding-right: 40px;
- appearance: none;
-}
-
-
-/* Mensajes de error */
-.text-danger {
- color: #e74c3c;
- font-size: 13px;
- margin-top: 5px;
- font-weight: 500;
- animation: shake 0.5s ease-in-out;
-}
-
-
-@keyframes shake {
- 0%, 100% { transform: translateX(0); }
- 25% { transform: translateX(-5px); }
- 75% { transform: translateX(5px); }
-}
-
-
-/* Botón de pago */
-.btn-primary {
- background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
- border: none;
- padding: 18px 40px;
- border-radius: 50px;
- font-size: 18px;
- font-weight: 600;
- color: white;
- cursor: pointer;
- transition: all 0.3s ease;
- text-transform: uppercase;
- letter-spacing: 1px;
- box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
- position: relative;
- overflow: hidden;
-}
-
-
-.btn-primary:hover:not(:disabled) {
- transform: translateY(-3px);
- box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
-}
-
-
-.btn-primary:active {
- transform: translateY(-1px);
-}
-
-
-.btn-primary:disabled {
- opacity: 0.7;
- cursor: not-allowed;
- transform: none;
-}
-
-
-/* Efectos adicionales */
-.btn-primary::before {
- content: '';
- position: absolute;
- top: 0;
- left: -100%;
- width: 100%;
- height: 100%;
- background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
- transition: left 0.5s;
-}
-
-
-.btn-primary:hover::before {
- left: 100%;
-}
-
-
-/* Responsive Design */
-@media (max-width: 768px) {
- .pago-container {
-   padding: 20px;
-   margin: 10px;
- }
-  .credit-card {
-   width: 300px;
-   height: 190px;
- }
-  .payment-title {
-   font-size: 1.5rem;
- }
-  .card-details {
-   grid-template-columns: 1fr;
-   gap: 15px;
- }
-  .back-button {
-   top: 20px;
-   left: 20px;
-   padding: 10px 14px;
-   font-size: 16px;
- }
-}
-
-
-@media (max-width: 480px) {
- .credit-card {
-   width: 280px;
-   height: 175px;
- }
-  .card-front,
- .card-back {
-   padding: 20px;
- }
-  .form-control {
-   padding: 12px 16px;
-   font-size: 14px;
- }
-  .btn-primary {
-   padding: 15px 30px;
-   font-size: 16px;
- }
+    padding: 15px 30px;
+    font-size: 16px;
+  }
 }

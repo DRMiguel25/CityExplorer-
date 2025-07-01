@@ -33,14 +33,21 @@
         </div>
 
         <div class="card-img-container">
+          <button class="btn-arrow" (click)="cambiarImagen(lugar, -1); $event.stopPropagation()">‹</button>
+
           <img
-            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=250&fit=crop"
+            [src]="lugar.url"
             alt="{{ lugar.nombre }}"
             class="card-img">
+
+          <button class="btn-arrow" (click)="cambiarImagen(lugar, 1); $event.stopPropagation()">›</button>
+
           <div class="category-tags">
-            <span class="category-tag">MONTAÑA</span>
+            <span class="category-tag">{{ getNombreCategoria(lugar.id_categoria) }}</span>
           </div>
+
         </div>
+
 
         <div class="card-body">
           <div class="card-title">Descripción</div>

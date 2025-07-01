@@ -327,3 +327,36 @@ body {
     padding: 0 1rem;
   }
 }
+
+.card-img-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-arrow {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 5px 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.btn-arrow:first-child {
+  left: 5px;
+}
+
+.btn-arrow:last-child {
+  right: 5px;
+}
+
+.card-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}

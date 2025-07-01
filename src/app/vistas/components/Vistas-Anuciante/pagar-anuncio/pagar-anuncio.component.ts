@@ -78,7 +78,7 @@ export class PagoAnuncioComponent implements AfterViewInit, OnDestroy, OnInit {
    // Estilos para los elementos de Stripe
    const cardNumberStyle = {
      base: {
-       color: '#ffffff',
+       color: '#18181b',
        fontSize: '20px',
        fontFamily: 'Courier New, monospace',
        letterSpacing: '2px',

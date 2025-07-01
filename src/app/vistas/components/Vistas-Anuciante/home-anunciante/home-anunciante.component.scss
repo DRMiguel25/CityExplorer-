@@ -216,3 +216,31 @@ h1 {
     text-align: center;
   }
 }
+
+.image-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-arrow {
+  background-color: transparent;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+  color: #333;
+}
+
+.btn-arrow:hover {
+  color: #007bff;
+}
+
+.card-img {
+  max-width: 300px;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
