@@ -39,9 +39,12 @@ export class VistaDetalladaDestinoComponent implements OnInit {
    this.id_destino = this.route.snapshot.paramMap.get('id_destino');
    this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
    if (this.id_destino) {
-     this.obtenerLugar(+this.id_destino);
-     this.obtenerValoraciones(); // Llamada para obtener las valoraciones del lugar
-     this.obtenerImagenes(+this.id_destino);
+    this.obtenerLugar(+this.id_destino);
+    this.obtenerValoraciones(); // Llamada para obtener las valoraciones del lugar
+    this.obtenerImagenes(+this.id_destino);
+
+    // Nueva llamada para verificar si es favorito
+    this.verificarFavorito(+this.id_destino);
    }
 
     this.obtenerCategoriasDesdeAPI();
@@ -322,4 +325,23 @@ obtenerCategoriasDesdeAPI(): void {
     });
   }
 
+  verificarFavorito(idLugar: number): void {
+  if (!this.id_usuario || this.id_usuario === "0") {
+    // Usuario no logueado, no hace falta checar favorito
+    return;
+  }
+
+  this.httpLaravelService.Service_Get(`favoritos/check/${idLugar}`, '').subscribe({
+    next: (resp: any) => {
+      if (resp && resp.success) {
+        this.lugar = this.lugar || {}; // aseguramos que lugar exista
+        this.lugar.esFavorito = resp.es_favorito;
+        console.log('Estado favorito cargado:', resp.es_favorito);
+      }
+    },
+    error: (err) => {
+      console.error('Error al verificar favorito:', err);
+    }
+  });
+}
 }

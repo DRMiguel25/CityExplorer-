@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class HttpLaravelService {
-  private _url = 'http://127.0.0.1:8001/api';
+  private _url = 'http://127.0.0.1:8000/api';
 
   constructor(
     public http: HttpClient,
@@ -129,5 +129,12 @@ export class HttpLaravelService {
     headers: this.getHeaders()
   });
 }
+
+Service_GetImagenes(idLugar: number) {
+  return this.http.get<any[]>(`${this._url}/lugar/${idLugar}/imagenes`, {
+    headers: this.getHeaders()
+  });
+}
+
 
 }

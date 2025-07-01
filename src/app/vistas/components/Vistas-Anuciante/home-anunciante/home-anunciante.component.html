@@ -22,18 +22,25 @@
       <div class="cards-container">
         <!-- Iterar sobre los lugares para generar una tarjeta por cada uno -->
         <div *ngFor="let lugar of lugares" class="card">
-          <div class="card-header">
-            <div>{{ lugar.nombre }}</div>
-          </div>
-          <img [src]="lugar.url" alt="{{ lugar.nombre }}" class="card-img">
-          <div class="card-body">
-            <div class="card-title">Descripción</div>
-            <div class="card-text">{{ lugar.descripcion }}</div>
-            <div class="card-actions">
-              <button class="btn btn-edit" (click)="vistaDetalladaAnuncio(lugar.id_lugar)">Vista detallada</button>
-            </div>
-          </div>
-        </div>
+  <div class="card-header">{{ lugar.nombre }}</div>
+
+  <div class="image-carousel">
+    <button class="btn-arrow" (click)="cambiarImagen(lugar, -1)">‹</button>
+
+    <img [src]="lugar.url" alt="{{ lugar.nombre }}" class="card-img">
+
+    <button class="btn-arrow" (click)="cambiarImagen(lugar, 1)">›</button>
+  </div>
+
+  <div class="card-body">
+    <div class="card-title">Descripción</div>
+    <div class="card-text">{{ lugar.descripcion }}</div>
+    <div class="card-actions">
+      <button class="btn btn-edit" (click)="vistaDetalladaAnuncio(lugar.id_lugar)">Vista detallada</button>
+    </div>
+  </div>
+</div>
+
       </div>
     </div>
   </div>

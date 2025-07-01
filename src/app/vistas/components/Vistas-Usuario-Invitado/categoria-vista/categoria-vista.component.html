@@ -1,33 +1,53 @@
 <navbar-invitado-usuario></navbar-invitado-usuario>
+<body>
+  
 
-<div class="background-slideshow"></div>
-<div class="overlay"></div>
 <div class="main-content">
-  <h2 class="announcements-title">{{ tituloCategoria | titlecase }}</h2>
+  <h1 class="page-title">{{ tituloCategoria | titlecase }}</h1>
 
-  <!-- Verificar si hay lugares -->
   <div *ngIf="lugares.length === 0">
-    <h3 class="announcements-title">No se encontraron lugares para esta categoría.</h3>
+    <p class="mensaje-vacio">
+      Aún no has agregado ningún lugar a tus favoritos.<br />
+      ¡Explora y guarda los que más te gusten!
+    </p>
   </div>
 
   <div class="cards-container" *ngIf="lugares.length > 0">
-    <div class="card" *ngFor="let lugar of lugares">
-      <div (click)="vistaDetalladaDestino(lugar.id_lugar)">
-        <div class="card-header">
-          <div>{{ lugar.nombre }}</div>
-        </div>
+    <div
+      class="card"
+      *ngFor="let lugar of lugares"
+      (click)="vistaDetalladaDestino(lugar.id_lugar)"
+    >
+      <div class="card-header">
+        <div class="card-title-text">{{ lugar.nombre }}</div>
+      </div>
+
+      <div class="card-img-container">
         <img
-          [src]="lugar.url || 'https://via.placeholder.com/300x200.png?text=Sin+Imagen'"
-          alt="{{ lugar.nombre }}"
+          [src]="lugar.url || 'https://via.placeholder.com/400x300'"
+          alt="Imagen lugar"
           class="card-img"
         />
-        <div class="card-body">
-          <div class="card-title">Descripción</div>
-          <div class="card-text">
-            {{ lugar.descripcion || 'No hay descripción disponible.' }}
+        <div class="category-tags">
+          <span class="category-tag">Favorito</span>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="card-title">Descripción</div>
+        <div class="card-text">
+          {{ lugar.descripcion || "No hay descripción disponible." }}
+        </div>
+        <div class="card-info">
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+            <span>4.5</span>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+</body>
