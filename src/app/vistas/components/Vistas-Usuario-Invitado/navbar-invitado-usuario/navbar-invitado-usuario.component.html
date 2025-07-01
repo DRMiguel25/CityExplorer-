@@ -28,7 +28,7 @@
 
   <div class="user-icon" (click)="mostrarAlertaCrearCuenta()">
   <ng-container *ngIf="id_usuario !== 0 && usuario?.foto_perfil; else iconoDefault">
-<img [src]="'http://localhost:8001/storage/' + usuario.foto_perfil" alt="Foto de perfil" class="perfil-img">
+<img [src]="'http://127.0.0.1:8000/storage/' + usuario.foto_perfil" alt="Foto de perfil" class="perfil-img">
   </ng-container>
 
   <ng-template #iconoDefault>
