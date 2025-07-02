@@ -1,6 +1,4 @@
 <navbar-invitado-usuario></navbar-invitado-usuario>
-<body>
-  <main class="main-content">
     <!-- Breadcrumbs -->
     <div class="breadcrumbs"></div>
 
@@ -16,18 +14,18 @@
       </div>
 
       <div class="filter-tags">
-        <span class="filter-tag active">Todos</span>
-        <span class="filter-tag">5 Estrellas</span> 
-        <span class="filter-tag">4 Estrellas</span>
-        <span class="filter-tag">3 Estrellas</span>
-        <span class="filter-tag">2 Estrellas</span>
-        <span class="filter-tag">1 Estrella </span>
-      </div>
-    </div>
+  <span class="filter-tag" [class.active]="filtroEstrellas === null" (click)="setFiltroEstrellas(null)">Todos</span>
+  <span class="filter-tag" [class.active]="filtroEstrellas === 5" (click)="setFiltroEstrellas(5)">5 Estrellas</span>
+  <span class="filter-tag" [class.active]="filtroEstrellas === 4" (click)="setFiltroEstrellas(4)">4 Estrellas</span>
+  <span class="filter-tag" [class.active]="filtroEstrellas === 3" (click)="setFiltroEstrellas(3)">3 Estrellas</span>
+  <span class="filter-tag" [class.active]="filtroEstrellas === 2" (click)="setFiltroEstrellas(2)">2 Estrellas</span>
+  <span class="filter-tag" [class.active]="filtroEstrellas === 1" (click)="setFiltroEstrellas(1)">1 Estrella</span>
+</div>
+
 
     <!-- Cards Container -->
     <div class="cards-container">
-      <div class="card" *ngFor="let lugar of lugares" (click)="vistaDetalladaDestino(lugar.id_lugar)">
+      <div class="card" *ngFor="let lugar of getLugaresFiltrados()" (click)="vistaDetalladaDestino(lugar.id_lugar)">
         <div class="card-header">
           <div>{{ lugar.nombre }}</div>
         </div>
@@ -55,17 +53,13 @@
             {{ lugar.descripcion || 'No hay descripción disponible.' }}
           </div>
           <div class="card-info">
-            <div class="rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-              <span>4.2</span>
-            </div>
+          <div class="rating">
+            <ng-container *ngFor="let starClass of getEstrellasVisuales(lugar.id_lugar)">
+              <i [class]="starClass"></i>
+            </ng-container>
+            <span>{{ promedioValoracionPorLugar[lugar.id_lugar] || 'Sin calificar' }}</span>
           </div>
+        </div>
         </div>
       </div>
     </div>
-  </main>
-</body>

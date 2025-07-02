@@ -35,30 +35,24 @@ export class HomeAnuncianteComponent implements OnInit {
     this.loadLugares();
     this.logLoadTime();
   }
-  
-loadLugares(): void {
-  this.httpLaravelService.Service_Get('lugar', '').subscribe(
-    (data: Lugar[]) => {
-      console.log('📍 Data de lugares recibida:', data);
 
-      this.lugares = data.filter(lugar => lugar.id_usuario === this.idUsuario);
-
-      console.log('✅ Lugares filtrados por usuario:', this.lugares);
-
-      // Cargar imágenes para cada lugar
-      this.lugares.forEach(lugar => {
-        this.cargarImagenesLugar(lugar);
-      });
-
-      this.isLoading = false;
-    },
-    (error) => {
-      this.isLoading = false;
-      this.errorMessage = 'Error al cargar los lugares, por favor intente nuevamente.';
-      console.error('❌ Error en Service_Get(lugar):', error);
-    }
-  );
-}
+  loadLugares(): void {
+    this.httpLaravelService.Service_Get('lugar', '').subscribe(
+      (data: Lugar[]) => {
+        this.lugares = data.filter(lugar => lugar.id_usuario === this.idUsuario);
+        // Cargar imágenes para cada lugar
+        this.lugares.forEach(lugar => {
+          this.cargarImagenesLugar(lugar);
+        });
+        this.isLoading = false;
+      },
+      (error) => {
+        this.isLoading = false;
+        this.errorMessage = 'Error al cargar los lugares, por favor intente nuevamente.';
+        console.error(error);
+      }
+    );
+  }
 
   crearAnuncio() {
     this.router.navigate(['/crear-actualizar-anuncio', this.idUsuario]);

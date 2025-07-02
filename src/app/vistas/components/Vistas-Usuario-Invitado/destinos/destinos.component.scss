@@ -360,3 +360,10 @@ body {
   height: auto;
   border-radius: 5px;
 }
+
+.filter-tag.active {
+  background-color: #5BA7F7;
+  color: white;
+  border-radius: 4px;
+  padding: 4px 8px;
+}

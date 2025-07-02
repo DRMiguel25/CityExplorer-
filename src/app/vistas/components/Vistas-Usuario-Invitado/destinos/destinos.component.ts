@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpLaravelService } from '../../../../http.service';
 import { Lugar } from '../../Vistas-Anuciante/home-anunciante/lugar.interface';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'destino-vista',
@@ -19,10 +20,13 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
 
   private slideshowInterval: any;
 
-  id_usuario: string | null = null; // Aquí guardamos el ID del usuario
+  id_usuario: string | null = null;
 
+  listaComentarios: any[] = [];
+  promedioValoracionPorLugar: { [idLugar: number]: number } = {};
 
-  // Lista de imágenes para el fondo animado
+  filtroEstrellas: number | null = null;
+
   images = [
     'https://a.travel-assets.com/findyours-php/viewfinder/images/res60/200000/200753-Guanajuato.jpg',
     'https://a.travel-assets.com/findyours-php/viewfinder/images/res60/201000/201316-El-Charco-Del-Ingenio.jpg',
@@ -34,7 +38,8 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private router: Router,
     private route: ActivatedRoute,
-    private httpLaravelService: HttpLaravelService
+    private httpLaravelService: HttpLaravelService,
+    private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -42,33 +47,27 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
     console.log('ID del usuario:', this.id_usuario);
 
     this.obtenerCategoriasDesdeAPI();
-    
     this.loadLugares();
 
-    // Inicializar el cambio de imágenes SOLO en el navegador
     if (isPlatformBrowser(this.platformId)) {
       this.initBackgroundChange();
     }
 
-    this.logLoadTime();  // 👈 mide tiempo de carga
+    this.logLoadTime();
   }
 
   ngOnDestroy(): void {
-    // Limpiar el intervalo cuando el componente se destruye
     if (this.slideshowInterval) {
       clearInterval(this.slideshowInterval);
     }
   }
 
   vistaDetalladaDestino(id: number | string) {
-    console.log('ID del destino:', id);
     const idEntero = parseInt(id.toString(), 10);
-
     if (isNaN(idEntero)) {
       console.error('ID inválido:', id);
       return;
     }
-
     this.router.navigate(['/vista-detallada-destino', idEntero, this.id_usuario]);
   }
 
@@ -77,57 +76,48 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
 
     if (slideshow) {
       let index = 0;
-
-      // Establecer la primera imagen inmediatamente al cargar
       slideshow.style.backgroundImage = `url('${this.images[index]}')`;
-      slideshow.style.opacity = '1'; // Asegurarse de que la opacidad sea visible
+      slideshow.style.opacity = '1';
 
-      // Esperar 2 segundos antes de iniciar el ciclo de animación
       setTimeout(() => {
         this.slideshowInterval = setInterval(() => {
-          // Aplicar efecto de desvanecimiento
           slideshow.style.opacity = '0';
-
           setTimeout(() => {
-            // Cambiar la imagen de fondo
             index = (index + 1) % this.images.length;
             slideshow.style.backgroundImage = `url('${this.images[index]}')`;
-
-            // Restaurar la opacidad después de cambiar la imagen
             setTimeout(() => {
               slideshow.style.opacity = '1';
-            }, 50); // Retraso mínimo para sincronizar la transición
-          }, 500); // Duración del efecto de desvanecimiento
-        }, 8000); // Cambio cada 8 segundos
-      }, 2000); // Esperar 2 segundos antes de iniciar la animación
+            }, 50);
+          }, 500);
+        }, 8000);
+      }, 2000);
     } else {
       console.warn('Elemento de slideshow no encontrado.');
     }
   }
 
   logLoadTime() {
-  window.addEventListener('load', () => {
-    const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
-    if (navEntry) {
-      console.log('⏱️ Tiempo total de carga en destinos (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
-      console.log('🧱 Tiempo de render en destinos (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
-      console.log('🌐 Tiempo de respuesta destinos (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
-    } else {
-      // Fallback para navegadores antiguos
-      const timing = performance.timing;
-      const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
-      console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
-    }
-  });
-}
+    window.addEventListener('load', () => {
+      const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+      if (navEntry) {
+        console.log('⏱️ Tiempo total de carga:', navEntry.domComplete.toFixed(2), 'ms');
+      } else {
+        const timing = performance.timing;
+        const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
+        console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
+      }
+    });
+  }
 
   loadLugares(): void {
     this.httpLaravelService.Service_Get('lugar', '').subscribe({
       next: (data: Lugar[]) => {
-        this.lugares = data;
+        this.lugares = data.filter(lugar => lugar.activo === true);
+        console.log('✅ Lugares activos:', this.lugares);
 
         this.lugares.forEach(lugar => {
           this.cargarImagenesLugar(lugar);
+          this.obtenerComentarios(lugar.id_lugar);
         });
       },
       error: (error) => {
@@ -142,7 +132,7 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
         if (imagenes && imagenes.length > 0) {
           this.imagenesPorLugar[lugar.id_lugar] = imagenes;
           this.imagenActualIndexPorLugar[lugar.id_lugar] = 0;
-          lugar.url = imagenes[0].url;  // Primera imagen
+          lugar.url = imagenes[0].url;
         } else {
           lugar.url = 'assets/img/placeholder.png';
         }
@@ -167,21 +157,76 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
     lugar.url = imgs[index].url;
   }
 
-    obtenerCategoriasDesdeAPI(): void {
-      this.httpLaravelService.Service_Get('categorias', '').subscribe({
-        next: (resp: any) => {
-          this.listaCategorias = resp.data; // <- solo tomamos el array
-          console.log('📦 Lista de categorías obtenidas:', this.listaCategorias);
-        },
-        error: (error) => {
-          console.error('❌ Error al obtener categorías:', error);
+  obtenerCategoriasDesdeAPI(): void {
+    this.httpLaravelService.Service_Get('categorias', '').subscribe({
+      next: (resp: any) => {
+        this.listaCategorias = resp.data;
+        console.log('📦 Categorías:', this.listaCategorias);
+      },
+      error: (error) => {
+        console.error('❌ Error al obtener categorías:', error);
+      }
+    });
+  }
+
+  getNombreCategoria(idCategoria: number): string {
+    const categoria = this.listaCategorias.find(cat => cat.id_categoria === idCategoria);
+    return categoria ? categoria.nombre : 'Sin Categoría';
+  }
+
+  obtenerComentarios(idLugar: number): void {
+    const modelo = 'lugar';
+    const dato = `${idLugar}/comentarios`;
+
+    this.httpLaravelService.Service_Get(modelo, dato).subscribe({
+      next: (respuesta: any) => {
+        const comentarios = respuesta?.data || [];
+        let promedio = 0;
+
+        if (Array.isArray(comentarios) && comentarios.length > 0) {
+          const suma = comentarios.reduce((acc, c) => acc + (c.valoracion || 0), 0);
+          promedio = +(suma / comentarios.length).toFixed(1);
         }
-      });
+
+        this.promedioValoracionPorLugar[idLugar] = promedio;
+        this.cdRef.detectChanges();
+      },
+      error: (error) => {
+        console.error('❌ Error obteniendo comentarios del lugar:', error);
+        this.promedioValoracionPorLugar[idLugar] = 0;
+      }
+    });
+  }
+
+  getEstrellasVisuales(idLugar: number): string[] {
+    const promedio = this.promedioValoracionPorLugar[idLugar] || 0;
+    const estrellas: string[] = [];
+
+    for (let i = 1; i <= 5; i++) {
+      if (promedio >= i) {
+        estrellas.push('fas fa-star');
+      } else if (promedio >= i - 0.5) {
+        estrellas.push('fas fa-star-half-alt');
+      } else {
+        estrellas.push('far fa-star');
+      }
     }
 
-getNombreCategoria(idCategoria: number): string {
-  const categoria = this.listaCategorias.find(cat => cat.id_categoria === idCategoria);
-  return categoria ? categoria.nombre : 'Sin Categoría';
-}
+    return estrellas;
+  }
 
+  setFiltroEstrellas(estrellas: number | null): void {
+    this.filtroEstrellas = estrellas;
+  }
+
+  getLugaresFiltrados(): Lugar[] {
+    if (this.filtroEstrellas === null) {
+      return this.lugares;
+    }
+
+    return this.lugares.filter(lugar => {
+      const promedio = this.promedioValoracionPorLugar[lugar.id_lugar] ?? 0;
+      return Math.round(promedio) === this.filtroEstrellas;
+    });
+  }
 }
