@@ -25,24 +25,46 @@
       </div>
 
       <div class="card-img-container">
-        <img 
-          [src]="fav.lugar.url || 'https://via.placeholder.com/400x300'" 
-          alt="Imagen lugar" 
-          class="card-img"
-        />
-        <div class="category-tags">
-          <span class="category-tag">Favorito</span>
-        </div>
+      <img 
+        [src]="(imagenesPorLugar[fav.lugar.id_lugar] && imagenesPorLugar[fav.lugar.id_lugar][indicesImagen[fav.lugar.id_lugar]]) || 'https://via.placeholder.com/400x300'"
+        alt="Imagen lugar" 
+        class="card-img"
+      />
+
+      <!-- Flecha izquierda -->
+      <button 
+        class="nav-button left" 
+        (click)="cambiarImagen(fav.lugar.id_lugar, -1); $event.stopPropagation()"
+      >
+        <span class="material-symbols-outlined">
+chevron_backward
+</span>
+      </button>
+
+      <!-- Flecha derecha -->
+      <button 
+        class="nav-button right" 
+        (click)="cambiarImagen(fav.lugar.id_lugar, 1); $event.stopPropagation()"
+      >
+       <span class="material-symbols-outlined">
+chevron_forward
+</span>
+      </button>
+
+      <div class="category-tags">
+        <span class="category-tag">Favorito</span>
       </div>
+    </div>
 
       <div class="card-body">
         <div class="card-title">Descripción</div>
         <div class="card-text">{{ fav.lugar.descripcion }}</div>
         <div class="card-info">
           <div class="rating">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-            <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-            <span>4.5</span>
+            <ng-container *ngFor="let estrella of getEstrellasVisuales(fav.lugar.id_lugar)">
+              <i [class]="estrella"></i>
+            </ng-container>
+            <span>{{ promedioValoracionPorLugar[fav.lugar.id_lugar] || 0 }}</span>
           </div>
           <div class="price">
             {{ fav.fecha_agregado | date:'dd MMM yyyy' }}

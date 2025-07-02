@@ -48,11 +48,22 @@ body {
 /* Filters Section */
 .filters-section {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   gap: 2rem;
   margin: 3rem 0;
+  width: 100%;
+}
+
+/* Contenedor superior: buscador y filtros */
+.filters-top-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .search-box {
@@ -65,7 +76,7 @@ body {
   border-radius: 25px;
   background: #F0F8FF;
   font-size: 1rem;
-  width: 300px;
+  width: 350px;
   transition: all 0.3s ease;
   color: #2E5BBA;
 }
@@ -89,10 +100,14 @@ body {
   color: #4A90E2;
 }
 
+/* Contenedor de filtros de estrellas */
 .filter-tags {
   display: flex;
+  justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
+  width: 100%;
+  max-width: 800px;
 }
 
 .filter-tag {
@@ -119,12 +134,13 @@ body {
   box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
 }
 
-/* Cards Container */
+/* Cards Container - Debajo de filtros */
 .cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 2rem;
-  margin: 3rem 0;
+  margin: 2rem 0;
+  width: 100%;
 }
 
 /* Card Styles */
@@ -138,6 +154,9 @@ body {
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: pointer;
   position: relative;
+  height: 550px;
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover {
@@ -180,6 +199,10 @@ body {
   font-size: 1.25rem;
   font-weight: 700;
   position: relative;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .card-header::before {
@@ -192,47 +215,110 @@ body {
   background: linear-gradient(135deg, transparent, rgba(240, 248, 255, 0.1));
 }
 
+/* ========== CONTENEDOR DE IMAGEN CON TAMAÑO FIJO ========== */
 .card-img-container {
   position: relative;
-  height: 200px;
+  width: 100%;
+  height: 250px !important; /* ALTURA FIJA PARA TODAS LAS IMÁGENES */
   overflow: hidden;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* No se encoge */
 }
 
+/* ========== IMAGEN CON TAMAÑO COMPLETAMENTE UNIFORME ========== */
 .card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100% !important;          /* ANCHO FIJO AL 100% DEL CONTENEDOR */
+  height: 100% !important;         /* ALTURA FIJA AL 100% DEL CONTENEDOR */
+  object-fit: cover !important;    /* RECORTA Y MANTIENE PROPORCIÓN */
+  object-position: center !important; /* CENTRA LA IMAGEN */
+  display: block !important;
   transition: transform 0.3s ease;
+  border: none;
+  outline: none;
+  /* Forzar dimensiones exactas */
+  min-width: 100%;
+  min-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .card:hover .card-img {
   transform: scale(1.05);
 }
 
+/* ========== BOTONES DE NAVEGACIÓN EN LOS EXTREMOS ========== */
+.btn-arrow {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  cursor: pointer;
+  font-size: 1.8rem;
+  font-weight: bold;
+  padding: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  border-radius: 50%;
+  color: #2E5BBA;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-arrow:hover {
+  background: rgba(74, 144, 226, 0.95);
+  color: white;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 4px 20px rgba(74, 144, 226, 0.4);
+}
+
+/* FLECHAS EN LOS EXTREMOS DEL CONTENEDOR */
+.btn-arrow:first-child {
+  left: 10px; /* La mitad del ancho del botón para que sobresalga */
+}
+
+.btn-arrow:last-child {
+  right: -1000px; /* La mitad del ancho del botón para que sobresalga */
+}
+
 .category-tags {
   position: absolute;
-  bottom: 1rem;
-  left: 1rem;
+  bottom: 15px;
+  left: 15px;
   display: flex;
   gap: 0.5rem;
+  z-index: 2;
 }
 
 .category-tag {
-  padding: 0.25rem 0.75rem;
-  background: #F0F8FF;
+  padding: 0.4rem 0.8rem;
+  background: rgba(240, 248, 255, 0.95);
   color: #2E5BBA;
-  border: 1px solid #E6F0FA;
-  border-radius: 15px;
+  border: 1px solid rgba(230, 240, 250, 0.8);
+  border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* ========== CUERPO DE LA TARJETA ========== */
 .card-body {
   padding: 1.5rem;
   background: rgba(240, 248, 255, 0.5);
   backdrop-filter: blur(10px);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .card-title {
@@ -248,6 +334,12 @@ body {
   color: #6B7280;
   line-height: 1.6;
   margin-bottom: 1.5rem;
+  flex: 1;
+  /* Limitar texto con ellipsis si es muy largo */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .card-info {
@@ -255,6 +347,7 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+  margin-top: auto;
 }
 
 .rating {
@@ -290,6 +383,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  margin-top: auto;
 }
 
 .cta-button:hover {
@@ -298,7 +392,9 @@ body {
   box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
 }
 
-/* Responsive */
+/* ========== RESPONSIVE DESIGN ========== */
+
+/* MÓVILES */
 @media (max-width: 768px) {
   .navbar-menu {
     display: none;
@@ -306,64 +402,127 @@ body {
 
   .page-title {
     font-size: 2rem;
+    margin: 4rem 0 1.5rem;
   }
 
   .filters-section {
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .filters-top-section {
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
   .search-input {
     width: 100%;
-    max-width: 300px;
+    max-width: 320px;
+  }
+
+  .filter-tags {
+    gap: 0.8rem;
+  }
+
+  .filter-tag {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
   }
 
   .cards-container {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    margin: 1.5rem 0;
   }
 
   .main-content {
     padding: 0 1rem;
   }
+
+  .card {
+    height: auto;
+    min-height: 480px;
+  }
+
+  /* IMAGEN MÁS PEQUEÑA EN MÓVIL */
+  .card-img-container {
+    height: 200px !important;
+  }
+  
+  /* FLECHAS DENTRO DEL CONTENEDOR EN MÓVIL */
+  .btn-arrow {
+    width: 35px;
+    height: 35px;
+    font-size: 1.4rem;
+  }
+  
+  .btn-arrow:first-child {
+    left: 10px; /* Dentro del contenedor en móvil */
+  }
+  
+  .btn-arrow:last-child {
+    right: 10px; /* Dentro del contenedor en móvil */
+  }
 }
 
-.card-img-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* TABLETS */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .card-img-container {
+    height: 220px !important;
+  }
+  
+  .card {
+    height: 520px;
+  }
 }
 
-.btn-arrow {
+/* PANTALLAS GRANDES */
+@media (min-width: 1025px) {
+  .card-img-container {
+    height: 250px !important;
+  }
+  
+  .card {
+    height: 550px;
+  }
+}
+
+/* ========== FILTROS ACTIVOS ========== */
+.filter-tag.active {
+  background-color: #5BA7F7 !important;
+  color: white !important;
+  border-radius: 25px;
+  padding: 0.75rem 1.5rem;
+} 
+
+.nav-button {
   position: absolute;
-  background: rgba(255, 255, 255, 0.7);
-  border: none;
-  cursor: pointer;
-  font-size: 1.5rem;
-  padding: 5px 10px;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 1;
+  background: rgba(255, 255, 255, 0.95);
+  color: #2E5BBA;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 50%;
+  user-select: none;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  z-index: 10;
 }
 
-.btn-arrow:first-child {
-  left: 5px;
-}
-
-.btn-arrow:last-child {
-  right: 5px;
-}
-
-.card-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
-}
-
-.filter-tag.active {
-  background-color: #5BA7F7;
+.nav-button:hover {
+  background: rgba(74, 144, 226, 0.95);
   color: white;
-  border-radius: 4px;
-  padding: 4px 8px;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 4px 20px rgba(74, 144, 226, 0.4);
+}
+
+.nav-button.left {
+  left: 10px;
+}
+
+.nav-button.right {
+  right: 10px;
 }

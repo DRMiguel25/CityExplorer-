@@ -130,7 +130,7 @@ export class HttpLaravelService {
   });
 }
 
-Service_GetImagenes(idLugar: number) {
+Service_GetImagenes(idLugar: number): Observable<any[]> {
   return this.http.get<any[]>(`${this._url}/lugar/${idLugar}/imagenes`, {
     headers: this.getHeaders()
   });

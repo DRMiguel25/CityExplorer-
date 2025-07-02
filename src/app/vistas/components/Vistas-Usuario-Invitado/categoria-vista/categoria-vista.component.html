@@ -1,6 +1,5 @@
 <navbar-invitado-usuario></navbar-invitado-usuario>
 <body>
-  
 
 <div class="main-content">
   <h1 class="page-title">{{ tituloCategoria | titlecase }}</h1>
@@ -23,15 +22,35 @@
       </div>
 
       <div class="card-img-container">
+        <button 
+        class="nav-button left" 
+        (click)="cambiarImagen(lugar.id_lugar, -1); $event.stopPropagation()"
+      >
+        <span class="material-symbols-outlined">
+chevron_backward
+</span>
+      </button>
         <img
-          [src]="lugar.url || 'https://via.placeholder.com/400x300'"
+          [src]="
+            imagenesPorLugar[lugar.id_lugar][indicesImagen[lugar.id_lugar]] || 'https://via.placeholder.com/400x300'
+          "
           alt="Imagen lugar"
           class="card-img"
         />
-        <div class="category-tags">
-          <span class="category-tag">Favorito</span>
-        </div>
+
+        <button 
+        class="nav-button right" 
+        (click)="cambiarImagen(lugar.id_lugar, 1); $event.stopPropagation()"
+      >
+<span class="material-symbols-outlined">
+chevron_forward
+</span>
+      </button>
+
+      <div class="category-tags">
+        <span class="category-tag">Favorito</span>
       </div>
+    </div>
 
       <div class="card-body">
         <div class="card-title">Descripción</div>
@@ -40,10 +59,10 @@
         </div>
         <div class="card-info">
           <div class="rating">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i>
-            <i class="fas fa-star"></i><i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-            <span>4.5</span>
+            <ng-container *ngFor="let estrella of getEstrellasVisuales(lugar.id_lugar)">
+              <i [class]="estrella"></i>
+            </ng-container>
+            <span>{{ promedioValoracionPorLugar[lugar.id_lugar] || 0 }}</span>
           </div>
         </div>
       </div>

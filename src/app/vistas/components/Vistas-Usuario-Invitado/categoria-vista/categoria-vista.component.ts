@@ -18,6 +18,11 @@ export class CategoriaVistaComponent implements OnInit {
 
   categoriasOpciones: any[] = [];
 
+  imagenesPorLugar: { [key: number]: string[] } = {};
+  indicesImagen: { [key: number]: number } = {};
+
+  promedioValoracionPorLugar: { [idLugar: number]: number } = [];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -80,6 +85,12 @@ export class CategoriaVistaComponent implements OnInit {
           (l: Lugar) => l.id_categoria === idCategoria && l.activo
         );
         console.log(`Lugares activos para '${nombreCategoria}':`, this.lugares);
+
+        // 👉 Aquí cargamos las imágenes por cada lugar
+        this.lugares.forEach(lugar => {
+          this.cargarImagenesPorLugar(lugar.id_lugar);
+          this.obtenerComentarios(lugar.id_lugar);   // 👈 Aquí llamamos el cálculo de estrellas
+        });
       },
       error: (err) => {
         console.error('Error al cargar lugares públicos:', err);
@@ -111,4 +122,75 @@ export class CategoriaVistaComponent implements OnInit {
       }
     });
   }
+
+  cargarImagenesPorLugar(idLugar: number): void {
+    if (this.imagenesPorLugar[idLugar]) return;  // Ya cargado
+
+    this.httpLaravelService.Service_GetImagenes(idLugar).subscribe({
+      next: (data) => {
+        console.log(`🖼️ Imágenes crudas para lugar ${idLugar}:`, data);
+        // Extraemos solo la URL de cada objeto
+        this.imagenesPorLugar[idLugar] = data.map(imgObj => imgObj.url);
+        this.indicesImagen[idLugar] = 0;
+      },
+      error: (error) => {
+        console.error(`❌ Error al cargar imágenes del lugar ${idLugar}:`, error);
+        this.imagenesPorLugar[idLugar] = [];
+        this.indicesImagen[idLugar] = 0;
+      }
+    });
+  }
+
+  cambiarImagen(idLugar: number, direccion: number): void {
+    const imagenes = this.imagenesPorLugar[idLugar];
+    if (!imagenes || imagenes.length === 0) {
+      this.cargarImagenesPorLugar(idLugar);
+      return;
+    }
+
+    const total = imagenes.length;
+    const actual = this.indicesImagen[idLugar] ?? 0;
+    this.indicesImagen[idLugar] = (actual + direccion + total) % total;
+  }
+
+  obtenerComentarios(idLugar: number): void {
+    const modelo = 'lugar';
+    const dato = `${idLugar}/comentarios`;
+
+    this.httpLaravelService.Service_Get(modelo, dato).subscribe({
+      next: (respuesta: any) => {
+        const comentarios = respuesta?.data || [];
+        let promedio = 0;
+
+        if (Array.isArray(comentarios) && comentarios.length > 0) {
+          const suma = comentarios.reduce((acc, c) => acc + (c.valoracion || 0), 0);
+          promedio = +(suma / comentarios.length).toFixed(1);
+        }
+
+        this.promedioValoracionPorLugar[idLugar] = promedio;
+      },
+      error: (error) => {
+        console.error('❌ Error obteniendo comentarios del lugar:', error);
+        this.promedioValoracionPorLugar[idLugar] = 0;
+      }
+    });
+  }
+
+  getEstrellasVisuales(idLugar: number): string[] {
+    const promedio = this.promedioValoracionPorLugar[idLugar] || 0;
+    const estrellas: string[] = [];
+
+    for (let i = 1; i <= 5; i++) {
+      if (promedio >= i) {
+        estrellas.push('fas fa-star');
+      } else if (promedio >= i - 0.5) {
+        estrellas.push('fas fa-star-half-alt');
+      } else {
+        estrellas.push('far fa-star');
+      }
+    }
+
+    return estrellas;
+  }
+
 }

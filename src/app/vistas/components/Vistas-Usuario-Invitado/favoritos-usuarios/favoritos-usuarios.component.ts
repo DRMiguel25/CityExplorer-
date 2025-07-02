@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpLaravelService } from '../../../../http.service';
 import Swal from 'sweetalert2';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'favoritos-usuarios',
@@ -15,10 +16,17 @@ export class FavoritosUsuariosComponent implements OnInit {
   favoritos: any[] = [];
   favoritosFiltrados: any[] = [];
 
+  imagenesPorLugar: { [key: number]: string[] } = {};
+  indicesImagen: { [key: number]: number } = {};
+
+  listaComentarios: any[] = [];
+  promedioValoracionPorLugar: { [idLugar: number]: number } = {};
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private httpLaravelService: HttpLaravelService
+    private httpLaravelService: HttpLaravelService,
+    private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +50,11 @@ export class FavoritosUsuariosComponent implements OnInit {
         this.favoritosFiltrados = this.favoritos.filter(fav =>
           fav.id_usuario == this.id_usuario
         );
+
+        this.favoritosFiltrados.forEach(fav => {
+          this.cargarImagenesPorLugar(fav.lugar.id_lugar);
+          this.obtenerComentarios(fav.lugar.id_lugar);  // <-- Aquí cargas las estrellas ⭐
+        });
 
         console.log('✅ Favoritos filtrados:', this.favoritosFiltrados);
       },
@@ -99,5 +112,76 @@ logLoadTime() {
     }
   });
 }
+
+cargarImagenesPorLugar(idLugar: number): void {
+  if (this.imagenesPorLugar[idLugar]) return;  // Ya cargado
+
+  this.httpLaravelService.Service_GetImagenes(idLugar).subscribe({
+    next: (data) => {
+      console.log(`🖼️ Imágenes crudas para lugar ${idLugar}:`, data);
+      // Extraemos solo la URL de cada objeto
+      this.imagenesPorLugar[idLugar] = data.map(imgObj => imgObj.url);
+      this.indicesImagen[idLugar] = 0;
+    },
+    error: (error) => {
+      console.error(`❌ Error al cargar imágenes del lugar ${idLugar}:`, error);
+      this.imagenesPorLugar[idLugar] = [];
+      this.indicesImagen[idLugar] = 0;
+    }
+  });
+}
+
+cambiarImagen(idLugar: number, direccion: number): void {
+  const imagenes = this.imagenesPorLugar[idLugar];
+  if (!imagenes || imagenes.length === 0) return;
+
+  const total = imagenes.length;
+  let actual = this.indicesImagen[idLugar] ?? 0;
+
+  actual = (actual + direccion + total) % total;
+  this.indicesImagen[idLugar] = actual;
+}
+
+  obtenerComentarios(idLugar: number): void {
+    const modelo = 'lugar';
+    const dato = `${idLugar}/comentarios`;
+
+    this.httpLaravelService.Service_Get(modelo, dato).subscribe({
+      next: (respuesta: any) => {
+        const comentarios = respuesta?.data || [];
+        let promedio = 0;
+
+        if (Array.isArray(comentarios) && comentarios.length > 0) {
+          const suma = comentarios.reduce((acc, c) => acc + (c.valoracion || 0), 0);
+          promedio = +(suma / comentarios.length).toFixed(1);
+        }
+
+        this.promedioValoracionPorLugar[idLugar] = promedio;
+        this.cdRef.detectChanges();
+      },
+      error: (error) => {
+        console.error('❌ Error obteniendo comentarios del lugar:', error);
+        this.promedioValoracionPorLugar[idLugar] = 0;
+      }
+    });
+  }
+
+  getEstrellasVisuales(idLugar: number): string[] {
+    const promedio = this.promedioValoracionPorLugar[idLugar] || 0;
+    const estrellas: string[] = [];
+
+    for (let i = 1; i <= 5; i++) {
+      if (promedio >= i) {
+        estrellas.push('fas fa-star');
+      } else if (promedio >= i - 0.5) {
+        estrellas.push('fas fa-star-half-alt');
+      } else {
+        estrellas.push('far fa-star');
+      }
+    }
+
+    return estrellas;
+  }
+
 
 }
