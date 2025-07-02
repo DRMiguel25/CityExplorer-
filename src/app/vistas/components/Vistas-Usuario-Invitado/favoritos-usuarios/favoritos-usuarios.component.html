@@ -1,41 +1,54 @@
-<navbar-invitado-usuario></navbar-invitado-usuario>
+    <navbar-invitado-usuario></navbar-invitado-usuario>
 
-<div class="container" style="padding: 6rem;">
-  <h1 class="header">Favoritos</h1>
+<div class="main-content" style="padding: 6rem 2rem;">
+  <h1 class="page-title">Favoritos</h1>
 
-    <!-- Si no hay favoritos -->
-  <div *ngIf="favoritosFiltrados.length === 0" class="no-favorites">
-    <p class="mensaje-vacio">
+  <!-- Si no hay favoritos -->
+  <div *ngIf="favoritosFiltrados.length === 0" class="no-favorites" style="text-align: center;">
+    <p class="mensaje-vacio" style="color: #6B7280; font-size: 1.25rem;">
       Aún no has agregado ningún lugar a tus favoritos.<br>
       ¡Explora y guarda los que más te gusten!
     </p>
   </div>
 
-<div class="place-grid" *ngIf="favoritosFiltrados.length > 0">
-  <div class="place-card" *ngFor="let fav of favoritosFiltrados" (click)="vistaDetalladaDestino(fav.lugar.id_lugar)">
-    <button class="favorite-btn active" (click)="toggleFavorito(fav.id_lugar); $event.stopPropagation()">
-      <svg class="heart-icon" viewBox="0 0 24 24">
-        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
-                 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
-                 C13.09 3.81 14.76 3 16.5 3
-                 19.58 3 22 5.42 22 8.5
-                 c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-      </svg>
-    </button>
+  <!-- Si hay favoritos -->
+  <div class="cards-container" *ngIf="favoritosFiltrados.length > 0">
+    <div class="card" *ngFor="let fav of favoritosFiltrados" (click)="vistaDetalladaDestino(fav.lugar.id_lugar)">
+      <div class="card-header">
+        <div class="card-title-text">{{ fav.lugar.nombre }}</div>
+        <button 
+          class="card-header-favorite active" 
+          (click)="toggleFavorito(fav.lugar.id_lugar); $event.stopPropagation()"
+        >
+          <i class="fas fa-heart"></i>
+        </button>
+      </div>
 
-    <div class="place-image">
-      <img [src]="fav.lugar.url || 'https://via.placeholder.com/400x300'" 
-           alt="Imagen lugar" class="sneaker-image" />
-    </div>
+      <div class="card-img-container">
+        <img 
+          [src]="fav.lugar.url || 'https://via.placeholder.com/400x300'" 
+          alt="Imagen lugar" 
+          class="card-img"
+        />
+        <div class="category-tags">
+          <span class="category-tag">Favorito</span>
+        </div>
+      </div>
 
-    <div class="place-name">
-      <h3 class="place-title">{{ fav.lugar.nombre }}</h3>
-      <p class="place-category">{{ fav.lugar.descripcion }}</p>
-      <div class="place-schedule">
-        Fecha agregado: {{ fav.fecha_agregado | date:'dd MMM yyyy' }}
+      <div class="card-body">
+        <div class="card-title">Descripción</div>
+        <div class="card-text">{{ fav.lugar.descripcion }}</div>
+        <div class="card-info">
+          <div class="rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+            <span>4.5</span>
+          </div>
+          <div class="price">
+            {{ fav.fecha_agregado | date:'dd MMM yyyy' }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
 </div>
