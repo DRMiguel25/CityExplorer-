@@ -13,8 +13,8 @@ export class HttpLaravelService {
 
   constructor(
     public http: HttpClient,
-    private storage: LocalstorageService, // Inyéctalo aquí
-    private authService: AuthService  // 👈 AÑADE ESTO
+    private storage: LocalstorageService, 
+    private authService: AuthService 
   ) {}
 
   private getHeaders(): HttpHeaders {
