@@ -117,3 +117,24 @@ body {
     line-height: 1.6;
     margin-bottom: 15px;
 }
+
+.close-button-container {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.2s ease;
+}
+
+.close-button:hover {
+  color: #ff4d4f;
+}

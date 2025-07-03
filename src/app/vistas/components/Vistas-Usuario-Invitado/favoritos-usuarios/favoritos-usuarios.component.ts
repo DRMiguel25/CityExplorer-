@@ -22,6 +22,8 @@ export class FavoritosUsuariosComponent implements OnInit {
   listaComentarios: any[] = [];
   promedioValoracionPorLugar: { [idLugar: number]: number } = {};
 
+  listaCategorias: any[] = [];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,

@@ -53,87 +53,95 @@ export class CrearActualizarAnuncioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  this.obtenerCategoriasDesdeAPI();
-  this.diasServicioOpciones = [
-    'Lunes-Viernes', 'Lunes-Sábado', 'Lunes-Domingo',
-    'Jueves-Domingo', 'Viernes-Domingo', 'Sabado-Domingo'
-  ];
+    this.obtenerCategoriasDesdeAPI();
+    this.diasServicioOpciones = [
+      'Lunes-Viernes', 'Lunes-Sábado', 'Lunes-Domingo',
+      'Jueves-Domingo', 'Viernes-Domingo', 'Sabado-Domingo'
+    ];
 
-  this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
-  this.id_anuncio = this.route.snapshot.paramMap.get('id_anuncio');
+    this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
+    this.id_anuncio = this.route.snapshot.paramMap.get('id_anuncio');
 
-  console.log('📌 ID Usuario:', this.id_usuario);
-  console.log('📌 ID Anuncio:', this.id_anuncio);
+    console.log('📌 ID Usuario:', this.id_usuario);
+    console.log('📌 ID Anuncio:', this.id_anuncio);
 
-  if (this.id_anuncio != null && this.id_anuncio !== '0') {
-    console.log('🔎 Buscando información del anuncio...');
-    this.cargarAnuncio(this.id_anuncio);
+    if (this.id_anuncio != null && this.id_anuncio !== '0') {
+      console.log('🔎 Buscando información del anuncio...');
+      this.cargarAnuncio(this.id_anuncio);
+    }
+
+    this.logLoadTime();
   }
 
-  this.logLoadTime();
-}
+  cargarAnuncio(id: string): void {
+    console.log(`🔁 Haciendo GET a: lugar/${id}`);
 
-cargarAnuncio(id: string): void {
-  console.log(`🔁 Haciendo GET a: lugar/${id}`);
+    this.service.Service_Get('lugar', id).subscribe({
+      next: (anuncio: any) => {
+        console.log('✅ Anuncio recibido del backend:', anuncio);
 
-  this.service.Service_Get('lugar', id).subscribe({
-    next: (anuncio: any) => {
-      console.log('✅ Anuncio recibido del backend:', anuncio);
-
-      if (!anuncio) {
-        console.warn('⚠️ No se encontró anuncio con ese ID.');
-        return;
-      }
-
-      // Si el backend te devuelve las imágenes:
-      if (anuncio.imagenes) {
-        this.imagenesActuales = anuncio.imagenes;
-        console.log('🖼️ Imágenes actuales:', this.imagenesActuales);
-      }
-
-      // Ahora carga la dirección
-      console.log(`🔁 Haciendo GET a: direccion/${anuncio.id_direccion}`);
-      this.service.Service_Get('direccion', anuncio.id_direccion).subscribe({
-        next: (direccion: any) => {
-          console.log('✅ Dirección recibida:', direccion);
-
-          // Setear valores en el formulario
-          this.anuncioForm.patchValue({
-            nombre: anuncio.nombre,
-            descripcion: anuncio.descripcion,
-            paginaWeb: anuncio.paginaWeb,
-            num_telefonico: anuncio.num_telefonico,
-            horario_apertura: anuncio.horario_apertura.length === 8
-              ? anuncio.horario_apertura.substring(0, 5)
-              : anuncio.horario_apertura,
-            horario_cierre: anuncio.horario_cierre.length === 8
-              ? anuncio.horario_cierre.substring(0, 5)
-              : anuncio.horario_cierre,
-            dias_servicio: Array.isArray(anuncio.dias_servicio)
-              ? anuncio.dias_servicio.join('-')
-              : anuncio.dias_servicio,
-            categoria: anuncio.id_categoria,
-            direccion: {
-              calle: direccion.calle,
-              numero_ext: direccion.numero_ext,
-              numero_int: direccion.numero_int || '',
-              colonia: direccion.colonia,
-              codigo_postal: direccion.codigo_postal
-            }
-          });
-
-          console.log('✅ Formulario rellenado correctamente con datos del anuncio.');
-        },
-        error: (error) => {
-          console.error('❌ Error al cargar la dirección:', error);
+        if (!anuncio) {
+          console.warn('⚠️ No se encontró anuncio con ese ID.');
+          return;
         }
-      });
-    },
-    error: (error) => {
-      console.error('❌ Error al cargar el anuncio:', error);
-    }
-  });
-}
+
+        // Si el backend te devuelve las imágenes:
+        if (anuncio.imagenes) {
+          console.log('🧩 Imágenes crudas del backend:', anuncio.imagenes);
+          this.imagenesActuales = anuncio.imagenes.map((img: any, index: number) => {
+            const id = img.id ?? img.id_imagen ?? index;
+            console.log(`📎 Imagen mapeada: id=${id}, url=${img.url}`);
+            return {
+              id,
+              url: img.url
+            };
+          });
+          console.log('🖼️ Imágenes actuales normalizadas:', this.imagenesActuales);
+        }
+
+        // Ahora carga la dirección
+        console.log(`🔁 Haciendo GET a: direccion/${anuncio.id_direccion}`);
+        this.service.Service_Get('direccion', anuncio.id_direccion).subscribe({
+          next: (direccion: any) => {
+            console.log('✅ Dirección recibida:', direccion);
+
+            // Setear valores en el formulario
+            this.anuncioForm.patchValue({
+              nombre: anuncio.nombre,
+              descripcion: anuncio.descripcion,
+              paginaWeb: anuncio.paginaWeb,
+              num_telefonico: anuncio.num_telefonico,
+              horario_apertura: anuncio.horario_apertura.length === 8
+                ? anuncio.horario_apertura.substring(0, 5)
+                : anuncio.horario_apertura,
+              horario_cierre: anuncio.horario_cierre.length === 8
+                ? anuncio.horario_cierre.substring(0, 5)
+                : anuncio.horario_cierre,
+              dias_servicio: Array.isArray(anuncio.dias_servicio)
+                ? anuncio.dias_servicio.join('-')
+                : anuncio.dias_servicio,
+              categoria: anuncio.id_categoria,
+              direccion: {
+                calle: direccion.calle,
+                numero_ext: direccion.numero_ext,
+                numero_int: direccion.numero_int || '',
+                colonia: direccion.colonia,
+                codigo_postal: direccion.codigo_postal
+              }
+            });
+
+            console.log('✅ Formulario rellenado correctamente con datos del anuncio.');
+          },
+          error: (error) => {
+            console.error('❌ Error al cargar la dirección:', error);
+          }
+        });
+      },
+      error: (error) => {
+        console.error('❌ Error al cargar el anuncio:', error);
+      }
+    });
+  }
 
   obtenerCategoriasDesdeAPI(): void {
     this.service.Service_Get('categorias', '').subscribe({
@@ -164,6 +172,11 @@ cargarAnuncio(id: string): void {
   crearAnuncio(): void {
     const formData = this.prepararFormData();
 
+    console.log('📦 Enviando FormData (creación)...');
+    for (const pair of formData.entries()) {
+      console.log(`🔹 ${pair[0]}:`, pair[1]);
+    }
+
     this.service.Service_Post_FormData_Auth('lugar', 'con-direccion', formData).subscribe({
       next: (response) => {
         Swal.fire('¡Éxito!', 'Lugar creado correctamente', 'success');
@@ -180,9 +193,16 @@ cargarAnuncio(id: string): void {
     const formData = this.prepararFormData();
 
     // 👉 Agregar imágenes a eliminar si el usuario marcó alguna
+    console.log('📤 IDs de imágenes a eliminar:', this.imagenesAEliminar);
+
     this.imagenesAEliminar.forEach((id: number) => {
       formData.append('imagenes_a_eliminar[]', id.toString());
     });
+
+    console.log('📦 Enviando FormData (actualización)...');
+    for (const pair of formData.entries()) {
+      console.log(`🔹 ${pair[0]}:`, pair[1]);
+    }
 
     this.service.Service_Post_FormData_Auth('lugar', this.id_anuncio!, formData).subscribe({
       next: (response) => {
@@ -240,6 +260,11 @@ cargarAnuncio(id: string): void {
 
     this.imagenesSeleccionadas.forEach((img: File) => {
       data.append('imagenes[]', img);
+    });
+
+    console.log('🛠️ Datos que se mandarán en FormData:');
+    data.forEach((value, key) => {
+      console.log(`🔸 ${key}:`, value);
     });
 
     return data;
@@ -307,7 +332,14 @@ cargarAnuncio(id: string): void {
     });
   }
 
-  eliminarImagen(idImagen: number): void {
+  eliminarImagen(idImagen: any): void {
+    console.log('🗑️ Intentando eliminar imagen con ID:', idImagen);
+
+    if (typeof idImagen !== 'number') {
+      console.warn('⚠️ ID inválido al eliminar imagen:', idImagen);
+      return;
+    }
+
     this.imagenesAEliminar.push(idImagen);
     this.imagenesActuales = this.imagenesActuales.filter(img => img.id !== idImagen);
     console.log('🗑️ Imágenes marcadas para eliminar:', this.imagenesAEliminar);
