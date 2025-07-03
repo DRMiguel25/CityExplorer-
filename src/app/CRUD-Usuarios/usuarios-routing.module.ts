@@ -54,7 +54,7 @@ const routes: Routes = [
   { path: 'resenia-usuario/:id_destino/:id_usuario/:id_resenia', component: ReseniaUsuarioComponent },
   { path: 'terminos-del-servicio', component: TerminosDelServicioComponent },
   { path: 'politicas-de-privacidad', component: PoliticasDePrivacidadComponent },
-  { path: 'vista-lista-comentarios/:id_destino', component: VistaListaComentariosComponent },
+  { path: 'vista-lista-comentarios/:id_destino/:id_usuario', component: VistaListaComentariosComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },  // ✅ Ruta por defecto al login
 ];
 

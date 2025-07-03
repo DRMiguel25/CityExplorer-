@@ -38,6 +38,7 @@ import { ReseniaUsuarioComponent } from './components/Vistas-Usuario-Invitado/re
 import { TerminosDelServicioComponent } from './components/Vistas-Usuario-Invitado/terminos-del-servicio/terminos-del-servicio.component'; // Asegúrate de importar el componente TerminosDelServicioComponent
 import { PoliticasDePrivacidadComponent } from './components/Vistas-Usuario-Invitado/Politicas-de-privacidad/politicas-de-privacidad.component'; // Asegúrate de importar el componente PoliticasDePrivacidadComponent
 import { VistaListaComentariosComponent } from './components/Vistas-Usuario-Invitado/vista-lista-comentarios/vista-lista-comentarios.component'; // Asegúrate de importar el componente VistaListaComentariosComponent
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { VistaListaComentariosComponent } from './components/Vistas-Usuario-Invi
     VistasRoutingModule,
     MatDialogModule,
     MatButtonModule,
+    RouterModule,  // <<--- este import falta
   ],
 })
 export class VistasModule { }

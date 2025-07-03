@@ -8,6 +8,7 @@ import { RegistroComponent } from './components/registro/registro.component';
 
 import { PaginatorModule } from 'primeng/paginator';
 import { UsuariosRoutingModule } from './usuarios-routing.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { UsuariosRoutingModule } from './usuarios-routing.module';
     FormsModule,
     ReactiveFormsModule,
     UsuariosRoutingModule,
-    PaginatorModule
+    PaginatorModule,
+    RouterModule,  // <<--- este import falta
   ],
 })
 export class UsuariosModule { }

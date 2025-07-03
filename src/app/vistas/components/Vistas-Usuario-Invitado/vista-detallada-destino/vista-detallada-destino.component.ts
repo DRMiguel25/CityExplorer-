@@ -36,6 +36,7 @@ export class VistaDetalladaDestinoComponent implements OnInit {
 
 
  ngOnInit(): void {
+  this.route.paramMap.subscribe(params => {
    this.id_destino = this.route.snapshot.paramMap.get('id_destino');
    this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
    if (this.id_destino) {
@@ -50,7 +51,7 @@ export class VistaDetalladaDestinoComponent implements OnInit {
     this.obtenerCategoriasDesdeAPI();
 
     this.logLoadTime();  // 👈 mide tiempo de carga
-
+});
  }
 
 
@@ -213,7 +214,7 @@ getEstrellas(valoracion: number): string {
 listarComentarios(): void {
   if (this.id_usuario != "0") {
     console.log('Navegando a la lista de comentarios para el lugar con ID:', this.id_destino);
-    this.router.navigate(['/vista-lista-comentarios', this.id_destino]);
+    this.router.navigate(['/vista-lista-comentarios', this.id_destino, this.id_usuario]);
   }
   else {
     Swal.fire({

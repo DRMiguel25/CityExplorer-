@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpLaravelService } from '../../../../http.service';
 import Swal from 'sweetalert2';
+import { Location } from '@angular/common'; // ⬅️ Agrega esto arriba, junto a otros imports
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'vista-lista-comentarios',
@@ -19,20 +21,24 @@ export class VistaListaComentariosComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private httpLaravelService: HttpLaravelService,
+    private location: Location // ⬅️ Inyecta esto
   ) {}
 
   ngOnInit(): void {
-    this.id_destino = this.route.snapshot.paramMap.get('id_destino');
+    this.route.paramMap.subscribe(params => {
+      this.id_destino = params.get('id_destino');
+      console.log('id_destino recibido:', this.id_destino);
 
-    if (this.id_destino) {
-      this.obtenerComentarios();
-    } else {
-      console.error('❌ No se recibió id_destino en la ruta');
-    }
+      if (this.id_destino) {
+        this.obtenerComentarios();
+      } else {
+        console.error('❌ No se recibió id_destino en la ruta');
+      }
+    });
 
-    this.logLoadTime();  // 👈 mide tiempo de carga
-
+    this.logLoadTime(); // sigue midiendo la carga igual
   }
+
 
   obtenerComentarios(): void {
     const modelo = 'lugar';
@@ -86,4 +92,11 @@ export class VistaListaComentariosComponent implements OnInit {
     }
   });
 }
+
+volverAtras(): void {
+  console.log('Volviendo atrás con history.back()');
+  window.history.back();
+}
+
+
 }
