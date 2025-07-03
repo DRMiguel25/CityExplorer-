@@ -101,8 +101,7 @@
       </div>
       <div class="stars">
         <span class="star">{{ getEstrellas(promedioValoracion) }}</span>
-        <span style="margin-left: 10px; font-weight: 600; color: var(--azul-principal);">{{ promedioValoracion.toFixed(1) }}</span>
-      </div>
+<span style="margin-left: 10px; font-weight: 600; color: var(--azul-principal);">{{ promedioValoracion ? promedioValoracion.toFixed(1) : '0.0' }}</span>      </div>
 
       <div *ngIf="ultimoComentario" class="review">
         <div class="review-rating">{{ getEstrellas(ultimoComentario.valoracion) }}</div>
