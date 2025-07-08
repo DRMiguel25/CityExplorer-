@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'Alerta-usuario',
+  selector: 'politicas-de-privacidad',
   standalone: false,
-  templateUrl: './Alerta-usuario.component.html',
-  styleUrl: './Alerta-usuario.component.scss'
+  templateUrl: './politicas-de-privacidad.component.html.html',
+  styleUrl: './politicas-de-privacidad.component.html.scss'
 })
-export class AlertaUsuarioAnuncianteComponent implements OnInit{
+export class PoliticasDePrivacidadAnuncianteComponent implements OnInit{
 
   ngOnInit(): void {
     this.logLoadTime();  // 👈 mide tiempo de carga

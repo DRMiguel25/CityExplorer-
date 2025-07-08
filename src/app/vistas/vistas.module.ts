@@ -40,6 +40,8 @@ import { PoliticasDePrivacidadComponent } from './components/Vistas-Usuario-Invi
 import { VistaListaComentariosComponent } from './components/Vistas-Usuario-Invitado/vista-lista-comentarios/vista-lista-comentarios.component'; // Asegúrate de importar el componente VistaListaComentariosComponent
 import { RouterModule } from '@angular/router';
 
+import { AlertaUsuarioAnuncianteComponent } from './components/Vistas-Anuciante/Alerta-usuario/Alerta-usuario.component';
+
 @NgModule({
   declarations: [
     CategoriasComponent,
@@ -61,6 +63,7 @@ import { RouterModule } from '@angular/router';
     TerminosDelServicioComponent,
     PoliticasDePrivacidadComponent,
     VistaListaComentariosComponent,
+    AlertaUsuarioAnuncianteComponent
   ],
   imports: [
     CommonModule,
