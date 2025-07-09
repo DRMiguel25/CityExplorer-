@@ -24,6 +24,8 @@ export class CrearActualizarAnuncioComponent implements OnInit {
   imagenesActuales: any[] = [];  // Las imágenes que ya tenía el anuncio (con sus IDs del backend)
   imagenesAEliminar: number[] = [];  // Para guardar IDs de imágenes que el usuario quiere borrar
 
+  // ✅ AGREGADO: Para la previsualización de imágenes nuevas
+  imagenesPreview: { url: string; name: string }[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -216,7 +218,6 @@ export class CrearActualizarAnuncioComponent implements OnInit {
     });
   }
 
-
   private prepararFormData(): FormData {
     const formData = this.anuncioForm.value;
     const data = new FormData();
@@ -270,7 +271,7 @@ export class CrearActualizarAnuncioComponent implements OnInit {
     return data;
   }
 
-
+  // ✅ MÉTODO CORREGIDO: Ahora genera previsualizaciones correctamente
   onImagenesSeleccionadas(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -284,17 +285,55 @@ export class CrearActualizarAnuncioComponent implements OnInit {
         return;
       }
 
-      if (this.imagenesSeleccionadas.length + archivosValidos.length > 5) {
-        Swal.fire('¡Límite alcanzado!', 'Máximo 5 imágenes.', 'warning');
+      if (this.imagenesSeleccionadas.length + archivosValidos.length > 8) {
+        Swal.fire('¡Límite alcanzado!', 'Máximo 8 imágenes.', 'warning');
         return;
       }
 
+      // Procesar cada archivo válido
       archivosValidos.forEach((archivo) => {
         this.imagenesSeleccionadas.push(archivo);
+        
+        // Crear preview para mostrar en el HTML
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.imagenesPreview.push({
+            url: e.target?.result as string,
+            name: archivo.name
+          });
+        };
+        reader.readAsDataURL(archivo);
       });
 
       console.log('📸 Imágenes seleccionadas:', this.imagenesSeleccionadas);
+      console.log('🖼️ Previews generados:', this.imagenesPreview);
     }
+  }
+
+  // ✅ MÉTODO AGREGADO: Para eliminar imágenes seleccionadas (nuevas)
+  eliminarImagenSeleccionada(index: number): void {
+    console.log('🗑️ Eliminando imagen seleccionada en índice:', index);
+    
+    this.imagenesSeleccionadas.splice(index, 1);
+    this.imagenesPreview.splice(index, 1);
+    
+    console.log('📸 Imágenes seleccionadas después de eliminar:', this.imagenesSeleccionadas);
+    console.log('🖼️ Previews después de eliminar:', this.imagenesPreview);
+  }
+
+  // ✅ MÉTODO CORREGIDO: Para eliminar imágenes actuales (existentes)
+  eliminarImagen(idImagen: any): void {
+    console.log('🗑️ Intentando eliminar imagen con ID:', idImagen);
+
+    if (typeof idImagen !== 'number') {
+      console.warn('⚠️ ID inválido al eliminar imagen:', idImagen);
+      return;
+    }
+
+    this.imagenesAEliminar.push(idImagen);
+    this.imagenesActuales = this.imagenesActuales.filter(img => img.id !== idImagen);
+    console.log('🗑️ Imágenes marcadas para eliminar:', this.imagenesAEliminar);
+    console.log('🖼️ Imágenes actuales restantes:', this.imagenesActuales);
   }
 
   isInvalid(controlPath: string): boolean {
@@ -331,18 +370,4 @@ export class CrearActualizarAnuncioComponent implements OnInit {
       }
     });
   }
-
-  eliminarImagen(idImagen: any): void {
-    console.log('🗑️ Intentando eliminar imagen con ID:', idImagen);
-
-    if (typeof idImagen !== 'number') {
-      console.warn('⚠️ ID inválido al eliminar imagen:', idImagen);
-      return;
-    }
-
-    this.imagenesAEliminar.push(idImagen);
-    this.imagenesActuales = this.imagenesActuales.filter(img => img.id !== idImagen);
-    console.log('🗑️ Imágenes marcadas para eliminar:', this.imagenesAEliminar);
-  }
-
 }

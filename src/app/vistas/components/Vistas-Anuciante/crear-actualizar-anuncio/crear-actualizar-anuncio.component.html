@@ -26,14 +26,28 @@
     <div class="form-group">
       <label for="imagenes">Selecciona Imágenes*</label>
       <input type="file" id="imagenes" (change)="onImagenesSeleccionadas($event)" multiple accept="image/*">
+      <div class="file-hint">Máximo 8 imágenes (JPG, PNG, WEBP - 2MB cada una)</div>
     </div>
 
+    <!-- Previsualización de imágenes nuevas seleccionadas -->
+    <div class="form-group" *ngIf="imagenesSeleccionadas.length > 0">
+      <label>Imágenes Seleccionadas:</label>
+      <div class="imagenes-preview">
+        <div *ngFor="let preview of imagenesPreview; let i = index" class="imagen-item">
+          <img [src]="preview.url" [alt]="preview.name" class="imagen-preview">
+          <button type="button" (click)="eliminarImagenSeleccionada(i)" class="btn-eliminar">×</button>
+          <div class="imagen-info">{{ preview.name }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Imágenes actuales (para modo edición) -->
     <div class="form-group" *ngIf="imagenesActuales.length > 0">
       <label>Imágenes Actuales:</label>
       <div class="imagenes-actuales">
         <div *ngFor="let img of imagenesActuales" class="imagen-item">
           <img [src]="img.url" alt="Imagen actual" class="imagen-preview">
-          <button type="button" (click)="eliminarImagen(img.id)" class="btn-eliminar">Eliminar</button>
+          <button type="button" (click)="eliminarImagen(img.id)" class="btn-eliminar">×</button>
         </div>
       </div>
     </div>
