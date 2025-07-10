@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'terminos-de-servicio',
   standalone: false,
-  templateUrl: './terminos-de-servicio.component.html.html',
-  styleUrl: './terminos-de-servicio.component.html.scss'
+  templateUrl: './terminos-de-servicio.component.html',
+  styleUrl: './terminos-de-servicio.component.scss'
 })
 export class TerminosDeServicioAnuncianteComponent implements OnInit{
 

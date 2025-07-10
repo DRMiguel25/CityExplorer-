@@ -197,80 +197,108 @@ cargarAnuncio(id: string): void {
   }
 
 
-  private prepararFormData(): FormData {
-    const formData = this.anuncioForm.value;
-    const data = new FormData();
+private prepararFormData(): FormData {
+  const formData = this.anuncioForm.value;
+  const data = new FormData();
 
-    const diasServicio = Array.isArray(formData.dias_servicio)
-      ? formData.dias_servicio
-      : formData.dias_servicio.split('-').map((dia: string) => dia.trim());
+  const diasServicio = Array.isArray(formData.dias_servicio)
+    ? formData.dias_servicio
+    : formData.dias_servicio.split('-').map((dia: string) => dia.trim());
 
-    const horarioApertura = formData.horario_apertura.length === 5
-      ? `${formData.horario_apertura}:00`
-      : formData.horario_apertura;
+  const horarioApertura = formData.horario_apertura.length === 5
+    ? `${formData.horario_apertura}:00`
+    : formData.horario_apertura;
 
-    const horarioCierre = formData.horario_cierre.length === 5
-      ? `${formData.horario_cierre}:00`
-      : formData.horario_cierre;
+  const horarioCierre = formData.horario_cierre.length === 5
+    ? `${formData.horario_cierre}:00`
+    : formData.horario_cierre;
 
-    const paginaWeb = formData.paginaWeb.startsWith('http')
-      ? formData.paginaWeb
-      : `https://${formData.paginaWeb}`;
+  const paginaWeb = formData.paginaWeb.startsWith('http')
+    ? formData.paginaWeb
+    : `https://${formData.paginaWeb}`;
 
-    // Dirección
-    data.append('direccion[calle]', formData.direccion.calle);
-    data.append('direccion[numero_ext]', formData.direccion.numero_ext);
-    data.append('direccion[numero_int]', formData.direccion.numero_int || '');
-    data.append('direccion[colonia]', formData.direccion.colonia);
-    data.append('direccion[codigo_postal]', formData.direccion.codigo_postal);
+  // Dirección
+  data.append('direccion[calle]', formData.direccion.calle);
+  data.append('direccion[numero_ext]', formData.direccion.numero_ext);
+  data.append('direccion[numero_int]', formData.direccion.numero_int || '');
+  data.append('direccion[colonia]', formData.direccion.colonia);
+  data.append('direccion[codigo_postal]', formData.direccion.codigo_postal);
 
-    // Lugar
-    data.append('lugar[nombre]', formData.nombre);
-    data.append('lugar[descripcion]', formData.descripcion);
-    data.append('lugar[paginaWeb]', paginaWeb);
-    data.append('lugar[num_telefonico]', formData.num_telefonico);
-    data.append('lugar[horario_apertura]', horarioApertura);
-    data.append('lugar[horario_cierre]', horarioCierre);
-    data.append('lugar[id_categoria]', formData.categoria.toString());
-    data.append('lugar[activo]', '0');
+  // Lugar
+  data.append('lugar[nombre]', formData.nombre);
+  data.append('lugar[descripcion]', formData.descripcion);
+  data.append('lugar[paginaWeb]', paginaWeb);
+  data.append('lugar[num_telefonico]', formData.num_telefonico);
+  data.append('lugar[horario_apertura]', horarioApertura);
+  data.append('lugar[horario_cierre]', horarioCierre);
+  data.append('lugar[id_categoria]', formData.categoria.toString());
+  data.append('lugar[activo]', '0');
 
-    diasServicio.forEach((dia: string) => {
-      data.append('lugar[dias_servicio][]', dia);
-    });
+  diasServicio.forEach((dia: string) => {
+    data.append('lugar[dias_servicio][]', dia);
+  });
 
-    this.imagenesSeleccionadas.forEach((img: File) => {
-      data.append('imagenes[]', img);
-    });
+  // Agregar imágenes nuevas seleccionadas
+  this.imagenesSeleccionadas.forEach((img: File) => {
+    data.append('imagenes[]', img);
+  });
 
-    return data;
-  }
-
-
-  onImagenesSeleccionadas(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const nuevosArchivos = Array.from(input.files);
-      const archivosValidos = nuevosArchivos.filter(file =>
-        ['image/jpeg', 'image/png', 'image/webp'].includes(file.type) && file.size <= 2 * 1024 * 1024
-      );
-
-      if (archivosValidos.length !== nuevosArchivos.length) {
-        Swal.fire('¡Error!', 'Solo JPG, PNG o WEBP menores a 2MB', 'error');
-        return;
-      }
-
-      if (this.imagenesSeleccionadas.length + archivosValidos.length > 5) {
-        Swal.fire('¡Límite alcanzado!', 'Máximo 5 imágenes.', 'warning');
-        return;
-      }
-
-      archivosValidos.forEach((archivo) => {
-        this.imagenesSeleccionadas.push(archivo);
-      });
-
-      console.log('📸 Imágenes seleccionadas:', this.imagenesSeleccionadas);
+  // Agregar IDs de imágenes actuales que no están marcadas para eliminar
+  this.imagenesActuales.forEach(img => {
+    if (img?.id_imagen && !this.imagenesAEliminar.includes(img.id_imagen)) {
+      data.append('imagenes[]', img.id_imagen.toString());
     }
+  });
+
+  return data;
+}
+
+onImagenesSeleccionadas(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    const nuevosArchivos = Array.from(input.files);
+
+    // Validar tipo y tamaño
+    const archivosValidos = nuevosArchivos.filter(file =>
+      ['image/jpeg', 'image/png', 'image/webp'].includes(file.type) && file.size <= 2 * 1024 * 1024
+    );
+
+    if (archivosValidos.length !== nuevosArchivos.length) {
+      Swal.fire('¡Error!', 'Solo se permiten imágenes JPG, PNG o WEBP menores a 2MB.', 'error');
+      return;
+    }
+
+    const totalActual = this.imagenesActuales.length + this.imagenesSeleccionadas.length;
+    const totalDespues = totalActual + archivosValidos.length;
+
+    if (totalDespues > 8) {
+      Swal.fire(
+        '¡Límite de imágenes!',
+        `Solo puedes tener un máximo de 8 imágenes.\nActualmente tienes: ${this.imagenesActuales.length + this.imagenesSeleccionadas.length} seleccionadas.`,
+        'warning'
+      );
+      return;
+    }
+
+    archivosValidos.forEach((archivo, index) => {
+      const numeroImagen = this.imagenesActuales.length + this.imagenesSeleccionadas.length + 1;
+      this.imagenesSeleccionadas.push(archivo);
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Imagen agregada',
+        text: `Imagen ${numeroImagen}/8: ${archivo.name}`,
+        timer: 2000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+      });
+    });
+
+    console.log('📸 Imágenes seleccionadas:', this.imagenesSeleccionadas);
   }
+}
+
 
   isInvalid(controlPath: string): boolean {
     const control = this.anuncioForm.get(controlPath);
@@ -307,10 +335,18 @@ cargarAnuncio(id: string): void {
     });
   }
 
-  eliminarImagen(idImagen: number): void {
-    this.imagenesAEliminar.push(idImagen);
-    this.imagenesActuales = this.imagenesActuales.filter(img => img.id !== idImagen);
-    console.log('🗑️ Imágenes marcadas para eliminar:', this.imagenesAEliminar);
+eliminarImagen(idImagen: number | undefined): void {
+  if (!idImagen) {
+    console.warn('Intento de eliminar imagen con ID inválido:', idImagen);
+    return;
   }
+  if (!this.imagenesAEliminar.includes(idImagen)) {
+    this.imagenesAEliminar.push(idImagen);
+  }
+  this.imagenesActuales = this.imagenesActuales.filter(img => img.id_imagen !== idImagen);
+  console.log('🗑️ Imágenes marcadas para eliminar:', this.imagenesAEliminar);
+}
+
+
 
 }

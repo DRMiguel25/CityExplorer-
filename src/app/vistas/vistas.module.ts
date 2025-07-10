@@ -42,7 +42,7 @@ import { RouterModule } from '@angular/router';
 
 import { AlertaUsuarioAnuncianteComponent } from './components/Vistas-Anuciante/Alerta-usuario/Alerta-usuario.component';
 import { PoliticasDePrivacidadAnuncianteComponent } from './components/Vistas-Anuciante/politicas-de-privacidad/politicas-de-privacidad.component';
-import { TerminosDeServicioAnuncianteComponent } from './components/Vistas-Anuciante/terminos-de-servicio /terminos-de-servicio .component';
+import { TerminosDeServicioAnuncianteComponent } from './components/Vistas-Anuciante/terminos-de-servicio/terminos-de-servicio.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +67,7 @@ import { TerminosDeServicioAnuncianteComponent } from './components/Vistas-Anuci
     VistaListaComentariosComponent,
     AlertaUsuarioAnuncianteComponent,
     PoliticasDePrivacidadAnuncianteComponent,
-    TerminosDeServicioAnuncianteComponent
+    TerminosDeServicioAnuncianteComponent,
   ],
   imports: [
     CommonModule,

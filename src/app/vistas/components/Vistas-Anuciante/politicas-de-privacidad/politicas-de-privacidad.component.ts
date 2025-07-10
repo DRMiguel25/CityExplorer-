@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'politicas-de-privacidad',
   standalone: false,
-  templateUrl: './politicas-de-privacidad.component.html.html',
-  styleUrl: './politicas-de-privacidad.component.html.scss'
+  templateUrl: './politicas-de-privacidad.component.html',
+  styleUrl: './politicas-de-privacidad.component.scss'
 })
 export class PoliticasDePrivacidadAnuncianteComponent implements OnInit{
 

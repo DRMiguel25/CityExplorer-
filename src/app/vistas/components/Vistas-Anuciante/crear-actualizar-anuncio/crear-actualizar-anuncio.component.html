@@ -24,8 +24,15 @@
     </div>
 
     <div class="form-group">
-      <label for="imagenes">Selecciona Imágenes*</label>
-      <input type="file" id="imagenes" (change)="onImagenesSeleccionadas($event)" multiple accept="image/*">
+      <label for="imagenes" class="form-label fw-bold">Selecciona Imágenes*</label>
+      <input type="file" id="imagenes" class="form-control" (change)="onImagenesSeleccionadas($event)" multiple accept="image/jpeg,image/png,image/webp">
+
+      <small class="form-text text-muted d-block mt-2">
+        <i class="bi bi-info-circle"></i>
+        Puedes subir hasta <strong>8 imágenes</strong> por anuncio.<br>
+        Formatos permitidos: <strong>JPG O PNG</strong>.<br>
+        Tamaño máximo por imagen: <strong>2MB</strong>.
+      </small>
     </div>
 
     <div class="form-group" *ngIf="imagenesActuales.length > 0">
@@ -33,7 +40,7 @@
       <div class="imagenes-actuales">
         <div *ngFor="let img of imagenesActuales" class="imagen-item">
           <img [src]="img.url" alt="Imagen actual" class="imagen-preview">
-          <button type="button" (click)="eliminarImagen(img.id)" class="btn-eliminar">Eliminar</button>
+          <button *ngIf="img.id_imagen" type="button" (click)="eliminarImagen(img.id_imagen)" class="btn-eliminar">Eliminar</button>
         </div>
       </div>
     </div>
