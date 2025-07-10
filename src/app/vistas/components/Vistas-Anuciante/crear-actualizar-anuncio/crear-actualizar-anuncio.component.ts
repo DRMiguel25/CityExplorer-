@@ -73,6 +73,11 @@ export class CrearActualizarAnuncioComponent implements OnInit {
   this.logLoadTime();
 }
 
+ngOnDestroy(): void {
+  this.imagenesSeleccionadas.forEach(file => URL.revokeObjectURL(this.getPreviewUrl(file)));
+}
+
+
 cargarAnuncio(id: string): void {
   console.log(`🔁 Haciendo GET a: lugar/${id}`);
 
@@ -347,6 +352,13 @@ eliminarImagen(idImagen: number | undefined): void {
   console.log('🗑️ Imágenes marcadas para eliminar:', this.imagenesAEliminar);
 }
 
+getPreviewUrl(file: File): string {
+  return URL.createObjectURL(file);
+}
 
+eliminarImagenSeleccionada(file: File): void {
+  this.imagenesSeleccionadas = this.imagenesSeleccionadas.filter(f => f !== file);
+  console.log('🗑️ Imagen nueva quitada:', file.name);
+}
 
 }

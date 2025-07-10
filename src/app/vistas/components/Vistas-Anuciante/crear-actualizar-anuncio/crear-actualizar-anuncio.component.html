@@ -35,13 +35,22 @@
       </small>
     </div>
 
-    <div class="form-group" *ngIf="imagenesActuales.length > 0">
-      <label>Imágenes Actuales:</label>
+    <div class="form-group" *ngIf="imagenesActuales.length + imagenesSeleccionadas.length > 0">
+      <label>Imágenes Subidas:</label>
       <div class="imagenes-actuales">
+        
+        <!-- Imágenes actuales desde el backend -->
         <div *ngFor="let img of imagenesActuales" class="imagen-item">
           <img [src]="img.url" alt="Imagen actual" class="imagen-preview">
           <button *ngIf="img.id_imagen" type="button" (click)="eliminarImagen(img.id_imagen)" class="btn-eliminar">Eliminar</button>
         </div>
+
+        <!-- Imágenes nuevas seleccionadas -->
+        <div *ngFor="let nueva of imagenesSeleccionadas" class="imagen-item">
+          <img [src]="getPreviewUrl(nueva)" alt="Imagen nueva" class="imagen-preview">
+          <button type="button" (click)="eliminarImagenSeleccionada(nueva)" class="btn-eliminar">Quitar</button>
+        </div>
+
       </div>
     </div>
 
