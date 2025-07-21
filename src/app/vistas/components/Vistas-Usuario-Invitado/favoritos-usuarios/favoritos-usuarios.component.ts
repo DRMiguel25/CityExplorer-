@@ -19,6 +19,8 @@ export class FavoritosUsuariosComponent implements OnInit {
   imagenesPorLugar: { [key: number]: string[] } = {};
   indicesImagen: { [key: number]: number } = {};
 
+  listaCategorias: any[] = [];
+
   listaComentarios: any[] = [];
   promedioValoracionPorLugar: { [idLugar: number]: number } = {};
 
@@ -35,6 +37,7 @@ export class FavoritosUsuariosComponent implements OnInit {
 
     if (this.id_usuario) {
       this.obtenerFavoritos();
+      this.obtenerCategoriasDesdeAPI();
     }
 
     this.logLoadTime();  // 👈 mide tiempo de carga
@@ -141,6 +144,23 @@ cambiarImagen(idLugar: number, direccion: number): void {
   actual = (actual + direccion + total) % total;
   this.indicesImagen[idLugar] = actual;
 }
+  obtenerCategoriasDesdeAPI(): void {
+    this.httpLaravelService.Service_Get('categorias', '').subscribe({
+      next: (resp: any) => {
+        this.listaCategorias = resp.data;
+        console.log('📦 Categorías:', this.listaCategorias);
+      },
+      error: (error) => {
+        console.error('❌ Error al obtener categorías:', error);
+      }
+    });
+  }
+
+  getNombreCategoria(idCategoria: number): string {
+    const categoria = this.listaCategorias.find(cat => cat.id_categoria === idCategoria);
+    return categoria ? categoria.nombre : 'Sin Categoría';
+  }
+
 
   obtenerComentarios(idLugar: number): void {
     const modelo = 'lugar';

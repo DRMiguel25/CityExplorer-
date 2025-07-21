@@ -14,6 +14,8 @@ export class CategoriaVistaComponent implements OnInit {
   categoriaSeleccionada = '';
   tituloCategoria = '';
 
+  listaCategorias: any[] = [];
+
   id_usuario: string | null = null; // Aquí guardamos el ID del usuario
 
   categoriasOpciones: any[] = [];
@@ -57,11 +59,19 @@ export class CategoriaVistaComponent implements OnInit {
         if (this.categoriaSeleccionada) {
           this.filtrarLugaresPorCategoria(this.categoriaSeleccionada);
         }
+        
+        this.listaCategorias = resp.data;
+        console.log('📦 Listas de categorías:', this.listaCategorias);
       },
       error: (error) => {
         console.error('❌ Error al obtener categorías:', error);
       }
     });
+  }
+
+  getNombreCategoria(idCategoria: number): string {
+    const categoria = this.listaCategorias.find(cat => cat.id_categoria === idCategoria);
+    return categoria ? categoria.nombre : 'Sin Categoría';
   }
 
   filtrarLugaresPorCategoria(nombreCategoria: string): void {
