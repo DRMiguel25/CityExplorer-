@@ -345,12 +345,31 @@ eliminarImagen(idImagen: number | undefined): void {
     console.warn('Intento de eliminar imagen con ID inválido:', idImagen);
     return;
   }
+
+  // Calculamos cuántas imágenes quedarían después de eliminar
+  const totalRestantes =
+    this.imagenesActuales.filter(img => img.id_imagen !== idImagen).length +
+    this.imagenesSeleccionadas.length;
+
+  if (totalRestantes < 1) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Debe haber al menos una imagen',
+      text: 'No puedes eliminar esta imagen porque el anuncio debe tener al menos una imagen visible.',
+      confirmButtonText: 'Entendido',
+      confirmButtonColor: '#3085d6'
+    });
+    return;
+  }
+
   if (!this.imagenesAEliminar.includes(idImagen)) {
     this.imagenesAEliminar.push(idImagen);
   }
+
   this.imagenesActuales = this.imagenesActuales.filter(img => img.id_imagen !== idImagen);
   console.log('🗑️ Imágenes marcadas para eliminar:', this.imagenesAEliminar);
 }
+
 
 getPreviewUrl(file: File): string {
   return URL.createObjectURL(file);

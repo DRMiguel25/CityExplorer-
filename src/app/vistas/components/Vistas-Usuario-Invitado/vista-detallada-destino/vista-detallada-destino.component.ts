@@ -189,15 +189,15 @@ obtenerValoraciones(): void {
         console.log('🔢 Total de comentarios:', this.totalComentarios);
       } else {
         console.warn('⚠️ No hay comentarios disponibles.');
-        this.ultimoComentario = null;
-        this.promedioValoracion = null;
+        this.ultimoComentario = 0;
+        this.promedioValoracion = 0;
         this.totalComentarios = 0;
       }
     },
     error: (error) => {
       console.error('❌ Error al obtener los comentarios:', error);
-      this.ultimoComentario = null;
-      this.promedioValoracion = null;
+      this.ultimoComentario = 0;
+      this.promedioValoracion = 0;
       this.totalComentarios = 0;
     }
   });

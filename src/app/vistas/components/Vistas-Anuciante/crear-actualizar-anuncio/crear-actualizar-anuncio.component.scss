@@ -474,3 +474,10 @@ h1 {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.text-danger-bold {
+  color: #e74c3c;   /* rojo intenso, nada de tonos pastel */
+  font-weight: 700; /* negrita fuerte */
+  font-size: 0.9rem; /* tamaño legible pero sin pasarse */
+  margin-top: 0.2rem; /* un poco de espacio arriba para que no quede pegado */
+}

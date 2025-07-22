@@ -14,13 +14,13 @@
     <div class="form-group">
       <label for="nombre">Nombre del Lugar*</label>
       <input type="text" id="nombre" formControlName="nombre">
-      <div *ngIf="isInvalid('nombre')" class="text-danger">El nombre es obligatorio</div>
+      <div *ngIf="isInvalid('nombre')" class="text-danger-bold">El nombre es obligatorio</div>
     </div>
 
     <div class="form-group">
       <label for="descripcion">Descripción*</label>
       <input type="text" id="descripcion" formControlName="descripcion">
-      <div *ngIf="isInvalid('descripcion')" class="text-danger">La descripción es obligatoria</div>
+      <div *ngIf="isInvalid('descripcion')" class="text-danger-bold">La descripción es obligatoria</div>
     </div>
 
     <div class="form-group">
@@ -51,25 +51,25 @@
     <div class="form-group">
       <label for="paginaWeb">Página Web</label>
       <input type="text" id="paginaWeb" formControlName="paginaWeb">
-      <div *ngIf="isInvalid('paginaWeb')" class="text-danger">La URL es obligatoria y debe ser válida</div>
+      <div *ngIf="isInvalid('paginaWeb')" class="text-danger-bold">La URL es obligatoria y debe ser válida</div>
     </div>
 
     <div class="form-group">
       <label for="num_telefonico">Número Telefónico*</label>
       <input type="text" id="num_telefonico" formControlName="num_telefonico">
-      <div *ngIf="isInvalid('num_telefonico')" class="text-danger">Debe tener 10 dígitos</div>
+      <div *ngIf="isInvalid('num_telefonico')" class="text-danger-bold">Debe tener 10 dígitos</div>
     </div>
 
     <div class="form-group">
       <label for="horario_apertura">Horario de Apertura*</label>
       <input type="time" id="horario_apertura" formControlName="horario_apertura">
-      <div *ngIf="isInvalid('horario_apertura')" class="text-danger">Campo obligatorio</div>
+      <div *ngIf="isInvalid('horario_apertura')" class="text-danger-bold">Campo obligatorio</div>
     </div>
 
     <div class="form-group">
       <label for="horario_cierre">Horario de Cierre*</label>
       <input type="time" id="horario_cierre" formControlName="horario_cierre">
-      <div *ngIf="isInvalid('horario_cierre')" class="text-danger">Campo obligatorio</div>
+      <div *ngIf="isInvalid('horario_cierre')" class="text-danger-bold">Campo obligatorio</div>
     </div>
 
     <div class="form-group">
@@ -78,7 +78,7 @@
         <option value="">Seleccionar días</option>
         <option *ngFor="let dia of diasServicioOpciones" [value]="dia">{{ dia }}</option>
       </select>
-      <div *ngIf="isInvalid('dias_servicio')" class="text-danger">Selecciona una opción</div>
+      <div *ngIf="isInvalid('dias_servicio')" class="text-danger-bold">Selecciona una opción</div>
     </div>
 
     <div class="form-group">
@@ -87,7 +87,7 @@
         <option value="">Seleccionar categoría</option>
         <option *ngFor="let cat of categoriasOpciones" [value]="cat.id_categoria">{{ cat.nombre }}</option>
       </select>
-      <div *ngIf="isInvalid('categoria')" class="text-danger">Selecciona una categoría</div>
+      <div *ngIf="isInvalid('categoria')" class="text-danger-bold">Selecciona una categoría</div>
     </div>
 
     <div class="form-group">
@@ -96,12 +96,12 @@
         <div>
           <label for="calle">Calle</label>
           <input type="text" id="calle" formControlName="calle">
-          <div *ngIf="isInvalid('direccion.calle')" class="text-danger">Campo obligatorio</div>
+          <div *ngIf="isInvalid('direccion.calle')" class="text-danger-bold">Campo obligatorio</div>
         </div>
         <div>
           <label for="numero_ext">Número Exterior</label>
           <input type="text" id="numero_ext" formControlName="numero_ext">
-          <div *ngIf="isInvalid('direccion.numero_ext')" class="text-danger">Campo obligatorio</div>
+          <div *ngIf="isInvalid('direccion.numero_ext')" class="text-danger-bold">Campo obligatorio</div>
         </div>
         <div>
           <label for="numero_int">Número Interior</label>
@@ -110,12 +110,12 @@
         <div>
           <label for="colonia">Colonia</label>
           <input type="text" id="colonia" formControlName="colonia">
-          <div *ngIf="isInvalid('direccion.colonia')" class="text-danger">Campo obligatorio</div>
+          <div *ngIf="isInvalid('direccion.colonia')" class="text-danger-bold">Campo obligatorio</div>
         </div>
         <div>
           <label for="codigo_postal">Código Postal</label>
           <input type="text" id="codigo_postal" formControlName="codigo_postal">
-          <div *ngIf="isInvalid('direccion.codigo_postal')" class="text-danger">Debe ser válido</div>
+          <div *ngIf="isInvalid('direccion.codigo_postal')" class="text-danger-bold">Debe ser válido</div>
         </div>
       </div>
     </div>
