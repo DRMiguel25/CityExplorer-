@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button'; // para los botones del diálogo
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { VistasRoutingModule } from './vistas-routing.module'; // ✅ Importar el módulo de rutas
 
@@ -77,7 +77,7 @@ import { TerminosDeServicioAnuncianteComponent } from './components/Vistas-Anuci
     VistasRoutingModule,
     MatDialogModule,
     MatButtonModule,
-    RouterModule,  // <<--- este import falta
+    RouterModule,
   ],
 })
 export class VistasModule { }

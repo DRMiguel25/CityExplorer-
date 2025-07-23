@@ -13,7 +13,12 @@
     <!-- Sección superior: Buscador -->
     <div class="filters-top-section">
       <div class="search-box">
-        <input type="text" class="search-input" placeholder="Buscar destinos...">
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Buscar destinos..."
+          [(ngModel)]="searchTerm"
+        />
         <i class="fas fa-search search-icon"></i>
       </div>
     </div>
