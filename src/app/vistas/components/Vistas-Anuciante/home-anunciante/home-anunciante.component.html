@@ -1,46 +1,47 @@
-<div class="background-slideshow"></div>
-<div class="overlay"></div>
-<div class="container">
-    <div class="top-bar">
-      <div class="buttons-container">
-        <button class="btn btn-primary" (click)="crearAnuncio()">Crear nuevo anuncio</button>
-        <button class="btn btn-outline" (click)="cerrarSesion()">
-          <span>↪</span>
-          Cerrar Sesión
-        </button>
-      </div>
-    </div>
+
   
-    <div class="content">
-      <h1>Bienvenido Usuario</h1>
-  
-      <h2 class="announcements-title">Anuncios Creados</h2>
-  
-      <div *ngIf="isLoading" class="loading-indicator">Cargando...</div>
+<h1 class="page-title" style="color: #5BA7F7;">Anuncios Creados</h1>
+
+ <div *ngIf="isLoading" class="loading-indicator">Cargando...</div>
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-  
-      <div class="cards-container">
-        <!-- Iterar sobre los lugares para generar una tarjeta por cada uno -->
-        <div *ngFor="let lugar of lugares" class="card">
-  <div class="card-header">{{ lugar.nombre }}</div>
-
-  <div class="image-carousel">
-    <button class="btn-arrow" (click)="cambiarImagen(lugar, -1)">‹</button>
-
-    <img [src]="lugar.url" alt="{{ lugar.nombre }}" class="card-img">
-
-    <button class="btn-arrow" (click)="cambiarImagen(lugar, 1)">›</button>
-  </div>
-
-  <div class="card-body">
-    <div class="card-title">Descripción</div>
-    <div class="card-text">{{ lugar.descripcion }}</div>
-    <div class="card-actions">
-      <button class="btn btn-edit" (click)="vistaDetalladaAnuncio(lugar.id_lugar)">Vista detallada</button>
+    
+    <!-- Cards Container - Ahora está dentro de filters-section -->
+    <div class="cards-container">
+      <div class="card" *ngFor="let lugar of lugares" class="card">
+        <div class="card-header">
+          <div>{{ lugar.nombre }}</div>
+        </div>
+        <div class="card-img-container">
+          <button 
+        class="nav-button left" 
+        (click)="cambiarImagen(lugar, -1); $event.stopPropagation()"
+      >
+         <span class="material-symbols-outlined">
+chevron_backward
+</span>
+      </button>
+          <img
+            [src]="lugar.url"
+            alt="{{ lugar.nombre }}"
+            class="card-img">
+          <button 
+        class="nav-button right" 
+        (click)="cambiarImagen(lugar, 1); $event.stopPropagation()"
+      >
+        <span class="material-symbols-outlined">
+chevron_forward
+</span>
+      </button>
+          
+        </div>
+        <div class="card-body">
+          <div class="card-title">Descripción</div>
+          <div class="card-text">
+            {{ lugar.descripcion || 'No hay descripción disponible.' }}
+             <div class="card-actions">
+     
     </div>
-  </div>
+    
+          </div>
+       <button class="btn btn-edit" (click)="vistaDetalladaAnuncio(lugar.id_lugar)">Vista detallada</button>
 </div>
-
-      </div>
-    </div>
-  </div>
