@@ -3,6 +3,15 @@
 <div class="main-content" style="padding: 6rem 2rem;">
   <h1 class="page-title">Favoritos</h1>
 
+  <div class="filtro-categorias" style="margin-bottom: 1.5rem;">
+    <label for="filtroCategoria" style="font-weight: bold; margin-right: 0.5rem;">Filtrar por categoría:</label>
+    <select id="filtroCategoria" [(ngModel)]="categoriaSeleccionada" style="padding: 0.5rem;">
+      <option [value]="0">Todas</option>
+      <option *ngFor="let cat of listaCategorias" [value]="cat.id_categoria">{{ cat.nombre }}</option>
+    </select>
+  </div>
+
+
   <!-- Si no hay favoritos -->
   <div *ngIf="favoritosFiltrados.length === 0" class="no-favorites" style="text-align: center;">
     <p class="mensaje-vacio" style="color: #6B7280; font-size: 1.25rem;">

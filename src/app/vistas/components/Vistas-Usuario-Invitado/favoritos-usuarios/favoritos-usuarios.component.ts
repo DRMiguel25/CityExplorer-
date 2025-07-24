@@ -24,6 +24,8 @@ export class FavoritosUsuariosComponent implements OnInit {
   listaComentarios: any[] = [];
   promedioValoracionPorLugar: { [idLugar: number]: number } = {};
 
+  categoriaSeleccionada: number = 0; // 0 = Todas
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -202,6 +204,5 @@ cambiarImagen(idLugar: number, direccion: number): void {
 
     return estrellas;
   }
-
 
 }
