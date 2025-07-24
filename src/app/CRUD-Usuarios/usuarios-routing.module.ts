@@ -58,7 +58,7 @@ const routes: Routes = [
   { path: 'terminos-del-servicio', component: TerminosDelServicioComponent },
   { path: 'politicas-de-privacidad', component: PoliticasDePrivacidadComponent },
   { path: 'vista-lista-comentarios/:id_destino', component: VistaListaComentariosComponent },
-  { path: 'navbar-anunciante', component: navbarAnuncianteComponent}
+  { path: 'navbar-anunciante', component: navbarAnuncianteComponent},
   { path: '', redirectTo: 'login', pathMatch: 'full' },  // ✅ Ruta por defecto al login
 ];
 
