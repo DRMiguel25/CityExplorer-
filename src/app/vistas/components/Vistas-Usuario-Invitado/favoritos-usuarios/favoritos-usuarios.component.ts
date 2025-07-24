@@ -45,23 +45,12 @@ export class FavoritosUsuariosComponent implements OnInit {
     this.logLoadTime();  // 👈 mide tiempo de carga
 
   }
-
+  
   obtenerFavoritos(): void {
     this.httpLaravelService.Service_Get('favoritos', '').subscribe({
       next: (respuesta: any) => {
         this.favoritos = respuesta.data || [];
-
-        // 🔍 Filtrar solo los del usuario actual
-        this.favoritosFiltrados = this.favoritos.filter(fav =>
-          fav.id_usuario == this.id_usuario
-        );
-
-        this.favoritosFiltrados.forEach(fav => {
-          this.cargarImagenesPorLugar(fav.lugar.id_lugar);
-          this.obtenerComentarios(fav.lugar.id_lugar);  // <-- Aquí cargas las estrellas ⭐
-        });
-
-        console.log('✅ Favoritos filtrados:', this.favoritosFiltrados);
+        this.filtrarFavoritos(); // 👈 Aquí llamas al método dinámico
       },
       error: (error) => {
         console.error('❌ Error al obtener los favoritos:', error);
@@ -69,6 +58,7 @@ export class FavoritosUsuariosComponent implements OnInit {
       }
     });
   }
+
 
   toggleFavorito(id_lugar: number): void {
     const body = { id_lugar };
@@ -204,5 +194,22 @@ cambiarImagen(idLugar: number, direccion: number): void {
 
     return estrellas;
   }
+  filtrarFavoritos(): void {
+    const categoriaSeleccionada = Number(this.categoriaSeleccionada);
+      
+    this.favoritosFiltrados = this.favoritos.filter(fav => {
+      const idCategoriaLugar = Number(fav.lugar?.id_categoria);
+      return fav.id_usuario == this.id_usuario &&
+        (categoriaSeleccionada === 0 || idCategoriaLugar === categoriaSeleccionada);
+    });
+
+    this.favoritosFiltrados.forEach(fav => {
+      this.cargarImagenesPorLugar(fav.lugar.id_lugar);
+      this.obtenerComentarios(fav.lugar.id_lugar);
+    });
+
+    console.log('📂 Favoritos filtrados dinámicamente:', this.favoritosFiltrados);
+  }
+
 
 }

@@ -5,9 +5,11 @@
 
   <div class="filtro-categorias" style="margin-bottom: 1.5rem;">
     <label for="filtroCategoria" style="font-weight: bold; margin-right: 0.5rem;">Filtrar por categoría:</label>
-    <select id="filtroCategoria" [(ngModel)]="categoriaSeleccionada" style="padding: 0.5rem;">
-      <option [value]="0">Todas</option>
-      <option *ngFor="let cat of listaCategorias" [value]="cat.id_categoria">{{ cat.nombre }}</option>
+    <select [(ngModel)]="categoriaSeleccionada" (change)="filtrarFavoritos()">
+      <option [value]="0">Todas las categorías</option>
+      <option *ngFor="let cat of listaCategorias" [value]="cat.id_categoria">
+        {{ cat.nombre }}
+      </option>
     </select>
   </div>
 
