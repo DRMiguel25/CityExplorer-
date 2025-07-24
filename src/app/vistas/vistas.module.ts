@@ -39,6 +39,8 @@ import { TerminosDelServicioComponent } from './components/Vistas-Usuario-Invita
 import { PoliticasDePrivacidadComponent } from './components/Vistas-Usuario-Invitado/Politicas-de-privacidad/politicas-de-privacidad.component'; // Asegúrate de importar el componente PoliticasDePrivacidadComponent
 import { VistaListaComentariosComponent } from './components/Vistas-Usuario-Invitado/vista-lista-comentarios/vista-lista-comentarios.component'; // Asegúrate de importar el componente VistaListaComentariosComponent
 
+import { navbarAnuncianteComponent } from './components/Vistas-Anuciante/navbar-anunciante/navbar-anunciante.component';
+
 @NgModule({
   declarations: [
     CategoriasComponent,
@@ -60,6 +62,7 @@ import { VistaListaComentariosComponent } from './components/Vistas-Usuario-Invi
     TerminosDelServicioComponent,
     PoliticasDePrivacidadComponent,
     VistaListaComentariosComponent,
+    navbarAnuncianteComponent
   ],
   imports: [
     CommonModule,

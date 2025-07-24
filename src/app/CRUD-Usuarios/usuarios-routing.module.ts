@@ -26,6 +26,9 @@ import { TerminosDelServicioComponent } from '../vistas/components/Vistas-Usuari
 import { PoliticasDePrivacidadComponent } from '../vistas/components/Vistas-Usuario-Invitado/Politicas-de-privacidad/politicas-de-privacidad.component'; // Asegúrate de importar el componente PoliticasDePrivacidadComponent
 
 import { VistaListaComentariosComponent } from '../vistas/components/Vistas-Usuario-Invitado/vista-lista-comentarios/vista-lista-comentarios.component'; // Asegúrate de importar el componente VistaListaComentariosComponent
+
+import { navbarAnuncianteComponent } from '../vistas/components/Vistas-Anuciante/navbar-anunciante/navbar-anunciante.component';
+
 const routes: Routes = [
   { path: 'inicio-sesion', component: InicioSesionComponent },
   { path: 'registro', component: RegistroComponent },
@@ -55,6 +58,7 @@ const routes: Routes = [
   { path: 'terminos-del-servicio', component: TerminosDelServicioComponent },
   { path: 'politicas-de-privacidad', component: PoliticasDePrivacidadComponent },
   { path: 'vista-lista-comentarios/:id_destino', component: VistaListaComentariosComponent },
+  { path: 'navbar-anunciante', component: navbarAnuncianteComponent}
   { path: '', redirectTo: 'login', pathMatch: 'full' },  // ✅ Ruta por defecto al login
 ];
 

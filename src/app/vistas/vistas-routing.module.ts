@@ -14,6 +14,7 @@ import { VistaDetalladaAnuncioComponent } from './components/Vistas-Anuciante/vi
 import { VistaDetalladaDestinoComponent } from './components/Vistas-Usuario-Invitado/vista-detallada-destino/vista-detallada-destino.component';
 import { AyudaComponent } from './components/Vistas-Usuario-Invitado/ayuda/ayuda.component';
 import { PagoAnuncioComponent } from './components/Vistas-Anuciante/pagar-anuncio/pagar-anuncio.component';
+
 const routes: Routes = [
   {
     path: '',
