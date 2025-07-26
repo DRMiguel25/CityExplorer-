@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
-import { AyudaComponent } from './vistas/components/Vistas-Usuario-Invitado/ayuda/ayuda.component';
-import { VistaDetalladaAnuncioComponent } from './vistas/components/Vistas-Anuciante/vista-detallada-anuncio/vista-detallada-anuncio.component';
+import { AyudaComponent } from './components/vistas/components/Vistas-Usuario-Invitado/ayuda/ayuda.component';
+import { VistaDetalladaAnuncioComponent } from './components/vistas/components/Vistas-Anuciante/vista-detallada-anuncio/vista-detallada-anuncio.component';
 
 const routes: Routes = [
   {
     path: 'vistas',
-    loadChildren: () => import('./vistas/vistas.module').then(m => m.VistasModule),
+    loadChildren: () => import('./components/vistas/vistas.module').then(m => m.VistasModule),
     canActivate: [AuthGuard]  // ✅ Protegido
   },
   {

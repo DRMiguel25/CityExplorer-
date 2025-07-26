@@ -9,8 +9,9 @@ import { authInterceptor } from './auth.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-import { UsuariosModule } from './CRUD-Usuarios/usuarios.module';
-import { VistasModule } from './vistas/vistas.module';
+
+import { UsuariosModule } from './components/CRUD-Usuarios/usuarios.module';
+import { VistasModule } from './components/vistas/vistas.module';
 
 @NgModule({
   declarations: [AppComponent],
