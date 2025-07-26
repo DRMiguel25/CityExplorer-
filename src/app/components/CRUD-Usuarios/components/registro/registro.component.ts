@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpLaravelService } from "../../../http.service";
+import { HttpLaravelService } from "../../../../http.service";
 import Swal from 'sweetalert2';
 
 @Component({

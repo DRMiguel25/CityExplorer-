@@ -10,21 +10,19 @@ import { interval, Subscription } from 'rxjs';
   styleUrls: ['./password-reset.component.css']
 })
 export class PasswordResetComponent implements OnInit, OnDestroy {
-  currentStep = 1; // 1: correo, 2: code + password
-  correoForm: FormGroup; // Cambiar nombre
+  currentStep = 1;
+  correoForm: FormGroup;
   resetForm: FormGroup;
-  
+
   loading = false;
   error: string | null = null;
   success: string | null = null;
-  
-  // Timer para expiración
+
   timeRemaining = 0;
   timerSubscription?: Subscription;
-  
-  // Estado del código
+
   remainingAttempts = 5;
-  currentCorreo = ''; // Cambiar nombre
+  currentCorreo = '';
 
   constructor(
     private fb: FormBuilder,
@@ -32,7 +30,7 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.correoForm = this.fb.group({
-      correo: ['', [Validators.required, Validators.email]] // Cambiar campo
+      correo: ['', [Validators.required, Validators.email]]
     });
 
     this.resetForm = this.fb.group({
@@ -43,7 +41,6 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // Si hay correo guardado, ir al paso 2
     const savedCorreo = localStorage.getItem('reset_correo');
     if (savedCorreo) {
       this.currentCorreo = savedCorreo;
@@ -56,20 +53,16 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
     localStorage.removeItem('reset_correo');
   }
 
-  // Validador personalizado para confirmar contraseñas
   passwordMatchValidator(group: FormGroup) {
     const password = group.get('password');
     const confirmPassword = group.get('password_confirmation');
-    
     if (password && confirmPassword && password.value !== confirmPassword.value) {
       confirmPassword.setErrors({ passwordMismatch: true });
       return { passwordMismatch: true };
     }
-    
     return null;
   }
 
-  // Paso 1: Enviar código
   sendResetCode() {
     if (this.correoForm.invalid) return;
 
@@ -85,15 +78,12 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
         this.success = response.message;
         this.currentCorreo = correo;
         this.currentStep = 2;
-        
-        // Guardar correo para persistencia
+
         localStorage.setItem('reset_correo', correo);
-        
-        // Iniciar timer
+
         this.timeRemaining = response.expires_in_minutes * 60;
         this.startTimer();
-        
-        // Focus en el campo código
+
         setTimeout(() => {
           const codeInput = document.getElementById('code');
           if (codeInput) codeInput.focus();
@@ -102,7 +92,7 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
       error: (error) => {
         this.loading = false;
         this.error = error.error?.message || 'Error enviando código';
-        
+
         if (error.status === 429) {
           this.error = 'Has superado el límite de códigos por hora. Intenta más tarde.';
         }
@@ -110,7 +100,6 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Paso 2: Verificar código y resetear contraseña
   resetPassword() {
     if (this.resetForm.invalid) return;
 
@@ -118,7 +107,7 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
     this.error = null;
 
     const formData = {
-      correo: this.currentCorreo, // Usar 'correo'
+      correo: this.currentCorreo,
       code: this.resetForm.value.code,
       password: this.resetForm.value.password,
       password_confirmation: this.resetForm.value.password_confirmation
@@ -129,11 +118,7 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
         this.loading = false;
         this.success = response.message;
         this.stopTimer();
-        
-        // Limpiar datos guardados
         localStorage.removeItem('reset_correo');
-        
-        // Redirigir al login después de 2 segundos
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 2000);
@@ -141,11 +126,11 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
       error: (error) => {
         this.loading = false;
         this.error = error.error?.message || 'Error restableciendo contraseña';
-        
+
         if (error.error?.remaining_attempts !== undefined) {
           this.remainingAttempts = error.error.remaining_attempts;
         }
-        
+
         if (error.error?.error === 'code_expired' || error.error?.error === 'max_attempts_exceeded') {
           this.backToStep1();
         }
@@ -153,20 +138,18 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Verificar si existe código pendiente
   checkExistingCode() {
     this.passwordResetService.checkCodeStatus(this.currentCorreo).subscribe({
       next: (response) => {
         if (response.exists && !response.is_expired) {
           this.currentStep = 2;
           this.remainingAttempts = response.remaining_attempts || 5;
-          
-          // Calcular tiempo restante
+
           if (response.expires_at) {
             const expiresAt = new Date(response.expires_at).getTime();
             const now = new Date().getTime();
             this.timeRemaining = Math.max(0, Math.floor((expiresAt - now) / 1000));
-            
+
             if (this.timeRemaining > 0) {
               this.startTimer();
             } else {
@@ -183,7 +166,6 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Volver al paso 1
   backToStep1() {
     this.currentStep = 1;
     this.stopTimer();
@@ -195,22 +177,19 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
     localStorage.removeItem('reset_correo');
   }
 
-  // Reenviar código
   resendCode() {
     this.correoForm.patchValue({ correo: this.currentCorreo });
     this.sendResetCode();
   }
 
-  // Manejar input del código (auto-formato)
   onCodeInput(event: any) {
-    let value = event.target.value.replace(/\D/g, ''); // Solo números
+    let value = event.target.value.replace(/\D/g, '');
     if (value.length > 6) {
       value = value.substring(0, 6);
     }
     this.resetForm.patchValue({ code: value });
   }
 
-  // Timer functions
   startTimer() {
     this.timerSubscription = interval(1000).subscribe(() => {
       this.timeRemaining--;
@@ -228,18 +207,15 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Formatear tiempo restante
   formatTime(seconds: number): string {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
 
-  // Getters para el template
   get correoControl() { return this.correoForm.get('correo'); }
   get codeControl() { return this.resetForm.get('code'); }
   get passwordControl() { return this.resetForm.get('password'); }
   get confirmPasswordControl() { return this.resetForm.get('password_confirmation'); }
 }
-
 

@@ -1,9 +1,9 @@
-import { LocalstorageService } from '../../../localstorage.service';
-import { HttpLaravelService } from "../../../http.service";
+import { LocalstorageService } from '../../../../localstorage.service';
+import { HttpLaravelService } from "../../../../http.service";
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { AuthService } from '../../../auth.service';
+import { AuthService } from '../../../../auth.service';
 
 
 import Swal from 'sweetalert2';

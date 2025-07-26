@@ -23,7 +23,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -46,17 +46,17 @@
             }
           }
         },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "city-explorer:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "city-explorer:build:production"
-            }
-          }
-        }
+"serve": {
+  "builder": "@angular-devkit/build-angular:dev-server",
+  "options": {
+    "buildTarget": "city-explorer:build"
+  },
+  "configurations": {
+    "production": {
+      "buildTarget": "city-explorer:build:production"
+    }
+  }
+}
       }
     }
   },

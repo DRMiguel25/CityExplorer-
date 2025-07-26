@@ -12,8 +12,7 @@ const routes: Routes = [
   },
   {
     path: '', // 👈 Este es el módulo de usuarios: login, registro, etc.
-    loadChildren: () => import('./CRUD-Usuarios/usuarios.module').then(m => m.UsuariosModule)
-    // ❌ SIN AuthGuard, porque aquí se puede entrar sin estar logueado
+loadChildren: () => import('./components/CRUD-Usuarios/usuarios.module').then(m => m.UsuariosModule)    // ❌ SIN AuthGuard, porque aquí se puede entrar sin estar logueado
   },
   {
     path: '**',
