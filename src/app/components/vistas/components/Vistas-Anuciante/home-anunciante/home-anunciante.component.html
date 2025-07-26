@@ -1,47 +1,87 @@
+<!-- Botón flotante para abrir sidebar cuando esté cerrado -->
+<button class="open-sidebar-btn" *ngIf="!sidebarAbierto" (click)="toggleSidebar()">
+  <i class="fas fa-bars"></i>
+</button>
 
-  
-<h1 class="page-title" style="color: #5BA7F7;">Anuncios Creados</h1>
-
- <div *ngIf="isLoading" class="loading-indicator">Cargando...</div>
-      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-    
-    <!-- Cards Container - Ahora está dentro de filters-section -->
-    <div class="cards-container">
-      <div class="card" *ngFor="let lugar of lugares" class="card">
-        <div class="card-header">
-          <div>{{ lugar.nombre }}</div>
-        </div>
-        <div class="card-img-container">
-          <button 
-        class="nav-button left" 
-        (click)="cambiarImagen(lugar, -1); $event.stopPropagation()"
-      >
-         <span class="material-symbols-outlined">
-chevron_backward
-</span>
+<!-- Sidebar -->
+<nav class="sidebar" [class.active]="sidebarAbierto">
+  <div class="sidebar-header">
+    <div class="logo">
+      <svg class="custom-logo" viewBox="0 0 100 100" fill="none"  style="color: #5BA7F7;">
+        <circle cx="50" cy="50" r="45" stroke="black" stroke-width="3" fill="none" />
+        <path d="M20 50 H80" stroke="black" stroke-width="3" />
+        <ellipse cx="50" cy="50" rx="25" ry="45" stroke="black" stroke-width="3" fill="none" />
+      </svg>
+      <button class="menu-toggle" (click)="toggleSidebar()">
+        <i class="fas fa-bars"></i>
       </button>
-          <img
-            [src]="lugar.url"
-            alt="{{ lugar.nombre }}"
-            class="card-img">
-          <button 
-        class="nav-button right" 
-        (click)="cambiarImagen(lugar, 1); $event.stopPropagation()"
-      >
-        <span class="material-symbols-outlined">
-chevron_forward
-</span>
-      </button>
-          
-        </div>
-        <div class="card-body">
-          <div class="card-title">Descripción</div>
-          <div class="card-text">
-            {{ lugar.descripcion || 'No hay descripción disponible.' }}
-             <div class="card-actions">
-     
     </div>
-    
-          </div>
-       <button class="btn btn-edit" (click)="vistaDetalladaAnuncio(lugar.id_lugar)">Vista detallada</button>
+  </div>
+
+  <div class="nav-section">
+    <a href="#" class="nav-item" (click)="crearAnuncio()">
+      <span class="material-symbols-outlined icon">edit_square</span>
+      <span class="label">Crear Anuncio</span>
+    </a>
+    <a href="#" class="nav-item">
+      <span class="material-symbols-outlined icon">attach_money</span>
+      <span class="label">Anuncios Pagados</span>
+    </a>
+    <a href="#" class="nav-item">
+      <span class="material-symbols-outlined icon">cancel</span>
+      <span class="label">Anuncios No Pagados</span>
+    </a>
+    <a href="#" class="nav-item">
+      <span class="material-symbols-outlined">money</span>
+      <span class="label"> Metodos De Pago</span>
+    </a>
+  </div>
+  
+
+  <div class="logout-section">
+    <a href="#" class="nav-item" (click)="cerrarSesion()">
+      <span class="material-symbols-outlined icon">logout</span>
+      <span class="label">Cerrar Sesión</span>
+    </a>
+  </div>
+
+  <div class="user-section">
+    <a href="#" class="user-profile">
+      <div class="user-avatar">A</div>
+      <div class="user-info">
+        <h4>Alexis Peralta rmz</h4>
+        <p>Anunciante</p>
+      </div>
+    </a>
+  </div>
+</nav>
+
+<!-- Contenido principal -->
+<div class="main-content" [class.collapsed]="!sidebarAbierto">
+  <h1 class="page-title">Anuncios Creados</h1>
+
+  <div *ngIf="isLoading" class="loading-indicator">Cargando...</div>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  <div class="cards-container">
+    <div class="card" *ngFor="let lugar of lugares">
+      <div class="card-header">{{ lugar.nombre }}</div>
+      <div class="card-img-container">
+        <button class="nav-button left" (click)="cambiarImagen(lugar, -1); $event.stopPropagation()">
+          <span class="material-symbols-outlined">chevron_backward</span>
+        </button>
+        <img [src]="lugar.url" alt="{{ lugar.nombre }}" class="card-img" />
+        <button class="nav-button right" (click)="cambiarImagen(lugar, 1); $event.stopPropagation()">
+          <span class="material-symbols-outlined">chevron_forward</span>
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Descripción</div>
+        <div class="card-text">{{ lugar.descripcion || 'No hay descripción disponible.' }}</div>
+        <div class="card-actions">
+          <button class="btn btn-edit" (click)="vistaDetalladaAnuncio(lugar.id_lugar)">Vista detallada</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
