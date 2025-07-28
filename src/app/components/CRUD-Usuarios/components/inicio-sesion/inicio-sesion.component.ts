@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./inicio-sesion.component.scss'],
 })
 export class InicioSesionComponent implements OnInit {
+
   InicioSesionFormulario: FormGroup;
   listaUsuarios: any[] = [];  // 👈 Aquí se guardará la lista
 
@@ -133,15 +134,9 @@ onLoggedin() {
     this.router.navigate(['/login']);  // Redirige a la ruta de inicio-sesion
   }
 
-  mostrarAlertaOlvido() {
-    Swal.fire({
-      icon: 'info',
-      title: 'Función no disponible',
-      text: 'Esta función estará disponible en una futura versión. ¡Gracias por tu paciencia!',
-      footer: '<i>Estamos trabajando en ello</i>',
-      confirmButtonText: 'Entendido',
-      confirmButtonColor: '#3085d6'
-    });
+  Restablecer() {
+    console.log('restablecer contraseña');
+    this.router.navigate(['/restablecer-contraseña']);  // Redirige a la ruta de restablecer-contraseña
   }
   
   logLoadTime() {

@@ -1,0 +1,44 @@
+.restablecer-container {
+  max-width: 400px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #fafafa;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    text-align: center;
+  }
+
+  label {
+    display: block;
+    margin-top: 1rem;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  button {
+    margin-top: 1rem;
+    margin-right: 0.5rem;
+  }
+
+  .alert {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+  }
+
+  .alert-danger {
+    background-color: #ffe5e5;
+    color: #a94442;
+  }
+
+  .alert-success {
+    background-color: #e5ffe5;
+    color: #3c763d;
+  }
+}

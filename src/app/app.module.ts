@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 
 import { UsuariosModule } from './components/CRUD-Usuarios/usuarios.module';
 import { VistasModule } from './components/vistas/vistas.module';
+import { PasswordResetService } from './services/password-reset.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,10 +25,15 @@ import { VistasModule } from './components/vistas/vistas.module';
     FormsModule,
     BrowserAnimationsModule,
 
+  
+    VistasModule,
     UsuariosModule,
-    VistasModule
+
+    // ❌ ¡Quitamos esto porque NO va aquí!
+    // PasswordResetService
   ],
   providers: [
+    PasswordResetService, // ✅ AQUÍ es donde va el servicio
     provideClientHydration(),
     provideHttpClient(
       withInterceptors([errorInterceptor, authInterceptor]), // <-- Aquí agregas el tuyo

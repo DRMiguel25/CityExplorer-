@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
 
 export interface ForgotPasswordResponse {
   message: string;
   expires_in_minutes: number;
-  correo: string; // Cambiar de 'email' a 'correo'
+  correo: string;
 }
 
 export interface ResetPasswordResponse {
   message: string;
-  usuario: { // Cambiar de 'user' a 'usuario'
-    id_usuario: number; // Cambiar de 'id' a 'id_usuario'
-    nombre_completo: string; // Cambiar de 'name' a 'nombre_completo'
-    correo: string; // Cambiar de 'email' a 'correo'
+  usuario: {
+    id_usuario: number;
+    nombre_completo: string;
+    correo: string;
   };
 }
 
@@ -30,7 +29,8 @@ export interface CodeStatusResponse {
   providedIn: 'root'
 })
 export class PasswordResetService {
-  private apiUrl = `${environment.apiUrl}/password`;
+  // Reemplazamos environment.apiUrl por una constante
+  private apiUrl = 'http://localhost:8000/api/password';
 
   constructor(private http: HttpClient) {}
 
@@ -39,7 +39,7 @@ export class PasswordResetService {
   }
 
   resetPassword(data: {
-    correo: string; // Cambiar de 'email' a 'correo'
+    correo: string;
     code: string;
     password: string;
     password_confirmation: string;

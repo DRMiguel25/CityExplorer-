@@ -9,11 +9,14 @@ import { RegistroComponent } from './components/registro/registro.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { UsuariosRoutingModule } from './usuarios-routing.module';
 
+import { RestablecerComponent } from './components/restablecer-contrasena/restablecer.component';
+
 @NgModule({
   declarations: [
     InicioSesionComponent,
     LoginComponent,
-    RegistroComponent
+    RegistroComponent,
+    RestablecerComponent
   ],
   imports: [
     CommonModule,

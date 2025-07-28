@@ -21,13 +21,14 @@ import { FavoritosUsuariosComponent } from '../vistas/components/Vistas-Usuario-
 import { ModificarInfoUsuarioComponent } from '../vistas/components/Vistas-Usuario-Invitado/modificar-info-usuario/modificar-info-usuario.component';
 import { AlertaInfoUsuarioComponent } from '../vistas/components/Vistas-Usuario-Invitado/alerta-info-usuario/alerta-info-usuario.component';
 
-import { ReseniaUsuarioComponent } from '../vistas/components/Vistas-Usuario-Invitado/resenia-usuario/resenia-usuario.component'; // Asegúrate de importar el componente ReseniaUsuarioComponent
-import { TerminosDelServicioComponent } from '../vistas/components/Vistas-Usuario-Invitado/terminos-del-servicio/terminos-del-servicio.component'; // Asegúrate de importar el componente TerminosDelServicioComponent
-import { PoliticasDePrivacidadComponent } from '../vistas/components/Vistas-Usuario-Invitado/Politicas-de-privacidad/politicas-de-privacidad.component'; // Asegúrate de importar el componente PoliticasDePrivacidadComponent
+import { ReseniaUsuarioComponent } from '../vistas/components/Vistas-Usuario-Invitado/resenia-usuario/resenia-usuario.component';
+import { TerminosDelServicioComponent } from '../vistas/components/Vistas-Usuario-Invitado/terminos-del-servicio/terminos-del-servicio.component';
+import { PoliticasDePrivacidadComponent } from '../vistas/components/Vistas-Usuario-Invitado/Politicas-de-privacidad/politicas-de-privacidad.component';
 
-import { VistaListaComentariosComponent } from '../vistas/components/Vistas-Usuario-Invitado/vista-lista-comentarios/vista-lista-comentarios.component'; // Asegúrate de importar el componente VistaListaComentariosComponent
+import { VistaListaComentariosComponent } from '../vistas/components/Vistas-Usuario-Invitado/vista-lista-comentarios/vista-lista-comentarios.component';
 
 import { navbarAnuncianteComponent } from '../vistas/components/Vistas-Anuciante/navbar-anunciante/navbar-anunciante.component';
+import { RestablecerComponent } from './components/restablecer-contrasena/restablecer.component';
 
 const routes: Routes = [
   { path: 'inicio-sesion', component: InicioSesionComponent },
@@ -59,7 +60,9 @@ const routes: Routes = [
   { path: 'politicas-de-privacidad', component: PoliticasDePrivacidadComponent },
   { path: 'vista-lista-comentarios/:id_destino', component: VistaListaComentariosComponent },
   { path: 'navbar-anunciante', component: navbarAnuncianteComponent},
-  { path: '', redirectTo: 'login', pathMatch: 'full' },  // ✅ Ruta por defecto al login
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'restablecer-contraseña', component: RestablecerComponent }, // ✅ nueva ruta
+
 ];
 
 @NgModule({
