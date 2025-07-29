@@ -1,8 +1,21 @@
 <div class="restablecer-container">
   <h2>Restablecer Contraseña</h2>
 
+   <div class="step-indicator">
+    <div class="step" [class.active]="currentStep === 1" [class.completed]="currentStep > 1">
+      1
+      <div class="step-label">Correo</div>
+    </div>
+    <div class="step-connector" [class.active]="currentStep > 1"></div>
+    <div class="step" [class.active]="currentStep === 2" [class.inactive]="currentStep < 2">
+      2
+      <div class="step-label">Verificar</div>
+    </div>
+  </div>
+
   <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
   <div *ngIf="success" class="alert alert-success">{{ success }}</div>
+
 
   <!-- Paso 1: Enviar correo -->
   <form *ngIf="currentStep === 1" (ngSubmit)="enviarCorreo()">
