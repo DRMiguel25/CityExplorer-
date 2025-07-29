@@ -30,7 +30,7 @@ export interface CodeStatusResponse {
 })
 export class PasswordResetService {
   // Reemplazamos environment.apiUrl por una constante
-  private apiUrl = 'http://localhost:8000/api/password';
+  private apiUrl = 'http://localhost:8001/api/password';
 
   constructor(private http: HttpClient) {}
 

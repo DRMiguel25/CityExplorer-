@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://eoxk3znz8jrc4uj.m.pipedream.net/'
+  apiUrl: 'https://eo4si0ii23bf0w1.m.pipedream.net'
 };
