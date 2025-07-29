@@ -16,7 +16,7 @@ export interface ResetPasswordResponse {
     correo: string;
   };
 }
-
+   
 export interface CodeStatusResponse {
   exists: boolean;
   expires_at?: string;
