@@ -1,0 +1,68 @@
+<div class="reviews-container">
+  <!-- Header Section -->
+  <!-- Botón de cerrar/volver atrás -->
+  <div class="close-button-container">
+    <button class="close-button" (click)="volverAtras()">✖</button>
+  </div>
+
+  <div class="reviews-header">
+    <div class="reviews-title">
+      <div class="title-left">
+        <div class="stars-display">
+          <!-- Mostrar estrellas llenas según promedio -->
+          <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
+            <svg class="star-filled" viewBox="0 0 24 24"
+              [style.fill]="(promedioValoracion && promedioValoracion > i) ? '#FFD700' : '#ccc'">
+              <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+            </svg>
+          </ng-container>
+        </div>
+        <h2 class="title-text">
+          Reseñas <span class="review-count">({{ totalComentarios }})</span>
+        </h2>
+      </div>
+    </div>
+
+    <div class="rating-summary">
+      <div class="stars-display">
+        <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
+          <svg class="star-filled" viewBox="0 0 24 24"
+            [style.fill]="(promedioValoracion && promedioValoracion > i) ? '#FFD700' : '#ccc'">
+            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+          </svg>
+        </ng-container>
+      </div>
+      <span class="rating-text">{{ promedioValoracion ? promedioValoracion + ' estrellas' : 'Sin valoraciones' }}</span>
+    </div>
+  </div>
+
+  <!-- Reviews List -->
+  <div class="reviews-list" *ngIf="listaComentarios.length > 0; else noComentarios">
+    <div *ngFor="let comentario of listaComentarios" class="review-item" [attr.data-rating]="comentario.valoracion">
+      <div class="review-header">
+        <div>
+          <div class="p-2">
+            <div class="review-title">{{ comentario.usuario?.nombre ?? 'Usuario anónimo' }}</div>
+          </div>
+          <div class="review-date">{{ comentario.fecha_creacion | date:'dd/MM/yyyy' }}</div>
+          <div class="review-rating">
+            <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
+              <svg class="star-small"
+                [ngClass]="{'star-filled-small': comentario.valoracion > i}"
+                viewBox="0 0 24 24">
+                <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+              </svg>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="review-content">
+        {{ comentario.contenido }}
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noComentarios>
+    <p>No hay comentarios disponibles.</p>
+  </ng-template>
+</div>

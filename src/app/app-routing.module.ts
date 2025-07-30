@@ -1,19 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
-import { AyudaComponent } from './vistas/components/Vistas-Usuario-Invitado/ayuda/ayuda.component';
-import { VistaDetalladaAnuncioComponent } from './vistas/components/Vistas-Anuciante/vista-detallada-anuncio/vista-detallada-anuncio.component';
+import { AyudaComponent } from './components/vistas/components/Vistas-Usuario-Invitado/ayuda/ayuda.component';
+import { VistaDetalladaAnuncioComponent } from './components/vistas/components/Vistas-Anuciante/vista-detallada-anuncio/vista-detallada-anuncio.component';
 
 const routes: Routes = [
   {
     path: 'vistas',
-    loadChildren: () => import('./vistas/vistas.module').then(m => m.VistasModule),
+    loadChildren: () => import('./components/vistas/vistas.module').then(m => m.VistasModule),
     canActivate: [AuthGuard]  // ✅ Protegido
   },
   {
     path: '', // 👈 Este es el módulo de usuarios: login, registro, etc.
-    loadChildren: () => import('./CRUD-Usuarios/usuarios.module').then(m => m.UsuariosModule)
-    // ❌ SIN AuthGuard, porque aquí se puede entrar sin estar logueado
+loadChildren: () => import('./components/CRUD-Usuarios/usuarios.module').then(m => m.UsuariosModule)    // ❌ SIN AuthGuard, porque aquí se puede entrar sin estar logueado
   },
   {
     path: '**',

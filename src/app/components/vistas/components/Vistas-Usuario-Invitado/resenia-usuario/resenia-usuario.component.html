@@ -1,0 +1,70 @@
+<body>
+  <div class="modal">
+    <button class="close-btn" (click)="closeModal()">&times;</button>
+
+    <div class="modal-header">
+      <h2 class="modal-title">{{ tituloResenia }}</h2>
+      <p class="modal-subtitle">Comparte tu opinión con la comunidad.</p>
+    </div>
+
+    <div class="product-info">
+      <div class="icon-container">
+        <span class="material-symbols-outlined">{{ getIconoCategoria() }}</span>
+      </div>
+      <div class="product-name">{{ lugar.nombre }}</div>
+    </div>
+
+    <!-- AÑADIDO ngSubmit y #reviewForm -->
+    <form #reviewForm="ngForm" (ngSubmit)="enviarResenia()">
+      <div class="form-group">
+        <label class="form-label">
+          Calificación general <span class="required">*</span>
+        </label>
+        <div class="star-rating">
+          <svg
+            *ngFor="let star of [1,2,3,4,5]"
+            class="star"
+            viewBox="0 0 24 24"
+            [attr.data-rating]="star"
+            (click)="valoracion = star"
+            [class.active]="valoracion >= star"
+            style="cursor:pointer;"
+          >
+            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 
+              12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          Tu reseña <span class="required">*</span>
+        </label>
+        <textarea
+          class="textarea"
+          id="reviewText"
+          name="contenido"
+          [(ngModel)]="contenido"
+          placeholder="Describe lo que te gustó y lo que no te gustó..."
+          maxlength="500"
+          (input)="charCount = contenido.length"
+        ></textarea>
+        <div class="character-count">
+          <span>{{ charCount || 0 }}</span>/500 caracteres
+        </div>
+        <div class="textarea-hint">
+          Describe lo que te gustó y lo que no te gustó, y comparte información clave que los compradores deben saber. Mínimo de 30 caracteres.
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary">
+          Enviar reseña
+        </button>
+      </div>
+    </form>
+  </div>
+</body>

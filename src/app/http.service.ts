@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Lugar } from './vistas/components/Vistas-Anuciante/home-anunciante/lugar.interface';
+import { Lugar } from './components/vistas/components/Vistas-Anuciante/home-anunciante/lugar.interface';
 import { LocalstorageService } from './localstorage.service'; // Importa tu servicio de storage
 import { AuthService } from './auth.service';
 
@@ -9,8 +9,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class HttpLaravelService {
-  private _url = 'http://127.0.0.1:8001/api';
-
+private _url = 'http://127.0.0.1:8001/api';
   constructor(
     public http: HttpClient,
     private storage: LocalstorageService, 

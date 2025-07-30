@@ -1,0 +1,154 @@
+<!-- crear-actualizar-anuncio.component.html -->
+<div class="background-slideshow"></div>
+<div class="overlay"></div>
+<div class="form-container">
+  <form [formGroup]="anuncioForm" (ngSubmit)="guardarAnuncio()">
+    <button type="button" class="back-button" (click)="goBack()">
+      <div class="circle-icon">&#8617;</div>
+    </button>
+
+    <div class="header">
+      <h1>{{ id_anuncio ? 'Editar Anuncio:' : 'Crear Anuncio:' }}</h1>
+    </div>
+
+    <div class="form-group">
+      <label for="nombre">Nombre del Lugar*</label>
+      <input type="text" id="nombre" formControlName="nombre">
+      <div *ngIf="isInvalid('nombre')" class="text-danger-bold">El nombre es obligatorio</div>
+    </div>
+
+    <div class="form-group">
+      <label for="descripcion">Descripción*</label>
+      <input type="text" id="descripcion" formControlName="descripcion">
+      <div *ngIf="isInvalid('descripcion')" class="text-danger-bold">La descripción es obligatoria</div>
+    </div>
+
+    <div class="form-group">
+<<<<<<< HEAD:src/app/vistas/components/Vistas-Anuciante/crear-actualizar-anuncio/crear-actualizar-anuncio.component.html
+      <label for="imagenes" class="form-label fw-bold">Selecciona Imágenes*</label>
+      <input type="file" id="imagenes" class="form-control" (change)="onImagenesSeleccionadas($event)" multiple accept="image/jpeg,image/png,image/webp">
+      <div class="file-hint">Máximo 8 imágenes (JPG, PNG, WEBP - 2MB cada una)</div>
+    </div>
+
+    <div class="form-group" *ngIf="imagenesActuales.length + imagenesSeleccionadas.length > 0">
+      <label>Imágenes Subidas:</label>
+=======
+      <label for="imagenes">Selecciona Imágenes*</label>
+      <input type="file" id="imagenes" (change)="onImagenesSeleccionadas($event)" multiple accept="image/*">
+      <div class="file-hint">Máximo 8 imágenes (JPG, PNG, WEBP - 2MB cada una)</div>
+    </div>
+
+    <!-- Previsualización de imágenes nuevas seleccionadas -->
+    <div class="form-group" *ngIf="imagenesSeleccionadas.length > 0">
+      <label>Imágenes Seleccionadas:</label>
+      <div class="imagenes-preview">
+        <div *ngFor="let preview of imagenesPreview; let i = index" class="imagen-item">
+          <img [src]="preview.url" [alt]="preview.name" class="imagen-preview">
+          <button type="button" (click)="eliminarImagenSeleccionada(i)" class="btn-eliminar">×</button>
+          <div class="imagen-info">{{ preview.name }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Imágenes actuales (para modo edición) -->
+    <div class="form-group" *ngIf="imagenesActuales.length > 0">
+      <label>Imágenes Actuales:</label>
+>>>>>>> Miguel-Anguel-Diaz-Rivera:src/app/components/vistas/components/Vistas-Anuciante/crear-actualizar-anuncio/crear-actualizar-anuncio.component.html
+      <div class="imagenes-actuales">
+        
+        <!-- Imágenes actuales desde el backend -->
+        <div *ngFor="let img of imagenesActuales" class="imagen-item">
+          <img [src]="img.url" alt="Imagen actual" class="imagen-preview">
+<<<<<<< HEAD:src/app/vistas/components/Vistas-Anuciante/crear-actualizar-anuncio/crear-actualizar-anuncio.component.html
+          <button *ngIf="img.id_imagen" type="button" (click)="eliminarImagen(img.id_imagen)" class="btn-eliminar">×</button>
+=======
+          <button type="button" (click)="eliminarImagen(img.id)" class="btn-eliminar">×</button>
+>>>>>>> Miguel-Anguel-Diaz-Rivera:src/app/components/vistas/components/Vistas-Anuciante/crear-actualizar-anuncio/crear-actualizar-anuncio.component.html
+        </div>
+
+        <!-- Imágenes nuevas seleccionadas -->
+        <div *ngFor="let nueva of imagenesSeleccionadas" class="imagen-item">
+          <img [src]="getPreviewUrl(nueva)" alt="Imagen nueva" class="imagen-preview">
+          <button type="button" (click)="eliminarImagenSeleccionada(nueva)" class="btn-eliminar">×</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="paginaWeb">Página Web</label>
+      <input type="text" id="paginaWeb" formControlName="paginaWeb">
+      <div *ngIf="isInvalid('paginaWeb')" class="text-danger-bold">La URL es obligatoria y debe ser válida</div>
+    </div>
+
+    <div class="form-group">
+      <label for="num_telefonico">Número Telefónico*</label>
+      <input type="text" id="num_telefonico" formControlName="num_telefonico">
+      <div *ngIf="isInvalid('num_telefonico')" class="text-danger-bold">Debe tener 10 dígitos</div>
+    </div>
+
+    <div class="form-group">
+      <label for="horario_apertura">Horario de Apertura*</label>
+      <input type="time" id="horario_apertura" formControlName="horario_apertura">
+      <div *ngIf="isInvalid('horario_apertura')" class="text-danger-bold">Campo obligatorio</div>
+    </div>
+
+    <div class="form-group">
+      <label for="horario_cierre">Horario de Cierre*</label>
+      <input type="time" id="horario_cierre" formControlName="horario_cierre">
+      <div *ngIf="isInvalid('horario_cierre')" class="text-danger-bold">Campo obligatorio</div>
+    </div>
+
+    <div class="form-group">
+      <label for="dias_servicio">Días de Servicio*</label>
+      <select id="dias_servicio" formControlName="dias_servicio">
+        <option value="">Seleccionar días</option>
+        <option *ngFor="let dia of diasServicioOpciones" [value]="dia">{{ dia }}</option>
+      </select>
+      <div *ngIf="isInvalid('dias_servicio')" class="text-danger-bold">Selecciona una opción</div>
+    </div>
+
+    <div class="form-group">
+      <label for="categoria">Categoría*</label>
+      <select id="categoria" formControlName="categoria">
+        <option value="">Seleccionar categoría</option>
+        <option *ngFor="let cat of categoriasOpciones" [value]="cat.id_categoria">{{ cat.nombre }}</option>
+      </select>
+      <div *ngIf="isInvalid('categoria')" class="text-danger-bold">Selecciona una categoría</div>
+    </div>
+
+    <div class="form-group">
+      <label>Dirección*</label>
+      <div class="direccion-group" formGroupName="direccion">
+        <div>
+          <label for="calle">Calle</label>
+          <input type="text" id="calle" formControlName="calle">
+          <div *ngIf="isInvalid('direccion.calle')" class="text-danger-bold">Campo obligatorio</div>
+        </div>
+        <div>
+          <label for="numero_ext">Número Exterior</label>
+          <input type="text" id="numero_ext" formControlName="numero_ext">
+          <div *ngIf="isInvalid('direccion.numero_ext')" class="text-danger-bold">Campo obligatorio</div>
+        </div>
+        <div>
+          <label for="numero_int">Número Interior</label>
+          <input type="text" id="numero_int" formControlName="numero_int">
+        </div>
+        <div>
+          <label for="colonia">Colonia</label>
+          <input type="text" id="colonia" formControlName="colonia">
+          <div *ngIf="isInvalid('direccion.colonia')" class="text-danger-bold">Campo obligatorio</div>
+        </div>
+        <div>
+          <label for="codigo_postal">Código Postal</label>
+          <input type="text" id="codigo_postal" formControlName="codigo_postal">
+          <div *ngIf="isInvalid('direccion.codigo_postal')" class="text-danger-bold">Debe ser válido</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="submit">{{ id_anuncio ? 'Actualizar Anuncio' : 'Crear Anuncio' }}</button>
+    </div>
+  </form>
+</div>
