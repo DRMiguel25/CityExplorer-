@@ -27,7 +27,6 @@ import { PoliticasDePrivacidadComponent } from '../vistas/components/Vistas-Usua
 
 import { VistaListaComentariosComponent } from '../vistas/components/Vistas-Usuario-Invitado/vista-lista-comentarios/vista-lista-comentarios.component';
 
-import { navbarAnuncianteComponent } from '../vistas/components/Vistas-Anuciante/navbar-anunciante/navbar-anunciante.component';
 import { RestablecerComponent } from './components/restablecer-contrasena/restablecer.component';
 
 const routes: Routes = [
@@ -59,7 +58,6 @@ const routes: Routes = [
   { path: 'terminos-del-servicio', component: TerminosDelServicioComponent },
   { path: 'politicas-de-privacidad', component: PoliticasDePrivacidadComponent },
   { path: 'vista-lista-comentarios/:id_destino', component: VistaListaComentariosComponent },
-  { path: 'navbar-anunciante', component: navbarAnuncianteComponent},
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'restablecer-contraseña', component: RestablecerComponent }, // ✅ nueva ruta
 

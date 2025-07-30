@@ -45,11 +45,13 @@
     </a>
   </div>
 
-  <div class="user-section">
-    <a href="#" class="user-profile">
-      <div class="user-avatar">A</div>
+<div class="user-section">
+  <a href="#" class="user-profile">
+    <div class="user-avatar">
+      <img *ngIf="usuario?.foto_perfil" [src]="'http://127.0.0.1:8001/storage/' + usuario.foto_perfil" alt="Avatar del usuario" />
+  </div>
       <div class="user-info">
-        <h4>Alexis Peralta rmz</h4>
+        <h4>{{ (usuario?.nombre +" "+ usuario?.apellidoP +" "+ usuario?.apellidoM) || 'Usuario' }}</h4>
         <p>Anunciante</p>
       </div>
     </a>

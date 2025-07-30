@@ -19,6 +19,8 @@ export class HomeAnuncianteComponent implements OnInit {
   imagenesPorLugar: { [idLugar: number]: any[] } = {};
   imagenActualIndexPorLugar: { [idLugar: number]: number } = {};
 
+  usuario: any;
+
   // Sidebar control
   sidebarAbierto = true;
 
@@ -36,6 +38,7 @@ export class HomeAnuncianteComponent implements OnInit {
     }
     this.loadLugares();
     this.logLoadTime();
+    this.cargarInfoUsuario(this.idUsuario);
   }
 
   toggleSidebar(): void {
@@ -58,7 +61,8 @@ export class HomeAnuncianteComponent implements OnInit {
   }
 
   crearAnuncio() {
-    this.router.navigate(['/crear-actualizar-anuncio', this.idUsuario]);
+    console.log('/crear-actualizar-anuncio', this.usuario.id_usuario)
+    this.router.navigate(['/crear-actualizar-anuncio', this.usuario.id_usuario]);
   }
 
   cerrarSesion() {
@@ -119,5 +123,18 @@ export class HomeAnuncianteComponent implements OnInit {
     this.imagenActualIndexPorLugar[id] = currentIndex;
     lugar.url = imgs[currentIndex].url;
   }
+
+cargarInfoUsuario(idUsuario: Number) {
+  this.httpLaravelService.Service_Get('usuario', this.idUsuario).subscribe(
+    (respuesta: any) => {
+      if (respuesta.estatus === 1) {
+        this.usuario = respuesta.data;
+        console.log('✅ Usuario:', this.usuario);
+      }
+    }
+  );
+}
+
+
 }
   

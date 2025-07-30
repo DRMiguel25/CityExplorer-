@@ -96,9 +96,20 @@ export class ReseniaUsuarioComponent implements OnInit{
     return icono ? icono[0] : 'help';
   }
 
- enviarResenia(): void {
+enviarResenia(): void {
+  // Validaciones básicas
+  if (this.valoracion <= 0) {
+    Swal.fire('Atención', 'Por favor, asigna una calificación.', 'warning');
+    return;
+  }
+
+  if (!this.contenido || this.contenido.trim().length < 30) {
+    Swal.fire('Atención', 'Tu reseña debe tener al menos 30 caracteres.', 'warning');
+    return;
+  }
+
   const comentario = {
-    contenido: this.contenido,
+    contenido: this.contenido.trim(),
     valoracion: this.valoracion,
     id_lugar: Number(this.id_destino)
   };
@@ -113,8 +124,9 @@ export class ReseniaUsuarioComponent implements OnInit{
           title: '¡Reseña modificada!',
           text: 'Tu opinión fue actualizada exitosamente.',
           confirmButtonColor: '#3085d6'
+        }).then(() => {
+          this.router.navigate(['/vista-detallada-destino', this.id_destino, this.id_usuario]);
         });
-        this.router.navigate(['/vista-detallada-destino', this.id_destino, this.id_usuario]);
       },
       error: (error) => {
         console.error('Error al actualizar la reseña:', error);
@@ -136,8 +148,9 @@ export class ReseniaUsuarioComponent implements OnInit{
           title: '¡Reseña enviada!',
           text: 'Gracias por compartir tu opinión.',
           confirmButtonColor: '#3085d6'
+        }).then(() => {
+          this.router.navigate(['/vista-detallada-destino', this.id_destino, this.id_usuario]);
         });
-        this.router.navigate(['/vista-detallada-destino', this.id_destino, this.id_usuario]);
       },
       error: (error) => {
         console.error('Error al enviar la reseña:', error);
@@ -151,6 +164,7 @@ export class ReseniaUsuarioComponent implements OnInit{
     });
   }
 }
+
 
 
   closeModal(): void {
