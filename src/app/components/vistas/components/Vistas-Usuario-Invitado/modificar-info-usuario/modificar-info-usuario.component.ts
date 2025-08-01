@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 export class ModificarInfoUsuarioComponent implements OnInit {
 
   ID: number = 0;
+  TipoUsuario: number = 0;
   usuarioForm!: FormGroup;
   fotoPreviewUrl: string | ArrayBuffer | null = null;
   fotoSeleccionada: File | null = null;
@@ -26,10 +27,19 @@ export class ModificarInfoUsuarioComponent implements OnInit {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id_usuario'));
-    if (!isNaN(id) && id !== 0) {
+    const tipoUsuario = Number(this.route.snapshot.paramMap.get('tipo-usuario'));
+    if (!isNaN(id) && id !== 0 && !isNaN(tipoUsuario) && tipoUsuario !== 0) {
       this.ID = id;
       this.inicializarFormulario();
       this.cargarUsuario(this.ID);
+
+      this.TipoUsuario = tipoUsuario;
+      if (this.TipoUsuario === 1){
+        console.log("tipo de usuario: anunciante...");
+      }
+      else if (this.TipoUsuario === 2){
+        console.log("tipo de usuario: usuario normal...");
+      }
     } else {
       console.error('ID de usuario no válido:', id);
     }
@@ -64,8 +74,15 @@ export class ModificarInfoUsuarioComponent implements OnInit {
           apellidoP: data.apellidoP,
           apellidoM: data.apellidoM,
           correo: data.correo,
-          id_rol: data.id_rol?.toString() || '1'
+          id_rol: data.id_rol?.toString() || '1',
+          foto_perfil: data.foto_perfil
         });
+
+        if (data.foto_perfil) {
+          //this.fotoPreviewUrl = 'http://localhost:8001/' + this.usuarioForm.value.foto_perfil;
+        }
+
+        console.log("info del usuario:", this.usuarioForm.value);
       },
       error => console.error('Error al obtener usuario:', error)
     );
@@ -121,7 +138,12 @@ export class ModificarInfoUsuarioComponent implements OnInit {
     this.httpLaravelService.Service_Post('usuario', `${this.ID}/update`, formData).subscribe({
       next: () => {
         Swal.fire('Usuario actualizado', 'Perfil actualizado correctamente.', 'success').then(() => {
-          this.router.navigate(['/home-invitado-usuario', this.ID]);
+          if (this.TipoUsuario === 1){
+            this.router.navigate(['/home-anunciante', this.ID]);
+          }
+          else if (this.TipoUsuario === 2){
+            this.router.navigate(['/home-invitado-usuario', this.ID]);
+          }
         });
       },
       error: (error) => {
@@ -132,7 +154,12 @@ export class ModificarInfoUsuarioComponent implements OnInit {
   }
 
   cancelar(): void {
-    this.router.navigate(['/home-invitado-usuario', this.ID]);
+    if (this.TipoUsuario === 1){
+      this.router.navigate(['/home-anunciante', this.ID]);
+    }
+    else if (this.TipoUsuario === 2){
+      this.router.navigate(['/home-invitado-usuario', this.ID]);
+    }
   }
 
   logLoadTime() {

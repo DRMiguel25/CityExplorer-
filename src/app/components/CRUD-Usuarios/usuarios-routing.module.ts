@@ -52,7 +52,7 @@ const routes: Routes = [
   { path: 'ayuda/:id_usuario', component: AyudaComponent },
   { path: 'pagar-anuncio/:id_anuncio/:id_usuario', component: PagoAnuncioComponent },
   { path: 'favoritos-usuarios/:id_usuario', component: FavoritosUsuariosComponent },
-  { path: 'modificar-info-usuario/:id_usuario', component: ModificarInfoUsuarioComponent },
+  { path: 'modificar-info-usuario/:id_usuario/:tipo-usuario', component: ModificarInfoUsuarioComponent },
   { path: 'alerta-info-usuario/:id_usuario', component: AlertaInfoUsuarioComponent },
   { path: 'resenia-usuario/:id_destino/:id_usuario/:id_resenia', component: ReseniaUsuarioComponent },
   { path: 'terminos-del-servicio', component: TerminosDelServicioComponent },

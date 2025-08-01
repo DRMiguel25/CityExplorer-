@@ -19,34 +19,38 @@
   </div>
 
   <div class="nav-section">
-    <a href="#" class="nav-item" (click)="crearAnuncio()">
+    <a class="nav-item" (click)="crearAnuncio()">
       <span class="material-symbols-outlined icon">edit_square</span>
       <span class="label">Crear Anuncio</span>
     </a>
-    <a href="#" class="nav-item">
+    <a class="nav-item" [class.activo]="botonActivo === 'todos'" (click)="mostrarTodos()">
+      <span class="material-symbols-outlined icon">list_alt</span>
+      <span class="label">Todos los Anuncios</span>
+    </a>
+    <a class="nav-item" [class.activo]="botonActivo === 'pagados'" (click)="mostrarPagados()">
       <span class="material-symbols-outlined icon">attach_money</span>
       <span class="label">Anuncios Pagados</span>
     </a>
-    <a href="#" class="nav-item">
+    <a class="nav-item" [class.activo]="botonActivo === 'nopagados'" (click)="mostrarNoPagados()">
       <span class="material-symbols-outlined icon">cancel</span>
       <span class="label">Anuncios No Pagados</span>
     </a>
-    <a href="#" class="nav-item">
-      <span class="material-symbols-outlined">money</span>
-      <span class="label"> Metodos De Pago</span>
+    <a class="nav-item" (click)="metodosDePagos()">
+      <span class="material-symbols-outlined">insights</span>
+      <span class="label">Estadísticas</span>
     </a>
   </div>
   
 
   <div class="logout-section">
-    <a href="#" class="nav-item" (click)="cerrarSesion()">
+    <a class="nav-item" (click)="cerrarSesion()">
       <span class="material-symbols-outlined icon">logout</span>
       <span class="label">Cerrar Sesión</span>
     </a>
   </div>
 
-<div class="user-section">
-  <a href="#" class="user-profile">
+<div class="user-section" (click)="AlertaModificarCuenta()">
+  <a class="user-profile">
     <div class="user-avatar">
       <img *ngIf="usuario?.foto_perfil" [src]="'http://127.0.0.1:8001/storage/' + usuario.foto_perfil" alt="Avatar del usuario" />
   </div>

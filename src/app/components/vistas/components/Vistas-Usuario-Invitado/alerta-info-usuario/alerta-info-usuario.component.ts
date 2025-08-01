@@ -45,7 +45,7 @@ export class AlertaInfoUsuarioComponent implements OnInit {
 
   vistaInfoUsuario(): void {
     console.log('Navegando a modificar información del usuario ' + this.data.id_usuario + '...');
-    this.router.navigate(['/modificar-info-usuario', this.data.id_usuario]).then(() => {
+    this.router.navigate(['/modificar-info-usuario', this.data.id_usuario, 2]).then(() => {
       this.dialogRef.close(); // Cierra el diálogo solo si la navegación fue exitosa
     }).catch(err => {
       console.error('Error al navegar a info-usuario:', err);

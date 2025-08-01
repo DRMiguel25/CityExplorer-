@@ -19,6 +19,12 @@ export class HomeAnuncianteComponent implements OnInit {
   imagenesPorLugar: { [idLugar: number]: any[] } = {};
   imagenActualIndexPorLugar: { [idLugar: number]: number } = {};
 
+  filtroActivo: 'todos' | 'pagados' | 'noPagados' = 'todos';
+  botonActivo: string = 'todos'; // Puedes iniciar con 'todos', 'pagados' o 'nopagados'
+  
+  todosLosLugares: Lugar[] = []; // <-- Aquí guardamos la data original
+
+
   usuario: any;
 
   // Sidebar control
@@ -46,23 +52,32 @@ export class HomeAnuncianteComponent implements OnInit {
   }
 
   loadLugares(): void {
+    console.log('🔄 Iniciando carga de lugares...');
     this.httpLaravelService.Service_Get('lugar', '').subscribe(
       (data: Lugar[]) => {
-        this.lugares = data.filter(lugar => lugar.id_usuario === this.idUsuario);
+        console.log('📦 Datos recibidos desde el backend:', data);
+        
+        const filtrados = data.filter(lugar => lugar.id_usuario === this.idUsuario);
+        this.todosLosLugares = filtrados;
+        this.lugares = [...filtrados]; // Usamos spread para evitar mutar la referencia
+
         this.lugares.forEach(lugar => this.cargarImagenesLugar(lugar));
         this.isLoading = false;
+        console.log('✅ Lugares filtrados para el usuario:', this.lugares);
       },
       (error) => {
         this.isLoading = false;
         this.errorMessage = 'Error al cargar los lugares, por favor intente nuevamente.';
-        console.error(error);
+        console.error('❌ Error al cargar los lugares:', error);
       }
     );
   }
 
+
+
   crearAnuncio() {
-    console.log('/crear-actualizar-anuncio', this.usuario.id_usuario)
-    this.router.navigate(['/crear-actualizar-anuncio', this.usuario.id_usuario]);
+    console.log('/crear-actualizar-anuncio', this.idUsuario)
+    this.router.navigate(['/crear-actualizar-anuncio', this.idUsuario]);
   }
 
   cerrarSesion() {
@@ -135,6 +150,31 @@ cargarInfoUsuario(idUsuario: Number) {
   );
 }
 
+mostrarTodos(): void {
+  this.lugares = [...this.todosLosLugares];
+  this.botonActivo = 'todos';
+  console.log('🌐 Mostrando todos los anuncios:', this.lugares);
+}
+
+mostrarPagados(): void {
+  this.lugares = this.todosLosLugares.filter(lugar => lugar.activo);
+  this.botonActivo = 'pagados';
+  console.log('💰 Mostrando anuncios pagados:', this.lugares);
+}
+
+mostrarNoPagados(): void {
+  this.lugares = this.todosLosLugares.filter(lugar => !lugar.activo);
+  this.botonActivo = 'nopagados';
+  console.log('❌ Mostrando anuncios no pagados:', this.lugares);
+}
+
+metodosDePagos(): void{
+  console.log('Navegando a metodos de pago...');
+}
+
+AlertaModificarCuenta(){
+  this.router.navigate(['/modificar-info-usuario', this.idUsuario, 1]);
+}
 
 }
   
