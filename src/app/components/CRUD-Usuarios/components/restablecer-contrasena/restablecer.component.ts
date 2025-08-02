@@ -57,7 +57,7 @@ export class RestablecerComponent {
     }).subscribe({
       next: (res) => {
         this.success = res.message;
-        setTimeout(() => this.router.navigate(['/login']), 2000);
+        setTimeout(() => this.router.navigate(['/inicio-sesion']), 2000);
       },
       error: (err) => {
         this.error = err.error?.message || 'Error al restablecer';
@@ -71,7 +71,7 @@ export class RestablecerComponent {
   }
 
   volver() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/inicio-sesion']);
   }
 
   formatTime(seconds: number): string {
