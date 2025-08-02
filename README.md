@@ -49,6 +49,7 @@ npm install
 npm install sweetalert2
 npm install @stripe/stripe-js
 npm install bootstrap
+npm install chart.js --save
 ```
 
 > **Nota:** Asegúrate de que todas las dependencias se instalen correctamente antes de continuar.
