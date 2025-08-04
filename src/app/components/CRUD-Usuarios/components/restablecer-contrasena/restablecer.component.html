@@ -59,9 +59,10 @@
       required
     />
 
-    <div *ngIf="timeRemaining > 0">
-      Código válido por: <strong>{{ formatTime(timeRemaining) }}</strong>
+    <div class="contador">
+      <p>Código válido por: <strong>{{ tiempoFormateado }}</strong></p>
     </div>
+
 
     <button type="submit" [disabled]="loading">Cambiar contraseña</button>
     <button type="button" (click)="reenviarCodigo()" [disabled]="loading">

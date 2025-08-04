@@ -60,10 +60,9 @@ export class RegistroComponent implements OnInit {
     this.registroForm.markAllAsTouched();
     return;
   }
-const formValue = { ...this.registroForm.value };
-delete formValue.acceptTerms; // 🔹 Eliminar campo
-
   
+  const formValue = { ...this.registroForm.value };
+  delete formValue.acceptTerms; // 🔹 Eliminar campo
 
   this.service.Service_Post_FormData('user', 'register', formValue).subscribe({
     next: (data: any) => {

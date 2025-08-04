@@ -70,7 +70,7 @@
   <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
   <div class="cards-container">
-    <div class="card" *ngFor="let lugar of lugares">
+    <div class="card" *ngFor="let lugar of lugares" (click)="vistaDetalladaAnuncio(lugar.id_lugar)">
       <div class="card-header">{{ lugar.nombre }}</div>
       <div class="card-img-container">
         <button class="nav-button left" (click)="cambiarImagen(lugar, -1); $event.stopPropagation()">
@@ -85,7 +85,7 @@
         <div class="card-title">Descripción</div>
         <div class="card-text">{{ lugar.descripcion || 'No hay descripción disponible.' }}</div>
         <div class="card-actions">
-          <button class="btn btn-edit" (click)="vistaDetalladaAnuncio(lugar.id_lugar)">Vista detallada</button>
+          <button class="btn btn-edit">Vista detallada</button>
         </div>
       </div>
     </div>

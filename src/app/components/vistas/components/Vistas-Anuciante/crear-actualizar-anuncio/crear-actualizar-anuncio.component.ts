@@ -27,6 +27,8 @@ export class CrearActualizarAnuncioComponent implements OnInit {
   // ✅ AGREGADO: Para la previsualización de imágenes nuevas
   imagenesPreview: { url: string; name: string }[] = [];
 
+  lugarActivo: any;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -86,6 +88,9 @@ export class CrearActualizarAnuncioComponent implements OnInit {
           console.warn('⚠️ No se encontró anuncio con ese ID.');
           return;
         }
+
+        // Guardar el valor de activo para usarlo después
+        this.lugarActivo = anuncio.activo;
 
         // Si el backend te devuelve las imágenes:
         if (anuncio.imagenes) {
@@ -253,7 +258,15 @@ export class CrearActualizarAnuncioComponent implements OnInit {
     data.append('lugar[horario_apertura]', horarioApertura);
     data.append('lugar[horario_cierre]', horarioCierre);
     data.append('lugar[id_categoria]', formData.categoria.toString());
-    data.append('lugar[activo]', '0');
+
+    if (this.id_anuncio != null && this.id_anuncio !== '0') {
+      // Si se está actualizando, se mantiene el valor actual
+      data.append('lugar[activo]', this.lugarActivo ? '1' : '0');
+    } else {
+      // Si se está creando, se establece como inactivo
+      data.append('lugar[activo]', '0');
+    }
+
 
     diasServicio.forEach((dia: string) => {
       data.append('lugar[dias_servicio][]', dia);

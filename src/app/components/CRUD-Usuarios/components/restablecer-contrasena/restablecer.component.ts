@@ -1,10 +1,8 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PasswordResetService } from '../../../../services/password-reset.service';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-restablecer',
@@ -13,7 +11,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./restablecer.component.scss']
 
 })
-export class RestablecerComponent {
+export class RestablecerComponent implements OnInit, OnDestroy{
   currentStep = 1;
   correo = '';
   codigo = '';
@@ -25,7 +23,18 @@ export class RestablecerComponent {
   timeRemaining = 0;
   remainingAttempts = 5;
 
+  tiempoRestante: number = 15 * 60; // 15 minutos en segundos
+  intervalo: any;
+
   constructor(private service: PasswordResetService, private router: Router, ) {}
+  
+  ngOnInit(): void {
+    this.iniciarContador();
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.intervalo);
+  }
 
   enviarCorreo() {
     this.loading = true;
@@ -78,5 +87,29 @@ export class RestablecerComponent {
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
     return `${m}:${s.toString().padStart(2, '0')}`;
+  }
+
+iniciarContador(): void {
+  this.intervalo = setInterval(() => {
+    this.tiempoRestante--;
+
+    if (this.tiempoRestante <= 0) {
+      clearInterval(this.intervalo);
+      Swal.fire({
+        title: 'Tiempo agotado',
+        text: 'El tiempo para ingresar el código ha caducado.',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        this.router.navigate(['/inicio-sesion']);
+      });
+    }
+  }, 1000);
+}
+
+  get tiempoFormateado(): string {
+    const minutos = Math.floor(this.tiempoRestante / 60).toString().padStart(2, '0');
+    const segundos = (this.tiempoRestante % 60).toString().padStart(2, '0');
+    return `${minutos}:${segundos}`;
   }
 }
