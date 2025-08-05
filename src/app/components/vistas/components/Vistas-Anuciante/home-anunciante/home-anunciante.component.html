@@ -35,10 +35,10 @@
       <span class="material-symbols-outlined icon">cancel</span>
       <span class="label">Anuncios No Pagados</span>
     </a>
-    <a class="nav-item" (click)="metodosDePagos()">
-      <span class="material-symbols-outlined">insights</span>
-      <span class="label">Estadísticas</span>
-    </a>
+   <a class="nav-item" [class.activo]="botonActivo === 'estadisticas'" (click)="irAEstadisticas()">
+  <span class="material-symbols-outlined">insights</span>
+  <span class="label">Estadísticas</span>
+</a>
   </div>
   
 

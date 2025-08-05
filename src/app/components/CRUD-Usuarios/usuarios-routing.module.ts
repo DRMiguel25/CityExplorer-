@@ -31,6 +31,7 @@ import { RestablecerComponent } from './components/restablecer-contrasena/restab
 
 import { ListaUsuariosComponent } from '../vistas/components/Vistas-Administrador/lista-usuarios/lista-usuarios.component';
 
+import { estadisticasComponent } from '../vistas/components/Vistas-Anuciante/estadisticas/estadisticas.component';
 const routes: Routes = [
   { path: 'inicio-sesion', component: InicioSesionComponent },
   { path: 'registro', component: RegistroComponent },
@@ -61,6 +62,7 @@ const routes: Routes = [
   { path: 'politicas-de-privacidad', component: PoliticasDePrivacidadComponent },
   { path: 'vista-lista-comentarios/:id_destino', component: VistaListaComentariosComponent },
   { path: 'lista-usuarios/:id_usuario', component: ListaUsuariosComponent },
+  { path: 'estadisticas/:id_usuario', component: estadisticasComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'restablecer-contraseña', component: RestablecerComponent }, // ✅ nueva ruta
 

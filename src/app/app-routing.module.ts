@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { AyudaComponent } from './components/vistas/components/Vistas-Usuario-Invitado/ayuda/ayuda.component';
 import { VistaDetalladaAnuncioComponent } from './components/vistas/components/Vistas-Anuciante/vista-detallada-anuncio/vista-detallada-anuncio.component';
+import path from 'path';
+import { estadisticasComponent } from './components/vistas/components/Vistas-Anuciante/estadisticas/estadisticas.component';
 
 const routes: Routes = [
   {
@@ -22,6 +24,10 @@ loadChildren: () => import('./components/CRUD-Usuarios/usuarios.module').then(m 
     path: 'ayuda',
     component: AyudaComponent
   },
+  {
+  path: 'estadisticas',
+  component: estadisticasComponent 
+},
   {
     path: 'vista-detallada-anuncio/:id',
     component: VistaDetalladaAnuncioComponent // asegúrate que este es el componente correcto

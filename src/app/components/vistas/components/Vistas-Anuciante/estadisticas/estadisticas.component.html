@@ -35,10 +35,10 @@
       <span class="material-symbols-outlined icon">cancel</span>
       <span class="label">Anuncios No Pagados</span>
     </a>
-    <a class="nav-item" (click)="metodosDePagos()">
-      <span class="material-symbols-outlined">insights</span>
-      <span class="label">Estadísticas</span>
-    </a>
+   <a class="nav-item" [class.activo]="botonActivo === 'estadisticas'">
+  <span class="material-symbols-outlined">insights</span>
+  <span class="label">Estadísticas</span>
+</a>
   </div>
   
 
@@ -61,4 +61,68 @@
     </a>
   </div>
 </nav>
+<body>
 
+    <div class="card-container">
+        <div class="card">
+            
+            <div class="header-ad-info">
+                <div class="ad-navigation">
+                    <button class="nav-button prev-button">
+                        <span class="arrow">‹</span>
+                    </button>
+                    <div class="ad-name">Anuncio de Verano 2025</div>
+                    <button class="nav-button next-button">
+                        <span class="arrow">›</span>
+                    </button>
+                </div>
+            </div>
+
+            <h1 class="card-title">Tiempo en Anuncio</h1>
+            
+            <div class="tabs">
+                <button class="tab-button active">Día</button>
+                <button class="tab-button">Semana</button>
+                <button class="tab-button">Mes</button>
+            </div>
+
+            <div class="graph-wrapper">
+                <div class="graph-content">
+                    <div class="graph-placeholder">
+                        <div class="bar-chart">
+                            <div class="bar" style="height: 60px;"></div>
+                            <div class="bar" style="height: 85px;"></div>
+                            <div class="bar" style="height: 45px;"></div>
+                            <div class="bar" style="height: 100px;"></div>
+                            <div class="bar" style="height: 70px;"></div>
+                            <div class="bar" style="height: 90px;"></div>
+                            <div class="bar" style="height: 55px;"></div>
+                        </div>
+                    </div>
+                    <div class="graph-labels">
+                        <span>Lun</span>
+                        <span>Mar</span>
+                        <span>Mié</span>
+                        <span>Jue</span>
+                        <span>Vie</span>
+                        <span>Sáb</span>
+                        <span>Dom</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-footer">
+                <div class="stat-item">
+                    <span class="stat-value">4.5 min</span>
+                    <span class="stat-label">Tiempo Promedio</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">120 visitas</span>
+                    <span class="stat-label">Total de Sesiones</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>

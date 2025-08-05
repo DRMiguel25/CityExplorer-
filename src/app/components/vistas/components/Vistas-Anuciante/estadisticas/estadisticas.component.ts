@@ -5,12 +5,12 @@ import { Lugar } from './lugar.interface';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'home-anunciante',
+  selector: 'estadisticas',
   standalone: false,
-  templateUrl: './home-anunciante.component.html',
-  styleUrls: ['./home-anunciante.component.scss']
+  templateUrl: 'estadisticas.component.html',
+  styleUrls: ['./estadisticas.component.scss']
 })
-export class HomeAnuncianteComponent implements OnInit {
+export class estadisticasComponent implements OnInit {
   lugares: Lugar[] = [];
   isLoading = true;
   errorMessage = '';

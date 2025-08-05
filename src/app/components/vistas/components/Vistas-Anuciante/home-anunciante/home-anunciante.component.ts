@@ -35,7 +35,9 @@ export class HomeAnuncianteComponent implements OnInit {
     private httpLaravelService: HttpLaravelService,
     private route: ActivatedRoute
   ) {}
-
+irAEstadisticas() {
+  this.router.navigate(['/estadisticas', this.idUsuario]);
+}
   ngOnInit(): void {
     this.idUsuario = Number(this.route.snapshot.paramMap.get('id_usuario'));
     if (isNaN(this.idUsuario)) {
