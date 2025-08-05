@@ -30,7 +30,11 @@ export class RegistroComponent implements OnInit {
       apellidoP: ['', Validators.required],
       apellidoM: ['', Validators.required],
       correo: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)
+      ]],
       id_rol: ['', Validators.required],
       foto_perfil: [null, Validators.required],
       acceptTerms: [false, Validators.requiredTrue]
@@ -61,10 +65,20 @@ export class RegistroComponent implements OnInit {
     return;
   }
   
-  const formValue = { ...this.registroForm.value };
-  delete formValue.acceptTerms; // 🔹 Eliminar campo
+  const formData = new FormData();
+  formData.append('nombre', this.f['nombre'].value);
+  formData.append('apellidoP', this.f['apellidoP'].value);
+  formData.append('apellidoM', this.f['apellidoM'].value);
+  formData.append('correo', this.f['correo'].value);
+  formData.append('password', this.f['password'].value);
+  formData.append('id_rol', this.f['id_rol'].value);
 
-  this.service.Service_Post_FormData('user', 'register', formValue).subscribe({
+  // Asegúrate de que estás enviando un File y no null
+  const archivo = this.f['foto_perfil'].value;
+  if (archivo instanceof File) {
+    formData.append('foto_perfil', archivo);
+  }  
+  this.service.Service_Post_FormData('user', 'register', formData).subscribe({
     next: (data: any) => {
       if (data.estatus) {
         Swal.fire('¡Éxito!', 'Usuario registrado correctamente', 'success');
@@ -126,4 +140,11 @@ export class RegistroComponent implements OnInit {
       }
     });
   }
+
+  mostrarPassword: boolean = false;
+
+  togglePassword(): void {
+    this.mostrarPassword = !this.mostrarPassword;
+  }
+
 }

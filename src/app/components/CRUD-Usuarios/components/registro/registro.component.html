@@ -67,14 +67,30 @@
         </div>
       </div>
 
-      <!-- Contraseña -->
-      <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input type="password" id="password" formControlName="password" />
-        <div class="textRequerido" *ngIf="isInvalid('password')">
-          La contraseña es obligatoria (mín. 6 caracteres)
-        </div>
-      </div>
+<!-- Contraseña -->
+<div class="form-group">
+  <label for="password">Contraseña</label>
+  <div style="position: relative;">
+    <input
+      [type]="mostrarPassword ? 'text' : 'password'"
+      id="password"
+      formControlName="password"
+    />
+    <button
+      type="button"
+      (click)="togglePassword()"
+      style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); border: none; background: none; cursor: pointer;"
+      aria-label="Mostrar u ocultar contraseña"
+    >
+      <span class="material-symbols-outlined">
+        {{ mostrarPassword ? 'visibility_off' : 'visibility' }}
+      </span>
+    </button>
+  </div>
+  <div class="textRequerido" *ngIf="isInvalid('password')">
+    La contraseña debe tener mínimo 8 caracteres y numeros y letras.
+  </div>
+</div>
 
       <!-- Rol -->
       <div class="form-group" *ngIf="roles && roles.length > 0; else loadingRoles">

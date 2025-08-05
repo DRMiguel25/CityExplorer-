@@ -92,13 +92,6 @@ onLoggedin() {
             this.router.navigate(['/login']);
             break;
         }
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error en el inicio de sesión',
-          text: data.mensaje || 'Credenciales incorrectas',
-          showConfirmButton: true,
-        });
       }
     },
     error: (error) => {
@@ -107,8 +100,8 @@ onLoggedin() {
 
       Swal.fire({
         icon: 'error',
-        title: 'Error de conexión',
-        text: 'No se pudo conectar con el servidor',
+        title: 'Error al inicio de sesión',
+        text: 'Credenciales incorrectas',
         showConfirmButton: true,
       });
     }
