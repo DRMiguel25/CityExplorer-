@@ -29,6 +29,8 @@ import { VistaListaComentariosComponent } from '../vistas/components/Vistas-Usua
 
 import { RestablecerComponent } from './components/restablecer-contrasena/restablecer.component';
 
+import { ListaUsuariosComponent } from '../vistas/components/Vistas-Administrador/lista-usuarios/lista-usuarios.component';
+
 const routes: Routes = [
   { path: 'inicio-sesion', component: InicioSesionComponent },
   { path: 'registro', component: RegistroComponent },
@@ -58,6 +60,7 @@ const routes: Routes = [
   { path: 'terminos-del-servicio', component: TerminosDelServicioComponent },
   { path: 'politicas-de-privacidad', component: PoliticasDePrivacidadComponent },
   { path: 'vista-lista-comentarios/:id_destino', component: VistaListaComentariosComponent },
+  { path: 'lista-usuarios/:id_usuario', component: ListaUsuariosComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'restablecer-contraseña', component: RestablecerComponent }, // ✅ nueva ruta
 
