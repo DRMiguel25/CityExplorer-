@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Lugar } from './components/vistas/components/Vistas-Anuciante/home-anunciante/lugar.interface';
 import { LocalstorageService } from './localstorage.service'; // Importa tu servicio de storage
 import { AuthService } from './auth.service';
+import { EstadisticasResponse } from './estadisticas/estadisticas.model';
 
 @Injectable({
   providedIn: 'root'
@@ -135,6 +136,7 @@ Service_GetImagenes(idLugar: number): Observable<any[]> {
   });
 }
 
+// === MÉTODOS DE ADMINISTRACIÓN DE USUARIOS ===
 Service_Get_Usuarios_Admin(): Observable<any> {
   return this.http.get(`${this._url}/admin/usuarios`, {
     headers: this.getHeaders()
@@ -144,6 +146,62 @@ Service_Get_Usuarios_Admin(): Observable<any> {
 toggleEstadoUsuario(id: number): Observable<any> {
   return this.http.post(`${this._url}/admin/usuarios/${id}/toggle`, {}, {
     headers: this.getHeaders()
+  });
+}
+
+// === MÉTODOS DE ESTADÍSTICAS ===
+Service_GetEstadisticas(Modelo: string, Dato: string | number): Observable<EstadisticasResponse> {
+    return this.http.get<EstadisticasResponse>(`${this._url}/${Modelo}/${Dato}`, {
+        headers: this.getHeaders()
+    });
+}
+
+// 📊 Métodos específicos para estadísticas de visitas
+Service_RegistrarVisita(parametros: any): Observable<any> {
+  return this.http.post(`${this._url}/estadisticas-visitas/`, parametros);
+}
+
+Service_Get_Estadisticas_Lugar(id: number): Observable<any> {
+  return this.http.get(`${this._url}/estadisticas-visitas/lugar/${id}`);
+}
+
+Service_Get_Lugares_Populares(parametros?: any): Observable<any> {
+  let url = `${this._url}/estadisticas-visitas/lugares-populares`;
+  if (parametros) {
+    const params = new URLSearchParams(parametros).toString();
+    url += `?${params}`;
+  }
+  return this.http.get(url);
+}
+
+Service_Get_Estadisticas_Usuario(id: number): Observable<any> {
+  return this.http.get(`${this._url}/estadisticas-visitas/usuario/${id}`, {
+    headers: this.getHeaders()
+  });
+}
+
+Service_Get_Mis_Estadisticas(): Observable<any> {
+  return this.http.get(`${this._url}/estadisticas-visitas/mis-estadisticas`, {
+    headers: this.getHeaders()
+  });
+}
+
+// 🔐 Métodos de administración para estadísticas
+Service_Get_Resumen_General_Admin(parametros?: any): Observable<any> {
+  let url = `${this._url}/admin/estadisticas-visitas/resumen`;
+  if (parametros) {
+    const params = new URLSearchParams(parametros).toString();
+    url += `?${params}`;
+  }
+  return this.http.get(url, {
+    headers: this.getHeaders()
+  });
+}
+
+Service_Limpiar_Estadisticas_Admin(parametros?: any): Observable<any> {
+  return this.http.delete(`${this._url}/admin/estadisticas-visitas/limpiar`, {
+    headers: this.getHeaders(),
+    body: parametros
   });
 }
 

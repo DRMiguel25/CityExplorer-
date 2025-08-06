@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpLaravelService } from '../../../../../http.service';
 import Swal from 'sweetalert2';
@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
  templateUrl: './vista-detallada-destino.component.html',
  styleUrls: ['./vista-detallada-destino.component.scss']
 })
-export class VistaDetalladaDestinoComponent implements OnInit {
+export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
  lugar: any; // Aquí guardaremos los datos del lugar
  direccion: any; // Aquí guardamos los datos de la dirección
  ultimoComentario: any = null; // Aquí guardamos el último comentario
@@ -26,7 +26,14 @@ export class VistaDetalladaDestinoComponent implements OnInit {
 
  categoriasOpciones: any[] = []; 
 
-
+ // 🕒 Variables para el tracking de tiempo
+ private tiempoInicio: number = 0;
+ private tiempoTotal: number = 0;
+ private intervaloPing: any;
+ private ultimoPing: number = 0;
+ private tiempoMinimo: number = 5; // Mínimo 5 segundos para registrar visita
+ private intervaloGuardado: number = 30; // Guardar cada 30 segundos
+ private visitaRegistrada: boolean = false;
 
  constructor(
    private router: Router,
@@ -34,11 +41,11 @@ export class VistaDetalladaDestinoComponent implements OnInit {
    private httpLaravelService: HttpLaravelService,
  ) {}
 
-
  ngOnInit(): void {
   this.route.paramMap.subscribe(params => {
    this.id_destino = this.route.snapshot.paramMap.get('id_destino');
    this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
+   
    if (this.id_destino) {
     this.obtenerLugar(+this.id_destino);
     this.obtenerValoraciones(); // Llamada para obtener las valoraciones del lugar
@@ -46,14 +53,129 @@ export class VistaDetalladaDestinoComponent implements OnInit {
 
     // Nueva llamada para verificar si es favorito
     this.verificarFavorito(+this.id_destino);
+    
+    // 🕒 Iniciar tracking de tiempo
+    this.iniciarTrackingTiempo();
    }
 
     this.obtenerCategoriasDesdeAPI();
-
     this.logLoadTime();  // 👈 mide tiempo de carga
-});
+  });
  }
 
+ ngOnDestroy(): void {
+   // 🕒 Guardar tiempo al destruir el componente
+   this.finalizarTrackingTiempo();
+ }
+
+ // 🕒 Detectar cuando el usuario sale de la página o cambia de pestaña
+ @HostListener('window:beforeunload', ['$event'])
+ onBeforeUnload(event: any): void {
+   this.finalizarTrackingTiempo();
+ }
+
+ @HostListener('document:visibilitychange', ['$event'])
+ onVisibilityChange(): void {
+   if (document.hidden) {
+     // Usuario cambió de pestaña - pausar contador
+     this.pausarTrackingTiempo();
+   } else {
+     // Usuario regresó - reanudar contador
+     this.reanudarTrackingTiempo();
+   }
+ }
+
+ // 🕒 MÉTODOS DE TRACKING DE TIEMPO
+
+ private iniciarTrackingTiempo(): void {
+   console.log('🕒 Iniciando tracking de tiempo para destino:', this.id_destino);
+   this.tiempoInicio = Date.now();
+   this.ultimoPing = this.tiempoInicio;
+   this.tiempoTotal = 0;
+   this.visitaRegistrada = false;
+
+   // Intervalo para guardar progreso periódicamente
+   this.intervaloPing = setInterval(() => {
+     this.actualizarTiempoVisita();
+   }, this.intervaloGuardado * 1000);
+ }
+
+ private pausarTrackingTiempo(): void {
+   if (this.ultimoPing > 0) {
+     const tiempoTranscurrido = Date.now() - this.ultimoPing;
+     this.tiempoTotal += tiempoTranscurrido;
+     this.ultimoPing = 0; // Marcar como pausado
+     console.log('⏸️ Tracking pausado. Tiempo acumulado:', Math.floor(this.tiempoTotal / 1000), 'segundos');
+   }
+ }
+
+ private reanudarTrackingTiempo(): void {
+   this.ultimoPing = Date.now();
+   console.log('▶️ Tracking reanudado');
+ }
+
+ private actualizarTiempoVisita(): void {
+   if (this.ultimoPing > 0) {
+     const tiempoTranscurrido = Date.now() - this.ultimoPing;
+     this.tiempoTotal += tiempoTranscurrido;
+     this.ultimoPing = Date.now();
+
+     const segundosTotal = Math.floor(this.tiempoTotal / 1000);
+     console.log('🕒 Tiempo de visita actualizado:', segundosTotal, 'segundos');
+
+     // Guardar en BD si ha pasado suficiente tiempo
+     if (segundosTotal >= this.tiempoMinimo) {
+       this.guardarEstadisticaVisita(segundosTotal);
+     }
+   }
+ }
+
+ private finalizarTrackingTiempo(): void {
+   if (this.intervaloPing) {
+     clearInterval(this.intervaloPing);
+   }
+
+   // Calcular tiempo final
+   if (this.ultimoPing > 0) {
+     const tiempoFinal = Date.now() - this.ultimoPing;
+     this.tiempoTotal += tiempoFinal;
+   }
+
+   const segundosTotal = Math.floor(this.tiempoTotal / 1000);
+   console.log('🏁 Finalizando tracking. Tiempo total:', segundosTotal, 'segundos');
+
+   // Guardar tiempo final si es significativo
+   if (segundosTotal >= this.tiempoMinimo) {
+     this.guardarEstadisticaVisita(segundosTotal, true);
+   }
+ }
+
+ private guardarEstadisticaVisita(tiempoSegundos: number, esFinal: boolean = false): void {
+   if (!this.id_destino) return;
+
+   // Evitar múltiples registros, solo actualizar si es final o si no se ha registrado
+   if (this.visitaRegistrada && !esFinal) return;
+
+   const datosVisita = {
+     id_lugar: +this.id_destino,
+     id_usuario: this.id_usuario && this.id_usuario !== "0" ? +this.id_usuario : null,
+     tiempo_visita: tiempoSegundos
+   };
+
+   console.log('💾 Guardando estadística de visita:', datosVisita);
+
+   this.httpLaravelService.Service_Post('estadisticas-visitas', '', datosVisita).subscribe({
+     next: (response) => {
+       console.log('✅ Estadística de visita guardada:', response);
+       this.visitaRegistrada = true;
+     },
+     error: (error) => {
+       console.error('❌ Error al guardar estadística de visita:', error);
+     }
+   });
+ }
+
+ // MÉTODOS ORIGINALES (sin cambios)
 
  // Método para obtener la información del lugar
  obtenerLugar(id_destino: number): void {
@@ -73,7 +195,6 @@ export class VistaDetalladaDestinoComponent implements OnInit {
    );
  }
 
-
  // Método para obtener la dirección
  obtenerDireccion(idDireccion: number): void {
    this.httpLaravelService.Service_Get_Direccion_Publica(idDireccion).subscribe(
@@ -88,13 +209,11 @@ export class VistaDetalladaDestinoComponent implements OnInit {
    );
  }
 
-
  // Método de retroceso
  goBack() {
   console.log("navegardo a home-invitado-usuario", this.id_usuario);
    this.router.navigate(['/home-invitado-usuario', this.id_usuario]); // Navega a la página de inicio del usuario invitado
  }
-
 
  // Método para obtener el nombre de la categoría basado en el ID
  obtenerCategoriaNombre(idCategoria: number): string {
@@ -150,7 +269,6 @@ crearResenia(): void {
   }
 }
 
-
 obtenerValoraciones(): void {
   const modelo = 'lugar';
   const dato = `${this.id_destino}/comentarios`;
@@ -202,8 +320,6 @@ obtenerValoraciones(): void {
     }
   });
 }
-
-
 
 getEstrellas(valoracion: number): string {
   const estrellasLlenas = '★'.repeat(valoracion);
@@ -295,6 +411,7 @@ logLoadTime() {
     }
   });
 }
+
 obtenerImagenes(idLugar: number): void {
   this.httpLaravelService.Service_Get(`lugar/${idLugar}`, 'imagenes').subscribe({
     next: (data) => {

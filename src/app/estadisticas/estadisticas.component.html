@@ -1,0 +1,12 @@
+<h1>Estadísticas de Visitas</h1>
+
+<ul *ngIf="estadisticas.length > 0; else sinDatos">
+  <li *ngFor="let estadistica of estadisticas">
+    Fecha: {{ estadistica.fecha }} -
+    Tiempo total: {{ formatearTiempo(estadistica.total_tiempo ?? estadistica.tiempo_total ?? estadistica.tiempo_promedio ?? 0) }}
+  </li>
+</ul>
+
+<ng-template #sinDatos>
+  <p>No hay estadísticas disponibles.</p>
+</ng-template>
