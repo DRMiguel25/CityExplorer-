@@ -135,5 +135,16 @@ Service_GetImagenes(idLugar: number): Observable<any[]> {
   });
 }
 
+Service_Get_Usuarios_Admin(): Observable<any> {
+  return this.http.get(`${this._url}/admin/usuarios`, {
+    headers: this.getHeaders()
+  });
+}
+
+toggleEstadoUsuario(id: number): Observable<any> {
+  return this.http.post(`${this._url}/admin/usuarios/${id}/toggle`, {}, {
+    headers: this.getHeaders()
+  });
+}
 
 }

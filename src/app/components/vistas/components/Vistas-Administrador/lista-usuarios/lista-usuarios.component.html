@@ -1,167 +1,115 @@
-<body>
-    <!-- Header -->
-    <div class="header">
-        <div class="header-content">
-            <div class="header-icon">👥</div>
-            <div>
-                <h1 class="header-title">Panel de Administración</h1>
-                <p class="header-subtitle">Gestiona y controla el acceso de usuarios con elegancia</p>
-            </div>
-        </div>
-
-        <!-- Stats Cards -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-content">
-                    <div>
-                        <p class="stat-label">Total de Usuarios</p>
-                        <p class="stat-value">6</p>
-                    </div>
-                    <span class="stat-icon">👥</span>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-content">
-                    <div>
-                        <p class="stat-label">Usuarios Activos</p>
-                        <p class="stat-value active">4</p>
-                    </div>
-                    <span class="stat-icon">🟢</span>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-content">
-                    <div>
-                        <p class="stat-label">Usuarios Bloqueados</p>
-                        <p class="stat-value blocked">2</p>
-                    </div>
-                    <span class="stat-icon">🚫</span>
-                </div>
-            </div>
+<!-- Header -->
+<div class="header">
+    <div class="header-content">
+        <div class="header-icon">👥</div>
+        <div>
+            <h1 class="header-title">Panel de Administración</h1>
+            <p class="header-subtitle">Gestiona y controla el acceso de usuarios con elegancia</p>
         </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Controls -->
-        <div class="controls">
-            <div class="controls-row">
-                <!-- Search -->
-                <div class="search-container">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" class="search-input" placeholder="Buscar usuarios por nombre o email...">
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-content">
+                <div>
+                    <p class="stat-label">Total de Usuarios</p>
+                    <p class="stat-value">{{ totalUsuarios }}</p>
                 </div>
-
-                <!-- Filter -->
-                <select class="filter-select">
-                    <option value="all">Todos los usuarios</option>
-                    <option value="active">Solo activos</option>
-                    <option value="blocked">Solo bloqueados</option>
-                </select>
+                <span class="stat-icon">👥</span>
             </div>
         </div>
 
-        <!-- Users Table -->
-        <div class="users-table">
-            <div class="table-header">
-                <h3 class="table-title">Lista de Usuarios (6)</h3>
-            </div>
-
-            <!-- User Row 1 -->
-            <div class="user-row">
-                <div class="user-avatar">AP</div>
-                <div class="user-info">
-                    <div class="user-name-row">
-                        <h4 class="user-name">Alexis Peralta Ramirez</h4>
-                        <span class="status-badge active">Activo</span>
-                    </div>
-                    <div class="user-details">
-                        <span>📧 alexito email.com</span>
-                        <span>📅 Desde 15/03/2024</span>
-                    </div>
+        <div class="stat-card">
+            <div class="stat-content">
+                <div>
+                    <p class="stat-label">Usuarios Activos</p>
+                    <p class="stat-value active">{{ usuariosActivos }}</p>
                 </div>
-                <div class="user-meta">
-                    <span class="role-badge">Administrador</span>
-                    <span class="last-login">Hace 2 horas</span>
-                </div>
-                <div class="user-actions">
-                    <button class="action-btn block-btn">🚫 Bloquear</button>
-                    <button class="more-btn">⋮</button>
-                </div>
-            </div>
-
-            <!-- User Row 2 -->
-            <div class="user-row">
-                <div class="user-avatar blocked">MR</div>
-                <div class="user-info">
-                    <div class="user-name-row">
-                        <h4 class="user-name">Miguel Anguel Diaz Rivera</h4>
-                        <span class="status-badge blocked">Bloqueado</span>
-                    </div>
-                    <div class="user-details">
-                        <span>📧 migue email.com</span>
-                        <span>📅 Desde 22/02/2024</span>
-                    </div>
-                </div>
-                <div class="user-meta">
-                    <span class="role-badge">Anunciante</span>
-                    <span class="last-login">Hace 1 día</span>
-                </div>
-                <div class="user-actions">
-                    <button class="action-btn unblock-btn">🟢 Desbloquear</button>
-                    <button class="more-btn">⋮</button>
-                </div>
-            </div>
-
-            <!-- User Row 3 -->
-            <div class="user-row">
-                <div class="user-avatar">OS</div>
-                <div class="user-info">
-                    <div class="user-name-row">
-                        <h4 class="user-name">Oscar Espinoza</h4>
-                        <span class="status-badge active">Activo</span>
-                    </div>
-                    <div class="user-details">
-                        <span>📧 oscar email.com</span>
-                        <span>📅 Desde 08/04/2024</span>
-                    </div>
-                </div>
-                <div class="user-meta">
-                    <span class="role-badge">Usuario</span>
-                    <span class="last-login">Hace 30 min</span>
-                </div>
-                <div class="user-actions">
-                    <button class="action-btn block-btn">🚫 Bloquear</button>
-                    <button class="more-btn">⋮</button>
-                </div>
-            </div>
-
-            <!-- User Row 4 -->
-            <div class="user-row">
-                <div class="user-avatar">JS</div>
-                <div class="user-info">
-                    <div class="user-name-row">
-                        <h4 class="user-name">José Manuel</h4>
-                        <span class="status-badge active">Activo</span>
-                    </div>
-                    <div class="user-details">
-                        <span>📧 jose email.com</span>
-                        <span>📅 Desde 12/01/2024</span>
-                    </div>
-                </div>
-                <div class="user-meta">
-                    <span class="role-badge">Usuario</span>
-                    <span class="last-login">Hace 5 horas</span>
-                </div>
-                <div class="user-actions">
-                    <button class="action-btn block-btn">🚫 Bloquear</button>
-                    <button class="more-btn">⋮</button>
-                </div>
-            </div>
-
-           
+                <span class="stat-icon">🟢</span>
             </div>
         </div>
-</body>
+
+        <div class="stat-card">
+            <div class="stat-content">
+                <div>
+                    <p class="stat-label">Usuarios Bloqueados</p>
+                    <p class="stat-value blocked">{{ usuariosBloqueados }}</p>
+                </div>
+                <span class="stat-icon">🚫</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Controls -->
+    <div class="controls">
+        <div class="controls-row">
+            <!-- Search -->
+            <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input
+                type="text"
+                class="search-input"
+                placeholder="Buscar usuarios por nombre o email..."
+                (input)="buscarUsuarios($event)"
+            />
+            </div>
+
+            <!-- Filter -->
+            <select class="filter-select" (change)="filtrarUsuarios(filtro.value)" #filtro>
+                <option value="all">Todos los usuarios</option>
+                <option value="active">Solo activos</option>
+                <option value="blocked">Solo bloqueados</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Users Table -->
+    <div class="users-table">
+        <div class="table-header">
+            <h3 class="table-title">Lista de Usuarios ({{ usuariosfiltrados.length }})</h3>
+        </div>
+
+        <!-- Lista de usuarios -->
+        <div *ngFor="let usuario of usuariosfiltrados" class="user-row">
+        <div class="user-avatar">
+            {{ usuario.nombre.charAt(0) + usuario.apellidoP.charAt(0) }}
+        </div>
+
+        <div class="user-info">
+            <div class="user-name-row">
+            <h4 class="user-name">
+                {{ usuario.nombre }} {{ usuario.apellidoP }} {{ usuario.apellidoM }}
+            </h4>
+            <span class="status-badge" [ngClass]="usuario.activo ? 'active' : 'inactive'">
+                {{ usuario.activo ? 'Activo' : 'Inactivo' }}
+            </span>
+            </div>
+            <div class="user-details">
+            <span>📧 {{ usuario.correo }}</span>
+            </div>
+        </div>
+
+        <div class="user-meta">
+            <span class="role-badge">{{ usuario.rol?.nombre }}</span>
+            <span class="last-login">
+            {{ usuario.last_login ? calcularTiempo(usuario.last_login) : 'Sin registro' }}
+            </span>
+        </div>
+
+        <div class="user-actions">
+            <button 
+            class="action-btn block-btn" 
+            [ngStyle]="{
+                'background-color': usuario.bloqueado ? 'green' : 'red',
+                'color': 'white'
+            }"
+            (click)="bloquearDesbloquearUsuario(usuario)">
+            {{ usuario.bloqueado ? '✅ Desbloquear' : '🚫 Bloquear' }}
+            </button>
+        </div>
+    </div>
+</div>
