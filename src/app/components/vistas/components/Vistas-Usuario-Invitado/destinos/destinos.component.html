@@ -13,7 +13,7 @@
     <!-- Sección superior: Buscador -->
     <div class="filters-top-section">
       <div class="search-box">
-        <input type="text" class="search-input" placeholder="Buscar destinos...">
+        <input type="text" class="search-input" placeholder="Buscar destinos..." [(ngModel)]="busqueda">
         <i class="fas fa-search search-icon"></i>
       </div>
     </div>
@@ -28,6 +28,10 @@
       <span class="filter-tag" [class.active]="filtroEstrellas === 1" (click)="setFiltroEstrellas(1)">1 Estrella</span>
     </div>
     
+    <div *ngIf="getLugaresFiltrados().length === 0" class="no-results">
+      <p>😕 No se encontraron destinos 😕</p>
+    </div>
+
     <!-- Cards Container - Ahora está dentro de filters-section -->
     <div class="cards-container">
       <div class="card" *ngFor="let lugar of getLugaresFiltrados()" (click)="vistaDetalladaDestino(lugar.id_lugar)">

@@ -15,6 +15,7 @@ export class HomeAnuncianteComponent implements OnInit {
   isLoading = true;
   errorMessage = '';
   idUsuario: number = 0;
+  idFiltrado: number = 0;
 
   imagenesPorLugar: { [idLugar: number]: any[] } = {};
   imagenActualIndexPorLugar: { [idLugar: number]: number } = {};
@@ -40,6 +41,10 @@ irAEstadisticas() {
 }
   ngOnInit(): void {
     this.idUsuario = Number(this.route.snapshot.paramMap.get('id_usuario'));
+    this.idFiltrado = Number(this.route.snapshot.paramMap.get('id_filtrado'));
+
+    console.log("tipo de filtrado: "+this.idFiltrado);
+
     if (isNaN(this.idUsuario)) {
       console.error('ID de usuario inválido en la URL');
       return;
@@ -58,14 +63,22 @@ irAEstadisticas() {
     this.httpLaravelService.Service_Get('lugar', '').subscribe(
       (data: Lugar[]) => {
         console.log('📦 Datos recibidos desde el backend:', data);
-        
+
         const filtrados = data.filter(lugar => lugar.id_usuario === this.idUsuario);
         this.todosLosLugares = filtrados;
-        this.lugares = [...filtrados]; // Usamos spread para evitar mutar la referencia
 
+        // 🧠 Aplica el filtro que vino en la URL
+        if (this.idFiltrado === 1) {
+          this.mostrarPagados();
+        } else if (this.idFiltrado === 2) {
+          this.mostrarNoPagados();
+        } else {
+          this.mostrarTodos();
+        }
+
+        // Cargar imágenes solo para los lugares mostrados
         this.lugares.forEach(lugar => this.cargarImagenesLugar(lugar));
         this.isLoading = false;
-        console.log('✅ Lugares filtrados para el usuario:', this.lugares);
       },
       (error) => {
         this.isLoading = false;
@@ -74,6 +87,7 @@ irAEstadisticas() {
       }
     );
   }
+
 
 
 
@@ -168,10 +182,6 @@ mostrarNoPagados(): void {
   this.lugares = this.todosLosLugares.filter(lugar => !lugar.activo);
   this.botonActivo = 'nopagados';
   console.log('❌ Mostrando anuncios no pagados:', this.lugares);
-}
-
-metodosDePagos(): void{
-  console.log('Navegando a metodos de pago...');
 }
 
 AlertaModificarCuenta(){

@@ -20,7 +20,7 @@ export class estadisticasComponent implements OnInit {
   imagenActualIndexPorLugar: { [idLugar: number]: number } = {};
 
   filtroActivo: 'todos' | 'pagados' | 'noPagados' = 'todos';
-  botonActivo: string = 'todos'; // Puedes iniciar con 'todos', 'pagados' o 'nopagados'
+  botonActivo: string = 'estadisticas'; // Puedes iniciar con 'todos', 'pagados' o 'nopagados'
   
   todosLosLugares: Lugar[] = []; // <-- Aquí guardamos la data original
 
@@ -151,26 +151,17 @@ cargarInfoUsuario(idUsuario: Number) {
 }
 
 mostrarTodos(): void {
-  this.lugares = [...this.todosLosLugares];
-  this.botonActivo = 'todos';
-  console.log('🌐 Mostrando todos los anuncios:', this.lugares);
+    this.router.navigate(['home-anunciante', this.idUsuario]);
 }
 
 mostrarPagados(): void {
-  this.lugares = this.todosLosLugares.filter(lugar => lugar.activo);
-  this.botonActivo = 'pagados';
-  console.log('💰 Mostrando anuncios pagados:', this.lugares);
+    this.router.navigate(['home-anunciante', this.idUsuario, 1]);
 }
 
 mostrarNoPagados(): void {
-  this.lugares = this.todosLosLugares.filter(lugar => !lugar.activo);
-  this.botonActivo = 'nopagados';
-  console.log('❌ Mostrando anuncios no pagados:', this.lugares);
+    this.router.navigate(['home-anunciante', this.idUsuario, 2]);
 }
 
-metodosDePagos(): void{
-  console.log('Navegando a metodos de pago...');
-}
 
 AlertaModificarCuenta(){
   this.router.navigate(['/modificar-info-usuario', this.idUsuario, 1]);

@@ -3,6 +3,17 @@
 <div class="main-content" style="padding: 6rem 2rem;">
   <h1 class="page-title">Favoritos</h1>
 
+  <div class="filtro-categorias" style="margin-bottom: 1.5rem;">
+    <label for="filtroCategoria" style="font-weight: bold; margin-right: 0.5rem;">Filtrar por categoría:</label>
+    <select [(ngModel)]="categoriaSeleccionada" (change)="filtrarFavoritos()">
+      <option [value]="0">Todas las categorías</option>
+      <option *ngFor="let cat of listaCategorias" [value]="cat.id_categoria">
+        {{ cat.nombre }}
+      </option>
+    </select>
+  </div>
+
+
   <!-- Si no hay favoritos -->
   <div *ngIf="favoritosFiltrados.length === 0" class="no-favorites" style="text-align: center;">
     <p class="mensaje-vacio" style="color: #6B7280; font-size: 1.25rem;">
@@ -52,7 +63,7 @@ chevron_forward
       </button>
 
       <div class="category-tags">
-        <span class="category-tag">Favorito</span>
+        <span class="category-tag">{{ getNombreCategoria(fav.lugar.id_categoria) }}</span>
       </div>
     </div>
 

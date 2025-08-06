@@ -27,6 +27,8 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
 
   filtroEstrellas: number | null = null;
 
+  busqueda: string = '';
+
   images = [
     'https://a.travel-assets.com/findyours-php/viewfinder/images/res60/200000/200753-Guanajuato.jpg',
     'https://a.travel-assets.com/findyours-php/viewfinder/images/res60/201000/201316-El-Charco-Del-Ingenio.jpg',
@@ -220,13 +222,24 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
   }
 
   getLugaresFiltrados(): Lugar[] {
-    if (this.filtroEstrellas === null) {
-      return this.lugares;
-    }
+  let filtrados = this.lugares;
 
-    return this.lugares.filter(lugar => {
+  if (this.filtroEstrellas !== null) {
+    filtrados = filtrados.filter(lugar => {
       const promedio = this.promedioValoracionPorLugar[lugar.id_lugar] ?? 0;
       return Math.round(promedio) === this.filtroEstrellas;
     });
   }
+
+  if (this.busqueda) {
+    const busquedaLower = this.busqueda.toLowerCase();
+    filtrados = filtrados.filter(lugar =>
+      lugar.nombre.toLowerCase().includes(busquedaLower) ||
+      lugar.descripcion?.toLowerCase().includes(busquedaLower)
+    );
+  }
+
+  return filtrados;
+}
+
 }

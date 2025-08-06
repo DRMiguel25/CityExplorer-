@@ -19,10 +19,12 @@ export class FavoritosUsuariosComponent implements OnInit {
   imagenesPorLugar: { [key: number]: string[] } = {};
   indicesImagen: { [key: number]: number } = {};
 
+  listaCategorias: any[] = [];
+
   listaComentarios: any[] = [];
   promedioValoracionPorLugar: { [idLugar: number]: number } = {};
 
-  listaCategorias: any[] = [];
+  categoriaSeleccionada: number = 0; // 0 = Todas
 
   constructor(
     private router: Router,
@@ -37,28 +39,18 @@ export class FavoritosUsuariosComponent implements OnInit {
 
     if (this.id_usuario) {
       this.obtenerFavoritos();
+      this.obtenerCategoriasDesdeAPI();
     }
 
     this.logLoadTime();  // 👈 mide tiempo de carga
 
   }
-
+  
   obtenerFavoritos(): void {
     this.httpLaravelService.Service_Get('favoritos', '').subscribe({
       next: (respuesta: any) => {
         this.favoritos = respuesta.data || [];
-
-        // 🔍 Filtrar solo los del usuario actual
-        this.favoritosFiltrados = this.favoritos.filter(fav =>
-          fav.id_usuario == this.id_usuario
-        );
-
-        this.favoritosFiltrados.forEach(fav => {
-          this.cargarImagenesPorLugar(fav.lugar.id_lugar);
-          this.obtenerComentarios(fav.lugar.id_lugar);  // <-- Aquí cargas las estrellas ⭐
-        });
-
-        console.log('✅ Favoritos filtrados:', this.favoritosFiltrados);
+        this.filtrarFavoritos(); // 👈 Aquí llamas al método dinámico
       },
       error: (error) => {
         console.error('❌ Error al obtener los favoritos:', error);
@@ -66,6 +58,7 @@ export class FavoritosUsuariosComponent implements OnInit {
       }
     });
   }
+
 
   toggleFavorito(id_lugar: number): void {
     const body = { id_lugar };
@@ -143,6 +136,23 @@ cambiarImagen(idLugar: number, direccion: number): void {
   actual = (actual + direccion + total) % total;
   this.indicesImagen[idLugar] = actual;
 }
+  obtenerCategoriasDesdeAPI(): void {
+    this.httpLaravelService.Service_Get('categorias', '').subscribe({
+      next: (resp: any) => {
+        this.listaCategorias = resp.data;
+        console.log('📦 Categorías:', this.listaCategorias);
+      },
+      error: (error) => {
+        console.error('❌ Error al obtener categorías:', error);
+      }
+    });
+  }
+
+  getNombreCategoria(idCategoria: number): string {
+    const categoria = this.listaCategorias.find(cat => cat.id_categoria === idCategoria);
+    return categoria ? categoria.nombre : 'Sin Categoría';
+  }
+
 
   obtenerComentarios(idLugar: number): void {
     const modelo = 'lugar';
@@ -183,6 +193,22 @@ cambiarImagen(idLugar: number, direccion: number): void {
     }
 
     return estrellas;
+  }
+  filtrarFavoritos(): void {
+    const categoriaSeleccionada = Number(this.categoriaSeleccionada);
+      
+    this.favoritosFiltrados = this.favoritos.filter(fav => {
+      const idCategoriaLugar = Number(fav.lugar?.id_categoria);
+      return fav.id_usuario == this.id_usuario &&
+        (categoriaSeleccionada === 0 || idCategoriaLugar === categoriaSeleccionada);
+    });
+
+    this.favoritosFiltrados.forEach(fav => {
+      this.cargarImagenesPorLugar(fav.lugar.id_lugar);
+      this.obtenerComentarios(fav.lugar.id_lugar);
+    });
+
+    console.log('📂 Favoritos filtrados dinámicamente:', this.favoritosFiltrados);
   }
 
 

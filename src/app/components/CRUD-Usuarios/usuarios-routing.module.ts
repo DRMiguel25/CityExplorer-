@@ -44,6 +44,7 @@ const routes: Routes = [
   { path: 'vista-detallada-destino/:id_destino/:id_usuario', component: VistaDetalladaDestinoComponent },
   { path: 'vista-detallada-destino/:id_destino', component: VistaDetalladaDestinoComponent },
   { path: 'home-anunciante/:id_usuario', component: HomeAnuncianteComponent },
+  { path: 'home-anunciante/:id_usuario/:id_filtrado', component: HomeAnuncianteComponent },
   { path: 'home-administrador/:id_usuario', component: HomeAdministradorComponent },
   { path: 'home-invitado-usuario/:id_usuario', component: HomeInvitadoUsuarioComponent },
   { path: 'home-invitado-usuario', component: HomeInvitadoUsuarioComponent },
