@@ -1,0 +1,338 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(240, 248, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(74, 144, 226, 0.2);
+  padding: 1rem 2rem;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 20px rgba(74, 144, 226, 0.1);
+  height: 80px;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.logo svg {
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
+}
+
+.logo svg circle,
+.logo svg path,
+.logo svg ellipse {
+  stroke: #2E5BBA !important;
+  stroke-width: 3;
+  fill: none;
+  transition: stroke 0.3s ease;
+}
+
+.logo:hover svg circle,
+.logo:hover svg path,
+.logo:hover svg ellipse {
+  stroke: #4A90E2 !important;
+}
+
+/* Texto del logo */
+.logo::after {
+  content: "CityExplorer";
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2E5BBA;
+  text-shadow: 1px 1px 3px rgba(74, 144, 226, 0.2);
+  margin-left: 8px;
+}
+
+/* Botón hamburguesa (oculto en desktop) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  z-index: 101;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: #2E5BBA;
+  margin: 3px 0;
+  transition: 0.3s;
+  border-radius: 3px;
+}
+
+.hamburger:hover span {
+  background: #4A90E2;
+}
+
+/* Menú de navegación */
+.nav-menu {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #6B7280;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  white-space: nowrap;
+}
+
+.nav-menu a:hover {
+  color: #2E5BBA;
+  background: #E6F0FA;
+  transform: translateY(-2px);
+}
+
+.nav-menu a.active {
+  background: linear-gradient(135deg, #4A90E2, #5BA7F7);
+  color: #F0F8FF;
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+}
+
+/* Icono de usuario */
+.user-icon {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  background: #2E5BBA;
+  border: 2px solid #2E5BBA;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  position: relative;
+}
+
+.user-icon:hover {
+  background: #4A90E2;
+  border-color: #5BA7F7;
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+}
+
+.user-icon svg {
+  transition: all 0.3s ease;
+  width: 24px;
+  height: 24px;
+}
+
+.user-icon svg circle,
+.user-icon svg path {
+  stroke: #2E5BBA !important;
+  stroke-width: 2;
+  fill: none;
+  transition: stroke 0.3s ease;
+}
+
+.user-icon:hover svg circle,
+.user-icon:hover svg path {
+  stroke: #F0F8FF !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem 1.5rem;
+    height: 70px;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 70px;
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background: rgba(240, 248, 255, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 2rem;
+    transition: left 0.3s ease;
+    gap: 1.5rem;
+    border-top: 1px solid rgba(74, 144, 226, 0.2);
+  }
+
+  .nav-menu.active {
+    left: 0;
+  }
+
+  .nav-menu a {
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    width: 80%;
+    text-align: center;
+    border-radius: 15px;
+  }
+
+  .logo::after {
+    font-size: 1.4rem;
+  }
+
+  .logo svg {
+    width: 35px;
+    height: 35px;
+  }
+
+  .user-icon {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 1rem;
+    height: 65px;
+  }
+
+  .nav-menu {
+    top: 65px;
+    height: calc(100vh - 65px);
+    gap: 1rem;
+    padding-top: 1.5rem;
+  }
+
+  .nav-menu a {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+    width: 90%;
+  }
+
+  .logo::after {
+    font-size: 1.2rem;
+  }
+
+  .logo svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .user-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .user-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Animación para el menú hamburguesa */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Efectos adicionales */
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(240, 248, 255, 0.1) 0%, 
+    rgba(74, 144, 226, 0.05) 100%);
+  pointer-events: none;
+}
+
+/* Ajuste para el contenido principal */
+body {
+  padding-top: 80px;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-top: 65px;
+  }
+}
+
+.perfil-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.user-icon {
+  cursor: pointer;
+  padding: 0;                          /* 👈 Quitamos padding */
+  border-radius: 50%;
+  background: transparent;             /* 👈 Fondo transparente por defecto */
+  border: 2px solid #4A90E2; /* Opcional, para que combine con el SVG original */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  position: relative;
+}
+
+.user-icon:hover {
+  background: transparent;             /* 👈 Sin cambio al pasar el mouse */
+  border-color: transparent;
+  transform: scale(1.05);
+  box-shadow: none;
+}
+
+.user-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+/* Solo si quieres mantener estilos para el SVG */
+.user-icon:hover svg circle,
+.user-icon:hover svg path {
+  stroke: #4A90E2 !important;
+}

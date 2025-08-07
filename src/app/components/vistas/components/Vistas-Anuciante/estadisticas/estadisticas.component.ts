@@ -19,7 +19,7 @@ export class estadisticasComponent implements OnInit {
   imagenesPorLugar: { [idLugar: number]: any[] } = {};
   imagenActualIndexPorLugar: { [idLugar: number]: number } = {};
 
-  filtroActivo: 'todos' | 'pagados' | 'noPagados' = 'todos';
+  filtroActivo: 'estadisticas' | 'pagados' | 'noPagados' = 'estadisticas';
   botonActivo: string = 'estadisticas'; // Puedes iniciar con 'todos', 'pagados' o 'nopagados'
   
   todosLosLugares: Lugar[] = []; // <-- Aquí guardamos la data original

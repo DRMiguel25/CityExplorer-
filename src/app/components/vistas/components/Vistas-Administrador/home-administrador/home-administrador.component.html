@@ -1,58 +1,82 @@
-
-  <div class="container">
-        <div class="header">
-            <button class="menu-btn">
-                <span class="material-symbols-outlined"> menu </span>
-            </button>
-            <div class="title">Comentarios</div>
-            <button class="external-link">↗</button>
+<body>
+    <header class="header">
+      <div class="header-content">
+        <div class="logo-section">
+          <div class="logo">
+            <svg
+              viewBox="0 0 100 100"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="50"
+                cy="50"
+                r="45"
+                stroke="#2C5282"
+                stroke-width="3"
+                fill="none"
+              />
+              <path d="M20 50 H80" stroke="#2C5282" stroke-width="3" />
+              <ellipse
+                cx="50"
+                cy="50"
+                rx="25"
+                ry="45"
+                stroke="#2C5282"
+                stroke-width="3"
+                fill="none"
+              />
+            </svg>
+          </div>
+          <h1 class="site-title">City Explorer</h1>
         </div>
-
-   <div class="search-container">
-            <input type="text" class="search-input" placeholder="Búsqueda de comentarios...">
-            <div class="view-controls">
-                <button class="view-btn">
-                    <span class="material-symbols-outlined"> menu </span>
-                </button>
-                <button class="view-btn">
-                    <span class="material-symbols-outlined"> view_comfy_alt </span>
-                </button>
+        <div class="admin-info">
+          <div class="admin-avatar">A</div>
+          <div>
+            <div style="font-weight: 600; color: var(--azul-profundo)">
+              Administrador
             </div>
+            <div style="font-size: 12px; color: var(--gris-texto)">
+              Panel de Control
+            </div>
+          </div>
         </div>
+      </div>
+    </header>
 
-    <div class="table-header">
-    </div>
+    <main class="main-container">
+      <section class="welcome-section">
+        <h2 class="welcome-title">¡Bienvenido de vuelta, Administrador!</h2>
+        <p class="welcome-subtitle">
+          Gestiona tu plataforma City Explorer desde este panel de control.
+          Supervisa el contenido y usuarios en tiempo real.
+        </p>
+      </section>
 
-    <div class="comment-row">
-      <div class="col comment-id">ID</div>
-      <div class="col">Este es un ejemplo de comentario</div>
-      <div class="col comment-author">Anuncio</div>
-      <div class="col"><button class="status-btn">Aprobar</button></div>
-      <div class="col"><button class="btn-eliminar">Eliminar</button></div>
-      <div class="col comment-date">FEB 04</div>
-      <div class="col comment-avatar">A</div>
-      <div class="col"><button class="more-options">⋯</button></div>
-    </div>
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">1,247</div>
+          <div class="stat-label">Usuarios Activos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3,456</div>
+          <div class="stat-label">Lugares Registrados</div>
+        </div>
+      </section>
 
-    <div class="comment-row">
-      <div class="col comment-id">FID-120</div>
-      <div class="col">Es un lugar agradable</div>
-      <div class="col comment-author">Mariscos</div>
-      <div class="col"><button class="status-btn">Aprobar</button></div>
-      <div class="col"><button class="btn-eliminar">Eliminar</button></div>
-      <div class="col comment-date">Dec 5</div>
-      <div class="col comment-avatar">M</div>
-      <div class="col"><button class="more-options">⋯</button></div>
-    </div>
-
-    <div class="comment-row">
-      <div class="col comment-id">FID-119</div>
-      <div class="col">Es un lugar ¡$$%! con personas ¡$$%!</div>
-      <div class="col comment-author">Mirador</div>
-      <div class="col"><button class="status-btn">Aprobar</button></div>
-      <div class="col"><button class="btn-eliminar">Eliminar</button></div>
-      <div class="col comment-date">Dec 5</div>
-      <div class="col comment-avatar">M</div>
-      <div class="col"><button class="more-options">⋯</button></div>
-    </div>
-  </div>
+      <section class="actions-grid">
+        <a href="#" class="action-button">
+          <div class="action-icon">👥</div>
+          <div>Gestionar Usuarios</div>
+        </a>
+        <a href="#" class="action-button">
+          <div class="action-icon">🏙️</div>
+          <div>Administrar Lugares</div>
+        </a>
+        <a href="#" class="action-button">
+          <div class="action-icon">⚙️</div>
+          <div>Ayuda</div>
+        </a>
+      </section>
+    </main>
+  </body>

@@ -1,15 +1,18 @@
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+* {
     margin: 0;
     padding: 0;
-    background-color: #E6F1F7;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    box-sizing: border-box;
 }
-/* === SIDEBAR NAVBAR STYLES === */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #F0F8FF, #F2F8FC);
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Sidebar Styles */
 .sidebar {
     width: 280px;
     background: linear-gradient(180deg, #EAF6FB, #EDF3F9);
@@ -54,32 +57,30 @@ body {
 }
 
 .logo {
-    color: #5BA7F7;
+   color: #5BA7F7;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-
 .logo svg circle,
 .logo svg path,
 .logo svg ellipse {
-    stroke: #5BA7F7 !important;
-    stroke-width: 3;
-    fill: none;
-    transition: stroke 0.3s ease;
+  stroke:  #5BA7F7 !important;
+  stroke-width: 3;
+  fill: none;
+  transition: stroke 0.3s ease;
 }
 
 .logo:hover svg circle,
 .logo:hover svg path,
 .logo:hover svg ellipse {
-    stroke: #5BA7F7 !important;
+  stroke: #5BA7F7 !important;
 }
-
 .custom-logo {
     color: #5BA7F7;
     width: 32px;
     height: 32px;
-    margin-right: 8px;
+    margin-right: 8px;   
 }
 
 .menu-toggle {
@@ -125,12 +126,25 @@ body {
     transform: translateX(5px);
 }
 
-.nav-item.activo {
-    background-color: #5BA7F7;
-    color: white;
+.nav-item.active {
+    background: linear-gradient(90deg, #E6F0FA, #E6F1F7);
+    color: #2980B9;
+    border-left: 3px solid #3498DB;
 }
 
-.nav-item .icon,
+/* CORRECCIÓN PRINCIPAL: Mejorar alineación de iconos */
+.nav-item .icon {
+    font-size: 22px;
+    width: 28px;
+    height: 28px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* Evita que el icono se encoja */
+}
+
+/* Para iconos de Material Symbols */
 .nav-item .material-symbols-outlined {
     font-size: 22px;
     width: 28px;
@@ -147,6 +161,16 @@ body {
     align-items: center;
     line-height: 1.2;
     font-size: 15px;
+}
+
+.section-title {
+    color: #5D6D7E;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0 20px;
+    margin: 20px 0 10px 0;
 }
 
 .logout-section {
@@ -181,26 +205,19 @@ body {
 }
 
 .user-avatar {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    overflow: hidden;
-    background-color: #ccc;
+    background: linear-gradient(45deg, #E74C3C, #C0392B);
     display: flex;
     align-items: center;
     justify-content: center;
+    color: white;
     font-weight: bold;
-    font-size: 20px;
-    color: #fff;
+    font-size: 16px;
     margin-right: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     flex-shrink: 0;
-}
-
-.user-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 }
 
 .user-info h4 {
@@ -214,13 +231,46 @@ body {
     color: #5D6D7E;
 }
 
-/* Responsive: ocultar sidebar */
-@media (max-width: 768px) {
-    .sidebar {
-        width: 250px;
-    }
+
+.open-sidebar-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #5BA7F7;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
 }
 
+.open-sidebar-btn:hover {
+    background-color: #2980B9;
+}
+
+.open-sidebar-btn i.fas.fa-bars {
+    font-size: 22px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #E6F1F7; /* var(--blanco-artico) */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
 
 .card-container {
     width: 100%;
@@ -230,11 +280,11 @@ body {
 }
 
 .card {
-    background-color: #F3F7FA;
+    background-color: #F3F7FA; /* var(--perla-azulada) */
     border-radius: 16px;
     padding: 30px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    border: 1px solid #EAF6FB;
+    border: 1px solid #EAF6FB; /* var(--blanco-glaciar) */
     transition: transform 0.3s ease;
 }
 
@@ -242,6 +292,7 @@ body {
     transform: translateY(-5px);
 }
 
+/* --- Estilos para el Encabezado de Anuncio --- */
 .header-ad-info {
     margin-bottom: 25px;
 }
@@ -262,7 +313,7 @@ body {
 }
 
 .nav-button {
-    background-color: #EAF6FB;
+    background-color: #EAF6FB; /* var(--blanco-glaciar) */
     border: none;
     border-radius: 50%;
     width: 35px;
@@ -275,7 +326,7 @@ body {
 }
 
 .nav-button:hover {
-    background-color: #EEF7FB;
+    background-color: #EEF7FB; /* var(--blanco-boreal) */
 }
 
 .nav-button .arrow {
@@ -292,11 +343,12 @@ body {
     text-align: center;
 }
 
+/* --- Estilos para las Pestañas (Tabs) --- */
 .tabs {
     display: flex;
     justify-content: center;
     margin-bottom: 25px;
-    background-color: #EAF6FB;
+    background-color: #EAF6FB; /* var(--blanco-glaciar) */
     border-radius: 8px;
     padding: 5px;
 }
@@ -319,27 +371,28 @@ body {
 }
 
 .tab-button.active {
-    background-color: #F0F8FF;
+    background-color: #F0F8FF; /* var(--blanco-hielo) */
     color: #333;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+/* --- Estilos para el Gráfico y Estadísticas --- */
 .graph-wrapper {
     margin-bottom: 25px;
 }
 
 .graph-content {
-    /* Control de visibilidad con JavaScript */
+    /* Aquí se podría controlar la visibilidad del gráfico con JavaScript */
 }
 
 .graph-placeholder {
     height: 120px;
-    background-color: #F0F8FF;
+    background-color: #F0F8FF; /* var(--blanco-hielo) */
     border-radius: 8px;
     padding: 10px;
     display: flex;
     align-items: flex-end;
-    border: 1px solid #EEF7FB;
+    border: 1px solid #EEF7FB; /* var(--blanco-boreal) */
 }
 
 .bar-chart {
@@ -352,7 +405,7 @@ body {
 
 .bar {
     width: 10%;
-    background-color: #EDF3F9;
+    background-color: #EDF3F9; /* var(--niebla-azul) */
     border-radius: 4px 4px 0 0;
     transition: height 0.5s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -370,7 +423,7 @@ body {
     display: flex;
     justify-content: space-around;
     padding-top: 20px;
-    border-top: 1px solid #EAF6FB;
+    border-top: 1px solid #EAF6FB; /* var(--blanco-glaciar) */
     margin-top: 20px;
 }
 
@@ -390,4 +443,99 @@ body {
     font-size: 0.8rem;
     color: #777;
     margin-top: 4px;
+}
+
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-edit {
+    background-color: #5BA7F7;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.btn-edit:hover {
+    background-color: #4A90E2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+}
+
+.loading-indicator {
+    text-align: center;
+    font-weight: bold;
+    padding: 1rem;
+    color: #2E5BBA;
+}
+
+.error-message {
+    text-align: center;
+    color: red;
+    font-weight: 600;
+    padding: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 250px;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: #fff;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-inicial {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.nav-item {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+
+.nav-item.activo {
+  background-color: #5BA7F7; /* Azul Bootstrap */
+  color: white;
 }
