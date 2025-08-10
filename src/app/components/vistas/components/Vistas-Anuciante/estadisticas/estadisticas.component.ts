@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpLaravelService } from "../../../../../http.service";
 import { Lugar } from './lugar.interface';
 import { ActivatedRoute } from '@angular/router';
+import { Injectable } from '@angular/core';
 
 @Component({
   selector: 'estadisticas',
@@ -24,11 +25,14 @@ export class estadisticasComponent implements OnInit {
   
   todosLosLugares: Lugar[] = []; // <-- Aquí guardamos la data original
 
-
   usuario: any;
 
   // Sidebar control
   sidebarAbierto = true;
+
+  estadisticasAnunciante: any = null;
+  anuncioActualIndex = 0;
+  filtroTiempo: 'dia' | 'semana' | 'mes' = 'dia';
 
   constructor(
     private router: Router,
@@ -45,6 +49,9 @@ export class estadisticasComponent implements OnInit {
     this.loadLugares();
     this.logLoadTime();
     this.cargarInfoUsuario(this.idUsuario);
+      
+    console.log('Cargando estadisticas...');
+    this.cargarEstadisticas();
   }
 
   toggleSidebar(): void {
@@ -62,8 +69,10 @@ export class estadisticasComponent implements OnInit {
         this.lugares = [...filtrados]; // Usamos spread para evitar mutar la referencia
 
         this.lugares.forEach(lugar => this.cargarImagenesLugar(lugar));
+
         this.isLoading = false;
-        console.log('✅ Lugares filtrados para el usuario:', this.lugares);
+        console.log('✅ Lugares filtrados para el anunciante:', this.lugares);
+
       },
       (error) => {
         this.isLoading = false;
@@ -167,5 +176,107 @@ AlertaModificarCuenta(){
   this.router.navigate(['/modificar-info-usuario', this.idUsuario, 1]);
 }
 
+cargarEstadisticas(): void {
+  this.httpLaravelService.Service_Get_Estadisticas_Por_Anunciante(this.idUsuario).subscribe({
+    next: (resp) => {
+      console.log(`📊 Estadísticas del Anunciante ${this.idUsuario}:`, resp);
+      this.estadisticasAnunciante = resp.data; // Guardamos solo "data"
+    },
+    error: (err) => {
+      console.error("❌ Error al cargar estadísticas", err);
+    }
+  });
 }
-  
+
+get anuncioActual() {
+  return this.estadisticasAnunciante?.visitas_por_lugar?.[this.anuncioActualIndex] || null;
+}
+
+cambiarAnuncio(direccion: number) {
+  const total = this.estadisticasAnunciante?.visitas_por_lugar?.length || 0;
+  if (total > 0) {
+    this.anuncioActualIndex = (this.anuncioActualIndex + direccion + total) % total;
+    this.filtroTiempo = 'dia';  // reset filtro al cambiar anuncio
+  }
+}
+
+get visitasActuales() {
+  if (!this.anuncioActual) return [];
+  switch (this.filtroTiempo) {
+    case 'semana': return this.agruparPorSemana(this.anuncioActual.visitas_por_dia || []);
+    case 'mes': return this.agruparPorMes(this.anuncioActual.visitas_por_dia || []);
+    default: return this.anuncioActual.visitas_por_dia || [];
+  }
+}
+
+cambiarFiltro(filtro: 'dia' | 'semana' | 'mes') {
+  this.filtroTiempo = filtro;
+}
+
+agruparPorSemana(visitasPorDia: any[]) {
+  const semanasMap = new Map<string, any>();
+
+  visitasPorDia.forEach(v => {
+    const fecha = new Date(v.fecha);
+    const anio = fecha.getFullYear();
+    // Obtener número de semana ISO simple (puedes mejorar)
+    const semana = this.getSemanaISO(fecha);
+    const key = `${anio}-W${semana}`;
+
+    if (!semanasMap.has(key)) {
+      semanasMap.set(key, { fecha: key, visitas: 0, tiempo_promedio: 0, total_tiempo: 0 });
+    }
+    const entry = semanasMap.get(key);
+    entry.visitas += v.visitas;
+    entry.total_tiempo += v.tiempo_promedio * v.visitas; // suma ponderada para promedio
+  });
+
+  const resultado = Array.from(semanasMap.values());
+  resultado.forEach(e => {
+    e.tiempo_promedio = (e.total_tiempo / e.visitas) || 0;
+    delete e.total_tiempo;
+  });
+
+  return resultado;
+}
+
+agruparPorMes(visitasPorDia: any[]) {
+  const mesesMap = new Map<string, any>();
+
+  visitasPorDia.forEach(v => {
+    const fecha = new Date(v.fecha);
+    const anio = fecha.getFullYear();
+    const mes = fecha.getMonth() + 1; // enero=0
+    const key = `${anio}-${mes.toString().padStart(2, '0')}`;
+
+    if (!mesesMap.has(key)) {
+      mesesMap.set(key, { fecha: key, visitas: 0, tiempo_promedio: 0, total_tiempo: 0 });
+    }
+    const entry = mesesMap.get(key);
+    entry.visitas += v.visitas;
+    entry.total_tiempo += v.tiempo_promedio * v.visitas;
+  });
+
+  const resultado = Array.from(mesesMap.values());
+  resultado.forEach(e => {
+    e.tiempo_promedio = (e.total_tiempo / e.visitas) || 0;
+    delete e.total_tiempo;
+  });
+
+  return resultado;
+}
+
+// ISO week number quick calc helper
+getSemanaISO(fecha: Date) {
+  const target = new Date(fecha.valueOf());
+  const dayNr = (fecha.getDay() + 6) % 7;
+  target.setDate(target.getDate() - dayNr + 3);
+  const firstThursday = target.valueOf();
+  target.setMonth(0, 1);
+  if (target.getDay() !== 4) {
+    target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
+  }
+  return 1 + Math.ceil((firstThursday - target.valueOf()) / 604800000);
+}
+
+}

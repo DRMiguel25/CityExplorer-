@@ -42,7 +42,9 @@ import { VistaListaComentariosComponent } from './components/Vistas-Usuario-Invi
 import { ListaUsuariosComponent } from './components/Vistas-Administrador/lista-usuarios/lista-usuarios.component';
 import { ListaLugaresComponent } from './components/Vistas-Administrador/lista-lugares/lista-lugares.component';
 
-import { NavbarAdministradorComponent } from './components/Vistas-Administrador/navbar-administrador/navbar-administrador.component'
+import { NavbarAdministradorComponent } from './components/Vistas-Administrador/navbar-administrador/navbar-administrador.component';
+
+import { estadisticasComponent } from './components/Vistas-Anuciante/estadisticas/estadisticas.component';
 @NgModule({
   declarations: [
     CategoriasComponent,
@@ -66,7 +68,8 @@ import { NavbarAdministradorComponent } from './components/Vistas-Administrador/
     VistaListaComentariosComponent,
     ListaUsuariosComponent,
     ListaLugaresComponent,
-    NavbarAdministradorComponent
+    NavbarAdministradorComponent,
+    estadisticasComponent
   ],
   imports: [
     CommonModule,

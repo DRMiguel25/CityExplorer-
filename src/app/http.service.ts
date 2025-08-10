@@ -205,4 +205,16 @@ Service_Limpiar_Estadisticas_Admin(parametros?: any): Observable<any> {
   });
 }
 
+Service_GetEstadisticasGenerales(): Observable<any> {
+  return this.http.get(`${this._url}/estadisticas-visitas/mis-estadisticas`, {
+    headers: this.getHeaders()
+  });
+}
+
+Service_Get_Estadisticas_Por_Anunciante(idUsuario: number): Observable<any> {
+  return this.http.get(`${this._url}/estadisticas/anunciante/${idUsuario}`, {
+    headers: this.getHeaders()
+  });
+}
+
 }

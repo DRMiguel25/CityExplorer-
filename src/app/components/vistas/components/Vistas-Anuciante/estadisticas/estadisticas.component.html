@@ -61,68 +61,87 @@
     </a>
   </div>
 </nav>
+
 <body>
-
-    <div class="card-container">
-        <div class="card">
-            
-            <div class="header-ad-info">
-                <div class="ad-navigation">
-                    <button class="nav-button prev-button">
-                        <span class="arrow">‹</span>
-                    </button>
-                    <div class="ad-name">Anuncio de Verano 2025</div>
-                    <button class="nav-button next-button">
-                        <span class="arrow">›</span>
-                    </button>
-                </div>
-            </div>
-
-            <h1 class="card-title">Tiempo en Anuncio</h1>
-            
-            <div class="tabs">
-                <button class="tab-button active">Día</button>
-                <button class="tab-button">Semana</button>
-                <button class="tab-button">Mes</button>
-            </div>
-
-            <div class="graph-wrapper">
-                <div class="graph-content">
-                    <div class="graph-placeholder">
-                        <div class="bar-chart">
-                            <div class="bar" style="height: 60px;"></div>
-                            <div class="bar" style="height: 85px;"></div>
-                            <div class="bar" style="height: 45px;"></div>
-                            <div class="bar" style="height: 100px;"></div>
-                            <div class="bar" style="height: 70px;"></div>
-                            <div class="bar" style="height: 90px;"></div>
-                            <div class="bar" style="height: 55px;"></div>
-                        </div>
-                    </div>
-                    <div class="graph-labels">
-                        <span>Lun</span>
-                        <span>Mar</span>
-                        <span>Mié</span>
-                        <span>Jue</span>
-                        <span>Vie</span>
-                        <span>Sáb</span>
-                        <span>Dom</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="stats-footer">
-                <div class="stat-item">
-                    <span class="stat-value">4.5 min</span>
-                    <span class="stat-label">Tiempo Promedio</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-value">120 visitas</span>
-                    <span class="stat-label">Total de Sesiones</span>
-                </div>
-            </div>
-
+<div class="card-container" *ngIf="estadisticasAnunciante">
+  <div class="card">
+    <div class="header-ad-info">
+      <div class="ad-navigation">
+        <button class="nav-button prev-button" (click)="cambiarAnuncio(-1)">
+          <span class="arrow">‹</span>
+        </button>
+        <div class="ad-name">
+          Estadísticas
         </div>
+        <button class="nav-button next-button" (click)="cambiarAnuncio(1)">
+          <span class="arrow">›</span>
+        </button>
+      </div>
     </div>
+
+    <h1 class="card-title">{{ anuncioActual?.nombre }}</h1>
+
+    <div class="tabs">
+      <button class="tab-button" 
+              [class.active]="filtroTiempo === 'dia'" 
+              (click)="cambiarFiltro('dia')">
+        Día
+      </button>
+      <button class="tab-button" 
+              [class.active]="filtroTiempo === 'semana'" 
+              (click)="cambiarFiltro('semana')">
+        Semana
+      </button>
+      <button class="tab-button" 
+              [class.active]="filtroTiempo === 'mes'" 
+              (click)="cambiarFiltro('mes')">
+        Mes
+      </button>
+    </div>
+
+    <!-- Gráfico -->
+    <div class="graph-wrapper" *ngIf="visitasActuales.length > 0; else noData">
+      <div class="graph-content">
+        <div class="graph-placeholder">
+          <div class="bar-chart">
+            <div 
+              class="bar" 
+              *ngFor="let visita of visitasActuales" 
+              [style.height]="(visita.tiempo_promedio * 5) + 'px'"
+              [style.backgroundColor]="'#4a90e2'"
+              title="{{ visita.fecha }} - {{ visita.tiempo_promedio }} min">
+            </div>
+          </div>
+        </div>
+        <div class="graph-labels">
+          <span *ngFor="let visita of visitasActuales">
+            {{ visita.fecha | date:'dd/MM' }}
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    <ng-template #noData>
+      <p class="no-data-message">No hay datos disponibles para {{ filtroTiempo }}.</p>
+    </ng-template>
+
+    <div class="stats-footer">
+      <div class="stat-item">
+        <span class="stat-value">{{ anuncioActual?.tiempo_promedio }} min</span>
+        <span class="stat-label">Tiempo Promedio</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">{{ anuncioActual?.total_visitas }} visitas</span>
+        <span class="stat-label">Total de Sesiones</span>
+      </div>
+    </div>
+
+    <!-- Detalles de visitas -->
+    <div class="visita-details" *ngFor="let visita of visitasActuales">
+      {{ visita.fecha | date:'dd/MM/yyyy' }} - {{ visita.tiempo_promedio }} min
+    </div>
+
+  </div>
+</div>
 
 </body>
