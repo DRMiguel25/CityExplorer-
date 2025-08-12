@@ -194,7 +194,5 @@ Este proyecto está bajo la licencia **MIT**.
 
 ---
 
-
-
 ## 📄 Notas
 Los datos proporcionados corresponden a información de prueba para simular transacciones en un entorno de desarrollo. El número de tarjeta de crédito de prueba es 4242 4242 4242 4242. Puede seleccionar cualquiera de las opciones de tarjetas disponibles. Para la fecha de vencimiento de la tarjeta, debe ser un valor posterior al año actual. El código de seguridad (CVV) y el código postal (CP) pueden ser establecidos con cualquier valor para fines de prueba.
