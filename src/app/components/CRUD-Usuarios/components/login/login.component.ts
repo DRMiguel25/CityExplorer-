@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit{
 
   homeScreen() {
     console.log('Navegar como invitado');
-    this.router.navigate(['/home-invitado-usuario']);  // Redirige a la ruta de home
+    this.router.navigate(['/home-invitado-usuario',0]);  // Redirige a la ruta de home
     // Aquí puedes manejar la navegación como invitado si lo deseas
   }
 

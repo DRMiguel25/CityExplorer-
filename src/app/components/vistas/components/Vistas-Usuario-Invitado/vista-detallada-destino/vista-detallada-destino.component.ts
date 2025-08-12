@@ -329,7 +329,7 @@ getEstrellas(valoracion: number): string {
 
 listarComentarios(): void {
   if (this.id_usuario != "0") {
-    console.log('Navegando a la lista de comentarios para el lugar con ID:', this.id_destino);
+    console.log('Navegando a la lista de comentarios para el lugar con ID:',this.id_destino,this.id_destino);
     this.router.navigate(['/vista-lista-comentarios', this.id_destino, this.id_usuario]);
   }
   else {
