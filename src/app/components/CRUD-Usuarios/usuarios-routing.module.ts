@@ -14,6 +14,7 @@ import { CrearActualizarAnuncioComponent } from '../vistas/components/Vistas-Anu
 import { navbarInvitadoUsuarioComponent } from '../vistas/components/Vistas-Usuario-Invitado/navbar-invitado-usuario/navbar-invitado-usuario.component';
 import { VistaDetalladaAnuncioComponent } from '../vistas/components/Vistas-Anuciante/vista-detallada-anuncio/vista-detallada-anuncio.component';
 import { AyudaComponent } from '../vistas/components/Vistas-Usuario-Invitado/ayuda/ayuda.component';
+import { AyudaAdministradorComponent } from '../vistas/components/Vistas-Administrador/ayuda-administrador/ayuda-administrador.component';
 import { PagoAnuncioComponent } from '../vistas/components/Vistas-Anuciante/pagar-anuncio/pagar-anuncio.component';
 
 import { HomeAdministradorComponent } from '../vistas/components/Vistas-Administrador/home-administrador/home-administrador.component';
@@ -30,10 +31,10 @@ import { VistaListaComentariosComponent } from '../vistas/components/Vistas-Usua
 import { RestablecerComponent } from './components/restablecer-contrasena/restablecer.component';
 
 import { ListaUsuariosComponent } from '../vistas/components/Vistas-Administrador/lista-usuarios/lista-usuarios.component';
+import { ListaLugaresComponent } from '../vistas/components/Vistas-Administrador/lista-lugares/lista-lugares.component';
 
 import { estadisticasComponent } from '../vistas/components/Vistas-Anuciante/estadisticas/estadisticas.component';
 
-import { NavbarAdministradorComponent } from'../vistas/components/Vistas-Administrador/navbar-administrador/navbar-administrador.component'
 const routes: Routes = [
   { path: 'inicio-sesion', component: InicioSesionComponent },
   { path: 'registro', component: RegistroComponent },
@@ -56,6 +57,7 @@ const routes: Routes = [
   { path: 'navbar-invitado-usuario', component: navbarInvitadoUsuarioComponent },
   { path: 'ayuda', component: AyudaComponent },
   { path: 'ayuda/:id_usuario', component: AyudaComponent },
+  { path: 'ayuda-administrador/:id_usuario', component: AyudaAdministradorComponent },
   { path: 'pagar-anuncio/:id_anuncio/:id_usuario', component: PagoAnuncioComponent },
   { path: 'favoritos-usuarios/:id_usuario', component: FavoritosUsuariosComponent },
   { path: 'modificar-info-usuario/:id_usuario/:tipo-usuario', component: ModificarInfoUsuarioComponent },
@@ -65,8 +67,8 @@ const routes: Routes = [
   { path: 'politicas-de-privacidad', component: PoliticasDePrivacidadComponent },
   { path: 'vista-lista-comentarios/:id_destino', component: VistaListaComentariosComponent },
   { path: 'lista-usuarios/:id_usuario', component: ListaUsuariosComponent },
+  { path: 'lista-lugares/:id_usuario', component: ListaLugaresComponent },
   { path: 'estadisticas/:id_usuario', component: estadisticasComponent },
-  { path: 'navbar-administrador', component: NavbarAdministradorComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'restablecer-contraseña', component: RestablecerComponent }, // ✅ nueva ruta
 

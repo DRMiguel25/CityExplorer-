@@ -85,7 +85,7 @@ onLoggedin() {
             this.router.navigate([`/home-anunciante/${userId}`]);
             break;
           case 3:
-            this.router.navigate([`/lista-usuarios/${userId}`]);
+            this.router.navigate([`/home-administrador/${userId}`]);
             break;
           default:
             console.warn('⚠️ Rol desconocido, redirigiendo a login');

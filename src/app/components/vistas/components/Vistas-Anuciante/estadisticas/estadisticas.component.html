@@ -81,49 +81,64 @@
 
     <h1 class="card-title">{{ anuncioActual?.nombre }}</h1>
 
-    <div class="tabs">
-      <button class="tab-button" 
-              [class.active]="filtroTiempo === 'dia'" 
-              (click)="cambiarFiltro('dia')">
-        Día
-      </button>
-      <button class="tab-button" 
-              [class.active]="filtroTiempo === 'semana'" 
-              (click)="cambiarFiltro('semana')">
-        Semana
-      </button>
-      <button class="tab-button" 
-              [class.active]="filtroTiempo === 'mes'" 
-              (click)="cambiarFiltro('mes')">
-        Mes
-      </button>
-    </div>
+<div class="tabs">
+  <button class="tab-button" 
+          [class.active]="filtroTiempo === 'todas'" 
+          (click)="cambiarFiltro('todas')">
+    Todas
+  </button>
+  <button class="tab-button" 
+          [class.active]="filtroTiempo === 'mes'" 
+          (click)="cambiarFiltro('mes')">
+    Último Mes
+  </button>
+  <button class="tab-button" 
+          [class.active]="filtroTiempo === 'semana'" 
+          (click)="cambiarFiltro('semana')">
+    Última Semana
+  </button>
+  <button class="tab-button" 
+          [class.active]="filtroTiempo === 'dia'" 
+          (click)="cambiarFiltro('dia')">
+    Hoy
+  </button>
+</div>
 
-    <!-- Gráfico -->
-    <div class="graph-wrapper" *ngIf="visitasActuales.length > 0; else noData">
-      <div class="graph-content">
-        <div class="graph-placeholder">
-          <div class="bar-chart">
-            <div 
-              class="bar" 
-              *ngFor="let visita of visitasActuales" 
-              [style.height]="(visita.tiempo_promedio * 5) + 'px'"
-              [style.backgroundColor]="'#4a90e2'"
-              title="{{ visita.fecha }} - {{ visita.tiempo_promedio }} min">
-            </div>
-          </div>
-        </div>
-        <div class="graph-labels">
-          <span *ngFor="let visita of visitasActuales">
-            {{ visita.fecha | date:'dd/MM' }}
-          </span>
-        </div>
-      </div>
+<!-- Gráfico de visitas -->
+<div class="graph-wrapper" *ngIf="visitasFiltradas?.length">
+  <div class="graph-content">
+    <!-- Etiquetas de duración -->
+    <div class="duration-labels">
+      <span>0</span>
+      <span>30s</span>
+      <span>60s</span>
+      <span>90s</span>
+      <span>120s</span>
     </div>
     
-    <ng-template #noData>
-      <p class="no-data-message">No hay datos disponibles para {{ filtroTiempo }}.</p>
-    </ng-template>
+    <!-- Contenedor del gráfico -->
+    <div class="line-chart">
+      <div class="chart-grid">
+        <!-- Líneas de la cuadrícula -->
+        <div class="grid-line" *ngFor="let level of [30, 60, 90, 120]" 
+             [style.bottom]="level + 'px'"></div>
+      </div>
+      
+      <!-- Líneas de las visitas - Asegúrate que tiempo_promedio está en segundos -->
+      <div class="visit-line" 
+          *ngFor="let visita of visitasFiltradas"
+          [style.height]="calcularAltura(visita.tiempo_promedio)"
+          [title]="'Duración: ' + visita.tiempo_promedio + ' min - ' + (visita.fecha | date:'medium')">
+        <span class="visit-label">{{visita.tiempo_promedio}}m</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sin datos -->
+<div *ngIf="!visitasFiltradas?.length" class="no-data-message">
+  No hay datos disponibles para el período seleccionado.
+</div>
 
     <div class="stats-footer">
       <div class="stat-item">

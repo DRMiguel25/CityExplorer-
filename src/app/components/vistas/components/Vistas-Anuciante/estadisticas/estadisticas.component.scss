@@ -395,22 +395,6 @@ body {
     border: 1px solid #EEF7FB; /* var(--blanco-boreal) */
 }
 
-.bar-chart {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    justify-content: space-around;
-    align-items: flex-end;
-}
-
-.bar {
-    width: 10%;
-    background-color: #EDF3F9; /* var(--niebla-azul) */
-    border-radius: 4px 4px 0 0;
-    transition: height 0.5s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
 .graph-labels {
     display: flex;
     justify-content: space-around;
@@ -546,4 +530,82 @@ body {
   margin: 0 2px;
   border-radius: 3px;
   transition: background-color 0.3s ease;
+}
+
+.graph-wrapper {
+  margin: 20px 0;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.graph-content {
+  display: flex;
+  height: 300px;
+  position: relative;
+}
+
+.duration-labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-right: 15px;
+  color: #666;
+  font-size: 12px;
+  height: 240px; /* Ajusta según tu escala */
+}
+
+.line-chart {
+  flex: 1;
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+  padding-left: 10px;
+  position: relative;
+}
+
+.chart-grid {
+  position: absolute;
+  width: 100%;
+  height: 240px; /* Igual que duration-labels */
+  pointer-events: none;
+}
+
+.grid-line {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: rgba(0,0,0,0.1);
+}
+
+.visit-line {
+  background: #4a90e2;
+  width: 30px;
+  position: relative;
+  transition: all 0.3s ease;
+  border-radius: 4px 4px 0 0;
+  min-height: 2px; /* Para que se vean visitas muy cortas */
+}
+
+.visit-line:hover {
+  background: #2a70c2;
+  transform: scaleY(1.05);
+}
+
+.visit-label {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: #333;
+  white-space: nowrap;
+}
+
+.no-data-message {
+  text-align: center;
+  padding: 40px;
+  color: #888;
+  font-size: 16px;
 }

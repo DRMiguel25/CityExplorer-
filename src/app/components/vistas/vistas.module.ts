@@ -24,9 +24,9 @@ import { VistaDetalladaAnuncioComponent } from './components/Vistas-Anuciante/vi
 
 import { VistaDetalladaDestinoComponent } from './components/Vistas-Usuario-Invitado/vista-detallada-destino/vista-detallada-destino.component';
 import { AyudaComponent } from './components/Vistas-Usuario-Invitado/ayuda/ayuda.component';
+import { AyudaAdministradorComponent } from './components/Vistas-Administrador/ayuda-administrador/ayuda-administrador.component';
 
 import { PagoAnuncioComponent } from './components/Vistas-Anuciante/pagar-anuncio/pagar-anuncio.component';
-
 
 import { HomeAdministradorComponent } from './components/Vistas-Administrador/home-administrador/home-administrador.component';
 
@@ -42,7 +42,6 @@ import { VistaListaComentariosComponent } from './components/Vistas-Usuario-Invi
 import { ListaUsuariosComponent } from './components/Vistas-Administrador/lista-usuarios/lista-usuarios.component';
 import { ListaLugaresComponent } from './components/Vistas-Administrador/lista-lugares/lista-lugares.component';
 
-import { NavbarAdministradorComponent } from './components/Vistas-Administrador/navbar-administrador/navbar-administrador.component';
 
 import { estadisticasComponent } from './components/Vistas-Anuciante/estadisticas/estadisticas.component';
 @NgModule({
@@ -57,6 +56,7 @@ import { estadisticasComponent } from './components/Vistas-Anuciante/estadistica
     DestinosVistaComponent,
     VistaDetalladaDestinoComponent,
     AyudaComponent,
+    AyudaAdministradorComponent,
     PagoAnuncioComponent,
     HomeAdministradorComponent,
     FavoritosUsuariosComponent,
@@ -68,7 +68,6 @@ import { estadisticasComponent } from './components/Vistas-Anuciante/estadistica
     VistaListaComentariosComponent,
     ListaUsuariosComponent,
     ListaLugaresComponent,
-    NavbarAdministradorComponent,
     estadisticasComponent
   ],
   imports: [

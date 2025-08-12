@@ -32,7 +32,7 @@ export class estadisticasComponent implements OnInit {
 
   estadisticasAnunciante: any = null;
   anuncioActualIndex = 0;
-  filtroTiempo: 'dia' | 'semana' | 'mes' = 'dia';
+  filtroTiempo: 'todas' | 'mes' | 'semana' | 'dia' = 'todas';
 
   constructor(
     private router: Router,
@@ -177,15 +177,66 @@ AlertaModificarCuenta(){
 }
 
 cargarEstadisticas(): void {
+  // Datos de prueba - simular respuesta del servidor
+  const datosPrueba = {
+    success: true,
+    data: {
+      id_usuario: "1",
+      nombre_usuario: "usuario",
+      total_lugares: 3,
+      resumen: {
+        total_visitas: 15,
+        tiempo_promedio: "45.33",
+        tiempo_total: "680",
+        usuarios_unicos: 5
+      },
+      visitas_por_dia: [
+        { fecha: this.getFechaHoy(), visitas: 3, tiempo_promedio: "42.50", id_lugar: 12 },
+        { fecha: this.getFechaAyer(), visitas: 5, tiempo_promedio: "47.20", id_lugar: 12 },
+        { fecha: this.getFechaSemanaPasada(), visitas: 4, tiempo_promedio: "38.75", id_lugar: 12 },
+        { fecha: this.getFechaHoy(), visitas: 2, tiempo_promedio: "51.00", id_lugar: 9 },
+        { fecha: this.getFechaAyer(), visitas: 1, tiempo_promedio: "35.50", id_lugar: 9 }
+      ],
+      visitas_por_lugar: [
+        { id_lugar: 12, nombre: "Gimnasio el don alexito", total_visitas: 12, tiempo_promedio: "42.81", tiempo_total: "513.75" },
+        { id_lugar: 9, nombre: "Gimnasio PowerFit", total_visitas: 3, tiempo_promedio: "43.25", tiempo_total: "129.75" }
+      ]
+    }
+  };
+
+  console.log('📊 Usando datos de prueba:', datosPrueba);
+  this.estadisticasAnunciante = datosPrueba.data;
+  
+  // También puedes mantener la llamada real al servidor comentada:
+  /*
   this.httpLaravelService.Service_Get_Estadisticas_Por_Anunciante(this.idUsuario).subscribe({
     next: (resp) => {
       console.log(`📊 Estadísticas del Anunciante ${this.idUsuario}:`, resp);
-      this.estadisticasAnunciante = resp.data; // Guardamos solo "data"
+      this.estadisticasAnunciante = resp.data;
     },
     error: (err) => {
       console.error("❌ Error al cargar estadísticas", err);
     }
   });
+  */
+}
+
+// Métodos auxiliares para generar fechas de prueba
+private getFechaHoy(): string {
+  const hoy = new Date();
+  return hoy.toISOString().split('T')[0];
+}
+
+private getFechaAyer(): string {
+  const ayer = new Date();
+  ayer.setDate(ayer.getDate() - 1);
+  return ayer.toISOString().split('T')[0];
+}
+
+private getFechaSemanaPasada(): string {
+  const semanaPasada = new Date();
+  semanaPasada.setDate(semanaPasada.getDate() - 7);
+  return semanaPasada.toISOString().split('T')[0];
 }
 
 get anuncioActual() {
@@ -196,7 +247,7 @@ cambiarAnuncio(direccion: number) {
   const total = this.estadisticasAnunciante?.visitas_por_lugar?.length || 0;
   if (total > 0) {
     this.anuncioActualIndex = (this.anuncioActualIndex + direccion + total) % total;
-    this.filtroTiempo = 'dia';  // reset filtro al cambiar anuncio
+    // No resetear el filtro para mantener la consistencia de la UI
   }
 }
 
@@ -209,7 +260,7 @@ get visitasActuales() {
   }
 }
 
-cambiarFiltro(filtro: 'dia' | 'semana' | 'mes') {
+cambiarFiltro(filtro: 'todas' | 'mes' | 'semana' | 'dia') {
   this.filtroTiempo = filtro;
 }
 
@@ -277,6 +328,112 @@ getSemanaISO(fecha: Date) {
     target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
   }
   return 1 + Math.ceil((firstThursday - target.valueOf()) / 604800000);
+}
+
+get visitasFiltradas() {
+  console.log('=== INICIO visitasFiltradas ===');
+  console.log('Filtro actual:', this.filtroTiempo);
+  
+  // Verificar si tenemos datos y el anuncio actual
+  if (!this.estadisticasAnunciante || !this.anuncioActual) {
+    console.log('No hay datos estadísticos o anuncio actual');
+    return [];
+  }
+
+  // Definir tipo para las visitas
+  type VisitaPorDia = {
+    fecha: string;
+    visitas: number;
+    tiempo_promedio: number | string;
+    id_lugar?: number; // Hacer opcional según estructura real
+  };
+
+  // Obtener todas las visitas por día con tipo explícito
+  const todasLasVisitas: VisitaPorDia[] = this.estadisticasAnunciante.visitas_por_dia || [];
+  console.log('Todas las visitas:', todasLasVisitas);
+
+  // Filtrar solo las visitas del lugar actual con tipo explícito
+  const visitasDelLugar = todasLasVisitas.filter((v: VisitaPorDia) => 
+    v.id_lugar === this.anuncioActual?.id_lugar
+  );
+  console.log('Visitas del lugar actual:', visitasDelLugar);
+
+  if (!visitasDelLugar.length) {
+    console.log('No hay visitas para este lugar');
+    return [];
+  }
+
+  const ahora = new Date();
+  console.log('Fecha actual:', ahora);
+
+  let resultado: VisitaPorDia[];
+
+  switch (this.filtroTiempo) {
+    case 'dia':
+      console.log('Aplicando filtro DÍA');
+      resultado = visitasDelLugar.filter((v: VisitaPorDia) => {
+        try {
+          const fechaVisita = new Date(v.fecha);
+          console.log(`Comparando fecha visita: ${fechaVisita} con hoy: ${ahora}`);
+          return fechaVisita.toDateString() === ahora.toDateString();
+        } catch (e) {
+          console.error('Error al procesar fecha:', v.fecha, e);
+          return false;
+        }
+      });
+      break;
+    
+    case 'semana':
+      console.log('Aplicando filtro SEMANA');
+      const inicioSemana = new Date(ahora);
+      inicioSemana.setDate(ahora.getDate() - 7);
+      console.log('Fecha inicio semana:', inicioSemana);
+      
+      resultado = visitasDelLugar.filter((v: VisitaPorDia) => {
+        try {
+          const fechaVisita = new Date(v.fecha);
+          console.log(`Comparando ${fechaVisita} >= ${inicioSemana}`);
+          return fechaVisita >= inicioSemana;
+        } catch (e) {
+          console.error('Error al procesar fecha:', v.fecha, e);
+          return false;
+        }
+      });
+      break;
+    
+    case 'mes':
+      console.log('Aplicando filtro MES');
+      const inicioMes = new Date(ahora);
+      inicioMes.setMonth(ahora.getMonth() - 1);
+      console.log('Fecha inicio mes:', inicioMes);
+      
+      resultado = visitasDelLugar.filter((v: VisitaPorDia) => {
+        try {
+          const fechaVisita = new Date(v.fecha);
+          console.log(`Comparando ${fechaVisita} >= ${inicioMes}`);
+          return fechaVisita >= inicioMes;
+        } catch (e) {
+          console.error('Error al procesar fecha:', v.fecha, e);
+          return false;
+        }
+      });
+      break;
+    
+    default: // 'todas'
+      console.log('Mostrando TODAS las visitas del lugar sin filtrar');
+      resultado = visitasDelLugar;
+  }
+
+  console.log('Resultado del filtro:', resultado);
+  console.log('=== FIN visitasFiltradas ===');
+  return resultado;
+}
+
+calcularAltura(tiempoPromedio: string | number): string {
+  const tiempo = typeof tiempoPromedio === 'string' 
+    ? parseFloat(tiempoPromedio) 
+    : tiempoPromedio;
+  return (tiempo * 6) + 'px';
 }
 
 }
