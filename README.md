@@ -31,7 +31,7 @@ CityExplorer es una aplicación web desarrollada con **Angular CLI 19.0.4** que 
 - 💳 **Procesamiento de pagos** - Integración segura con Stripe
 - 📱 **Diseño responsivo** - Compatible con dispositivos móviles
 - 🎨 **Interfaz moderna** - Diseño intuitivo con Bootstrap
-- 📊 **Visualización de datos** - Gráficos interactivos con Chart.js
+- 🔒 **Seguridad robusta** - Autenticación y validación de datos
 
 ## 📦 Requisitos Previos
 
@@ -74,7 +74,6 @@ npm install
 npm install sweetalert2
 npm install @stripe/stripe-js
 npm install bootstrap
-npm install chart.js --save
 ```
 
 ## ⚙️ Configuración
@@ -134,7 +133,6 @@ Los archivos compilados se guardarán en el directorio `dist/`.
 | **SweetAlert2** | [Documentación](https://sweetalert2.github.io/) | Alertas modernas y personalizadas |
 | **Stripe.js** | [Documentación](https://stripe.com/docs/js) | Integración de pagos |
 | **Bootstrap** | [Documentación](https://getbootstrap.com/) | Framework CSS responsivo |
-| **Chart.js** | [Documentación](https://www.chartjs.org/) | Gráficos interactivos |
 | **Angular CLI** | [Documentación](https://angular.dev/tools/cli) | Herramientas de desarrollo |
 
 ## 💳 Datos de Prueba
