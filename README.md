@@ -132,12 +132,12 @@ Este proyecto fue desarrollado por:
 
 - Equipo de City Explorer, conformado por:
 Miguel Angel Díaz Rivera(Lider del proyecto),
-Oscar Martin Espinosa Romero(Administrador de Base de Datos
+Oscar Martin Espinosa Romero(Administrador de Base de Datos,
 Alexis Armando Peralta Ramírez(Diseñador),
 José Manuel García Morales(Desarrollador)
 
 
-Este es  un proyecto académico o personal diseñado para explorar las capacidades de Angular en combinación con tecnologías modernas como **Stripe** para pagos y APIs RESTful para la gestión de datos.
+
 
 ---
 
