@@ -403,3 +403,181 @@
 .nav-button.right {
   right: 10px;
 }
+/* Contenedor del filtro de categorías */
+.filtro-categorias {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0 3rem;
+  padding: 1.5rem;
+  background: rgba(240, 248, 255, 0.6);
+  backdrop-filter: blur(15px);
+  border: 2px solid #E6F0FA;
+  border-radius: 25px;
+  box-shadow: 0 8px 32px rgba(74, 144, 226, 0.1);
+  transition: all 0.3s ease;
+}
+
+.filtro-categorias:hover {
+  background: rgba(242, 248, 252, 0.8);
+  border-color: #5BA7F7;
+  box-shadow: 0 12px 40px rgba(74, 144, 226, 0.15);
+}
+
+/* Label del filtro */
+.filtro-categorias label {
+  font-weight: 600;
+  color: #2E5BBA;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Select personalizado */
+.filtro-categorias select {
+  padding: 1rem 3rem 1rem 1.5rem;
+  border: 2px solid #E6F0FA;
+  border-radius: 20px;
+  background: #F0F8FF;
+  color: #2E5BBA;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+  min-width: 250px;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A90E2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 20px;
+}
+
+.filtro-categorias select:hover {
+  border-color: #5BA7F7;
+  background: #F2F8FC;
+  box-shadow: 0 4px 20px rgba(74, 144, 226, 0.2);
+  transform: translateY(-2px);
+}
+
+.filtro-categorias select:focus {
+  border-color: #4A90E2;
+  box-shadow: 0 0 25px rgba(74, 144, 226, 0.4);
+  background: #F2F8FC;
+}
+
+/* Opciones del select */
+.filtro-categorias select option {
+  background: #F0F8FF;
+  color: #2E5BBA;
+  padding: 0.75rem;
+  font-weight: 500;
+}
+
+.filtro-categorias select option:hover {
+  background: #E6F0FA;
+}
+
+/* Versión alternativa con estilo de pill/tag */
+.filtro-categorias-pill {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 2rem 0 3rem;
+  flex-wrap: wrap;
+}
+
+.filtro-categorias-pill label {
+  font-weight: 700;
+  color: #2E5BBA;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.filtro-categorias-pill select {
+  padding: 1rem 3rem 1rem 1.5rem;
+  background: linear-gradient(135deg, #4A90E2, #5BA7F7);
+  color: #F0F8FF;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  min-width: 250px;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F0F8FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 20px;
+  box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+}
+
+.filtro-categorias-pill select:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(74, 144, 226, 0.4);
+  background: linear-gradient(135deg, #5BA7F7, #2E5BBA);
+}
+
+.filtro-categorias-pill select:focus {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 0 30px rgba(74, 144, 226, 0.6);
+}
+
+.filtro-categorias-pill select option {
+  background: #2E5BBA;
+  color: #F0F8FF;
+  padding: 0.75rem;
+  font-weight: 500;
+}
+
+/* Responsive para el filtro */
+@media (max-width: 768px) {
+  .filtro-categorias,
+  .filtro-categorias-pill {
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0 2rem;
+    padding: 1rem;
+  }
+
+  .filtro-categorias select,
+  .filtro-categorias-pill select {
+    min-width: 100%;
+    max-width: 300px;
+  }
+
+  .filtro-categorias label,
+  .filtro-categorias-pill label {
+    text-align: center;
+  }
+}
+
+/* Mensaje cuando no hay favoritos - mejorado */
+.no-favorites {
+  background: rgba(240, 248, 255, 0.6);
+  backdrop-filter: blur(15px);
+  border: 2px solid #E6F0FA;
+  border-radius: 25px;
+  padding: 4rem 2rem;
+  margin: 3rem 0;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(74, 144, 226, 0.1);
+}
+
+.mensaje-vacio {
+  color: #6B7280;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 500;
+}
+
+.mensaje-vacio br {
+  margin: 0.5rem 0;
+}

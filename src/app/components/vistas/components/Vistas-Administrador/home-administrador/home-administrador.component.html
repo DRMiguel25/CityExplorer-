@@ -1,82 +1,62 @@
 <body>
     <header class="header">
-      <div class="header-content">
-        <div class="logo-section">
-          <div class="logo">
-            <svg
-              viewBox="0 0 100 100"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle
-                cx="50"
-                cy="50"
-                r="45"
-                stroke="#2C5282"
-                stroke-width="3"
-                fill="none"
-              />
-              <path d="M20 50 H80" stroke="#2C5282" stroke-width="3" />
-              <ellipse
-                cx="50"
-                cy="50"
-                rx="25"
-                ry="45"
-                stroke="#2C5282"
-                stroke-width="3"
-                fill="none"
-              />
-            </svg>
-          </div>
-          <h1 class="site-title">City Explorer</h1>
-        </div>
-        <div class="admin-info" (click)="PanelDeControl()">
-          <img class="admin-avatar" [src]="'http://127.0.0.1:8001/storage/' + usuario.foto_perfil">
-          <div>
-            <div style="font-weight: 600; color: var(--azul-profundo)">
-              {{ nombreCompleto }}
+        <div class="header-content">
+            <!-- LOGO Y NOMBRE A LA IZQUIERDA -->
+            <div class="logo-section">
+                <div class="logo">
+                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" stroke="#2C5282" stroke-width="3" fill="none" />
+                        <path d="M20 50 H80" stroke="#2C5282" stroke-width="3" />
+                        <ellipse cx="50" cy="50" rx="25" ry="45" stroke="#2C5282" stroke-width="3" fill="none" />
+                    </svg>
+                </div>
+                <h1 class="site-title">City Explorer</h1>
             </div>
-            <div style="font-size: 12px; color: var(--gris-texto)">
-              Panel de Control
+
+            <!-- PERFIL Y PANEL DE CONTROL A LA DERECHA -->
+            <div class="admin-info" (click)="PanelDeControl()">
+                <img class="admin-avatar" [src]="'http://127.0.0.1:8001/storage/' + usuario.foto_perfil">
+                <div>
+                    <div class="admin-name">{{ nombreCompleto }}</div>
+                    <div class="admin-panel">Panel de Control</div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </header>
 
     <main class="main-container">
-      <section class="welcome-section">
-        <h2 class="welcome-title">¡Bienvenido de vuelta, Administrador!</h2>
-        <p class="welcome-subtitle">
-          Gestiona tu plataforma City Explorer desde este panel de control.
-          Supervisa el contenido y usuarios en tiempo real.
-        </p>
-      </section>
+        <section class="welcome-section">
+            <h2 class="welcome-title">¡Bienvenido de vuelta, Administrador!</h2>
+            <p class="welcome-subtitle">
+                Gestiona tu plataforma City Explorer desde este panel de control.
+                Supervisa el contenido y usuarios en tiempo real.
+            </p>
+        </section>
 
-      <section class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-number">{{ usuariosActivos }}</div>
-          <div class="stat-label">Usuarios Activos</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">{{ totalLugares }}</div>
-          <div class="stat-label">Lugares Registrados</div>
-        </div>
-      </section>
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">{{ usuariosActivos }}</div>
+                <div class="stat-label">Usuarios Activos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ totalLugares }}</div>
+                <div class="stat-label">Lugares Registrados</div>
+            </div>
+        </section>
 
-      <section class="actions-grid">
-        <a class="action-button" (click)="GestionarUsuarios()">
-          <div class="action-icon">👥</div>
-          <div>Gestionar Usuarios</div>
-        </a>
-        <a class="action-button" (click)="AdministrarLugares()">
-          <div class="action-icon">🏙️</div>
-          <div>Administrar Lugares</div>
-        </a>
-        <a class="action-button" (click)="Ayuda()">
-          <div class="action-icon">⚙️</div>
-          <div>Ayuda</div>
-        </a>
-      </section>
+        <section class="actions-grid">
+            <a class="action-button" (click)="GestionarUsuarios()">
+                <div class="action-icon">👥</div>
+                <div>Gestionar Usuarios</div>
+            </a>
+            <a class="action-button" (click)="AdministrarLugares()">
+                <div class="action-icon">🏙️</div>
+                <div>Administrar Lugares</div>
+            </a>
+            <a class="action-button" (click)="Ayuda()">
+                <div class="action-icon">⚙️</div>
+                <div>Ayuda</div>
+            </a>
+        </section>
     </main>
-  </body>
+</body>

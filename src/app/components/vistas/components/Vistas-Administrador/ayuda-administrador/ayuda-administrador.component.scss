@@ -26,12 +26,9 @@ body {
 }
 
 @keyframes float {
-
-    0%,
-    100% {
+    0%, 100% {
         transform: translateY(0px);
     }
-
     50% {
         transform: translateY(-10px);
     }
@@ -46,37 +43,16 @@ body {
     overflow: hidden;
     backdrop-filter: blur(10px);
     border: 1px solid #E6F1F7;
+    position: relative; /* Necesario para posicionar el botón dentro */
 }
 
 .header {
- text-align: center;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #2E5BBA;
-  margin: 6rem 0 2rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.header::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, #EEF7FB 0%, transparent 70%);
-    animation: rotate 30s linear infinite;
-    opacity: 0.3;
-}
-
-@keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2E5BBA;
+    margin: 6rem 0 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .header h1 {
@@ -113,19 +89,6 @@ body {
     opacity: 0.7;
 }
 
-.welcome-section h2 {
-    color: #2C3E50;
-    font-size: 1.4em;
-    margin-bottom: 15px;
-    font-weight: 500;
-}
-
-.welcome-section p {
-    color: #34495E;
-    line-height: 1.6;
-    font-size: 1.05em;
-}
-
 .section {
     background: #F3F7FA;
     padding: 25px;
@@ -149,30 +112,6 @@ body {
     font-weight: 500;
 }
 
-.section h3::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    background: #4A90E2;
-    border-radius: 50%;
-    margin-right: 12px;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    50% {
-        opacity: 0.7;
-        transform: scale(1.2);
-    }
-}
-
 .section ul {
     list-style: none;
 }
@@ -184,15 +123,6 @@ body {
     position: relative;
     line-height: 1.5;
     font-size: 1.02em;
-}
-
-.section li::before {
-    content: '•';
-    color: #4A90E2;
-    position: absolute;
-    left: 0;
-    font-size: 1.5em;
-    line-height: 1;
 }
 
 .footer {
@@ -209,10 +139,6 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
-}
-
-.footer p::before {
-    content: '⚠️';
 }
 
 .icon-tip::before {
@@ -235,20 +161,48 @@ body {
         margin: 10px;
         border-radius: 15px;
     }
-
     .header {
         padding: 20px;
     }
-
     .header h1 {
         font-size: 1.8em;
     }
-
     .content {
         padding: 25px;
     }
-
     .section {
         padding: 20px;
     }
+}
+
+/* Botón dentro del contenedor */
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: linear-gradient(135deg, #4A90E2, #63B3ED);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+    z-index: 10;
+}
+
+.back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+    background: linear-gradient(135deg, #3182CE, #4A90E2);
+}
+
+.back-btn:active {
+    transform: translateY(0);
 }
