@@ -99,25 +99,8 @@ Los artefactos de compilación se almacenarán en el directorio `dist/`. Por def
 
 > Nota: Angular CLI no incluye un framework de pruebas e2e por defecto. Puedes elegir uno como [Protractor](https://www.protractortest.org/) o [Cypress](https://www.cypress.io/) según tus necesidades.
 
----
-
-## 🛠 Generación de código (Scaffolding)
-
-Angular CLI incluye herramientas poderosas para generar componentes, servicios, módulos y más. Por ejemplo, para crear un nuevo componente, ejecuta:
 
 
-ng generate component component-name
-
-
-Para ver una lista completa de los esquemas disponibles (como `components`, `directives`, `pipes`, `services`, etc.), usa:
-
-
-ng generate --help
-
-
-Esto te permitirá explorar todas las opciones de generación de código.
-
----
 
 ## 📚 Recursos adicionales
 
