@@ -1,67 +1,63 @@
 
----
+ 🌍 CityExplorer
 
-# 🌍 CityExplorer
+CityExplorer es una aplicación Angular diseñada para explorar lugares turísticos, gestionar usuarios y procesar pagos de manera eficiente. Este proyecto fue generado utilizando [Angular CLI](https://github.com/angular/angular-cli) versión 19.0.4.
 
-**CityExplorer** es una aplicación Angular diseñada para explorar lugares turísticos, gestionar usuarios y procesar pagos de manera eficiente. Este proyecto fue generado utilizando [Angular CLI](https://github.com/angular/angular-cli) versión 19.0.4.
 
----
 
-## 📦 Requisitos previos
+ 📦 Requisitos previos
 
 Antes de comenzar, asegúrate de tener instalado lo siguiente en tu sistema:
 
-- **Node.js**: Versión 18.x o superior. Puedes descargarlo desde [aquí](https://nodejs.org/).
-- **npm**: Viene incluido con Node.js.
-- **Visual Studio Code**: Un editor de código popular. Descárgalo desde [aquí](https://code.visualstudio.com/).
+- Node.js: Versión 18.x o superior. Puedes descargarlo desde [aquí](https://nodejs.org/).
+  npm: Viene incluido con Node.js.
+- Visual Studio Code: Un editor de código popular. Descárgalo desde [aquí](https://code.visualstudio.com/).
 
 Además, este proyecto se conecta con una API RESTful desarrollada en Laravel. Para que la aplicación funcione correctamente, necesitarás descargar y configurar el backend correspondiente.
 
----
 
-## 🛠 Instalación
+
+ 🛠 Instalación
 
 Sigue estos pasos para configurar el proyecto en tu entorno local:
 
-### 1. Clonar el repositorio frontend
+ 1. Clonar el repositorio frontend
 
-```bash
+
 https://github.com/DRMiguel25/CityExplorer-.git
-```
 
-### 2. Clonar el repositorio backend
+ 2. Clonar el repositorio backend
 
 Este proyecto requiere un backend desarrollado en Laravel. Clona el repositorio backend ejecutando:
 
-```bash
+
 git clone https://github.com/IngOscar19/BackEnd-CityExplorer.git
 cd BackEnd-CityExplorer
-```
 
-> **Nota:** Consulta el archivo `README` del repositorio backend para instrucciones detalladas sobre cómo configurar y ejecutar el servidor.
+
+> Nota: Consulta el archivo `README` del repositorio backend para instrucciones detalladas sobre cómo configurar y ejecutar el servidor.
 
 ### 3. Instalar dependencias del frontend
 
 Ejecuta los siguientes comandos para instalar las dependencias necesarias del frontend:
 
-```bash
+
 npm install
 npm install sweetalert2
 npm install @stripe/stripe-js
 npm install bootstrap
 npm install chart.js --save
-```
 
-> **Nota:** Asegúrate de que todas las dependencias se instalen correctamente antes de continuar.
+
+> Nota: Asegúrate de que todas las dependencias se instalen correctamente antes de continuar.
 
 ### 4. Configurar la conexión con el backend
 
 Edita el archivo de configuración del frontend (por ejemplo, `httpservice.ts`) para especificar la URL base del backend. 
 
-```typescript
 export class HttpLaravelService {
   private _url = 'http://127.0.0.1:8000/api';
-```
+
 
 Asegúrate de que el backend esté en funcionamiento y accesible en la URL especificada.
 
@@ -69,60 +65,39 @@ Asegúrate de que el backend esté en funcionamiento y accesible en la URL espec
 
 Para iniciar el servidor de desarrollo localmente, ejecuta:
 
-```bash
 ng serve --ssl true --ssl-key ssl.key --ssl-cert ssl.crt
-```
+
 
 Una vez que el servidor esté en funcionamiento, abre tu navegador y navega a:
 
-```
-https://localhost:4200/proyecto-City-explorer-front-end```
+
+https://localhost:4200/proyecto-City-explorer-front-end
 
 La aplicación se recargará automáticamente cada vez que modifiques alguno de los archivos fuente.
 
-> **Consejo:** Si no necesitas HTTPS durante el desarrollo, puedes omitir las opciones `--ssl`, `--ssl-key` y `--ssl-cert`.
+> Consejo: Si no necesitas HTTPS durante el desarrollo, puedes omitir las opciones `--ssl`, `--ssl-key` y `--ssl-cert`.
 
----
 
 ## 🏗 Construcción del proyecto
 
 Para compilar el proyecto, ejecuta:
 
-```bash
+
 ng build
-```
+
 
 Los artefactos de compilación se almacenarán en el directorio `dist/`. Por defecto, la compilación de producción optimiza tu aplicación para mejorar el rendimiento y la velocidad.
 
 > **Consejo:** Para una compilación de producción, utiliza:
 >
-> ```bash
+> 
 > ng build --configuration production
-> ```
+> 
 
 ---
 
-## 🧪 Ejecución de pruebas unitarias
 
-Para ejecutar las pruebas unitarias con el test runner [Karma](https://karma-runner.github.io), usa:
-
-```bash
-ng test
-```
-
-Este comando iniciará Karma y ejecutará todas las pruebas unitarias definidas en tu proyecto.
-
----
-
-## 🌐 Ejecución de pruebas end-to-end (e2e)
-
-Para ejecutar pruebas end-to-end (e2e), usa:
-
-```bash
-ng e2e
-```
-
-> **Nota:** Angular CLI no incluye un framework de pruebas e2e por defecto. Puedes elegir uno como [Protractor](https://www.protractortest.org/) o [Cypress](https://www.cypress.io/) según tus necesidades.
+> Nota: Angular CLI no incluye un framework de pruebas e2e por defecto. Puedes elegir uno como [Protractor](https://www.protractortest.org/) o [Cypress](https://www.cypress.io/) según tus necesidades.
 
 ---
 
@@ -130,15 +105,15 @@ ng e2e
 
 Angular CLI incluye herramientas poderosas para generar componentes, servicios, módulos y más. Por ejemplo, para crear un nuevo componente, ejecuta:
 
-```bash
+
 ng generate component component-name
-```
+
 
 Para ver una lista completa de los esquemas disponibles (como `components`, `directives`, `pipes`, `services`, etc.), usa:
 
-```bash
+
 ng generate --help
-```
+
 
 Esto te permitirá explorar todas las opciones de generación de código.
 
@@ -172,13 +147,12 @@ El backend de este proyecto está disponible en [este repositorio](https://githu
 
 Este proyecto fue desarrollado por:
 
-- **Equipo de City Explorer, conformado por:
- Miguel Angel Díaz Rivera(Lider del proyecto),
+- Equipo de City Explorer, conformado por:
+Miguel Angel Díaz Rivera(Lider del proyecto),
 Oscar Martin Espinosa Romero(Administrador de Base de Datos
 Alexis Armando Peralta Ramírez(Diseñador),
-José Manuel García Morales(Desarrollador),
+José Manuel García Morales(Desarrollador)
 
-)**
 
 Este es  un proyecto académico o personal diseñado para explorar las capacidades de Angular en combinación con tecnologías modernas como **Stripe** para pagos y APIs RESTful para la gestión de datos.
 
