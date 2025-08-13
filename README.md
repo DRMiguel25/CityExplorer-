@@ -1,155 +1,183 @@
+# 🌍 CityExplorer
 
- 🌍 CityExplorer
+Una aplicación Angular moderna para explorar lugares turísticos, gestionar usuarios y procesar pagos de manera eficiente.
 
-CityExplorer es una aplicación Angular diseñada para explorar lugares turísticos, gestionar usuarios y procesar pagos de manera eficiente. Este proyecto fue generado utilizando [Angular CLI](https://github.com/angular/angular-cli) versión 19.0.4.
+![Angular](https://img.shields.io/badge/Angular-19.0.4-red?style=for-the-badge&logo=angular)
+![TypeScript](https://img.shields.io/badge/TypeScript-Latest-blue?style=for-the-badge&logo=typescript)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5-purple?style=for-the-badge&logo=bootstrap)
+![Stripe](https://img.shields.io/badge/Stripe-Payment-00d4aa?style=for-the-badge&logo=stripe)
 
+## 📋 Tabla de Contenidos
 
+- [Descripción](#-descripción)
+- [Características](#-características)
+- [Requisitos Previos](#-requisitos-previos)
+- [Instalación](#-instalación)
+- [Configuración](#-configuración)
+- [Uso](#-uso)
+- [Construcción](#-construcción)
+- [Recursos Adicionales](#-recursos-adicionales)
+- [Equipo](#-equipo)
+- [Licencia](#-licencia)
 
- 📦 Requisitos previos
+## 🎯 Descripción
 
-Antes de comenzar, asegúrate de tener instalado lo siguiente en tu sistema:
+CityExplorer es una aplicación web desarrollada con **Angular CLI 19.0.4** que permite a los usuarios explorar destinos turísticos, gestionar perfiles de usuario y realizar transacciones de pago de forma segura. La aplicación se conecta con una API RESTful desarrollada en Laravel para proporcionar una experiencia completa.
 
-- Node.js: Versión 18.x o superior. Puedes descargarlo desde [aquí](https://nodejs.org/).
-  npm: Viene incluido con Node.js.
-- Visual Studio Code: Un editor de código popular. Descárgalo desde [aquí](https://code.visualstudio.com/).
+## ✨ Características
 
-Además, este proyecto se conecta con una API RESTful desarrollada en Laravel. Para que la aplicación funcione correctamente, necesitarás descargar y configurar el backend correspondiente.
+- 🗺️ **Exploración de lugares turísticos** - Descubre destinos increíbles
+- 👥 **Gestión de usuarios** - Perfiles personalizados y autenticación
+- 💳 **Procesamiento de pagos** - Integración segura con Stripe
+- 📱 **Diseño responsivo** - Compatible con dispositivos móviles
+- 🎨 **Interfaz moderna** - Diseño intuitivo con Bootstrap
+- 📊 **Visualización de datos** - Gráficos interactivos con Chart.js
 
+## 📦 Requisitos Previos
 
+Antes de comenzar, asegúrate de tener instalado:
 
- 🛠 Instalación
+| Herramienta | Versión | Descripción |
+|-------------|---------|-------------|
+| **Node.js** | 18.x o superior | [Descargar aquí](https://nodejs.org/) |
+| **npm** | Incluido con Node.js | Gestor de paquetes |
+| **Angular CLI** | 19.0.4 | `npm install -g @angular/cli` |
+| **VS Code** | Última versión | [Descargar aquí](https://code.visualstudio.com/) |
 
-Sigue estos pasos para configurar el proyecto en tu entorno local:
+> ⚠️ **Importante**: Este proyecto requiere el backend de Laravel. Consulta la sección de [Configuración](#-configuración) para más detalles.
 
- 1. Clonar el repositorio frontend
+## 🛠 Instalación
 
+### 1️⃣ Clonar el repositorio frontend
 
-https://github.com/DRMiguel25/CityExplorer-.git
+```bash
+git clone https://github.com/DRMiguel25/CityExplorer-.git
+cd CityExplorer-
+```
 
- 2. Clonar el repositorio backend
+### 2️⃣ Clonar el repositorio backend
 
-Este proyecto requiere un backend desarrollado en Laravel. Clona el repositorio backend ejecutando:
-
-
+```bash
 git clone https://github.com/IngOscar19/BackEnd-CityExplorer.git
 cd BackEnd-CityExplorer
+```
 
+> 📚 **Nota**: Consulta el README del repositorio backend para instrucciones de configuración detalladas.
 
-> Nota: Consulta el archivo `README` del repositorio backend para instrucciones detalladas sobre cómo configurar y ejecutar el servidor.
+### 3️⃣ Instalar dependencias del frontend
 
-### 3. Instalar dependencias del frontend
-
-Ejecuta los siguientes comandos para instalar las dependencias necesarias del frontend:
-
-
+```bash
+# Dependencias principales
 npm install
+
+# Dependencias adicionales
 npm install sweetalert2
 npm install @stripe/stripe-js
 npm install bootstrap
 npm install chart.js --save
+```
 
+## ⚙️ Configuración
 
-> Nota: Asegúrate de que todas las dependencias se instalen correctamente antes de continuar.
+### Configurar conexión con el backend
 
-### 4. Configurar la conexión con el backend
+Edita el archivo `httpservice.ts` para especificar la URL del backend:
 
-Edita el archivo de configuración del frontend (por ejemplo, `httpservice.ts`) para especificar la URL base del backend. 
-
+```typescript
 export class HttpLaravelService {
   private _url = 'http://127.0.0.1:8000/api';
-
-
-Asegúrate de que el backend esté en funcionamiento y accesible en la URL especificada.
-
-### 5. Iniciar el servidor de desarrollo
-
-Para iniciar el servidor de desarrollo localmente, ejecuta:
-
-ng serve --ssl true --ssl-key ssl.key --ssl-cert ssl.crt
-
-
-Una vez que el servidor esté en funcionamiento, abre tu navegador y navega a:
-
-
-https://localhost:4200/proyecto-City-explorer-front-end
-
-La aplicación se recargará automáticamente cada vez que modifiques alguno de los archivos fuente.
-
-> Consejo: Si no necesitas HTTPS durante el desarrollo, puedes omitir las opciones `--ssl`, `--ssl-key` y `--ssl-cert`.
-
-
-## 🏗 Construcción del proyecto
-
-Para compilar el proyecto, ejecuta:
-
-
-ng build
-
-
-Los artefactos de compilación se almacenarán en el directorio `dist/`. Por defecto, la compilación de producción optimiza tu aplicación para mejorar el rendimiento y la velocidad.
-
-> **Consejo:** Para una compilación de producción, utiliza:
->
-> 
-> ng build --configuration production
-> 
-
----
-
-
-> Nota: Angular CLI no incluye un framework de pruebas e2e por defecto. Puedes elegir uno como [Protractor](https://www.protractortest.org/) o [Cypress](https://www.cypress.io/) según tus necesidades.
-
-
-
-
-## 📚 Recursos adicionales
-
-- **SweetAlert2**: Una librería para mostrar alertas modernas y personalizadas. Documentación oficial [aquí](https://sweetalert2.github.io/).
-- **Stripe.js**: Una librería para integrar pagos con Stripe. Documentación oficial [aquí](https://stripe.com/docs/js).
-- **Bootstrap**: Un framework CSS para diseño responsivo. Documentación oficial [aquí](https://getbootstrap.com/).
-- **Angular CLI Overview and Command Reference**: Para obtener más información sobre cómo usar Angular CLI, incluidas referencias detalladas de comandos, visita la [documentación oficial](https://angular.dev/tools/cli).
-
----
-
-## 🔧 Configuración adicional
+  // Asegúrate de que el backend esté ejecutándose en esta URL
+}
+```
 
 ### Variables de entorno
 
-Este proyecto utiliza variables de entorno para configuraciones específicas. Asegúrate de configurar correctamente los archivos `.env` o ajustar las variables directamente en el código si es necesario.
+Configura las variables necesarias para:
+- 🔑 **Claves de API de Stripe**
+- 🌐 **URLs del backend**
+- 🔧 **Configuraciones específicas del entorno**
 
-### Integración con APIs externas
+## 🚀 Uso
 
-Si tu aplicación se conecta a APIs externas (por ejemplo, Stripe para pagos o una API RESTful para gestión de lugares turísticos), asegúrate de configurar las claves de API en el archivo de entorno correspondiente.
+### Servidor de desarrollo
 
-El backend de este proyecto está disponible en [este repositorio](https://github.com/IngOscar19/BackEnd-CityExplorer.git). Asegúrate de descargarlo y configurarlo para que la aplicación funcione correctamente.
+```bash
+# Con HTTPS (recomendado para Stripe)
+ng serve --ssl true --ssl-key ssl.key --ssl-cert ssl.crt
 
----
+# Sin HTTPS (desarrollo básico)
+ng serve
+```
 
+La aplicación estará disponible en:
+- **HTTPS**: `https://localhost:4200/proyecto-City-explorer-front-end`
+- **HTTP**: `http://localhost:4200/proyecto-City-explorer-front-end`
 
-## 👨‍💻 Autor
+## 🏗 Construcción
 
-Este proyecto fue desarrollado por:
+### Compilación de desarrollo
+```bash
+ng build
+```
 
-- Equipo de City Explorer, conformado por:
-Miguel Angel Díaz Rivera(Lider del proyecto),
-Oscar Martin Espinosa Romero(Administrador de Base de Datos,
-Alexis Armando Peralta Ramírez(Diseñador),
-José Manuel García Morales(Desarrollador)
+### Compilación de producción
+```bash
+ng build --configuration production
+```
 
+Los archivos compilados se guardarán en el directorio `dist/`.
 
+## 📚 Recursos Adicionales
 
+| Tecnología | Documentación | Propósito |
+|------------|---------------|-----------|
+| **SweetAlert2** | [Documentación](https://sweetalert2.github.io/) | Alertas modernas y personalizadas |
+| **Stripe.js** | [Documentación](https://stripe.com/docs/js) | Integración de pagos |
+| **Bootstrap** | [Documentación](https://getbootstrap.com/) | Framework CSS responsivo |
+| **Chart.js** | [Documentación](https://www.chartjs.org/) | Gráficos interactivos |
+| **Angular CLI** | [Documentación](https://angular.dev/tools/cli) | Herramientas de desarrollo |
 
----
+## 💳 Datos de Prueba
+
+Para testing de pagos con Stripe:
+
+```
+Número de tarjeta: 4242 4242 4242 4242
+Fecha de vencimiento: Cualquier fecha futura (ej: 12/25)
+CVV: Cualquier valor (ej: 123)
+Código Postal: Cualquier valor (ej: 12345)
+```
+
+## 👨‍💻 Equipo
+
+Este proyecto fue desarrollado por el **Equipo City Explorer**:
+
+| Rol | Nombre |
+|-----|--------|
+| 👑 **Líder del Proyecto** | Miguel Angel Díaz Rivera |
+| 🗄️ **Administrador de BD** | Oscar Martin Espinosa Romero |
+| 🎨 **Diseñador** | Alexis Armando Peralta Ramírez |
+| 💻 **Desarrollador** | José Manuel García Morales |
+
+## 🔗 Enlaces Importantes
+
+- **Frontend**: [GitHub Repository](https://github.com/DRMiguel25/CityExplorer-.git)
+- **Backend**: [GitHub Repository](https://github.com/IngOscar19/BackEnd-CityExplorer.git)
 
 ## 📄 Licencia
 
-Este proyecto está bajo la licencia **MIT**.
+Este proyecto está bajo la **Licencia MIT**.
+
+## ⚖️ Términos de Uso
+
+> ⚠️ **AVISO IMPORTANTE**: Se prohíbe estrictamente cualquier copia, modificación no autorizada de la aplicación o de sus marcas, intentos de extraer el código fuente, traducir o crear versiones derivadas. El contenido y las marcas se proporcionan "TAL CUAL" para su información y uso personal, no comercial.
 
 ---
 
-## Se prohíbe estrictamente cualquier copia, modificación no autorizada de la Aplicación o de sus marcas, intentos de extraer el código fuente, traducir o crear versiones derivadas. El contenido y las marcas se proporcionan "TAL CUAL" para su información y uso personal, no comercial.
+<div align="center">
 
----
+**¿Te gusta el proyecto? ¡Dale una ⭐ en GitHub!**
 
-## 📄 Notas
-Los datos proporcionados corresponden a información de prueba para simular transacciones en un entorno de desarrollo. El número de tarjeta de crédito de prueba es 4242 4242 4242 4242. Puede seleccionar cualquiera de las opciones de tarjetas disponibles. Para la fecha de vencimiento de la tarjeta, debe ser un valor posterior al año actual. El código de seguridad (CVV) y el código postal (CP) pueden ser establecidos con cualquier valor para fines de prueba.
+[🐛 Reportar Bug](../../issues) • [✨ Solicitar Feature](../../issues) • [📖 Documentación](../../wiki)
+
+</div>
