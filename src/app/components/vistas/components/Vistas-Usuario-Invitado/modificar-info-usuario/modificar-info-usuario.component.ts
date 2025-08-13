@@ -40,6 +40,9 @@ export class ModificarInfoUsuarioComponent implements OnInit {
       else if (this.TipoUsuario === 2){
         console.log("tipo de usuario: usuario normal...");
       }
+      else if (this.TipoUsuario === 3){
+        console.log("tipo de usuario: usuario administrador...");
+      }
     } else {
       console.error('ID de usuario no válido:', id);
     }
@@ -144,6 +147,9 @@ export class ModificarInfoUsuarioComponent implements OnInit {
           else if (this.TipoUsuario === 2){
             this.router.navigate(['/home-invitado-usuario', this.ID]);
           }
+          else if (this.TipoUsuario === 3){
+            this.router.navigate(['/home-administrador', this.ID]);
+          }
         });
       },
       error: (error) => {
@@ -159,6 +165,9 @@ export class ModificarInfoUsuarioComponent implements OnInit {
     }
     else if (this.TipoUsuario === 2){
       this.router.navigate(['/home-invitado-usuario', this.ID]);
+    }
+    else if (this.TipoUsuario === 3){
+      this.router.navigate(['/home-administrador', this.ID]);
     }
   }
 

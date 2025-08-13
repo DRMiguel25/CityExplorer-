@@ -14,6 +14,8 @@ export class CategoriaVistaComponent implements OnInit {
   categoriaSeleccionada = '';
   tituloCategoria = '';
 
+  listaCategorias: any[] = [];
+
   id_usuario: string | null = null; // Aquí guardamos el ID del usuario
 
   categoriasOpciones: any[] = [];
@@ -52,6 +54,7 @@ export class CategoriaVistaComponent implements OnInit {
       next: (resp: any) => {
         this.categoriasOpciones = resp.data;
         console.log('📦 Categorías obtenidas:', this.categoriasOpciones);
+        this.listaCategorias = resp.data;
 
         // Si ya teníamos una categoría seleccionada, vuelve a filtrar
         if (this.categoriaSeleccionada) {
@@ -191,6 +194,12 @@ export class CategoriaVistaComponent implements OnInit {
     }
 
     return estrellas;
+  }
+
+
+  getNombreCategoria(idCategoria: number): string {
+    const categoria = this.listaCategorias.find(cat => cat.id_categoria === idCategoria);
+    return categoria ? categoria.nombre : 'Sin Categoría';
   }
 
 }

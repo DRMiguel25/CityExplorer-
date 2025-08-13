@@ -63,7 +63,7 @@ export class navbarInvitadoUsuarioComponent {
     } else {
       this.dialog.open(AlertaInfoUsuarioComponent, {
             width: '400px',
-            data: { id_usuario: this.id_usuario },
+            data: { id_usuario: this.id_usuario, tipo_usuario: 2 },
             autoFocus: true // opcional: enfoca al abrir
       });
     }

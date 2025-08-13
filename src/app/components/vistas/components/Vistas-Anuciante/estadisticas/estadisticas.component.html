@@ -65,21 +65,9 @@
 <body>
 <div class="card-container" *ngIf="estadisticasAnunciante">
   <div class="card">
-    <div class="header-ad-info">
-      <div class="ad-navigation">
-        <button class="nav-button prev-button" (click)="cambiarAnuncio(-1)">
-          <span class="arrow">‹</span>
-        </button>
-        <div class="ad-name">
-          Estadísticas
-        </div>
-        <button class="nav-button next-button" (click)="cambiarAnuncio(1)">
-          <span class="arrow">›</span>
-        </button>
-      </div>
-    </div>
-
-    <h1 class="card-title">{{ anuncioActual?.nombre }}</h1>
+  <div class="ad-name">
+    Grafico de todos los anuncios
+  </div>
 
 <div class="tabs">
   <button class="tab-button" 
@@ -109,27 +97,28 @@
   <div class="graph-content">
     <!-- Etiquetas de duración -->
     <div class="duration-labels">
-      <span>0</span>
-      <span>30s</span>
-      <span>60s</span>
-      <span>90s</span>
-      <span>120s</span>
+      <span>60m</span>
+      <span>45m</span>
+      <span>30m</span>
+      <span>15m</span>
+      <span>0m</span>
     </div>
     
     <!-- Contenedor del gráfico -->
     <div class="line-chart">
       <div class="chart-grid">
         <!-- Líneas de la cuadrícula -->
-        <div class="grid-line" *ngFor="let level of [30, 60, 90, 120]" 
+        <div class="grid-line" *ngFor="let level of [75, 150, 225, 300]" 
              [style.bottom]="level + 'px'"></div>
       </div>
       
-      <!-- Líneas de las visitas - Asegúrate que tiempo_promedio está en segundos -->
+      <!-- Líneas de las visitas -->
       <div class="visit-line" 
-          *ngFor="let visita of visitasFiltradas"
+          *ngFor="let visita of visitasFiltradas; let i = index"
           [style.height]="calcularAltura(visita.tiempo_promedio)"
-          [title]="'Duración: ' + visita.tiempo_promedio + ' min - ' + (visita.fecha | date:'medium')">
-        <span class="visit-label">{{visita.tiempo_promedio}}m</span>
+          [style.backgroundColor]="getColorForBar(i)"
+          [title]="'Visita ' + (i+1) + ': ' + visita.tiempo_promedio + ' min - ' + (visita.fecha | date:'medium')">
+        <span class="visit-label">{{visita.tiempo_promedio | number:'1.0-1'}}m</span>
       </div>
     </div>
   </div>
@@ -139,6 +128,22 @@
 <div *ngIf="!visitasFiltradas?.length" class="no-data-message">
   No hay datos disponibles para el período seleccionado.
 </div>
+
+<hr>
+
+    <div class="header-ad-info">
+      <div class="ad-navigation">
+        <button class="nav-button prev-button" (click)="cambiarAnuncio(-1)">
+          <span class="arrow">‹</span>
+        </button>
+        <div class="ad-name">
+          {{ anuncioActual?.nombre }}
+        </div>
+        <button class="nav-button next-button" (click)="cambiarAnuncio(1)">
+          <span class="arrow">›</span>
+        </button>
+      </div>
+    </div>
 
     <div class="stats-footer">
       <div class="stat-item">

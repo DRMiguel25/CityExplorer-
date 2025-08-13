@@ -355,7 +355,7 @@ export class CrearActualizarAnuncioComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate([`/home-anunciante`, this.id_usuario]);
+    this.router.navigate(['/home-anunciante', this.id_usuario]);
   }
 
   private logErroresFormulario(form: FormGroup, nivel: string = ''): void {

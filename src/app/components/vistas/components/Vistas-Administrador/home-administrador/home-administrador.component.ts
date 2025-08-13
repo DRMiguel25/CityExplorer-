@@ -77,7 +77,7 @@ export class HomeAdministradorComponent implements OnInit{
   PanelDeControl(){
     this.dialog.open(AlertaInfoUsuarioComponent, {
       width: '450px',
-      data: { id_usuario: this.idUsuario },
+      data: { id_usuario: this.idUsuario, tipo_usuario: 3},
       autoFocus: true // opcional: enfoca al abrir
     });
   }

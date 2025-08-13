@@ -16,11 +16,13 @@ export class AlertaInfoUsuarioComponent implements OnInit {
     private router: Router,
     private apiService: HttpLaravelService,
     private dialogRef: MatDialogRef<AlertaInfoUsuarioComponent>, // <- agregado
-    @Inject(MAT_DIALOG_DATA) public data: { id_usuario: number } // aquí llega el id
+    @Inject(MAT_DIALOG_DATA) public data: { id_usuario: number, tipo_usuario: number } // aquí llega el id
   ) {}
 
   ngOnInit(): void {
     console.log('ID recibido desde el diálogo:', this.data.id_usuario);
+
+    console.log('Tipo de usuario: ', this.data.tipo_usuario);
 
     this.apiService.Service_Get('usuario', this.data.id_usuario).subscribe(
       respuesta => {
@@ -45,7 +47,7 @@ export class AlertaInfoUsuarioComponent implements OnInit {
 
   vistaInfoUsuario(): void {
     console.log('Navegando a modificar información del usuario ' + this.data.id_usuario + '...');
-    this.router.navigate(['/modificar-info-usuario', this.data.id_usuario, 2]).then(() => {
+    this.router.navigate(['/modificar-info-usuario', this.data.id_usuario, this.data.tipo_usuario]).then(() => {
       this.dialogRef.close(); // Cierra el diálogo solo si la navegación fue exitosa
     }).catch(err => {
       console.error('Error al navegar a info-usuario:', err);
