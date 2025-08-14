@@ -16,7 +16,7 @@
                 <div class="stat-content">
                     <div>
                         <p class="stat-label">Total de Lugares</p>
-                        <p class="stat-value">25</p>
+                        <p class="stat-value">{{ totalLugares }}</p>
                     </div>
                     <span class="stat-icon">🏪</span>
                 </div>
@@ -26,7 +26,7 @@
                 <div class="stat-content">
                     <div>
                         <p class="stat-label">Lugares Activos</p>
-                        <p class="stat-value active">18</p>
+                        <p class="stat-value active">{{ totalActivos }}</p>
                     </div>
                     <span class="stat-icon">🟢</span>
                 </div>
@@ -72,33 +72,39 @@
         <!-- Places Table -->
         <div class="places-table">
             <div class="table-header">
-                <h3 class="table-title">Lista de Lugares (6)</h3>
+                <h3 class="table-title">Lista de Lugares ({{ totalLugaresFiltrados }})</h3>
             </div>
 
             <!-- Lista de lugares -->
-            <div class="place-row">
+            <div class="place-row" *ngFor="let lugar of filteredLugares">
                 <div class="place-avatar">
-                    RM
+                    {{ getInitials(lugar?.nombre) }}
                 </div>
 
                 <div class="place-info">
                     <div class="place-name-row">
                         <h4 class="place-name">
-                            Restaurante El Mirador
+                            {{ lugar.nombre }}
                         </h4>
-                        <span class="status-badge active">
-                            Activo
+                        <span class="status-badge"
+                            [ngClass]="lugar.activo ? 'active' : 'blocked'">
+                        {{ lugar.activo ? 'Activo' : 'Bloqueado' }}
                         </span>
                     </div>
                     <div class="place-details">
-                        <span>📍 Centro de San Luis Rey</span>
-                        <span>⭐ 4.5 (120 reseñas)</span>
-                        <span>👤 Creado por: María González</span>
+                        <span>
+                            📍
+                            {{ lugar.direccion?.calle || 'Dirección no disponible' }}
+                            {{ lugar.direccion?.numero_ext ? 'No. ' + lugar.direccion?.numero_ext : '' }}
+                            {{ lugar.direccion?.numero_int ? 'Int. ' + lugar.direccion?.numero_int : '' }}
+                        </span>
+                        <span>⭐ {{ lugar.promedioValoracion || 0 }} ({{ lugar.totalComentarios || 0 }} reseñas)</span>
+                        <span>👤 Creado por: {{ lugar.usuario?.nombre }} {{ lugar.usuario?.apellidoP }} {{ lugar.usuario?.apellidoM }}</span>
                     </div>
                 </div>
 
                 <div class="place-meta">
-                    <div class="category-badge">Restaurante</div>
+                    <div class="category-badge">{{ getCategoriaNombre(lugar.id_categoria) }}</div>
                     <div class="place-date">
                         Registrado hace 2 meses
                     </div>
@@ -107,196 +113,6 @@
                 <div class="place-actions">
                     <button class="action-btn block-btn">
                         🚫 Bloquear
-                    </button>
-                    <button class="action-btn delete-btn">
-                        🗑️ Eliminar
-                    </button>
-                </div>
-            </div>
-
-            <div class="place-row">
-                <div class="place-avatar">
-                    PC
-                </div>
-
-                <div class="place-info">
-                    <div class="place-name-row">
-                        <h4 class="place-name">
-                            Parque Central
-                        </h4>
-                        <span class="status-badge active">
-                            Activo
-                        </span>
-                    </div>
-                    <div class="place-details">
-                        <span>📍 Centro Histórico</span>
-                        <span>⭐ 4.8 (89 reseñas)</span>
-                        <span>👤 Creado por: Carlos Mendoza</span>
-                    </div>
-                </div>
-
-                <div class="place-meta">
-                    <div class="category-badge">Parque</div>
-                    <div class="place-date">
-                        Registrado hace 1 mes
-                    </div>
-                </div>
-
-                <div class="place-actions">
-                    <button class="action-btn block-btn">
-                        🚫 Bloquear
-                    </button>
-                    <button class="action-btn delete-btn">
-                        🗑️ Eliminar
-                    </button>
-                </div>
-            </div>
-
-            <div class="place-row">
-                <div class="place-avatar blocked">
-                    HP
-                </div>
-
-                <div class="place-info">
-                    <div class="place-name-row">
-                        <h4 class="place-name">
-                            Hotel Plaza Guanajuato
-                        </h4>
-                        <span class="status-badge blocked">
-                            Bloqueado
-                        </span>
-                    </div>
-                    <div class="place-details">
-                        <span>📍 Zona Turística</span>
-                        <span>⭐ 3.2 (45 reseñas)</span>
-                        <span>👤 Creado por: Ana Ruiz</span>
-                    </div>
-                </div>
-
-                <div class="place-meta">
-                    <div class="category-badge">Hotel</div>
-                    <div class="place-date">
-                        Bloqueado hace 1 semana
-                    </div>
-                </div>
-
-                <div class="place-actions">
-                    <button class="action-btn unblock-btn">
-                        ✅ Desbloquear
-                    </button>
-                    <button class="action-btn delete-btn">
-                        🗑️ Eliminar
-                    </button>
-                </div>
-            </div>
-
-            <div class="place-row">
-                <div class="place-avatar">
-                    MM
-                </div>
-
-                <div class="place-info">
-                    <div class="place-name-row">
-                        <h4 class="place-name">
-                            Mercado Municipal
-                        </h4>
-                        <span class="status-badge active">
-                            Activo
-                        </span>
-                    </div>
-                    <div class="place-details">
-                        <span>📍 Centro Comercial</span>
-                        <span>⭐ 4.0 (156 reseñas)</span>
-                        <span>👤 Creado por: Roberto Silva</span>
-                    </div>
-                </div>
-
-                <div class="place-meta">
-                    <div class="category-badge">Mercado</div>
-                    <div class="place-date">
-                        Registrado hace 3 meses
-                    </div>
-                </div>
-
-                <div class="place-actions">
-                    <button class="action-btn block-btn">
-                        🚫 Bloquear
-                    </button>
-                    <button class="action-btn delete-btn">
-                        🗑️ Eliminar
-                    </button>
-                </div>
-            </div>
-
-            <div class="place-row">
-                <div class="place-avatar">
-                    MS
-                </div>
-
-                <div class="place-info">
-                    <div class="place-name-row">
-                        <h4 class="place-name">
-                            Mariscos La Playa
-                        </h4>
-                        <span class="status-badge active">
-                            Activo
-                        </span>
-                    </div>
-                    <div class="place-details">
-                        <span>📍 Zona Gastronómica</span>
-                        <span>⭐ 4.7 (203 reseñas)</span>
-                        <span>👤 Creado por: Luis Herrera</span>
-                    </div>
-                </div>
-
-                <div class="place-meta">
-                    <div class="category-badge">Restaurante</div>
-                    <div class="place-date">
-                        Registrado hace 1 semana
-                    </div>
-                </div>
-
-                <div class="place-actions">
-                    <button class="action-btn block-btn">
-                        🚫 Bloquear
-                    </button>
-                    <button class="action-btn delete-btn">
-                        🗑️ Eliminar
-                    </button>
-                </div>
-            </div>
-
-            <div class="place-row">
-                <div class="place-avatar blocked">
-                    CF
-                </div>
-
-                <div class="place-info">
-                    <div class="place-name-row">
-                        <h4 class="place-name">
-                            Café Frida
-                        </h4>
-                        <span class="status-badge blocked">
-                            Bloqueado
-                        </span>
-                    </div>
-                    <div class="place-details">
-                        <span>📍 Plaza Principal</span>
-                        <span>⭐ 2.8 (34 reseñas)</span>
-                        <span>👤 Creado por: Sofia López</span>
-                    </div>
-                </div>
-
-                <div class="place-meta">
-                    <div class="category-badge">Café</div>
-                    <div class="place-date">
-                        Bloqueado hace 3 días
-                    </div>
-                </div>
-
-                <div class="place-actions">
-                    <button class="action-btn unblock-btn">
-                        ✅ Desbloquear
                     </button>
                     <button class="action-btn delete-btn">
                         🗑️ Eliminar
