@@ -3,14 +3,14 @@
   <div class="overlay"></div>
 
   <div class="container">
-    <!-- Botón de regreso: fuera del form, tipo button para evitar submit -->
+    <!-- Botón de regreso -->
     <button type="button" class="back-button" (click)="login()">←</button>
 
     <h1 class="title">¡Hola!</h1>
     <p class="subtitle">Crea una nueva cuenta</p>
 
     <form class="register-form" [formGroup]="registroForm" (ngSubmit)="registrar()">
-      <!-- Vista previa de foto de perfil -->
+      <!-- Vista previa de foto -->
       <div class="profile-preview-container">
         <div class="profile-preview" id="profilePreview">
           <img *ngIf="previewUrl" [src]="previewUrl" alt="Vista previa" />
@@ -67,30 +67,30 @@
         </div>
       </div>
 
-<!-- Contraseña -->
-<div class="form-group">
-  <label for="password">Contraseña</label>
-  <div style="position: relative;">
-    <input
-      [type]="mostrarPassword ? 'text' : 'password'"
-      id="password"
-      formControlName="password"
-    />
-    <button
-      type="button"
-      (click)="togglePassword()"
-      style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); border: none; background: none; cursor: pointer;"
-      aria-label="Mostrar u ocultar contraseña"
-    >
-      <span class="material-symbols-outlined">
-        {{ mostrarPassword ? 'visibility_off' : 'visibility' }}
-      </span>
-    </button>
-  </div>
-  <div class="textRequerido" *ngIf="isInvalid('password')">
-    La contraseña debe tener mínimo 8 caracteres y numeros y letras.
-  </div>
-</div>
+      <!-- Contraseña -->
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <div style="position: relative;">
+          <input
+            [type]="mostrarPassword ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+          />
+          <button
+            type="button"
+            (click)="togglePassword()"
+            style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); border: none; background: none; cursor: pointer;"
+            aria-label="Mostrar u ocultar contraseña"
+          >
+            <span class="material-symbols-outlined">
+              {{ mostrarPassword ? 'visibility_off' : 'visibility' }}
+            </span>
+          </button>
+        </div>
+        <div class="textRequerido" *ngIf="isInvalid('password')">
+          La contraseña debe tener mínimo 8 caracteres, letras y números.
+        </div>
+      </div>
 
       <!-- Rol -->
       <div class="form-group" *ngIf="roles && roles.length > 0; else loadingRoles">
@@ -110,22 +110,28 @@
         </div>
       </ng-template>
 
-      <!-- Términos y condiciones -->
-      <div class="terms-container">
-        <label class="custom-checkbox">
-          <input type="checkbox" formControlName="acceptTerms" />
-          <span class="checkmark"></span>
-        </label>
-        <div class="terms-text">
-          Acepto los
-          <a class="terms-link" (click)="openTerms()">términos y condiciones</a>
-          de uso de la plataforma
-        </div>
-      </div>
-      <div class="textRequerido" *ngIf="isInvalid('acceptTerms')">
-        Debes aceptar los términos y condiciones
-      </div>
+      <!-- Términos y Privacidad -->
+      <!-- Sección de Términos y Condiciones -->
 
+  <div class="terms-text">
+    Acepto los 
+    <a href="javascript:void(0)" class="terms-link" (click)="openTerms()">
+      Términos y Condiciones
+    </a>
+    y el 
+    <a href="javascript:void(0)" class="terms-link" (click)="openPrivacy()">
+      Aviso de Privacidad
+    </a>
+    
+    <!-- Indicador de estado cuando no se han leído los documentos -->
+      (Debes leer ambos documentos antes de aceptar)
+  </div>
+
+
+<!-- Mensaje de error si el campo es inválido -->
+<div *ngIf="isInvalid('acceptTerms')" class="textRequerido">
+  Debes aceptar los términos y condiciones
+</div>
       <!-- Botón de registro -->
       <button type="submit" class="register-button" [disabled]="registroForm.invalid">
         Registrarse

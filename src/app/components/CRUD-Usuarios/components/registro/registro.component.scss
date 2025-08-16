@@ -55,13 +55,13 @@ body {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(240, 248, 255, 0.6);
     animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
 
-.container:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 35px 70px rgba(0, 51, 102, 0.2),
-                0 25px 50px rgba(0, 123, 255, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 35px 70px rgba(0, 51, 102, 0.2),
+                    0 25px 50px rgba(0, 123, 255, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
 }
 
 @keyframes slideInUp {
@@ -92,13 +92,13 @@ body {
     height: 45px;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
-}
 
-.back-button:hover {
-    color: white;
-    background: linear-gradient(135deg, #007bff, #0056b3);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+    &:hover {
+        color: white;
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+    }
 }
 
 .title {
@@ -140,17 +140,17 @@ body {
     position: relative;
     box-shadow: 0 10px 30px rgba(0, 123, 255, 0.2);
     transition: all 0.3s ease;
-}
 
-.profile-preview:hover {
-    transform: scale(1.05);
-    box-shadow: 0 15px 40px rgba(0, 123, 255, 0.3);
-}
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(0, 123, 255, 0.3);
+    }
 
-.profile-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 }
 
 .profile-placeholder {
@@ -172,26 +172,30 @@ body {
     box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
     position: relative;
     overflow: hidden;
-}
 
-.upload-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.4);
-}
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(0, 123, 255, 0.4);
 
-.upload-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: left 0.5s;
-}
+        &::before {
+            left: 100%;
+        }
+    }
 
-.upload-button:hover::before {
-    left: 100%;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.5s;
+    }
+
+    &:active {
+        animation: pulse 0.3s ease;
+    }
 }
 
 #foto_perfil {
@@ -228,25 +232,23 @@ select {
     color: #333333;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
-}
 
-input:focus,
-select:focus {
-    border-color: #007bff;
-    box-shadow: 
-        0 0 0 4px rgba(0, 123, 255, 0.1),
-        inset 0 2px 8px rgba(0, 0, 0, 0.05);
-    outline: none;
-    background: #F0F8FF;
-}
+    &:focus {
+        border-color: #007bff;
+        box-shadow: 
+            0 0 0 4px rgba(0, 123, 255, 0.1),
+            inset 0 2px 8px rgba(0, 0, 0, 0.05);
+        outline: none;
+        background: #F0F8FF;
+    }
 
-input.is-invalid,
-select.is-invalid {
-    border-color: #E34234;
-    box-shadow: 
-        0 0 0 4px rgba(227, 66, 52, 0.1),
-        inset 0 2px 8px rgba(227, 66, 52, 0.05);
-    background: linear-gradient(135deg, #fef2f2, #fef7f7);
+    &.is-invalid {
+        border-color: #E34234;
+        box-shadow: 
+            0 0 0 4px rgba(227, 66, 52, 0.1),
+            inset 0 2px 8px rgba(227, 66, 52, 0.05);
+        background: linear-gradient(135deg, #fef2f2, #fef7f7);
+    }
 }
 
 .textRequerido {
@@ -256,30 +258,101 @@ select.is-invalid {
     font-weight: 500;
 }
 
-/* Checkbox de términos */
+/* ==============================================
+   TÉRMINOS Y CONDICIONES - SECCIÓN CORREGIDA
+   ============================================== */
+
+/* Contenedor principal de términos */
 .terms-container {
     display: flex;
     align-items: flex-start;
     gap: 12px;
     margin: 20px 0;
     text-align: left;
+    transition: all 0.3s ease;
+
+    /* Estado deshabilitado cuando no se han leído los documentos */
+    &.disabled {
+        opacity: 0.5;
+        
+        .custom-checkbox {
+            cursor: not-allowed;
+            
+            input[type="checkbox"] {
+                cursor: not-allowed;
+            }
+            
+            .checkmark {
+                background: #f5f5f5;
+                border-color: #ccc;
+                cursor: not-allowed;
+            }
+        }
+        
+        .terms-text {
+            color: #999;
+        }
+        
+        .terms-link {
+            color: #007bff; // Los links siguen siendo clickeables
+            cursor: pointer;
+            
+            &:hover {
+                color: #0056b3;
+            }
+        }
+    }
+
+    /* Estado habilitado - cuando ya se pueden aceptar los términos */
+    &:not(.disabled) {
+        .custom-checkbox {
+            cursor: pointer;
+            
+            input[type="checkbox"] {
+                cursor: pointer;
+            }
+            
+            .checkmark {
+                cursor: pointer;
+            }
+        }
+    }
 }
 
+/* Checkbox personalizado */
 .custom-checkbox {
     position: relative;
     width: 20px;
     height: 20px;
     margin-top: 2px;
     flex-shrink: 0;
-}
-
-.custom-checkbox input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0;
     cursor: pointer;
+    
+    input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        cursor: pointer;
+        
+        &:disabled {
+            cursor: not-allowed;
+        }
+
+        &:checked ~ .checkmark {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            
+            &:after {
+                display: block;
+            }
+        }
+    }
+
+    &:hover .checkmark:not([disabled]) {
+        border-color: #0056b3;
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+    }
 }
 
 .checkmark {
@@ -292,45 +365,52 @@ select.is-invalid {
     border: 2px solid #007bff;
     border-radius: 5px;
     transition: all 0.3s ease;
+    cursor: pointer;
+    
+    &:after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 6px;
+        top: 2px;
+        width: 6px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
 }
 
-.custom-checkbox input:checked ~ .checkmark {
-    background: linear-gradient(135deg, #007bff, #0056b3);
-}
-
-.checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-    left: 6px;
-    top: 2px;
-    width: 6px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-}
-
-.custom-checkbox input:checked ~ .checkmark:after {
-    display: block;
-}
-
+/* Texto de términos */
 .terms-text {
     font-size: 13px;
     color: #333333;
     line-height: 1.5;
+    flex: 1;
 }
 
+/* Links de términos */
 .terms-link {
     color: #007bff;
     text-decoration: none;
     font-weight: 600;
+    cursor: pointer;
     transition: color 0.3s ease;
+    
+    &:hover {
+        color: #0056b3;
+        text-decoration: underline;
+    }
 }
 
-.terms-link:hover {
-    color: #0056b3;
-    text-decoration: underline;
+/* Indicador de estado */
+.status-indicator {
+    display: block;
+    font-size: 11px;
+    color: #E34234;
+    font-weight: 500;
+    margin-top: 4px;
+    font-style: italic;
 }
 
 /* Botón de registro */
@@ -349,32 +429,39 @@ select.is-invalid {
     box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
     position: relative;
     overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.5s;
+    }
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0, 123, 255, 0.4);
+
+        &::before {
+            left: 100%;
+        }
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
 }
 
-.register-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: left 0.5s;
-}
-
-.register-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(0, 123, 255, 0.4);
-}
-
-.register-button:hover::before {
-    left: 100%;
-}
-
-.register-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
+/* Animaciones adicionales */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
 
 /* Media Queries */
@@ -415,15 +502,3 @@ select.is-invalid {
         max-width: 450px;
     }
 }
-
-/* Animaciones adicionales */
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.upload-button:active {
-    animation: pulse 0.3s ease;
-}
-

@@ -1,36 +1,571 @@
 <!-- src/app/vistas/components/Vistas-Usuario-Invitado/terminos-del-servicio/terminos-del-servicio.component.html -->
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.background-slideshow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(45deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9)),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1.5" fill="rgba(255,255,255,0.05)"/><circle cx="50" cy="10" r="0.8" fill="rgba(255,255,255,0.08)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  z-index: -2;
+  animation: backgroundShift 20s ease-in-out infinite alternate;
+}
+
+@keyframes backgroundShift {
+  0% { transform: translateX(-2%) translateY(-1%); }
+  100% { transform: translateX(2%) translateY(1%); }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: -1;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-section {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.hero-title {
+  color: white;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  animation: fadeInDown 1s ease-out;
+}
+
+.hero-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.terms-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  animation: slideInUp 1s ease-out 0.6s both;
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+  animation: float 15s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+.main-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.company-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  position: relative;
+  z-index: 1;
+}
+
+.card-body {
+  padding: 3rem;
+  color: #333;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.section:nth-child(1) { animation-delay: 0.8s; }
+.section:nth-child(2) { animation-delay: 0.9s; }
+.section:nth-child(3) { animation-delay: 1.0s; }
+.section:nth-child(4) { animation-delay: 1.1s; }
+.section:nth-child(5) { animation-delay: 1.2s; }
+.section:nth-child(6) { animation-delay: 1.3s; }
+.section:nth-child(7) { animation-delay: 1.4s; }
+.section:nth-child(8) { animation-delay: 1.5s; }
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.section-title {
+  color: #667eea;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid #667eea;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: #764ba2;
+  transition: width 0.3s ease;
+}
+
+.section:hover .section-title::after {
+  width: 100%;
+}
+
+.highlight-box {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 1.5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.highlight-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.highlight-box:hover::before {
+  left: 100%;
+}
+
+.pricing-section {
+  margin: 3rem 0;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.pricing-card {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  border-color: #667eea;
+}
+
+.price-title {
+  color: #667eea;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.price-amount {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.price-period {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.savings-badge {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 1rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-list li {
+  padding: 0.5rem 0;
+  position: relative;
+  padding-left: 2rem;
+  transition: color 0.3s ease;
+}
+
+.feature-list li:hover {
+  color: #667eea;
+}
+
+.feature-list li::before {
+  content: '✨';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.standard-list {
+  padding-left: 1.5rem;
+}
+
+.standard-list li {
+  margin-bottom: 0.5rem;
+}
+
+.contact-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.contact-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.contact-email {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  display: inline-block;
+  font-weight: 600;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.contact-email:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  color: white;
+  text-decoration: none;
+}
+
+.scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  z-index: 1000;
+  transition: width 0.1s ease;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<div class="scroll-indicator"></div>
 <div class="background-slideshow"></div>
 <div class="overlay"></div>
+
 <div class="container">
-  <div class="card mt-4">
+  <div class="hero-section">
+    <h1 class="hero-title">City Explorer</h1>
+    <p class="hero-subtitle">Términos y Condiciones de Servicio</p>
+  </div>
+
+  <div class="terms-card">
+    <div class="card-header">
+      <h1 class="main-title">Términos y Condiciones</h1>
+      <div class="company-badge">ExploreTech • San Miguel de Allende</div>
+    </div>
+    
     <div class="card-body">
-      <h1>Términos de Servicio</h1>
-      <p><strong>1. Aceptación de los Términos</strong></p>
-      <p>Al utilizar nuestra plataforma, los usuarios y anunciantes aceptan estar sujetos a estos Términos de Servicio. Si no estás de acuerdo con estos términos, no utilices nuestra plataforma.</p>
+      <div class="section">
+        <p style="text-align: center; font-size: 1.1rem; color: #666; margin-bottom: 2rem;">
+          Estos términos y condiciones se aplican a la aplicación web interactiva desarrollada para el 
+          monitoreo y presentación de atractivos turísticos en la ciudad de San Miguel de Allende.
+        </p>
+      </div>
 
-      <p><strong>2. Uso de la Plataforma</strong></p>
-      <p>Los usuarios pueden utilizar la plataforma para descubrir lugares destacados en San Miguel de Allende, dejar comentarios y calificaciones. Los anunciantes pueden utilizar la plataforma para promocionar sus sitios, subir fotos, compartir horarios de servicio, ubicación y número de contacto, siempre y cuando cumplan con los requisitos de pago.</p>
+      <div class="section">
+        <h2 class="section-title">ACEPTACIÓN DE LAS CONDICIONES</h2>
+        <div class="highlight-box">
+          <p>Usted acepta que, al acceder o utilizar la Aplicación, ha leído, comprendido y aceptado todos estos Términos y Condiciones. Si no está de acuerdo con todos estos Términos y Condiciones, se le prohíbe expresamente utilizar la Aplicación y debe interrumpir su uso inmediatamente.</p>
+        </div>
+      </div>
 
-      <p><strong>3. Comentarios y Calificaciones</strong></p>
-      <p>Los usuarios son responsables de asegurarse de que sus comentarios y calificaciones sean precisos, respetuosos y relevantes. Nos reservamos el derecho de eliminar comentarios que no cumplan con estas directrices.</p>
+      <div class="section">
+        <h2 class="section-title">OBJETO DE LA APLICACIÓN</h2>
+        <p>La Aplicación ha sido diseñada con el objetivo principal de <strong>centralizar y actualizar la información turística</strong> de San Miguel de Allende (SMA). Su propósito es mejorar la experiencia de los visitantes y fomentar el desarrollo económico local y sostenible en la región.</p>
 
-      <p><strong>4. Anuncios y Perfiles de Anunciantes</strong></p>
-      <p>Los anunciantes son responsables de asegurarse de que la información proporcionada en sus anuncios sea precisa y actualizada. Nos reservamos el derecho de revisar y aprobar o rechazar cualquier anuncio subido por los anunciantes.</p>
+        <p>La Aplicación busca abordar la problemática de la fragmentación de la información turística que los turistas enfrentan actualmente, la cual se encuentra dispersa en múltiples plataformas y fuentes no especializadas.</p>
 
-      <p><strong>5. Pagos y Suscripciones</strong></p>
-      <p>Los anunciantes deben pagar por la publicación de sus anuncios. Los detalles de pago se procesan de manera segura y conforme a las políticas de privacidad descritas anteriormente.</p>
+        <div class="highlight-box">
+          <h3 style="color: #667eea; margin-bottom: 1rem;">📋 Características principales:</h3>
+          <ul class="feature-list">
+            <li><strong>Categorías detalladas:</strong> Contenido organizado por intereses específicos como comida, fiesta, bebidas, relax y sitios históricos.</li>
+            <li><strong>Comunidad activa:</strong> Espacio para comentarios y valoraciones</li>
+            <li><strong>Personalización:</strong> Herramientas para guardar lugares favoritos.</li>
+            <li><strong>Sitios históricos:</strong> Acceso a información cultural detallada sobre monumentos y atracciones locales.</li>
+            <li><strong>Gestión y moderación:</strong> Un administrador responsable de mantener la calidad y seguridad del contenido publicado.</li>
+          </ul>
+        </div>
 
-      <p><strong>6. Cancelación y Reembolsos</strong></p>
-      <p>Los anunciantes pueden cancelar sus anuncios en cualquier momento. Sin embargo, no se ofrecerán reembolsos por anuncios ya publicados.</p>
+        <p>El proyecto busca transformar la interacción de los turistas con el destino, facilitando la toma de decisiones informadas y promoviendo un turismo más responsable e integrador.</p>
+      </div>
 
-      <p><strong>7. Limitación de Responsabilidad</strong></p>
-      <p>No nos responsabilizamos de cualquier daño directo, indirecto, incidental, especial o consecuente que resulte del uso de la plataforma, incluyendo, pero no limitado a, la pérdida de datos, interrupciones en el servicio o errores en la información proporcionada por los anunciantes.</p>
+      <div class="section">
+        <h2 class="section-title">DERECHOS DE PROPIEDAD INTELECTUAL</h2>
+        <p>A menos que se indique lo contrario, la Aplicación, todo su código fuente, funcionalidad, diseño, contenido (texto, fotografías, gráficos) y los logotipos, marcas comerciales y de servicio contenidos en ella son propiedad exclusiva ExploreTech o han sido licenciados a este.</p>
 
-      <p><strong>8. Cambios en los Términos de Servicio</strong></p>
-      <p>Nos reservamos el derecho de modificar estos Términos de Servicio en cualquier momento. Cualquier cambio será notificado a los usuarios a través de la plataforma o por correo electrónico.</p>
+        <div class="highlight-box">
+          <p><strong>⚠️ Importante:</strong> Se prohíbe estrictamente cualquier copia, modificación no autorizada de la Aplicación o de sus marcas, intentos de extraer el código fuente, traducir o crear versiones derivadas. El contenido y las marcas se proporcionan "TAL CUAL" para su información y uso personal, no comercial.</p>
+        </div>
+      </div>
 
-      <p><strong>9. Ley Aplicable</strong></p>
-      <p>Estos Términos de Servicio se regirán e interpretarán de acuerdo con las leyes de [tu jurisdicción]. Cualquier disputa que surja de o esté relacionada con estos Términos de Servicio se resolverá en los tribunales de [tu jurisdicción].</p>
+      <div class="section">
+        <h2 class="section-title">OBLIGACIONES DEL USUARIO</h2>
+        <p>Al utilizar la Aplicación, usted se compromete a:</p>
+        <ul class="standard-list">
+          <li>Mantener la seguridad de su dispositivo y el acceso a la Aplicación.</li>
+          <li>No utilizar la Aplicación para fines ilegales o no autorizados.</li>
+          <li>No recopilar sistemáticamente datos o contenidos sin permiso del Proveedor del Servicio.</li>
+          <li>No eludir, desactivar o interferir con las funciones de seguridad de la Aplicación.</li>
+          <li>No realizar ningún uso automatizado del sistema, como el uso de scripts para enviar comentarios o mensajes.</li>
+          <li>Participar activamente en la comunidad a través de comentarios, valoraciones y sugerencias de manera respetuosa y veraz.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">CONTRIBUCIONES Y RESEÑAS DE USUARIOS</h2>
+        <p>La Aplicación puede permitirle contribuir o participar en secciones de comentarios y valoraciones. Al crear o poner a disposición cualquier contribución (comentarios, valoraciones, sugerencias), usted declara y garantiza que su contenido es verdadero, preciso, no engañoso, y que no infringe los derechos de terceros, ni contiene material obsceno, difamatorio, ilegal o inapropiado.</p>
+
+        <div class="highlight-box">
+          <p><strong>🛡️ Moderación:</strong> El Proveedor del Servicio se reserva el derecho, a su entera discreción, de editar, eliminar o cambiar la categoría de cualquier contribución en cualquier momento y por cualquier motivo, sin previo aviso.</p>
+        </div>
+      </div>
+
+      <div class="section pricing-section">
+        <h2 class="section-title">SERVICIOS DE PUBLICIDAD PARA NEGOCIOS LOCALES</h2>
+        
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <h3 class="price-title">💳 Plan Mensual</h3>
+            <div class="price-amount">$580 <span class="price-period">MXN/mes</span></div>
+            <ul class="standard-list">
+              <li>Precio base: $500 MXN</li>
+              <li>IVA (16%): $80 MXN</li>
+            </ul>
+          </div>
+
+          <div class="pricing-card">
+            <h3 class="price-title">💰 Plan Anual</h3>
+            <div class="price-amount">$5,800 <span class="price-period">MXN/año</span></div>
+            <ul class="standard-list">
+              <li>Precio base: $5,000 MXN</li>
+              <li>IVA (16%): $800 MXN</li>
+            </ul>
+            <div class="savings-badge">
+              ¡Ahorro de $1,160 MXN! (16.7% descuento)
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <h3 style="color: #667eea; margin-bottom: 1rem;">📊 Comparativo de Ahorro Anual:</h3>
+          <ul class="standard-list">
+            <li><strong>Pago mensual durante 12 meses:</strong> $580 × 12 = $6,960 MXN</li>
+            <li><strong>Pago anual por adelantado:</strong> $5,800 MXN</li>
+            <li><strong>Ahorro total:</strong> $1,160 MXN (16.7% de descuento)</li>
+          </ul>
+        </div>
+
+        <p><strong>Facturación de Servicios de Publicidad:</strong> ExploreTech informa que no emite comprobantes fiscales (facturas) por los servicios de publicidad ofrecidos a través de la Aplicación. No obstante, en cumplimiento con el numeral 5.2.1.12 de la Norma Mexicana NMX-COE-001-SCFI-2018, se proporcionará a los anunciantes un comprobante de la transacción comercial que detallará los pagos realizados.</p>
+
+        <p>Los anunciantes son responsables de sus propias obligaciones fiscales y de cumplir con la normativa aplicable a su actividad empresarial. Los anunciantes deberán garantizar que sus anuncios cumplen con todas las leyes y normativas aplicables, incluyendo los derechos de propiedad intelectual y los derechos de publicidad.</p>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">RESPONSABILIDADES Y LIMITACIONES</h2>
+        <p>El Proveedor del Servicio se dedica a garantizar que la Aplicación sea lo más beneficiosa y eficiente posible. No obstante, es importante señalar que:</p>
+        
+        <ul class="standard-list">
+          <li>Algunas funciones de la Aplicación requieren una conexión a internet activa, ya sea Wi-Fi o proporcionada por su proveedor de red móvil.</li>
+          <li>Usted es responsable de cualquier cargo por el uso de datos móviles, incluidos los cargos por roaming.</li>
+          <li>El Proveedor del Servicio no asume responsabilidad si su dispositivo se queda sin batería y no puede acceder al Servicio.</li>
+          <li>Aunque el Proveedor del Servicio se esfuerza por mantener la Aplicación actualizada y precisa, se basa en terceros para proporcionar información.</li>
+          <li>El Proveedor del Servicio no será responsable por interrupciones ocasionadas por fallas en telecomunicaciones, energía eléctrica, casos fortuitos, fuerza mayor o acciones de terceros.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">SEGURIDAD Y PROTECCIÓN DE DATOS</h2>
+        <p>El Proveedor del Servicio debe garantizar una protección transparente y efectiva al Usuario y Consumidor, conforme a los estándares de seguridad que la industria dicte en términos de seguridad de la información y comercio electrónico.</p>
+
+        <div class="highlight-box">
+          <p><strong>🔒 Privacidad:</strong> La información personal que usted proporcione será almacenada y procesada por el Proveedor del Servicio para fines de servicio. Se recomienda consultar el Aviso de Privacidad de la Aplicación para entender cómo se manejan sus datos personales, en conformidad con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">ACTUALIZACIONES Y TERMINACIÓN</h2>
+        <p>El Proveedor del Servicio puede actualizar la Aplicación en cualquier momento y es su responsabilidad descargar las actualizaciones para seguir utilizándola. El Proveedor del Servicio no garantiza que siempre actualizará la Aplicación para que sea relevante o compatible con la versión específica del sistema del navegador de su dispositivo.</p>
+
+        <p>El Proveedor del Servicio puede, a su entera discreción, cesar la provisión de la Aplicación y terminar su uso en cualquier momento sin previo aviso.</p>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">CAMBIOS EN LOS TÉRMINOS</h2>
+        <p>El Proveedor del Servicio puede actualizar periódicamente estos Términos y Condiciones. Se recomienda revisar esta página regularmente para cualquier cambio. Se le notificará de cualquier cambio publicando los nuevos Términos y Condiciones en esta página.</p>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">LEGISLACIÓN APLICABLE</h2>
+        <p>Estos Términos y Condiciones y su uso de la Aplicación se rigen e interpretan de acuerdo con las leyes aplicables en México, dada la ubicación del proyecto en San Miguel de Allende, México.</p>
+
+        <p>Las partes se someten a la jurisdicción de los tribunales competentes en México, renunciando a cualquier otro fuero que pudiera corresponderles en virtud de sus domicilios o por cualquier otra causa.</p>
+      </div>
+
+      <div class="contact-section">
+        <h3 class="contact-title">📞 CONTACTO</h3>
+        <p>Si tiene alguna pregunta o sugerencia sobre estos Términos y Condiciones, puede contactar al Proveedor del Servicio:</p>
+        <br>
+        <div style="margin-bottom: 1rem;"><strong>ExploreTech</strong></div>
+        <a href="mailto:exploreTechSupport&#64;gmail.com" class="contact-email">
+          exploreTechSupport&#64;gmail.com
+        </a>
+      </div>
     </div>
   </div>
 </div>
+
+<script>
+// Scroll indicator
+window.addEventListener('scroll', () => {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-indicator').style.width = scrolled + '%';
+});
+</script>
