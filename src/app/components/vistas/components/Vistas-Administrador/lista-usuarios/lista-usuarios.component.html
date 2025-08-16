@@ -1,118 +1,137 @@
 <!-- Header -->
 <div class="header">
-    <div class="header-content">
-        <button class="back-btn" onclick="goBack()">
-                <span>←</span>
-            </button>
-        <div class="header-icon">👥</div>
+  <div class="header-content">
+    <button class="back-btn" onclick="goBack()">
+      <span>←</span>
+    </button>
+    <div class="header-icon">👥</div>
+    <div>
+      <h1 class="header-title">Panel de Administración</h1>
+      <p class="header-subtitle">
+        Gestiona y controla el acceso de usuarios con elegancia
+      </p>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-content">
         <div>
-            <h1 class="header-title">Panel de Administración</h1>
-            <p class="header-subtitle">Gestiona y controla el acceso de usuarios con elegancia</p>
+          <p class="stat-label">Total de Usuarios</p>
+          <p class="stat-value">{{ totalUsuarios }}</p>
         </div>
+        <span class="stat-icon">👥</span>
+      </div>
     </div>
 
-    <!-- Stats Cards -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-content">
-                <div>
-                    <p class="stat-label">Total de Usuarios</p>
-                    <p class="stat-value">{{ totalUsuarios }}</p>
-                </div>
-                <span class="stat-icon">👥</span>
-            </div>
+    <div class="stat-card">
+      <div class="stat-content">
+        <div>
+          <p class="stat-label">Usuarios Activos</p>
+          <p class="stat-value active">{{ usuariosActivos }}</p>
         </div>
-
-        <div class="stat-card">
-            <div class="stat-content">
-                <div>
-                    <p class="stat-label">Usuarios Activos</p>
-                    <p class="stat-value active">{{ usuariosActivos }}</p>
-                </div>
-                <span class="stat-icon">🟢</span>
-            </div>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-content">
-                <div>
-                    <p class="stat-label">Usuarios Bloqueados</p>
-                    <p class="stat-value blocked">{{ usuariosBloqueados }}</p>
-                </div>
-                <span class="stat-icon">🚫</span>
-            </div>
-        </div>
+        <span class="stat-icon">🟢</span>
+      </div>
     </div>
+
+    <div class="stat-card">
+      <div class="stat-content">
+        <div>
+          <p class="stat-label">Usuarios Bloqueados</p>
+          <p class="stat-value blocked">{{ usuariosBloqueados }}</p>
+        </div>
+        <span class="stat-icon">🚫</span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Main Content -->
 <div class="main-content">
-    <!-- Controls -->
-    <div class="controls">
-        <div class="controls-row">
-            <!-- Search -->
-            <div class="search-container">
-            <span class="search-icon">🔍</span>
-            <input
-                type="text"
-                class="search-input"
-                placeholder="Buscar usuarios por nombre o email..."
-                (input)="buscarUsuarios($event)"
-            />
-            </div>
+  <!-- Controls -->
+  <div class="controls">
+    <div class="controls-row">
+      <!-- Search -->
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Buscar usuarios por nombre o email..."
+          (input)="buscarUsuarios($event)"
+        />
+      </div>
 
-            <!-- Filter -->
-            <select class="filter-select" (change)="filtrarUsuarios(filtro.value)" #filtro>
-                <option value="all">Todos los usuarios</option>
-                <option value="active">Solo activos</option>
-                <option value="blocked">Solo bloqueados</option>
-            </select>
-        </div>
+      <!-- Filter -->
+      <select class="filter-select" (change)="filtrarUsuarios(filtro.value)" #filtro>
+        <option value="all">Todos los usuarios</option>
+        <option value="active">Solo activos</option>
+        <option value="blocked">Solo bloqueados</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Users Table -->
+  <div class="users-table">
+    <div class="table-header">
+      <h3 class="table-title">
+        Lista de Usuarios ({{ usuariosfiltrados.length }})
+      </h3>
     </div>
 
-    <!-- Users Table -->
-    <div class="users-table">
-        <div class="table-header">
-            <h3 class="table-title">Lista de Usuarios ({{ usuariosfiltrados.length }})</h3>
-        </div>
+    <!-- Lista de usuarios -->
+    <div *ngFor="let usuario of usuariosfiltrados" class="user-row">
+      <!-- Avatar -->
+      <div class="user-avatar">
+        {{ usuario.nombre.charAt(0) + usuario.apellidoP.charAt(0) }}
+      </div>
 
-        <!-- Lista de usuarios -->
-        <div *ngFor="let usuario of usuariosfiltrados" class="user-row">
-        <div class="user-avatar">
-            {{ usuario.nombre.charAt(0) + usuario.apellidoP.charAt(0) }}
+      <!-- Info -->
+      <div class="user-info">
+        <div class="user-name-row">
+          <h4 class="user-name">
+            {{ usuario.nombre }} {{ usuario.apellidoP }} {{ usuario.apellidoM }}
+          </h4>
+          <span
+            class="status-badge"
+            [ngClass]="usuario.activo ? 'active' : 'inactive'"
+          >
+            {{ usuario.activo ? 'Activo' : 'Inactivo' }}
+          </span>
         </div>
+        <div class="user-details">
+          <span>📧 {{ usuario.correo }}</span>
+        </div>
+      </div>
 
-        <div class="user-info">
-            <div class="user-name-row">
-            <h4 class="user-name">
-                {{ usuario.nombre }} {{ usuario.apellidoP }} {{ usuario.apellidoM }}
-            </h4>
-            <span class="status-badge" [ngClass]="usuario.activo ? 'active' : 'inactive'">
-                {{ usuario.activo ? 'Activo' : 'Inactivo' }}
-            </span>
-            </div>
-            <div class="user-details">
-            <span>📧 {{ usuario.correo }}</span>
-            </div>
-        </div>
+      <!-- Rol -->
+      <div class="user-role">
+        <span class="role-badge">{{ usuario.rol?.nombre }}</span>
+      </div>
 
-        <div class="user-meta">
-            <span class="role-badge">{{ usuario.rol?.nombre }}</span>
-            <span class="last-login">
-            {{ usuario.last_login ? calcularTiempo(usuario.last_login) : 'Sin registro' }}
-            </span>
-        </div>
+      <!-- Último login -->
+      <div class="user-login">
+        <span class="last-login">
+          {{ usuario.last_login ? calcularTiempo(usuario.last_login) : 'Sin registro' }}
+        </span>
+      </div>
 
-        <div class="user-actions">
-            <button 
-            class="action-btn block-btn" 
-            [ngStyle]="{
-                'background-color': usuario.bloqueado ? 'green' : 'red',
-                'color': 'white'
-            }"
-            (click)="bloquearDesbloquearUsuario(usuario)">
-            {{ usuario.bloqueado ? '✅ Desbloquear' : '🚫 Bloquear' }}
-            </button>
-        </div>
+      <!-- Botón acciones -->
+      <div class="user-actions">
+        <button
+          class="action-btn block-btn"
+          [ngStyle]="{
+            'background-color': usuario.bloqueado ? 'green' : 'red',
+            'color': 'white'
+          }"
+          (click)="bloquearDesbloquearUsuario(usuario)"
+        >
+          {{ usuario.bloqueado ? '✅ Desbloquear' : '🚫 Bloquear' }}
+        </button>
+      </div>
     </div>
+  </div>
 </div>
+
+
