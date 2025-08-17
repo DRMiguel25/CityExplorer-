@@ -1,6 +1,10 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpLaravelService } from '../../../../../http.service';
+import { VistaListaComentariosComponent } from '../vista-lista-comentarios/vista-lista-comentarios.component';
+import { ReseniaUsuarioComponent } from '../resenia-usuario/resenia-usuario.component'
+import { MatDialog } from '@angular/material/dialog';
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -38,6 +42,7 @@ export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
  constructor(
    private router: Router,
    private route: ActivatedRoute,
+   private dialog: MatDialog,
    private httpLaravelService: HttpLaravelService,
  ) {}
 
@@ -175,7 +180,6 @@ export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
    });
  }
 
- // MÉTODOS ORIGINALES (sin cambios)
 
  // Método para obtener la información del lugar
  obtenerLugar(id_destino: number): void {
@@ -241,7 +245,13 @@ crearResenia(): void {
 
         console.log(`📝 Redirigiendo con id_resenia: ${idResenia}`);
 
-        this.router.navigate(['/resenia-usuario', this.id_destino, this.id_usuario, idResenia]);
+        //this.router.navigate(['/resenia-usuario', this.id_destino, this.id_usuario, idResenia]);
+
+        this.dialog.open(ReseniaUsuarioComponent, {
+          width: '600px',
+          data: { id_destino: this.id_destino, id_usuario: this.id_usuario,  id_resenia: idResenia},
+          autoFocus: true // opcional: enfoca al abrir
+        });
       },
       error: (error) => {
         console.error('❌ Error al verificar reseñas del usuario:', error);
@@ -330,7 +340,11 @@ getEstrellas(valoracion: number): string {
 listarComentarios(): void {
   if (this.id_usuario != "0") {
     console.log('Navegando a la lista de comentarios para el lugar con ID:',this.id_destino,this.id_destino);
-    this.router.navigate(['/vista-lista-comentarios', this.id_destino, this.id_usuario]);
+    this.dialog.open(VistaListaComentariosComponent, {
+      width: '600px',
+      data: { id_destino: this.id_destino, id_usuario: this.id_usuario},
+      autoFocus: true // opcional: enfoca al abrir
+    });
   }
   else {
     Swal.fire({

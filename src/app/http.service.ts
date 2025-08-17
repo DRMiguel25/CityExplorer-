@@ -217,4 +217,10 @@ Service_Get_Estadisticas_Por_Anunciante(idUsuario: number): Observable<any> {
   });
 }
 
+Service_Get_Lugares_Administrador(): Observable<any> {
+  return this.http.get(`${this._url}/admin/lugares`, {
+    headers: this.getHeaders()
+  });
+}
+
 }

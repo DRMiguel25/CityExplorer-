@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpLaravelService } from '../../../../../http.service';
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'lista-usuarios',
@@ -8,6 +10,9 @@ import { HttpLaravelService } from '../../../../../http.service';
   styleUrls: ['./lista-usuarios.component.scss']
 })
 export class ListaUsuariosComponent implements OnInit {
+
+  idUsuario: number = 0;
+
   usuarios: any[] = [];
   usuariosfiltrados: any[] = [];
 
@@ -15,9 +20,16 @@ export class ListaUsuariosComponent implements OnInit {
   usuariosActivos: number = 0; // 👈 aquí guardamos la cuenta de los activos
   usuariosBloqueados: number = 0; // 👈 aquí guardamos la cuenta de los activos
 
-  constructor(private httpLaravel: HttpLaravelService) {}
+  constructor(
+    private httpLaravel: HttpLaravelService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
+    this.idUsuario = Number(this.route.snapshot.paramMap.get('id_usuario'));
+    console.log("id del usuario: "+this.idUsuario);
+
     this.cargarUsuarios();
   }
 
@@ -94,6 +106,10 @@ bloquearDesbloquearUsuario(usuario: any): void {
       console.error('❌ Error al cambiar el estado del usuario:', error);
     }
   });
+}
+
+goBack(){
+  this.router.navigate([`/home-administrador`,this.idUsuario]);
 }
 
 }

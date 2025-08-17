@@ -399,6 +399,10 @@ calcularAltura(tiempoPromedio: string | number): string {
   return (tiempo * 5) + 'px';
 }
 
+irAayuda(){
+  this.router.navigate(['/ayuda-anunciante', this.idUsuario]);
+}
+
 }
 
 interface VisitaPorDia {

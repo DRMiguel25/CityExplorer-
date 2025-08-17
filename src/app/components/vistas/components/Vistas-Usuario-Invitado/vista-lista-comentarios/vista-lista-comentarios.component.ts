@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpLaravelService } from '../../../../../http.service';
-import Swal from 'sweetalert2';
 import { Location } from '@angular/common'; // ⬅️ Agrega esto arriba, junto a otros imports
-import { CommonModule } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'vista-lista-comentarios',
@@ -13,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class VistaListaComentariosComponent implements OnInit {
 
-  id_destino: string | null = null; // ID del destino
+  id_destino: number | null = null; // ID del destino
   listaComentarios: any[] = [];
   promedioValoracion: number | null = null;
   totalComentarios: number = 0;
@@ -21,20 +20,21 @@ export class VistaListaComentariosComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private httpLaravelService: HttpLaravelService,
-    private location: Location // ⬅️ Inyecta esto
+    private location: Location, // ⬅️ Inyecta esto
+    private dialogRef: MatDialogRef<VistaListaComentariosComponent>, // <- agregado
+    @Inject(MAT_DIALOG_DATA) public data: { id_destino: number, id_usuario: number } // aquí llega el id
+
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.id_destino = params.get('id_destino');
-      console.log('id_destino recibido:', this.id_destino);
+    this.id_destino = this.data.id_destino
+    console.log('id_destino recibido:', this.id_destino);
 
-      if (this.id_destino) {
-        this.obtenerComentarios();
-      } else {
-        console.error('❌ No se recibió id_destino en la ruta');
-      }
-    });
+    if (this.id_destino) {
+      this.obtenerComentarios();
+    } else {
+      console.error('❌ No se recibió id_destino en la ruta');
+    }
 
     this.logLoadTime(); // sigue midiendo la carga igual
   }
@@ -95,7 +95,7 @@ export class VistaListaComentariosComponent implements OnInit {
 
 volverAtras(): void {
   console.log('Volviendo atrás con history.back()');
-  window.history.back();
+  this.dialogRef.close();
 }
 
 

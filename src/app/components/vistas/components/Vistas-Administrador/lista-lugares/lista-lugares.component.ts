@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpLaravelService } from "../../../../../http.service";
 import { ActivatedRoute } from '@angular/router';
-import { Lugar } from './lugar.interface';
+import { LugarAdministrador } from './lugar_administrador.interface';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -13,11 +13,14 @@ import Swal from 'sweetalert2';
 })
 export class ListaLugaresComponent implements OnInit{
 
-  lugares: Lugar[] = [];
+  idUsuario: number = 0;
+
+  lugares: LugarAdministrador[] = [];
 
   totalLugares: number = 0;
   totalActivos: number = 0;
   totalBloqueados: number = 0;
+  totalDisponibles: number = 0;
 
   totalLugaresFiltrados: number = 0;
 
@@ -33,7 +36,7 @@ export class ListaLugaresComponent implements OnInit{
 
   usuario: any = null; // Aquí vamos a guardar la info para mostrarla en el HTML
 
-  filteredLugares: Lugar[] = []; // 🔹 Para guardar la lista filtrada
+  filteredLugares: LugarAdministrador[] = []; // 🔹 Para guardar la lista filtrada
 
   filtroActual: string = 'all'; // 'all' | 'active' | 'blocked'
   busquedaActual: string = '';  // Texto de búsqueda
@@ -44,6 +47,9 @@ export class ListaLugaresComponent implements OnInit{
     private route: ActivatedRoute,
   ){}
   ngOnInit(): void {
+    this.idUsuario = Number(this.route.snapshot.paramMap.get('id_usuario'));
+    console.log("id del usuario: "+this.idUsuario);
+
     this.logLoadTime();  // 👈 mide tiempo de carga
     this.loadLugares();
 
@@ -80,28 +86,69 @@ export class ListaLugaresComponent implements OnInit{
     });
   }
 
-  loadLugares(): void {
+loadLugares(): void {
   this.service.Service_Get('lugar', '').subscribe({
-    next: (data: Lugar[]) => {
-      this.lugares = data;
-      this.totalLugares = data.length;
-      this.totalActivos = data.filter(l => l.activo === true).length;
-      this.totalBloqueados = data.filter(l => !l.activo).length;
+    next: (lugares: any[]) => {
+      console.log('📩 Respuesta cruda de lugares:', lugares);
 
-      this.totalLugaresFiltrados = data.length;
+      // Adaptar a LugarAdministrador
+      const adaptados: LugarAdministrador[] = lugares.map(l => ({
+        id_lugar: l.id_lugar,
+        id_usuario: l.id_usuario,
+        id_categoria: l.id_categoria,
+        id_direccion: l.id_direccion,
+        nombre: l.nombre,
+        descripcion: l.descripcion,
+        paginaWeb: l.paginaWeb,
+        num_telefonico: l.num_telefonico,
+        activo: l.activo,
+        bloqueado: l.bloqueado,
+        bloqueado_por: l.bloqueado_por ?? null,
+        desbloqueado_por: l.desbloqueado_por ?? null,
+        motivo_bloqueo: l.motivo_bloqueo ?? null,
+        fecha_activacion: l.fecha_activacion ?? null,
+        fecha_bloqueo: l.fecha_bloqueo ?? null,
+        fecha_desbloqueo: l.fecha_desbloqueo ?? null,
+        activado_por_pago_id: l.activado_por_pago_id ?? null,
+        horario_apertura: l.horario_apertura,
+        horario_cierre: l.horario_cierre,
+        dias_servicio: l.dias_servicio || [],
+        imagenes: l.imagenes || [],
+        created_at: l.created_at,
+        updated_at: l.updated_at,
+        last_login: l.last_login ?? null,
+        
+        // Opcionales
+        promedioValoracion: l.promedioValoracion ?? 0,
+        totalComentarios: l.totalComentarios ?? 0,
+        direccion: l.direccion ?? undefined,
+        usuario: l.usuario ?? undefined
+      }));
 
-      // Inicializamos filteredLugares
-      this.filteredLugares = [...this.lugares];
+      console.log('📦 Lugares procesados:', adaptados);
+
+      this.lugares = adaptados;
+      this.totalLugares = adaptados.length;
+      this.totalDisponibles = adaptados.filter(l => l.activo && !l.bloqueado).length;
+      this.totalBloqueados = this.totalLugares - this.totalDisponibles;
+      // Si quieres que la tabla se muestre de una vez
+      this.aplicarFiltros();
 
       this.lugares.forEach(lugar => {
-        this.obtenerValoracionesPorLugar(lugar);
+        // Cargar dirección
         this.obtenerDireccion(lugar);
+        // Cargar info de usuario
         this.cargarInfoUsuario(lugar);
+        // Cargar info de valoraciones
+        this.obtenerValoracionesPorLugar(lugar);
       });
     },
-    error: (error) => console.error('❌ Error al cargar lugares:', error)
+    error: (error) => {
+      console.error('❌ Error al cargar lugares:', error);
+    }
   });
 }
+
 
   getInitials(nombre?: string): string {
     if (!nombre) return '?';
@@ -128,7 +175,7 @@ export class ListaLugaresComponent implements OnInit{
     return categoria ? categoria.nombre : 'Sin categoría';
   }
 
-  obtenerValoracionesPorLugar(lugar: Lugar): void {
+  obtenerValoracionesPorLugar(lugar: LugarAdministrador): void {
   const modelo = 'lugar';
   const dato = `${lugar.id_lugar}/comentarios`;
 
@@ -155,7 +202,7 @@ export class ListaLugaresComponent implements OnInit{
   });
 }
 
- obtenerDireccion(lugar: Lugar): void {
+ obtenerDireccion(lugar: LugarAdministrador): void {
   const idDireccion = lugar.id_direccion;
 
   this.service.Service_Get_Direccion_Publica(idDireccion).subscribe(
@@ -171,7 +218,7 @@ export class ListaLugaresComponent implements OnInit{
   );
 }
 
-cargarInfoUsuario(lugar: Lugar) {
+cargarInfoUsuario(lugar: LugarAdministrador) {
   const id_usuario = lugar.id_usuario;
 
   this.service.Service_Get('usuario', id_usuario).subscribe(
@@ -207,6 +254,28 @@ aplicarFiltros(): void {
   });
   // 🔹 Actualizamos el total de lugares filtrados
   this.totalLugaresFiltrados = this.filteredLugares.length;
+}
+
+goBack(){
+  this.router.navigate([`/home-administrador`,this.idUsuario]);
+}
+
+getTiempoTranscurrido(fecha: string | null): string {
+  if (!fecha) return 'Fecha no disponible';
+  
+  const fechaActual = new Date();
+  const fechaLugar = new Date(fecha);
+  const diffMs = fechaActual.getTime() - fechaLugar.getTime();
+  const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffDias < 1) return 'Hoy';
+  if (diffDias === 1) return 'Hace 1 día';
+  if (diffDias < 30) return `Hace ${diffDias} días`;
+  
+  const diffMeses = Math.floor(diffDias / 30);
+  if (diffMeses === 1) return 'Hace 1 mes';
+  
+  return `Hace ${diffMeses} meses`;
 }
 
 }

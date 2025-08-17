@@ -1,26 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'ayuda-administrador',
+  selector: 'ayuda-anunciante',
   standalone: false,
-  templateUrl: './ayuda-administrador.component.html',
-  styleUrls: ['./ayuda-administrador.component.scss']
+  templateUrl: './ayuda-anunciante.component.html',
+  styleUrls: ['./ayuda-anunciante.component.scss']
 })
-export class AyudaAdministradorComponent implements OnInit{
-
-  idUsuario: number = 0;
-
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-  ){}
+export class AyudaAnuncianteComponent implements OnInit{
 
   ngOnInit(): void {
-    this.idUsuario = Number(this.route.snapshot.paramMap.get('id_usuario'));
-    console.log("id del usuario: "+this.idUsuario);
-
     this.logLoadTime();  // 👈 mide tiempo de carga
   }
 
@@ -39,9 +27,4 @@ export class AyudaAdministradorComponent implements OnInit{
     }
   });
 }
-
-goBack(){
-  this.router.navigate([`/home-administrador`,this.idUsuario]);
-}
-
 }

@@ -1,39 +1,27 @@
 <!-- Header -->
 <div class="header">
-  <div class="header-content">
-    <button class="back-btn" onclick="goBack()">
-      <span>←</span>
-    </button>
-    <div class="header-icon">👥</div>
-    <div>
-      <h1 class="header-title">Panel de Administración</h1>
-      <p class="header-subtitle">
-        Gestiona y controla el acceso de usuarios con elegancia
-      </p>
-    </div>
-  </div>
-
-  <!-- Stats Cards -->
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-content">
+    <div class="header-content">
+        <button class="back-btn" (click)="goBack()">
+                <span>←</span>
+            </button>
+        <div class="header-icon">👥</div>
         <div>
-          <p class="stat-label">Total de Usuarios</p>
-          <p class="stat-value">{{ totalUsuarios }}</p>
+            <h1 class="header-title">Panel de Administración</h1>
+            <p class="header-subtitle">Gestiona y controla el acceso de usuarios con elegancia</p>
         </div>
-        <span class="stat-icon">👥</span>
-      </div>
     </div>
 
-    <div class="stat-card">
-      <div class="stat-content">
-        <div>
-          <p class="stat-label">Usuarios Activos</p>
-          <p class="stat-value active">{{ usuariosActivos }}</p>
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-content">
+                <div>
+                    <p class="stat-label">Total de Usuarios</p>
+                    <p class="stat-value">{{ totalUsuarios }}</p>
+                </div>
+                <span class="stat-icon">👥</span>
+            </div>
         </div>
-        <span class="stat-icon">🟢</span>
-      </div>
-    </div>
 
     <div class="stat-card">
       <div class="stat-content">

@@ -20,7 +20,7 @@ export class HomeAnuncianteComponent implements OnInit {
   imagenesPorLugar: { [idLugar: number]: any[] } = {};
   imagenActualIndexPorLugar: { [idLugar: number]: number } = {};
 
-  filtroActivo: 'todos' | 'pagados' | 'noPagados' = 'todos';
+  filtroActivo: 'todos' | 'pagados' | 'noPagados' | 'ayuda' = 'todos';
   botonActivo: string = 'todos'; // Puedes iniciar con 'todos', 'pagados' o 'nopagados'
   
   todosLosLugares: Lugar[] = []; // <-- Aquí guardamos la data original
@@ -182,6 +182,10 @@ mostrarNoPagados(): void {
   this.lugares = this.todosLosLugares.filter(lugar => !lugar.activo);
   this.botonActivo = 'nopagados';
   console.log('❌ Mostrando anuncios no pagados:', this.lugares);
+}
+
+irAayuda(){
+  this.router.navigate(['/ayuda-anunciante', this.idUsuario]);
 }
 
 AlertaModificarCuenta(){

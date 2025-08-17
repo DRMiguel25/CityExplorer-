@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpLaravelService } from '../../../../../http.service';
 import Swal from 'sweetalert2';
 
@@ -10,9 +11,9 @@ import Swal from 'sweetalert2';
   styleUrl: './resenia-usuario.component.scss'
 })
 export class ReseniaUsuarioComponent implements OnInit{
-  id_usuario: string | null = null; // Aquí guardamos el ID del usuario
-  id_destino: string | null = null; // Aquí guardamos el ID del destino
-  id_resenia: string | null = null; // Aquí guardamos el ID de la reseña
+  id_usuario: number | null = null; // Aquí guardamos el ID del usuario
+  id_destino: number | null = null; // Aquí guardamos el ID del destino
+  id_resenia: number | null = null; // Aquí guardamos el ID de la reseña
 
   contenido: string = '';
   valoracion: number = 0;
@@ -40,19 +41,21 @@ export class ReseniaUsuarioComponent implements OnInit{
    private router: Router,
    private route: ActivatedRoute,
    private httpLaravelService: HttpLaravelService,
+   private dialogRef: MatDialogRef<ReseniaUsuarioComponent>, // <- agregado
+  @Inject(MAT_DIALOG_DATA) public data: { id_destino: number, id_usuario: number, id_resenia: number } // aquí llega el id
  ) {}
 
   ngOnInit(): void {
-    this.id_destino = this.route.snapshot.paramMap.get('id_destino');
-    this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
-    this.id_resenia = this.route.snapshot.paramMap.get('id_resenia');
+    this.id_destino = this.data.id_destino
+    this.id_usuario = this.data.id_usuario
+    this.id_resenia = this.data.id_resenia
 
     console.log('ID Usuario:', this.id_usuario);
     console.log('ID Destino:', this.id_destino);
     console.log('ID Reseña:', this.id_resenia);
 
     // Cambiar el título dependiendo si es creación o edición
-    if (this.id_resenia === "0") {
+    if (this.id_resenia === 0) {
       this.tituloResenia = "Crear una reseña";
     } else {
       this.tituloResenia = "Modificar tu reseña";
@@ -114,7 +117,7 @@ enviarResenia(): void {
     id_lugar: Number(this.id_destino)
   };
 
-  if (this.id_resenia && this.id_resenia !== "0") {
+  if (this.id_resenia && this.id_resenia !== 0) {
     // Actualizar reseña existente
     this.httpLaravelService.Service_Put('comentarios', this.id_resenia, comentario).subscribe({
       next: (respuesta) => {
@@ -125,7 +128,7 @@ enviarResenia(): void {
           text: 'Tu opinión fue actualizada exitosamente.',
           confirmButtonColor: '#3085d6'
         }).then(() => {
-          this.router.navigate(['/vista-detallada-destino', this.id_destino, this.id_usuario]);
+          this.dialogRef.close();
         });
       },
       error: (error) => {
@@ -149,7 +152,7 @@ enviarResenia(): void {
           text: 'Gracias por compartir tu opinión.',
           confirmButtonColor: '#3085d6'
         }).then(() => {
-          this.router.navigate(['/vista-detallada-destino', this.id_destino, this.id_usuario]);
+          this.dialogRef.close();
         });
       },
       error: (error) => {
@@ -168,7 +171,7 @@ enviarResenia(): void {
 
 
   closeModal(): void {
-    this.router.navigate(['/vista-detallada-destino', this.id_destino, this.id_usuario]);
+    this.dialogRef.close();
     console.log('vista del usuario reseña cerrada y redirigiendo a vista detallada del destino');
   }
 

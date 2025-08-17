@@ -1,6 +1,6 @@
 <div class="header">
         <div class="header-content">
-            <button class="back-btn" onclick="goBack()">
+            <button class="back-btn" (click)="goBack()">
                 <span>←</span>
             </button>
             <div class="header-icon">🏪</div>
@@ -25,8 +25,8 @@
             <div class="stat-card">
                 <div class="stat-content">
                     <div>
-                        <p class="stat-label">Lugares Activos</p>
-                        <p class="stat-value active">{{ totalActivos }}</p>
+                        <p class="stat-label">Lugares Pagados</p>
+                        <p class="stat-value active">{{ totalDisponibles }}</p>
                     </div>
                     <span class="stat-icon">🟢</span>
                 </div>
@@ -35,8 +35,8 @@
             <div class="stat-card">
                 <div class="stat-content">
                     <div>
-                        <p class="stat-label">Lugares Bloqueados</p>
-                        <p class="stat-value blocked">7</p>
+                        <p class="stat-label">Lugares No Pagados</p>
+                        <p class="stat-value blocked">{{ totalBloqueados }}</p>
                     </div>
                     <span class="stat-icon">🚫</span>
                 </div>
@@ -63,8 +63,8 @@
                 <!-- Filter -->
                 <select class="filter-select" id="filterSelect">
                     <option value="all">Todos los lugares</option>
-                    <option value="active">Solo activos</option>
-                    <option value="blocked">Solo bloqueados</option>
+                    <option value="active">Solo pagados</option>
+                    <option value="blocked">Solo no pagados</option>
                 </select>
             </div>
         </div>
@@ -88,7 +88,7 @@
                         </h4>
                         <span class="status-badge"
                             [ngClass]="lugar.activo ? 'active' : 'blocked'">
-                        {{ lugar.activo ? 'Activo' : 'Bloqueado' }}
+                        {{ lugar.activo ? 'Pagado' : 'No Pagado' }}
                         </span>
                     </div>
                     <div class="place-details">
@@ -106,7 +106,7 @@
                 <div class="place-meta">
                     <div class="category-badge">{{ getCategoriaNombre(lugar.id_categoria) }}</div>
                     <div class="place-date">
-                        Registrado hace 2 meses
+                        Registrado hace: {{ getTiempoTranscurrido(lugar.created_at) }}
                     </div>
                 </div>
 

@@ -34,6 +34,7 @@ import { ListaUsuariosComponent } from '../vistas/components/Vistas-Administrado
 import { ListaLugaresComponent } from '../vistas/components/Vistas-Administrador/lista-lugares/lista-lugares.component';
 
 import { estadisticasComponent } from '../vistas/components/Vistas-Anuciante/estadisticas/estadisticas.component';
+import { AyudaAnuncianteComponent } from '../vistas/components/Vistas-Anuciante/ayuda-anunciante/ayuda-anunciante.component';
 
 const routes: Routes = [
   { path: 'inicio-sesion', component: InicioSesionComponent },
@@ -69,6 +70,7 @@ const routes: Routes = [
   { path: 'lista-usuarios/:id_usuario', component: ListaUsuariosComponent },
   { path: 'lista-lugares/:id_usuario', component: ListaLugaresComponent },
   { path: 'estadisticas/:id_usuario', component: estadisticasComponent },
+  { path: 'ayuda-anunciante/:id_usuario', component: AyudaAnuncianteComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'restablecer-contraseña', component: RestablecerComponent }, // ✅ nueva ruta
 
