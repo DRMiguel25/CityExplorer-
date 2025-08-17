@@ -252,3 +252,72 @@ body {
         padding: 20px;
     }
 }
+// Agrega estos estilos a tu archivo SCSS existente
+.faq-item {
+    background: white;
+    border: 1px solid #E6F1F7;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.faq-question {
+    background: #F3F7FA;
+    padding: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #2C3E50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.faq-question:hover {
+    background: #EAF6FB;
+}
+
+.faq-answer {
+    padding: 15px;
+    display: none;
+    background: white;
+    border-top: 1px solid #E6F1F7;
+}
+
+.faq-answer.active {
+    display: block;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.contact-item {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 3px solid #4A90E2;
+    box-shadow: 0 2px 5px rgba(70, 130, 200, 0.1);
+}
+
+.emergency-box {
+    background: #F5F9FD;
+    border: 2px solid #4A90E2;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.emergency-box h4 {
+    color: #2C3E50;
+    margin-bottom: 10px;
+}
+
+.icon-faq::before { content: '❓'; margin-right: 8px; }
+.icon-contact::before { content: '📞'; margin-right: 8px; }
+.icon-emergency::before { content: '🆘'; margin-right: 8px; }
+.icon-accessibility::before { content: '♿'; margin-right: 8px; }
+.icon-language::before { content: '🌐'; margin-right: 8px; }

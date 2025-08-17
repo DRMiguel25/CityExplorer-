@@ -117,37 +117,90 @@ export class PagoAnuncioComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   // Popup para confirmar plan antes de pagar
-  confirmarAntesDePagar() {
+confirmarAntesDePagar() {
   Swal.fire({
-    title: 'Confirmar pago',
+    title: '✨ Confirmar Pago',
     html: `
-      <p style="margin-bottom:10px;">Selecciona tu plan:</p>
-      <select id="planSelect" class="swal2-input">
-        <option value="mensual">Mensual - $580 MXN (IVA incluido)</option>
-        <option value="anual">Anual - $5,800 MXN (IVA incluido)</option>
-      </select>
+      <div style="text-align: center; margin-bottom: 20px;">
+        <p style="margin-bottom: 15px; font-size: 16px; font-weight: 500;">
+           Selecciona tu plan preferido:
+        </p>
+        <select id="planSelect" class="swal2-input" style="width: 100%; max-width: 320px; padding: 10px; border-radius: 8px; font-size: 15px;">
+          <option value="mensual">💳 Plan Mensual - $580 MXN (IVA incluido)</option>
+          <option value="anual">🎊 Plan Anual - $5,800 MXN (IVA incluido) - ¡2 meses gratis!</option>
+        </select>
+        <div style="margin-top: 12px; font-size: 13px; opacity: 0.8;">
+          💡 El plan anual incluye 2 meses adicionales sin costo
+        </div>
+      </div>
     `,
-    background: 'rgba(255, 255, 255, 0.25)', // Fondo semitransparente
-    backdrop: `
-      rgba(0,0,0,0.4)
-      blur(8px)
-    `,
+    // 🔽 FONDO SÓLIDO (blanco o gris muy claro)
+    background: '#ffffff', // Fondo blanco puro
+    // Opcional: fondo gris claro moderno
+    // background: '#f8f9fa',
+
+    // 🔽 Elimina el backdrop difuminado pesado o déjalo sutil
+    backdrop: 'rgba(0, 0, 0, 0.4)', // Solo oscurece el fondo, sin blur ni textura
+
     customClass: {
-      popup: 'swal-blur-popup',
-      title: 'swal-blur-title',
-      confirmButton: 'swal-blur-confirm',
-      cancelButton: 'swal-blur-cancel'
+      popup: 'swal-solid-popup',        // Clase opcional para estilos extra
+      title: 'swal-solid-title',
+      confirmButton: 'swal-solid-confirm',
+      cancelButton: 'swal-solid-cancel'
     },
+
     showCancelButton: true,
-    confirmButtonText: 'Confirmar',
-    cancelButtonText: 'Cancelar',
+    confirmButtonText: '✅ Confirmar Pago',
+    cancelButtonText: '❌ Cancelar',
+    buttonsStyling: false, // Para usar tus clases personalizadas
+    allowOutsideClick: false,
+    allowEscapeKey: true,
+    focusConfirm: false,
+
     preConfirm: () => {
-      const plan = (document.getElementById('planSelect') as HTMLSelectElement).value;
-      this.planSeleccionado = plan as 'mensual' | 'anual';
+      const planSelect = document.getElementById('planSelect') as HTMLSelectElement;
+      if (!planSelect || !planSelect.value) {
+        Swal.showValidationMessage('Por favor selecciona un plan');
+        return false;
+      }
+      this.planSeleccionado = planSelect.value as 'mensual' | 'anual';
+      return true;
+    },
+
+    willOpen: (popup) => {
+      // Opcional: ajustar sombra o bordes al popup
+      popup.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.15)';
+      popup.style.borderRadius = '16px';
     }
+
   }).then((result) => {
     if (result.isConfirmed) {
-      this.handlePayment(new Event('submit'));
+      const planTexto = this.planSeleccionado === 'anual'
+        ? 'Plan Anual - $5,800 MXN (¡Incluye 2 meses gratis!)'
+        : 'Plan Mensual - $580 MXN';
+
+      Swal.fire({
+        title: 'Procesando...',
+        html: `
+          <div style="text-align: center;">
+            <p style="margin-bottom: 10px;">Iniciando pago para:</p>
+            <strong style="color: #16a34a;">${planTexto}</strong>
+          </div>
+        `,
+        timer: 1500,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        background: '#ffffff93', // Fondo blanco limpio
+        willOpen: (popup) => {
+          popup.style.borderRadius = '12px';
+          popup.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+        },
+        didOpen: () => {
+          setTimeout(() => {
+            this.handlePayment(new Event('submit'));
+          }, 1500);
+        }
+      });
     }
   });
 }

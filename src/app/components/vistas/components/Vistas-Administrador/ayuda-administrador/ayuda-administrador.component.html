@@ -1,50 +1,113 @@
-<body>
-    <div class="background-overlay"></div>
-    
-    <div class="container">
-        <button class="back-btn" onclick="goBack()">
+<div class="background-overlay"></div>
+
+<div class="container">
+<button class="back-btn" onclick="goBack()">
             <span>←</span>
         </button>
 
-        <div class="header">
-            <h1 style="color: #5BA7F7;">Ayuda e Información</h1>
+    <div class="header">
+        <h1 style="color: #5BA7F7;">Sección de Ayuda – Panel de Administración</h1>
+    </div>
+    
+    <div class="content">
+        <div class="welcome-section">
+            <h2>¿Qué es City Explorer?</h2>
+            <p>City Explorer es una plataforma digital diseñada para conectar usuarios con lugares destacados de la ciudad: restaurantes, parques, iglesias, mercados, tours y más. Como administrador, tú tienes acceso total al control de contenido y usuarios para garantizar una experiencia segura, actualizada y de calidad.</p>
         </div>
         
-        <div class="content">
-            <div class="welcome-section">
-                <h2>Bienvenido a City Explorer la mejor guía de San Miguel de Allende</h2>
-                <p>Esta app te ayuda a descubrir los mejores lugares para comer, tomar un café, pasear, y disfrutar de esta joya colonial.</p>
+        <div class="section">
+            <h3 class="icon-tip">Funciones del Panel de Control</h3>
+            <h4>1. Gestionar Usuarios</h4>
+            <ul>
+                <li><strong>Lista de Usuarios:</strong> Visualiza todos los usuarios registrados en la plataforma.</li>
+                <li><strong>Filtros:</strong> Usa el menú desplegable para filtrar entre:
+                    <ul class="sub-list">
+                        <li><em>Todos los usuarios</em></li>
+                        <li><em>Solo activos</em></li>
+                        <li><em>Solo bloqueados</em></li>
+                    </ul>
+                </li>
+                <li><strong>Buscar usuarios:</strong> Busca por nombre o correo electrónico usando la barra de búsqueda.</li>
+                <li><strong>Acciones disponibles:</strong>
+                    <ul class="sub-list">
+                        <li><strong>Bloquear:</strong> Restringe el acceso de un usuario si viola las normas de uso.</li>
+                        <li><strong>Desbloquear:</strong> Permite restaurar el acceso a un usuario previamente bloqueado.</li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="tip-box">
+                <strong>💡 Consejo:</strong> Revisa periódicamente los usuarios bloqueados para decidir si deben ser reinstaurados o eliminados permanentemente.
             </div>
             
-            <div class="section">
-                <h3 class="icon-tip">¿Cómo usar la aplicación?</h3>
-                <ul>
-                    <li>Usa navbar para moverte entre las diferentes secciones de la página.</li>
-                    <li>Filtra por categoría o busca entre todos los lugares disponibles.</li>
-                    <li>Puedes ver todos los detalles de cada lugar si presionas sobre él.</li>
-                </ul>
+            <h4>2. Administrar Lugares</h4>
+            <ul>
+                <li><strong>Lista de Lugares:</strong> Muestra todos los lugares registrados por usuarios.</li>
+                <li><strong>Filtros:</strong> Filtra por estado:
+                    <ul class="sub-list">
+                        <li><em>Todos los lugares</em></li>
+                        <li><em>Solo activos</em></li>
+                        <li><em>Solo bloqueados</em></li>
+                    </ul>
+                </li>
+                <li><strong>Buscar lugares:</strong> Busca por nombre, categoría (ej. restaurantes, iglesias) o creador.</li>
+                <li><strong>Acciones disponibles:</strong>
+                    <ul class="sub-list">
+                        <li><strong>Bloquear:</strong> Oculta un lugar temporalmente si contiene información inadecuada o falsa.</li>
+                        <li><strong>Eliminar:</strong> Elimina permanentemente un lugar de la plataforma (uso cuidadoso recomendado).</li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="warning-box">
+                <strong>⚠️ Importante:</strong> Solo elimina lugares si están mal registrados, duplicados o violan políticas de contenido.
             </div>
-            
-            <div class="section">
-                <h3 class="icon-local">Tips locales</h3>
-                <ul>
-                    <li>Algunos lugares cierran entre semana, ¡verifica los horarios antes de ir!</li>
-                    <li>No olvides llevar efectivo: algunos sitios no aceptan tarjeta.</li>
-                    <li>¿Eres amante de la fotografía? El atardecer desde el mirador es imperdible.</li>
-                    <li>Los fines de semana el centro se llena, ve con tiempo si quieres buen lugar para estacionarte.</li>
-                    <li>Pregunta por menús del día: muchos lugares tienen opciones deliciosas y más baratas.</li>
-                    <li>El tranvía turístico es buena opción si quieres conocer sin caminar tanto.</li>
-                    <li>Si buscas algo auténtico, prueba los mercados locales (como el Mercado de Artesanías).</li>
-                    <li>El clima puede cambiar rápido, lleva una chamarra ligera aunque veas sol.</li>
-                    <li>Evita los tacos cerca del Jardín Principal... y mejor ve a los puestos que recomiendan los locales 😉</li>
-                    <li>Muchos eventos culturales son gratuitos, revisa la cartelera de la Casa de la Cultura o la parroquia.</li>
-                </ul>
-            </div>
+
+            <h4>3. Información General del Panel</h4>
+            <ul>
+                <li><strong>Usuarios Activos:</strong> Número total de usuarios que pueden acceder a la plataforma.</li>
+                <li><strong>Lugares Registrados:</strong> Cantidad total de lugares agregados por usuarios.</li>
+                <li><strong>Lugares Bloqueados / Usuarios Bloqueados:</strong> Te permite supervisar contenido o cuentas problemáticas.</li>
+            </ul>
         </div>
-        
-        <div class="footer">
-            <p class="icon-remember">¡Recuerda! Esta es una versión de prueba</p>
+
+        <div class="section">
+            <h3 class="icon-support">Soporte Técnico</h3>
+            <p>Si encuentras problemas técnicos, como errores al cargar datos, fallos en la edición de usuarios o lugares, o si necesitas ayuda para realizar cambios importantes:</p>
+            <ul>
+                <li>Envía un mensaje a nuestro equipo de soporte técnico: 
+                    <div class="contact-info">
+                        <strong>📧 soporte&#64;cityexplorer.com</strong>
+                    </div>
+                </li>
+                <li>Incluye detalles como:
+                    <ul class="sub-list">
+                        <li>El tipo de error</li>
+                        <li>Captura de pantalla (si aplica)</li>
+                        <li>Tu nombre de usuario y rol</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3 class="icon-recommendations">Recomendaciones para Administradores</h3>
+            <ul>
+                <li>Realiza revisiones mensuales de usuarios y lugares para mantener la calidad del contenido.</li>
+                <li>Mantén un registro de cambios importantes (como bloqueos o eliminaciones).</li>
+                <li>Comunica cualquier cambio significativo a los usuarios principales o equipos colaboradores.</li>
+                <li>Asegúrate de que todos los lugares tengan información verificable y actualizada.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3 class="icon-suggestions">¿Tienes sugerencias?</h3>
+            <p>Nos encantaría escuchar tus ideas para mejorar City Explorer. Puedes enviar tus comentarios a:</p>
+            <div class="contact-info">
+                <strong>📧 feedback&#64;cityexplorer.com</strong>
+            </div>
         </div>
     </div>
-
-</body>
+    
+    <div class="footer">
+        <p class="icon-remember">Gracias por ayudarnos a construir una comunidad urbana más conectada y segura</p>
+    </div>
+</div>

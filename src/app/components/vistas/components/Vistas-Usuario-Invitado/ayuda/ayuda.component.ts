@@ -27,4 +27,26 @@ export class AyudaComponent implements OnInit{
     }
   });
 }
+toggleFAQ(event: Event) {
+  const element = event.currentTarget as HTMLElement;
+  const answer = element.nextElementSibling as HTMLElement;
+  const symbol = element.querySelector('span');
+  
+  // Close all other FAQs
+  document.querySelectorAll('.faq-answer').forEach(ans => {
+    if (ans !== answer) {
+      ans.classList.remove('active');
+      (ans.previousElementSibling as HTMLElement).querySelector('span')!.textContent = '+';
+    }
+  });
+  
+  // Toggle current FAQ
+  if (answer.classList.contains('active')) {
+    answer.classList.remove('active');
+    symbol!.textContent = '+';
+  } else {
+    answer.classList.add('active');
+    symbol!.textContent = '−';
+  }
+}
 }
