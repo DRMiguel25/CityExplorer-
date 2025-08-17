@@ -196,7 +196,7 @@ confirmarAntesDePagar() {
           popup.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
         },
         didOpen: () => {
-          setTimeout(() => {
+          setTimeout(() => { 
             this.handlePayment(new Event('submit'));
           }, 1500);
         }
