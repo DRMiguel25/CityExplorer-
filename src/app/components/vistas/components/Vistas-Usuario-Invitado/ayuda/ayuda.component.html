@@ -1,123 +1,151 @@
-<navbar-invitado-usuario></navbar-invitado-usuario>
-<div class="container">
+
+<body>
+    <div class="background-pattern"></div>
     
-    <div class="header">
-        <h1>Ayuda e Información</h1>
-    </div>
-    <div class="content">
-        <div class="welcome-section">
-            <h2>Bienvenido a City Explorer la mejor guía de San Miguel de Allende</h2>
-            <p>Esta app te ayuda a descubrir los mejores lugares para comer, tomar un café, pasear, y disfrutar de esta joya colonial.</p>
+    <nav class="navbar-placeholder">
+        <button class="back-button" onclick="GoBackr()">
+            ←
+        </button>
+        <div class="navbar-content"> City Explorer - San Miguel de Allende</div>
+        <div style="width: 120px;"></div> <!-- Espaciador para centrar el título -->
+    </nav>
+
+    <div class="container">
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Ayuda e Información</h1>
+                <p class="hero-subtitle">Tu guía completa para descubrir los mejores lugares de San Miguel de Allende, la joya colonial de México</p>
+            </div>
+        </section>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <span class="feature-icon">📱</span>
+                <h3 class="feature-title">¿Cómo usar la app?</h3>
+                <ul class="feature-list">
+                    <li>Navega entre secciones usando el menú superior</li>
+                    <li>Filtra por categoría o busca lugares específicos</li>
+                    <li>Toca cualquier lugar para ver detalles completos</li>
+                    <li>Agrega favoritos tocando el corazón ❤️</li>
+                    <li>Usa el filtro de estrellas para los mejores lugares</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">💡</span>
+                <h3 class="feature-title">Tips Locales</h3>
+                <ul class="feature-list">
+                    <li>Verifica horarios - algunos cierran entre semana</li>
+                    <li>Lleva efectivo - no todos aceptan tarjeta</li>
+                    <li>El atardecer desde el mirador es imperdible 📸</li>
+                    <li>Fines de semana: ve temprano por estacionamiento</li>
+                    <li>Pregunta por menús del día (más económicos)</li>
+                    <li>Prueba el tranvía turístico para recorridos</li>
+                    <li>Explora mercados locales para experiencias auténticas</li>
+                    <li>Lleva chamarra - el clima cambia rápido</li>
+                    <li>Evita tacos turísticos, busca los de locales 😉</li>
+                    <li>Muchos eventos culturales son gratuitos</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">♿</span>
+                <h3 class="feature-title">Accesibilidad</h3>
+                <ul class="feature-list">
+                    <li>Centro histórico con escalones y empedrado</li>
+                    <li>Busca el ícono ♿ para acceso en silla de ruedas</li>
+                    <li>Jardín Principal tiene rampas en varias entradas</li>
+                    <li>Consulta por baños adaptados antes de visitar</li>
+                </ul>
+            </div>
         </div>
 
-        <div class="section">
-            <h3 class="icon-tip">¿Cómo usar la aplicación?</h3>
-            <ul>
-                <li>Usa navbar para moverte entre las diferentes secciones de la página.</li>
-                <li>Filtra por categoría o busca entre todos los lugares disponibles.</li>
-                <li>Puedes ver todos los detalles de cada lugar si presionas sobre él.</li>
-                <li>Agrega lugares a tus favoritos tocando el corazón ❤️</li>
-                <li>Usa el filtro de estrellas para encontrar los mejores lugares calificados.</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h3 class="icon-local">Tips locales</h3>
-            <ul>
-                <li>Algunos lugares cierran entre semana, ¡verifica los horarios antes de ir!</li>
-                <li>No olvides llevar efectivo: algunos sitios no aceptan tarjeta.</li>
-                <li>¿Eres amante de la fotografía? El atardecer desde el mirador es imperdible.</li>
-                <li>Los fines de semana el centro se llena, ve con tiempo si quieres buen lugar para estacionarte.</li>
-                <li>Pregunta por menús del día: muchos lugares tienen opciones deliciosas y más baratas.</li>
-                <li>El tranvía turístico es buena opción si quieres conocer sin caminar tanto.</li>
-                <li>Si buscas algo auténtico, prueba los mercados locales (como el Mercado de Artesanías).</li>
-                <li>El clima puede cambiar rápido, lleva una chamarra ligera aunque veas sol.</li>
-                <li>Evita los tacos cerca del Jardín Principal... y mejor ve a los puestos que recomiendan los locales 😉</li>
-                <li>Muchos eventos culturales son gratuitos, revisa la cartelera de la Casa de la Cultura o la parroquia.</li>
-            </ul>
-        </div>
-
-
-
-        <div class="section">
-            <h3 class="icon-accessibility">Accesibilidad</h3>
-            <ul>
-                <li>Muchos lugares en el centro histórico tienen escalones o calles empedradas.</li>
-                <li>Busca el ícono ♿ en las descripciones para lugares con acceso para sillas de ruedas.</li>
-                <li>El Jardín Principal tiene rampas de acceso en varias entradas.</li>
-                <li>Algunos restaurantes tienen baños adaptados - consulta antes de tu visita.</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h3 class="icon-emergency">Información de Emergencia</h3>
-            <div class="emergency-box">
-                <h4>Números Importantes:</h4>
-                <div class="contact-grid">
-                    <div class="contact-item">
-                        <strong>Emergencias:</strong><br>
-                        911
-                    </div>
-                    <div class="contact-item">
-                        <strong>Policía Municipal:</strong><br>
-                        (415) 152-0022
-                    </div>
-                    <div class="contact-item">
-                        <strong>Cruz Roja:</strong><br>
-                        (415) 152-1616
-                    </div>
-                    <div class="contact-item">
-                        <strong>Bomberos:</strong><br>
-                        (415) 152-1888
-                    </div>
+        <section class="emergency-section">
+            <h2 class="emergency-title">🆘 Información de Emergencia</h2>
+            <div class="emergency-grid">
+                <div class="emergency-item">
+                    <strong>Emergencias Generales</strong><br>
+                    📞 911
+                </div>
+                <div class="emergency-item">
+                    <strong>Policía Municipal</strong><br>
+                    📞 (415) 152-0022
+                </div>
+                <div class="emergency-item">
+                    <strong>Cruz Roja</strong><br>
+                    📞 (415) 152-1616
+                </div>
+                <div class="emergency-item">
+                    <strong>Bomberos</strong><br>
+                    📞 (415) 152-1888
                 </div>
             </div>
-            <ul style="margin-top: 15px;">
-                <li>Hospital de la Fe: Calle Insurgentes #22</li>
-                <li>Farmacia Guadalajara (24hrs): Libramiento Jose Manuel Zavala</li>
-                <li>Ubicaciones de ATMs principales: Jardín Principal, Plaza Colonial, Mega</li>
-            </ul>
-        </div>
+            <div style="margin-top: 2rem; opacity: 0.95; font-weight: 500;">
+                <p><strong>Hospital de la Fe:</strong> Calle Insurgentes #22</p>
+                <p><strong>Farmacia 24hrs:</strong> Libramiento Jose Manuel Zavala</p>
+                <p><strong>ATMs:</strong> Jardín Principal, Plaza Colonial, Mega</p>
+            </div>
+        </section>
 
-        <div class="section">
-            <h3 class="icon-contact">Contacto y Soporte</h3>
+        <section class="contact-section">
+            <h2 class="section-title">📞 Contacto y Soporte</h2>
             <div class="contact-grid">
                 <div class="contact-item">
-                    <strong>Email de soporte:</strong><br>
+                    <strong>Email de Soporte</strong><br>
                     ayuda&#64;cityexplorer.mx
                 </div>
                 <div class="contact-item">
-                    <strong>Reportar problema:</strong><br>
+                    <strong>Reportar Problema</strong><br>
                     bugs&#64;cityexplorer.mx
                 </div>
                 <div class="contact-item">
-                    <strong>Sugerir lugares:</strong><br>
+                    <strong>Sugerir Lugares</strong><br>
                     lugares&#64;cityexplorer.mx
                 </div>
                 <div class="contact-item">
-                    <strong>WhatsApp:</strong><br>
+                    <strong>WhatsApp</strong><br>
                     +52 415 123-4567
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="section">
-            <h3 class="icon-language">Glosario Local</h3>
-            <ul>
-                <li><strong>El Jardín:</strong> La plaza principal de San Miguel (Jardín Principal)</li>
-                <li><strong>La Parroquia:</strong> La icónica iglesia rosa del centro</li>
-                <li><strong>Gringo/a:</strong> Término amigable para extranjeros (principalmente estadounidenses)</li>
-                <li><strong>Cantina:</strong> Bar tradicional mexicano</li>
-                <li><strong>Comida corrida:</strong> Menú del día con precio fijo</li>
-                <li><strong>Mercado:</strong> Mercado local con comida y productos frescos</li>
-            </ul>
-        </div>
-    </div>
+        <section class="glossary-section">
+            <h2 class="section-title">🌐 Glosario Local</h2>
+            <div class="glossary-grid">
+                <div class="glossary-item">
+                    <div class="glossary-term">El Jardín</div>
+                    <div>La plaza principal de San Miguel (Jardín Principal)</div>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">La Parroquia</div>
+                    <div>La icónica iglesia rosa del centro</div>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Gringo/a</div>
+                    <div>Término amigable para extranjeros (principalmente estadounidenses)</div>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Cantina</div>
+                    <div>Bar tradicional mexicano</div>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Comida Corrida</div>
+                    <div>Menú del día con precio fijo</div>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Mercado</div>
+                    <div>Mercado local con comida y productos frescos</div>
+                </div>
+            </div>
+        </section>
 
-    <div class="footer">
-        <p class="icon-remember">¡Recuerda! Esta es una versión de prueba</p>
-        <p style="margin-top: 10px; font-size: 0.9em;">
-            Versión 1.0 Beta | Última actualización: Agosto 2025
-        </p>
+        <footer class="footer">
+            <div class="footer-content">
+                <span class="beta-badge pulse">
+                    🧪 Versión Beta
+                </span>
+                <span style="font-weight: 600; color: var(--texto-secundario);">Versión 1.0 | Actualizada en Agosto 2025</span>
+            </div>
+        </footer>
     </div>
-</div>
+</body>

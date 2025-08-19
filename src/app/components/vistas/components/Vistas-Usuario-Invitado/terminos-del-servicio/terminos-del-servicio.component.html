@@ -1,5 +1,36 @@
-<!-- src/app/vistas/components/Vistas-Usuario-Invitado/terminos-del-servicio/terminos-del-servicio.component.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Explorer - Términos y Condiciones</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
 <style>
+:root {
+  /* Ice Color Palette */
+  --blanco-hielo: #F0F8FF;
+  --alice-blue: #F0F8FF;
+  --blanco-glaciar: #EAF6FB;
+  --blanco-artico: #E6F1F7;
+  --perla-azulada: #F3F7FA;
+  --niebla-azul: #EDF3F9;
+  --azul-palido: #E6F0FA;
+  --humo-azul-claro: #F5F9FD;
+  --polar-white: #F2F8FC;
+  --blanco-boreal: #EEF7FB;
+  
+  /* Accent Colors */
+  --ice-gradient-1: #B8D4F1;
+  --ice-gradient-2: #9BC5ED;
+  --ice-accent: #5A9BD4;
+  --ice-dark: #2E5984;
+  --ice-text: #1F4788;
+  --ice-light-text: #4A6B8A;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -7,10 +38,12 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  background: linear-gradient(135deg, var(--blanco-hielo) 0%, var(--blanco-glaciar) 50%, var(--niebla-azul) 100%);
   min-height: 100vh;
+  color: var(--ice-text);
 }
 
 .background-slideshow {
@@ -20,15 +53,16 @@ body {
   width: 100%;
   height: 100%;
   background: 
-    linear-gradient(45deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9)),
-    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1.5" fill="rgba(255,255,255,0.05)"/><circle cx="50" cy="10" r="0.8" fill="rgba(255,255,255,0.08)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    linear-gradient(45deg, rgba(184, 212, 241, 0.3), rgba(155, 197, 237, 0.3)),
+    radial-gradient(circle at 30% 20%, rgba(240, 248, 255, 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(234, 246, 251, 0.4) 0%, transparent 50%);
   z-index: -2;
-  animation: backgroundShift 20s ease-in-out infinite alternate;
+  animation: backgroundShift 25s ease-in-out infinite alternate;
 }
 
 @keyframes backgroundShift {
-  0% { transform: translateX(-2%) translateY(-1%); }
-  100% { transform: translateX(2%) translateY(1%); }
+  0% { transform: translateX(-1%) translateY(-1%) scale(1.02); }
+  100% { transform: translateX(1%) translateY(1%) scale(1); }
 }
 
 .overlay {
@@ -37,7 +71,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(240, 248, 255, 0.1);
   z-index: -1;
 }
 
@@ -49,57 +83,88 @@ body {
   z-index: 1;
 }
 
+.back-btn {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  background: var(--polar-white);
+  border: 2px solid var(--ice-gradient-1);
+  border-radius: 12px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--ice-accent);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(90, 155, 212, 0.1);
+}
+
+.back-btn:hover {
+  background: var(--blanco-hielo);
+  transform: translateX(-3px);
+  box-shadow: 0 8px 25px rgba(90, 155, 212, 0.15);
+}
+
 .hero-section {
   text-align: center;
   margin-bottom: 3rem;
-  padding: 2rem 0;
+  padding: 3rem 0;
 }
 
 .hero-title {
-  color: white;
-  font-size: 3rem;
+  color: var(--ice-dark);
+  font-family: 'Poppins', sans-serif;
+  font-size: 3.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 2px 10px rgba(90, 155, 212, 0.2);
   animation: fadeInDown 1s ease-out;
+  letter-spacing: -0.02em;
 }
 
 .hero-subtitle {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 1.2rem;
+  color: var(--ice-light-text);
+  font-family: 'Inter', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 400;
   margin-bottom: 2rem;
   animation: fadeInUp 1s ease-out 0.3s both;
 }
 
 @keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-30px); }
+  from { opacity: 0; transform: translateY(-40px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .terms-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--polar-white);
   backdrop-filter: blur(20px);
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  box-shadow: 0 25px 60px rgba(90, 155, 212, 0.08);
+  border: 1px solid rgba(184, 212, 241, 0.3);
   overflow: hidden;
   animation: slideInUp 1s ease-out 0.6s both;
 }
 
 @keyframes slideInUp {
-  from { opacity: 0; transform: translateY(50px); }
+  from { opacity: 0; transform: translateY(60px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .card-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 2rem;
+  background: linear-gradient(135deg, var(--ice-gradient-1) 0%, var(--ice-gradient-2) 100%);
+  color: var(--ice-dark);
+  padding: 3rem 2rem;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -112,43 +177,49 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
-  animation: float 15s ease-in-out infinite;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+  animation: float 20s ease-in-out infinite;
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(5deg); }
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50% { transform: translateY(-15px) rotate(3deg) scale(1.02); }
 }
 
 .main-title {
-  font-size: 2rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.2rem;
   font-weight: 700;
   margin: 0;
   position: relative;
   z-index: 1;
+  letter-spacing: -0.01em;
 }
 
 .company-badge {
   display: inline-block;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  padding: 0.8rem 1.5rem;
   border-radius: 50px;
   margin-top: 1rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 500;
   position: relative;
   z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .card-body {
-  padding: 3rem;
-  color: #333;
+  padding: 3.5rem;
+  color: var(--ice-text);
 }
 
 .section {
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
   opacity: 0;
-  animation: fadeIn 0.6s ease-out forwards;
+  animation: fadeIn 0.8s ease-out forwards;
 }
 
 .section:nth-child(1) { animation-delay: 0.8s; }
@@ -165,14 +236,16 @@ body {
 }
 
 .section-title {
-  color: #667eea;
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 3px solid #667eea;
+  color: var(--ice-accent);
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 3px solid var(--ice-gradient-1);
   position: relative;
   display: inline-block;
+  letter-spacing: -0.01em;
 }
 
 .section-title::after {
@@ -182,8 +255,8 @@ body {
   left: 0;
   width: 0;
   height: 3px;
-  background: #764ba2;
-  transition: width 0.3s ease;
+  background: var(--ice-accent);
+  transition: width 0.4s ease;
 }
 
 .section:hover .section-title::after {
@@ -191,13 +264,14 @@ body {
 }
 
 .highlight-box {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-  border: 2px solid rgba(102, 126, 234, 0.2);
-  border-radius: 15px;
-  padding: 2rem;
-  margin: 1.5rem 0;
+  background: linear-gradient(135deg, var(--blanco-hielo) 0%, var(--perla-azulada) 100%);
+  border: 2px solid var(--azul-palido);
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin: 2rem 0;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(5px);
 }
 
 .highlight-box::before {
@@ -207,8 +281,8 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  transition: left 0.5s;
+  background: linear-gradient(90deg, transparent, rgba(184, 212, 241, 0.3), transparent);
+  transition: left 0.6s;
 }
 
 .highlight-box:hover::before {
@@ -216,23 +290,23 @@ body {
 }
 
 .pricing-section {
-  margin: 3rem 0;
+  margin: 4rem 0;
 }
 
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
-  margin: 2rem 0;
+  margin: 2.5rem 0;
 }
 
 .pricing-card {
-  background: white;
-  border-radius: 15px;
-  padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background: var(--blanco-hielo);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 12px 40px rgba(90, 155, 212, 0.08);
   border: 2px solid transparent;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
 }
@@ -243,46 +317,52 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 4px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  height: 5px;
+  background: linear-gradient(135deg, var(--ice-gradient-1) 0%, var(--ice-accent) 100%);
 }
 
 .pricing-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  border-color: #667eea;
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px rgba(90, 155, 212, 0.15);
+  border-color: var(--ice-gradient-1);
+  background: var(--polar-white);
 }
 
 .price-title {
-  color: #667eea;
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
+  color: var(--ice-accent);
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
 }
 
 .price-amount {
-  font-size: 2.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.8rem;
   font-weight: 800;
-  color: #333;
+  color: var(--ice-dark);
   margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
 }
 
 .price-period {
-  color: #666;
-  font-size: 1rem;
-  margin-bottom: 1rem;
+  color: var(--ice-light-text);
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
 }
 
 .savings-badge {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 0.8rem 1.5rem;
   border-radius: 50px;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
   display: inline-block;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   animation: pulse 2s infinite;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
 }
 
 @keyframes pulse {
@@ -296,62 +376,70 @@ body {
 }
 
 .feature-list li {
-  padding: 0.5rem 0;
+  padding: 0.8rem 0;
   position: relative;
-  padding-left: 2rem;
+  padding-left: 2.5rem;
   transition: color 0.3s ease;
+  font-weight: 400;
 }
 
 .feature-list li:hover {
-  color: #667eea;
+  color: var(--ice-accent);
 }
 
 .feature-list li::before {
-  content: '✨';
   position: absolute;
   left: 0;
-  top: 0.5rem;
-  font-size: 1.2rem;
+  top: 0.8rem;
+  font-size: 1.3rem;
 }
 
 .standard-list {
-  padding-left: 1.5rem;
+  padding-left: 2rem;
 }
 
 .standard-list li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+  font-weight: 400;
 }
 
 .contact-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 2rem;
-  border-radius: 15px;
+  background: linear-gradient(135deg, var(--ice-gradient-1) 0%, var(--ice-gradient-2) 100%);
+  color: var(--ice-dark);
+  padding: 3rem;
+  border-radius: 20px;
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 3rem;
+  box-shadow: 0 15px 40px rgba(90, 155, 212, 0.1);
 }
 
 .contact-title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
 }
 
 .contact-email {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  padding: 1.2rem 2.5rem;
   border-radius: 50px;
   display: inline-block;
   font-weight: 600;
   text-decoration: none;
-  color: white;
+  color: var(--ice-dark);
   transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-size: 1.1rem;
 }
 
 .contact-email:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
-  color: white;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateY(-3px);
+  color: var(--ice-dark);
   text-decoration: none;
+  box-shadow: 0 8px 25px rgba(90, 155, 212, 0.2);
 }
 
 .scroll-indicator {
@@ -360,9 +448,29 @@ body {
   left: 0;
   width: 0%;
   height: 4px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--ice-gradient-1) 0%, var(--ice-accent) 100%);
   z-index: 1000;
   transition: width 0.1s ease;
+  box-shadow: 0 2px 10px rgba(90, 155, 212, 0.3);
+}
+
+/* Typography Improvements */
+p {
+  font-weight: 400;
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--ice-dark);
+}
+
+h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: var(--ice-accent);
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 768px) {
@@ -371,6 +479,28 @@ body {
   }
   
   .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .card-body {
+    padding: 2rem;
+  }
+  
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .back-btn {
+    top: 1rem;
+    left: 1rem;
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
     font-size: 2rem;
   }
   
@@ -378,8 +508,8 @@ body {
     padding: 1.5rem;
   }
   
-  .pricing-grid {
-    grid-template-columns: 1fr;
+  .card-header {
+    padding: 2rem 1.5rem;
   }
 }
 </style>
@@ -388,9 +518,9 @@ body {
 <div class="background-slideshow"></div>
 <div class="overlay"></div>
 
- <button class="back-btn" onclick="goBack()">
-                <span>←</span>
-            </button>
+<button class="back-btn" onclick="goBack()">
+    <span>←</span>
+</button>
 
 <div class="container">
   <div class="hero-section">
@@ -406,7 +536,7 @@ body {
     
     <div class="card-body">
       <div class="section">
-        <p style="text-align: center; font-size: 1.1rem; color: #666; margin-bottom: 2rem;">
+        <p style="text-align: center; font-size: 1.15rem; color: var(--ice-light-text); margin-bottom: 2.5rem; font-weight: 400;">
           Estos términos y condiciones se aplican a la aplicación web interactiva desarrollada para el 
           monitoreo y presentación de atractivos turísticos en la ciudad de San Miguel de Allende.
         </p>
@@ -426,7 +556,7 @@ body {
         <p>La Aplicación busca abordar la problemática de la fragmentación de la información turística que los turistas enfrentan actualmente, la cual se encuentra dispersa en múltiples plataformas y fuentes no especializadas.</p>
 
         <div class="highlight-box">
-          <h3 style="color: #667eea; margin-bottom: 1rem;">📋 Características principales:</h3>
+          <h3 style="color: var(--ice-accent); margin-bottom: 1.5rem;"> Características principales:</h3>
           <ul class="feature-list">
             <li><strong>Categorías detalladas:</strong> Contenido organizado por intereses específicos como comida, fiesta, bebidas, relax y sitios históricos.</li>
             <li><strong>Comunidad activa:</strong> Espacio para comentarios y valoraciones</li>
@@ -497,7 +627,7 @@ body {
         </div>
 
         <div class="highlight-box">
-          <h3 style="color: #667eea; margin-bottom: 1rem;">📊 Comparativo de Ahorro Anual:</h3>
+          <h3 style="color: var(--ice-accent); margin-bottom: 1.5rem;">📊 Comparativo de Ahorro Anual:</h3>
           <ul class="standard-list">
             <li><strong>Pago mensual durante 12 meses:</strong> $580 × 12 = $6,960 MXN</li>
             <li><strong>Pago anual por adelantado:</strong> $5,800 MXN</li>
@@ -541,35 +671,4 @@ body {
 
       <div class="section">
         <h2 class="section-title">CAMBIOS EN LOS TÉRMINOS</h2>
-        <p>El Proveedor del Servicio puede actualizar periódicamente estos Términos y Condiciones. Se recomienda revisar esta página regularmente para cualquier cambio. Se le notificará de cualquier cambio publicando los nuevos Términos y Condiciones en esta página.</p>
-      </div>
-
-      <div class="section">
-        <h2 class="section-title">LEGISLACIÓN APLICABLE</h2>
-        <p>Estos Términos y Condiciones y su uso de la Aplicación se rigen e interpretan de acuerdo con las leyes aplicables en México, dada la ubicación del proyecto en San Miguel de Allende, México.</p>
-
-        <p>Las partes se someten a la jurisdicción de los tribunales competentes en México, renunciando a cualquier otro fuero que pudiera corresponderles en virtud de sus domicilios o por cualquier otra causa.</p>
-      </div>
-
-      <div class="contact-section">
-        <h3 class="contact-title">📞 CONTACTO</h3>
-        <p>Si tiene alguna pregunta o sugerencia sobre estos Términos y Condiciones, puede contactar al Proveedor del Servicio:</p>
-        <br>
-        <div style="margin-bottom: 1rem;"><strong>ExploreTech</strong></div>
-        <a href="mailto:exploreTechSupport&#64;gmail.com" class="contact-email">
-          exploreTechSupport&#64;gmail.com
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-// Scroll indicator
-window.addEventListener('scroll', () => {
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  const scrolled = (scrollTop / scrollHeight) * 100;
-  document.querySelector('.scroll-indicator').style.width = scrolled + '%';
-});
-</script>  
+        <p>El Proveedor del Servicio puede actualizar periódicamente estos Términos y Condiciones. Se recomienda revisar esta página regularmente para cualquier cambio. Se le notificará de cualquier cambio publican
