@@ -52,7 +52,7 @@ const routes: Routes = [
   { path: 'home-anunciante/:id_usuario/:id_filtrado', component: HomeAnuncianteComponent },
   { path: 'home-administrador/:id_usuario', component: HomeAdministradorComponent },
   { path: 'home-invitado-usuario/:id_usuario', component: HomeInvitadoUsuarioComponent },
-  { path: 'crear-actualizar-anuncio/:id_usuaradministradorio', component: CrearActualizarAnuncioComponent },
+  { path: 'crear-actualizar-anuncio/:id_usuario', component: CrearActualizarAnuncioComponent },
   { path: 'crear-actualizar-anuncio/:id_anuncio/:id_usuario', component: CrearActualizarAnuncioComponent },
   { path: 'vista-detallada-anuncio/:id_anuncio/:id_usuario', component: VistaDetalladaAnuncioComponent },
   { path: 'navbar-invitado-usuario', component: navbarInvitadoUsuarioComponent },

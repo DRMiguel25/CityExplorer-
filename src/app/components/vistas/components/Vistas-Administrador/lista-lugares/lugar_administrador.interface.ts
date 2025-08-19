@@ -30,8 +30,17 @@ export interface LugarAdministrador {
   updated_at: string;
   last_login: string | null;
 
-  promedioValoracion?: number | string;
+  // Extras / opcionales
+  promedioValoracion?: number | null;
   totalComentarios?: number;
+  estado_texto?: string;
+
+  categoria?: {
+    id_categoria: number;
+    nombre: string;
+    descripcion: string;
+  };
+
   direccion?: {
     calle: string;
     numero_int?: string | null;
@@ -52,5 +61,4 @@ export interface LugarAdministrador {
     rol: { id_rol: number; nombre: string; descripcion: string };
     last_login?: string;
   };
-
 }

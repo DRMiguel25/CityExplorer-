@@ -111,11 +111,15 @@
                 </div>
 
                 <div class="place-actions">
-                    <button class="action-btn block-btn">
-                        🚫 Bloquear
+                    <button 
+                        class="action-btn block-btn" 
+                        *ngIf="lugar.activo"
+                        (click)="toggleLugar(lugar)">
+                        {{ lugar.bloqueado ? '✅ Desbloquear' : '🚫 Bloquear' }}
                     </button>
-                    <button class="action-btn delete-btn">
-                        🗑️ Eliminar
+                    
+                    <button class="action-btn delete-btn" (click)="eleminarLugar(lugar)">
+                        {{ lugar.activo ? '🚫 Cancelar membresia' : '✅ Reanudar membresia' }}
                     </button>
                 </div>
             </div>

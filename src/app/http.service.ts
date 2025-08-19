@@ -223,4 +223,23 @@ Service_Get_Lugares_Administrador(): Observable<any> {
   });
 }
 
+Service_toggle_Lugares_Administrador(id: number): Observable<any> {
+  console.log(`mandando a llamar a la ruta: ${this._url}/admin/lugares/${id}/toggle`);
+  return this.http.patch(`${this._url}/admin/lugares/${id}/toggle`, {
+    headers: this.getHeaders()
+  });
+}
+
+Service_delete_Lugar_Administrador(id: number): Observable<any> {
+  return this.http.delete(`${this._url}/admin/lugares/${id}`, {
+    headers: this.getHeaders()
+  });
+}
+
+Service_restaurar_Lugar_Administrador(id: number): Observable<any> {
+  return this.http.patch(`${this._url}/admin/lugares/${id}/restaurar`, {
+    headers: this.getHeaders()
+  });
+}
+
 }

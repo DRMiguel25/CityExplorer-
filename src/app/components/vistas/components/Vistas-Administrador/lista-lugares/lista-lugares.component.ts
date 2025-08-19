@@ -87,12 +87,15 @@ export class ListaLugaresComponent implements OnInit{
   }
 
 loadLugares(): void {
-  this.service.Service_Get('lugar', '').subscribe({
-    next: (lugares: any[]) => {
-      console.log('📩 Respuesta cruda de lugares:', lugares);
+  this.service.Service_Get_Lugares_Administrador().subscribe({
+    next: (respuesta: any) => {
+      console.log('📩 Respuesta cruda de lugares:', respuesta);
 
-      // Adaptar a LugarAdministrador
-      const adaptados: LugarAdministrador[] = lugares.map(l => ({
+      // ✅ obtener array real
+      const lugares = respuesta?.lugares?.data || [];
+
+      // ✅ map directamente sobre "lugares" (que ya es array)
+      const adaptados: LugarAdministrador[] = lugares.map((l: any) => ({
         id_lugar: l.id_lugar,
         id_usuario: l.id_usuario,
         id_categoria: l.id_categoria,
@@ -117,29 +120,32 @@ loadLugares(): void {
         created_at: l.created_at,
         updated_at: l.updated_at,
         last_login: l.last_login ?? null,
-        
-        // Opcionales
+
+        // Extras
         promedioValoracion: l.promedioValoracion ?? 0,
         totalComentarios: l.totalComentarios ?? 0,
         direccion: l.direccion ?? undefined,
-        usuario: l.usuario ?? undefined
+        usuario: l.usuario ?? undefined,
+        categoria: l.categoria ?? undefined,
+        estado_texto: l.estado_texto ?? null
       }));
+
 
       console.log('📦 Lugares procesados:', adaptados);
 
+      // Guardar en la UI
       this.lugares = adaptados;
-      this.totalLugares = adaptados.length;
-      this.totalDisponibles = adaptados.filter(l => l.activo && !l.bloqueado).length;
-      this.totalBloqueados = this.totalLugares - this.totalDisponibles;
-      // Si quieres que la tabla se muestre de una vez
+      this.totalLugares = respuesta?.resumen?.total_lugares ?? adaptados.length;
+      this.totalDisponibles = this.lugares.filter(l => l.activo).length;
+      this.totalBloqueados = this.lugares.filter(l => !l.activo).length;
+
+      // Mostrar en tabla/tabla filtrada
       this.aplicarFiltros();
 
+      // Cargar datos extra (si los necesitas todavía)
       this.lugares.forEach(lugar => {
-        // Cargar dirección
         this.obtenerDireccion(lugar);
-        // Cargar info de usuario
         this.cargarInfoUsuario(lugar);
-        // Cargar info de valoraciones
         this.obtenerValoracionesPorLugar(lugar);
       });
     },
@@ -148,6 +154,7 @@ loadLugares(): void {
     }
   });
 }
+
 
 
   getInitials(nombre?: string): string {
@@ -188,7 +195,7 @@ loadLugares(): void {
         const promedio = suma / comentarios.length;
 
         // Guardamos en el mismo objeto lugar
-        lugar.promedioValoracion = promedio.toFixed(1); // opcional: 1 decimal
+        lugar.promedioValoracion = parseFloat(promedio.toFixed(1)); // opcional: 1 decimal
         lugar.totalComentarios = comentarios.length;
       } else {
         lugar.promedioValoracion = 0;
@@ -276,6 +283,81 @@ getTiempoTranscurrido(fecha: string | null): string {
   if (diffMeses === 1) return 'Hace 1 mes';
   
   return `Hace ${diffMeses} meses`;
+}
+
+toggleLugar(lugar: LugarAdministrador): void {
+  Swal.fire({
+    title: '¿Seguro?',
+    text: `Vas a ${lugar.bloqueado ? 'desbloquear' : 'bloquear'} el lugar: "${lugar.nombre}".`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: `Sí, ${lugar.bloqueado ? 'desbloquear' : 'bloquear'}`,
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.service.Service_toggle_Lugares_Administrador(lugar.id_lugar).subscribe({
+        next: (resp: any) => {
+          console.log('✅ Toggle realizado:', resp);
+
+          // Cambiar estado local (importante!)
+          lugar.bloqueado = !lugar.bloqueado;
+
+          Swal.fire(
+            'Hecho',
+            `El lugar "${lugar.nombre}" ahora está ${lugar.bloqueado ? 'bloqueado' : 'desbloqueado'}.`,
+            'success'
+          );
+
+          // 🔹 Reaplicar filtros para refrescar listado
+          this.aplicarFiltros();
+        },
+        error: (err) => {
+          console.error('❌ Error al hacer toggle:', err);
+          Swal.fire('Error', 'No se pudo cambiar el estado del lugar', 'error');
+        }
+      });
+    }
+  });
+}
+
+//una palabra para nombrar la accionnde que se actica y descativa un lugar en una lista, no se elimina, solo cambia de estado
+
+eleminarLugar(lugar: LugarAdministrador): void {
+  const accion = lugar.activo ? 'Cancelar la membresia' : 'Reanudar la membresia';
+
+  Swal.fire({
+    title: '¿Seguro?',
+    text: `Vas a ${accion} del lugar: "${lugar.nombre}".`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: `Sí, ${accion}`,
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const servicio = lugar.activo
+        ? this.service.Service_delete_Lugar_Administrador(lugar.id_lugar)
+        : this.service.Service_restaurar_Lugar_Administrador(lugar.id_lugar);
+
+      servicio.subscribe({
+        next: (resp: any) => {
+          Swal.fire(
+            'Hecho',
+            `El lugar "${lugar.nombre}" ha sido ${accion === 'Cancelar la membresia' ? 'Cancelar la membresia' : 'Reanudar la membresia'}.`,
+            'success'
+          );
+
+          // Actualizar estado local para refrescar la lista sin recargar
+          lugar.activo = !lugar.activo;
+          lugar.bloqueado = lugar.activo ? false : lugar.bloqueado; // opcional, si se quiere desbloquear al restaurar
+          this.aplicarFiltros();
+        },
+        error: (err) => {
+          console.error('❌ Error al procesar acción:', err);
+          Swal.fire('Error', `No se pudo ${accion} el lugar.`, 'error');
+        }
+      });
+    }
+  });
 }
 
 }

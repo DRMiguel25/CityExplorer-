@@ -355,6 +355,7 @@ export class CrearActualizarAnuncioComponent implements OnInit {
   }
 
   goBack(): void {
+    console.log("navegando a home-anunciante con el id: "+this.id_usuario)
     this.router.navigate(['/home-anunciante', this.id_usuario]);
   }
 
