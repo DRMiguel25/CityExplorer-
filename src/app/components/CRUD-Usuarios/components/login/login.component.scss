@@ -1,128 +1,258 @@
-/* Fondo principal */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 48px;
+    color: #333;
+}
+
+/* Fondo principal con efecto parallax */
 .background-slideshow {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('https://imgs.search.brave.com/XG96xVtOsvlc3t1btHIcTKIv3eA3dGDV_yreLYcfpNo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9lc2Nh/cGFkYXMubWV4aWNv/ZGVzY29ub2NpZG8u/Y29tLm14L3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIxLzAyL1Bh/cnJvcXVpYS1kZS1T/YW4tTWlndWVsLmpw/Zw') no-repeat center center fixed;
+    background: url('https://escapadas.mexicodesconocido.com.mx/wp-content/uploads/2021/02/Parroquia-de-San-Miguel.jpg') no-repeat center center fixed;
     background-size: cover;
-    z-index: -2; /* Coloca esta capa detrás de todo */
+    z-index: -3;
+    filter: blur(3px);
 }
 
-/* Capa semi-transparente */
+/* Capa de overlay con gradiente azul */
 .overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.325); /* Ajusta la opacidad según desees */
-    z-index: -1; /* Detrás del container pero encima del fondo */
+    background: linear-gradient(135deg, 
+        rgba(240, 248, 255, 0.3) 0%,
+        rgba(234, 246, 251, 0.4) 25%,
+        rgba(230, 241, 247, 0.5) 50%,
+        rgba(237, 243, 249, 0.4) 75%,
+        rgba(240, 248, 255, 0.3) 100%);
+    z-index: -2;
+    backdrop-filter: blur(1px);
 }
 
-/* Contenedor principal */
+/* Contenedor principal rediseñado */
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 15px;
-    padding: 35px;
-    border-radius: 12px;
-    background-color:  rgba(255, 255, 255, 0.838);;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-    width: 380px; /* Ancho fijo */
-    max-width: 100%; /* Responsivo */
-    margin: 0 auto; /* Centra horizontalmente */
-    position: absolute; /* Posición absoluta para controlar ubicación */
-    top: 50%; /* Centrado vertical */
-    left: 50%; /* Centrado horizontal */
-    transform: translate(-50%, -50%); /* Corrige el centrado */
-    z-index: 1; /* Sobre las capas de fondo */
-    transition: transform 0.6s ease-in-out; /* Animación más suave */
+    gap: 20px;
+    padding: 40px 35px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, 
+        rgba(240, 248, 255, 0.95) 0%,
+        rgba(243, 247, 250, 0.92) 50%,
+        rgba(238, 247, 251, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(240, 248, 255, 0.6);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.1),
+        0 10px 30px rgba(240, 248, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    width: 400px;
+    max-width: 90%;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .container:hover {
-    transform: translate(-50%, -52%); /* Movimiento sutil en hover */
+    transform: translate(-50%, -52%) scale(1.02);
+    box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.15),
+        0 15px 40px rgba(240, 248, 255, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
+/* Logo mejorado */
 .logo img {
     border-radius: 50%;
-    box-shadow: none; /* Sin sombra inicialmente */
-    transition: box-shadow 0.4s ease-in-out; /* Transición suave para la sombra */
+    border: 3px solid #F0F8FF;
+    box-shadow: 0 8px 25px rgba(240, 248, 255, 0.6);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #F2F8FC;
+    padding: 5px;
 }
 
 .container:hover .logo img {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra en hover */
+    box-shadow: 
+        0 12px 35px rgba(240, 248, 255, 0.8),
+        0 6px 15px rgba(0, 123, 191, 0.2);
+    transform: scale(1.05) rotate(5deg);
 }
 
+/* Títulos con gradiente */
 h1 {
-    margin: 10px 0 0;
-    color: #333;
-    font-size: 28px;
-    font-weight: 600;
-    width: 100%;
+    margin: 15px 0 5px;
+    background: linear-gradient(135deg, #0089a1, #1a73e8, #00a3bf);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 10px rgba(240, 248, 255, 0.5);
 }
 
 p {
-    margin: 5px 0 15px;
-    color: #666;
+    margin: 5px 0 20px;
+    color: #4a5568;
     font-size: 16px;
-    width: 100%;
+    font-weight: 400;
+    opacity: 0.8;
 }
 
+/* Botones rediseñados */
 .button {
     width: 100%;
-    padding: 12px;
+    padding: 14px 20px;
     border: none;
-    border-radius: 6px;
+    border-radius: 12px;
     cursor: pointer;
-    font-size: 15px;
-    font-weight: 500;
-    margin-bottom: 10px;
-    transition: all 0.3s ease-in-out; /* Animación suave para los botones */
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s;
+}
+
+.button:hover::before {
+    left: 100%;
 }
 
 .login {
-    background-color: #00a3bf;
+    background: linear-gradient(135deg, #00a3bf, #0089a1);
     color: white;
+    box-shadow: 0 6px 20px rgba(0, 163, 191, 0.3);
 }
 
 .login:hover {
-    background-color: #0089a1;
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #0089a1, #006b7d);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 163, 191, 0.4);
 }
 
 .register {
-    background-color: #1a73e8;
+    background: linear-gradient(135deg, #1a73e8, #0d62d1);
     color: white;
+    box-shadow: 0 6px 20px rgba(26, 115, 232, 0.3);
 }
 
 .register:hover {
-    background-color: #0d62d1;
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #0d62d1, #0b56c4);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(26, 115, 232, 0.4);
 }
 
+/* Botón invitado mejorado */
 .guest {
-    background: none;
-    border: none;
-    color: #666;
+    background: rgba(240, 248, 255, 0.5);
+    border: 2px solid transparent;
+    color: #4a5568;
     text-decoration: none;
     cursor: pointer;
-    margin-top: 5px;
+    margin-top: 10px;
     font-size: 14px;
-    transition: color 0.3s ease-in-out; /* Animación suave para el texto */
-    padding: 5px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
 }
 
 .guest:hover {
     color: #1a73e8;
-    text-decoration: underline;
+    background: #F0F8FF;
+    border-color: rgba(26, 115, 232, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(240, 248, 255, 0.6);
 }
 
+/* Efectos de partículas flotantes */
+.container::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 25px;
+    background: linear-gradient(45deg, 
+        rgba(240, 248, 255, 0.8), 
+        rgba(234, 246, 251, 0.6), 
+        rgba(237, 243, 249, 0.8));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.container:hover::after {
+    opacity: 1;
+}
+
+/* Responsivo mejorado */
 @media (max-width: 500px) {
     .container {
-        width: 80%; /* Ajusta el ancho en pantallas pequeñas */
+        width: 95%;
+        padding: 30px 25px;
     }
+    
+    h1 {
+        font-size: 28px;
+    }
+    
+    .button {
+        padding: 12px 16px;
+        font-size: 15px;
+    }
+}
+
+/* Animación de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -40%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.container {
+    animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
