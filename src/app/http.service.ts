@@ -241,5 +241,10 @@ Service_restaurar_Lugar_Administrador(id: number): Observable<any> {
     headers: this.getHeaders()
   });
 }
+Service_Cerrar_seccion(): Observable<any> {
+  return this.http.post(`${this._url}/logout`, {
+    headers: this.getHeaders()
+  });
+}
 
 }

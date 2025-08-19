@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpLaravelService } from '../../../../../http.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'alerta-info-usuario',
@@ -39,11 +40,23 @@ export class AlertaInfoUsuarioComponent implements OnInit {
   }
 
   cerrarSesion(): void {
-    console.log('Navegando a login...');
-    this.router.navigate(['/login']).then(() => {
-      this.dialogRef.close();
-    });
-  }
+  console.log('Intentando cerrar sesión...');
+
+  this.apiService.Service_Cerrar_seccion().subscribe({
+    next: (resp: any) => {
+      console.log('✅ Sesión cerrada correctamente:', resp);
+      // Navegar a login y cerrar diálogo
+      this.router.navigate(['/login']).then(() => {
+        this.dialogRef.close();
+      });
+    },
+    error: (err) => {
+      console.error('❌ Error al cerrar sesión:', err);
+      // Opcional: mostrar alerta al usuario
+      Swal.fire('Error', 'No se pudo cerrar sesión, intenta de nuevo.', 'error');
+    }
+  });
+}
 
   vistaInfoUsuario(): void {
     console.log('Navegando a modificar información del usuario ' + this.data.id_usuario + '...');

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpLaravelService } from "../../../../../http.service";
 import { Lugar } from './lugar.interface';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'estadisticas',
@@ -89,9 +90,23 @@ export class estadisticasComponent implements OnInit {
     this.router.navigate(['/crear-actualizar-anuncio', this.idUsuario]);
   }
 
-  cerrarSesion() {
-    this.router.navigate(['/login']);
-  }
+    cerrarSesion(): void {
+      console.log('Intentando cerrar sesión...');
+    
+      this.httpLaravelService.Service_Cerrar_seccion().subscribe({
+        next: (resp: any) => {
+          console.log('✅ Sesión cerrada correctamente:', resp);
+          // Navegar a login y cerrar diálogo
+          this.router.navigate(['/login'])
+        },
+        error: (err) => {
+          console.error('❌ Error al cerrar sesión:', err);
+          // Opcional: mostrar alerta al usuario
+          Swal.fire('Error', 'No se pudo cerrar sesión, intenta de nuevo.', 'error');
+        }
+      });
+    }
+  
 
   vistaDetalladaAnuncio(id: number | string) {
     const idEntero = parseInt(id.toString(), 10);

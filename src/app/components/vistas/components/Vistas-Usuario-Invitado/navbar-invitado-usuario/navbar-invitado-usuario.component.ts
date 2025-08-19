@@ -28,7 +28,9 @@ export class navbarInvitadoUsuarioComponent {
       const id = params.get('id_usuario');
       this.id_usuario = id ? Number(id) : 0;
       console.log('👤 ID de usuario desde la URL:', this.id_usuario);
-      this.cargarInfoUsuario();
+      if (this.id_usuario != 0){
+        this.cargarInfoUsuario();
+      }
     });
 
     this.logLoadTime();  // 👈 mide tiempo de carga
