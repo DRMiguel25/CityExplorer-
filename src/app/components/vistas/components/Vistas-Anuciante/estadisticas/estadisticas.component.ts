@@ -399,7 +399,7 @@ calcularAltura(tiempoPromedio: string | number): string {
   return (tiempo * 5) + 'px';
 }
 
-irAayuda(){
+irAyuda(){
   this.router.navigate(['/ayuda-anunciante', this.idUsuario]);
 }
 

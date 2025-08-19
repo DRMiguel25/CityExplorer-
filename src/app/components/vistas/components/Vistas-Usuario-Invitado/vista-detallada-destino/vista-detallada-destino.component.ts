@@ -27,6 +27,7 @@ export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
  
  id_usuario: string | null = null; // Aquí guardamos el ID del usuario
  id_destino: string | null = null; // Aquí guardamos el ID del destino
+ pagina_regreso: string | null = null;
 
  categoriasOpciones: any[] = []; 
 
@@ -50,6 +51,7 @@ export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
   this.route.paramMap.subscribe(params => {
    this.id_destino = this.route.snapshot.paramMap.get('id_destino');
    this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
+   this.pagina_regreso = this.route.snapshot.paramMap.get('pagina-regreso');
    
    if (this.id_destino) {
     this.obtenerLugar(+this.id_destino);
@@ -215,8 +217,22 @@ export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
 
  // Método de retroceso
  goBack() {
-  console.log("navegardo a home-invitado-usuario", this.id_usuario);
+  if(this.pagina_regreso == "1"){
+    this.router.navigate(['/destino-vista', this.id_usuario]);
+    console.log("navegardo a destino-vista", this.id_usuario);
+  }
+  else if(this.pagina_regreso == "2"){
+    this.router.navigate(['/categorias', this.id_usuario]);
+    console.log("navegardo a categorias", this.id_usuario);
+  }
+  else if(this.pagina_regreso == "3"){
+    this.router.navigate(['/favoritos-usuarios', this.id_usuario]);
+    console.log("navegardo a favoritos-usuarios", this.id_usuario);
+  }
+  else{
    this.router.navigate(['/home-invitado-usuario', this.id_usuario]); // Navega a la página de inicio del usuario invitado
+   console.log("navegardo a home-invitado-usuario", this.id_usuario);
+  }
  }
 
  // Método para obtener el nombre de la categoría basado en el ID

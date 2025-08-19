@@ -89,7 +89,7 @@ export class FavoritosUsuariosComponent implements OnInit {
     return;
   }
 
-  this.router.navigate(['/vista-detallada-destino', idEntero, this.id_usuario]);
+  this.router.navigate(['/vista-detallada-destino', idEntero, this.id_usuario, 3]);
 }
 
 logLoadTime() {

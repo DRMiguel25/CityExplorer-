@@ -45,6 +45,7 @@ const routes: Routes = [
   { path: 'categoria-vista/:categoria/:id_usuario', component: CategoriaVistaComponent },
   { path: 'categorias', component: CategoriasComponent },
   { path: 'categorias/:id_usuario', component: CategoriasComponent },
+  { path: 'vista-detallada-destino/:id_destino/:id_usuario/:pagina-regreso', component: VistaDetalladaDestinoComponent },
   { path: 'vista-detallada-destino/:id_destino/:id_usuario', component: VistaDetalladaDestinoComponent },
   { path: 'vista-detallada-destino/:id_destino', component: VistaDetalladaDestinoComponent },
   { path: 'home-anunciante/:id_usuario', component: HomeAnuncianteComponent },

@@ -70,7 +70,7 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
       console.error('ID inválido:', id);
       return;
     }
-    this.router.navigate(['/vista-detallada-destino', idEntero, this.id_usuario]);
+    this.router.navigate(['/vista-detallada-destino', idEntero, this.id_usuario, 1]);
   }
 
   private initBackgroundChange(): void {

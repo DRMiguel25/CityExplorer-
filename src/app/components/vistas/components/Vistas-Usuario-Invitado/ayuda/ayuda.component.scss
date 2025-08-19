@@ -4,16 +4,6 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #F0F8FF 0%, #EAF6FB 100%);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
 .background-overlay {
     position: fixed;
     top: 0;
@@ -37,15 +27,28 @@ body {
     }
 }
 
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #F0F8FF 0%, #EAF6FB 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center; /* 👈 fuerza a que el texto sea centrado */
+}
+
 .container {
-    max-width: 800px;
-    width: 100%;
-    background: #F2F8FC;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(70, 130, 200, 0.1);
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    border: 1px solid #E6F1F7;
+  max-width: 800px;
+  width: auto; /* 👈 no forzar 100% */
+  background: #F2F8FC;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(70, 130, 200, 0.1);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  border: 1px solid #E6F1F7;
+  padding: 30px;
+  margin: auto; /* 👈 asegura centrado */
 }
 
 .header {

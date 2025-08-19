@@ -184,7 +184,7 @@ mostrarNoPagados(): void {
   console.log('❌ Mostrando anuncios no pagados:', this.lugares);
 }
 
-irAayuda(){
+irAyuda(){
   this.router.navigate(['/ayuda-anunciante', this.idUsuario]);
 }
 

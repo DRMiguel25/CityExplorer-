@@ -108,7 +108,7 @@ export class CategoriaVistaComponent implements OnInit {
       return;
     }
     console.log("navegando a vista-detallada-destino", idEntero, this.id_usuario);
-    this.router.navigate(['/vista-detallada-destino', idEntero, this.id_usuario]);
+    this.router.navigate(['/vista-detallada-destino', idEntero, this.id_usuario, 2]);
   }
 
   logLoadTime() {

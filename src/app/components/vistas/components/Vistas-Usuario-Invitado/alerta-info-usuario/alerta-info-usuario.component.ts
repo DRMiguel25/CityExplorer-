@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class AlertaInfoUsuarioComponent implements OnInit {
   usuario: any = null; // Aquí vamos a guardar la info para mostrarla en el HTML
-
+  
   constructor(
     private router: Router,
     private apiService: HttpLaravelService,

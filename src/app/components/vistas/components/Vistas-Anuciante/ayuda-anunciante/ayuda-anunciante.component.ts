@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ayuda-anunciante',
@@ -7,8 +9,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ayuda-anunciante.component.scss']
 })
 export class AyudaAnuncianteComponent implements OnInit{
+  idUsuario: number = 0;
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+  ){}
 
   ngOnInit(): void {
+    this.idUsuario = Number(this.route.snapshot.paramMap.get('id_usuario'));
+    console.log("id del usuario: "+this.idUsuario);
+    
     this.logLoadTime();  // 👈 mide tiempo de carga
   }
 
@@ -27,4 +38,9 @@ export class AyudaAnuncianteComponent implements OnInit{
     }
   });
 }
+
+goBack(){
+  this.router.navigate([`/home-anunciante`,this.idUsuario]);
+}
+
 }
