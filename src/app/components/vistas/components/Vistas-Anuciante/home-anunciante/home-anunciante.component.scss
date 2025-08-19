@@ -522,3 +522,10 @@ body {
   background-color: #5BA7F7; /* Azul Bootstrap */
   color: white;
 }
+.logo-text {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #5BA7F7;
+  letter-spacing: 1px;
+  white-space: nowrap; /* evita que se parta en dos líneas */
+}
