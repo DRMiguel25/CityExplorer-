@@ -256,13 +256,13 @@ body {
 }
 
 .icon-tip::before {
-    content: '📱';
+    content: '📝';
     font-size: 2rem;
     filter: drop-shadow(0 2px 8px rgba(107, 163, 214, 0.3));
 }
 
-.icon-local::before {
-    content: '💡';
+.icon-info::before {
+    content: '📊';
     font-size: 2rem;
     filter: drop-shadow(0 2px 8px rgba(107, 163, 214, 0.3));
 }
@@ -348,7 +348,7 @@ body {
 }
 
 .icon-remember::before {
-    content: '🧪';
+    content: '📧';
     font-size: 1.5rem;
     filter: drop-shadow(0 2px 8px rgba(255, 165, 0, 0.4));
 }
@@ -404,7 +404,7 @@ body {
     <div class="container">
         <button class="back-btn" onclick="window.history.back()">
             <span>←</span>
-            
+            Volver
         </button>
 
         <div class="header">
@@ -413,38 +413,47 @@ body {
         
         <div class="content">
             <div class="welcome-section">
-                <h2>Bienvenido a City Explorer la mejor guía de San Miguel de Allende</h2>
-                <p>Esta app te ayuda a descubrir los mejores lugares para comer, tomar un café, pasear, y disfrutar de esta joya colonial.</p>
+                <h2>Bienvenido a CityExplorer, la plataforma ideal para promocionar tu negocio o lugar de interés</h2>
+                <p>CityExplorer es la herramienta perfecta para descubrir y promocionar lugares en tu comunidad. Aquí encontrarás todo lo que necesitas saber para crear y gestionar tu anuncio de forma efectiva.</p>
             </div>
             
             <div class="section">
-                <h3 class="icon-tip">¿Cómo usar la aplicación?</h3>
+                <h3 class="icon-tip">¿Cómo crear un anuncio?</h3>
                 <ul>
-                    <li>Usa navbar para moverte entre las diferentes secciones de la página.</li>
-                    <li>Filtra por categoría o busca entre todos los lugares disponibles.</li>
-                    <li>Puedes ver todos los detalles de cada lugar si presionas sobre él.</li>
+                    <li><strong>Haz clic en el botón “Crear Anuncio”</strong> ubicado en la parte superior de la página.</li>
+                    <li><strong>Completa los siguientes campos obligatorios:</strong>
+                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                            <li><strong>Nombre del Lugar:</strong> Escribe el nombre oficial del establecimiento o sitio (ej. Parroquia de San Miguel Arcángel).</li>
+                            <li><strong>Descripción:</strong> Proporciona información clara y atractiva sobre el lugar (historia, características, servicios, etc.).</li>
+                            <li><strong>Imágenes:</strong> Selecciona al menos una imagen representativa. Haz clic en “Examinar” para subir archivos desde tu dispositivo.</li>
+                            <li><strong>Página web (opcional):</strong> Si el lugar tiene sitio web, ingrésalo aquí.</li>
+                            <li><strong>Número telefónico:</strong> Proporciona un contacto válido.</li>
+                            <li><strong>Horario de apertura y cierre:</strong> Indica las horas en las que el lugar está disponible al público.</li>
+                            <li><strong>Días de servicio:</strong> Selecciona los días en que opera (por ejemplo, Lunes a Domingo).</li>
+                            <li><strong>Categoría:</strong> Elige la categoría adecuada (Iglesias, Restaurantes, Artesanías, etc.).</li>
+                            <li><strong>Dirección:</strong> Completa todos los campos: Calle, Número Exterior, Colonia, Código Postal y Zona.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Haz clic en “Guardar”</strong> para publicar tu anuncio.</li>
                 </ul>
             </div>
             
             <div class="section">
-                <h3 class="icon-local">Tips locales</h3>
+                <h3 class="icon-info">Más información</h3>
                 <ul>
-                    <li>Algunos lugares cierran entre semana, ¡verifica los horarios antes de ir!</li>
-                    <li>No olvides llevar efectivo: algunos sitios no aceptan tarjeta.</li>
-                    <li>¿Eres amante de la fotografía? El atardecer desde el mirador es imperdible.</li>
-                    <li>Los fines de semana el centro se llena, ve con tiempo si quieres buen lugar para estacionarte.</li>
-                    <li>Pregunta por menús del día: muchos lugares tienen opciones deliciosas y más baratas.</li>
-                    <li>El tranvía turístico es buena opción si quieres conocer sin caminar tanto.</li>
-                    <li>Si buscas algo auténtico, prueba los mercados locales (como el Mercado de Artesanías).</li>
-                    <li>El clima puede cambiar rápido, lleva una chamarra ligera aunque veas sol.</li>
-                    <li>Evita los tacos cerca del Jardín Principal... y mejor ve a los puestos que recomiendan los locales 😉</li>
-                    <li>Muchos eventos culturales son gratuitos, revisa la cartelera de la Casa de la Cultura o la parroquia.</li>
+                    <li><strong>Tipos de anuncios:</strong> 
+                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                            <li><strong>Anuncios Pagados:</strong> En esta sección podras ver tus anuncios pagados y que pueden ver el publico.</li>
+                            <li><strong>Anuncios No Pagados:</strong> No estaran visibles tus anuncios al publico.</li>
+                        </ul>
+                    </li>
+                    
                 </ul>
             </div>
         </div>
         
         <div class="footer">
-            <p class="icon-remember">¡Recuerda! Esta es una versión de prueba</p>
+            <p class="icon-remember">¿Tienes dudas? Contáctanos: exploreTechSupport&#64;gmail.com</p>
         </div>
     </div>
 </body>
