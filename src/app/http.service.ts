@@ -247,4 +247,9 @@ Service_Cerrar_seccion(): Observable<any> {
   });
 }
 
+Service_Get_lugares_anunciante(): Observable<any> {
+  return this.http.get(`${this._url}/lugar/listaLugares`, {
+    headers: this.getHeaders()
+  });
+}
 }

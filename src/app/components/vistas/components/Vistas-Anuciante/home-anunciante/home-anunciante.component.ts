@@ -61,7 +61,7 @@ irAEstadisticas() {
 
   loadLugares(): void {
     console.log('🔄 Iniciando carga de lugares...');
-    this.httpLaravelService.Service_Get('lugar', '').subscribe(
+    this.httpLaravelService.Service_Get_lugares_anunciante().subscribe(
       (data: Lugar[]) => {
         console.log('📦 Datos recibidos desde el backend:', data);
 

@@ -82,7 +82,7 @@ export class ModificarInfoUsuarioComponent implements OnInit {
         });
 
         if (data.foto_perfil) {
-          //this.fotoPreviewUrl = 'http://localhost:8001/' + this.usuarioForm.value.foto_perfil;
+          this.fotoPreviewUrl = 'http://localhost:8001/storage/' + this.usuarioForm.value.foto_perfil;
         }
 
         console.log("info del usuario:", this.usuarioForm.value);
