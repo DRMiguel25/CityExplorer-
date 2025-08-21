@@ -15,24 +15,30 @@ body {
 /* HEADER */
 .header {
     background: linear-gradient(90deg, #f0f8ff, #f0f8ff);
-    padding: 1rem 2rem;
+    padding: 1rem 0;
     box-shadow: 0 4px 20px rgba(44, 82, 130, 0.1);
     border-bottom: 1px solid #e6f0fa;
+    position: relative;
+    top: 0;
+    z-index: 1000;
 }
 
 .header-content {
-    max-width: 1200px;
-    margin: 0 auto;
+    margin: 0;
     display: flex;
-    justify-content: space-between; /* LOGO IZQ - PERFIL DER */
     align-items: center;
+    justify-content: space-between; /* Logo a la izquierda, admin a la derecha */
+    width: 100%;
+    padding: 0 1rem;
 }
+
 
 /* LOGO Y NOMBRE */
 .logo-section {
     display: flex;
     align-items: center;
     gap: 15px;
+    margin-left: 0;
 }
 
 .logo {
@@ -59,7 +65,7 @@ body {
 
 /* PERFIL ADMIN */
 .admin-info {
-    display: flex;
+ display: flex;
     align-items: center;
     gap: 15px;
     background: #f3f7fa;
@@ -68,6 +74,10 @@ body {
     border: 1px solid #e6f0fa;
     cursor: pointer;
     transition: background 0.3s ease;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .admin-info:hover {
@@ -78,7 +88,6 @@ body {
     width: 55px;
     height: 55px;
     object-fit: cover;
-    background: #4299e1;
     border-radius: 50%;
     border: 2px solid #e6f0fa;
 }
@@ -211,14 +220,33 @@ body {
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
+    .header {
+        padding: 1rem;
+    }
+
     .header-content {
-        flex-direction: column;
-        gap: 1rem;
+        padding: 0 1rem; /* Ajuste de padding si es necesario */
+    }
+
+    .logo-section {
+        /* Quitamos flex: 1 y mantenemos alineado a la izquierda */
+        flex: none;
     }
 
     .admin-info {
-        width: 100%;
-        justify-content: center;
+        /* Quitamos flex: 1 para evitar estiramiento */
+        flex: none;
+        padding: 8px 16px; /* Ajuste de tamaño en móvil */
+        gap: 10px;
+    }
+
+    .admin-avatar {
+        width: 45px;
+        height: 45px;
+    }
+
+    .site-title {
+        font-size: 24px; /* Un poco más pequeño en móvil */
     }
 
     .main-container {
@@ -233,10 +261,7 @@ body {
         font-size: 28px;
     }
 
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-
+    .stats-grid,
     .actions-grid {
         grid-template-columns: 1fr;
     }
