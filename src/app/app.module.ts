@@ -8,7 +8,7 @@ import { errorInterceptor } from './error.interceptor';
 import { authInterceptor } from './auth.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 import { UsuariosModule } from './components/CRUD-Usuarios/usuarios.module';
 import { VistasModule } from './components/vistas/vistas.module';
@@ -24,7 +24,6 @@ import { PasswordResetService } from './services/password-reset.service';
     CommonModule,
     FormsModule,
     BrowserAnimationsModule,
-
   
     VistasModule,
     UsuariosModule,
@@ -33,13 +32,14 @@ import { PasswordResetService } from './services/password-reset.service';
     // PasswordResetService
   ],
   providers: [
-    PasswordResetService, // ✅ AQUÍ es donde va el servicio
-    provideClientHydration(),
-    provideHttpClient(
-      withInterceptors([errorInterceptor, authInterceptor]), // <-- Aquí agregas el tuyo
-      withFetch()
-    )
-  ],
+  PasswordResetService,
+  provideClientHydration(),
+  provideHttpClient(
+    withInterceptors([errorInterceptor, authInterceptor]),
+    withFetch()
+  ),
+  provideCharts(withDefaultRegisterables()) // ✅ aquí
+],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

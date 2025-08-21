@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpLaravelService } from "../../../../../http.service";
 import { Lugar } from './lugar.interface';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
+
+// Registrar todos los componentes de Chart.js
+Chart.register(...registerables);
 
 @Component({
   selector: 'estadisticas',
@@ -13,6 +17,11 @@ import Swal from 'sweetalert2';
 })
 
 export class estadisticasComponent implements OnInit {
+  @ViewChild('graficaVisitas', { static: false }) graficaVisitas!: ElementRef<HTMLCanvasElement>;
+  
+  chart!: Chart;
+  private chartInitialized = false;
+
   lugares: Lugar[] = [];
   isLoading = true;
   errorMessage = '';
@@ -22,16 +31,23 @@ export class estadisticasComponent implements OnInit {
   imagenActualIndexPorLugar: { [idLugar: number]: number } = {};
 
   filtroActivo: 'estadisticas' | 'pagados' | 'noPagados' = 'estadisticas';
-  botonActivo: string = 'estadisticas'; // Puedes iniciar con 'todos', 'pagados' o 'nopagados'
+  botonActivo: string = 'estadisticas';
   
-  todosLosLugares: Lugar[] = []; // <-- Aquí guardamos la data original
+  todosLosLugares: Lugar[] = [];
 
   usuario: any;
 
   // Sidebar control
   sidebarAbierto = true;
 
-  estadisticasAnunciante: any = null;
+  // Variables para estadísticas consolidadas
+  estadisticasConsolidadas: EstadisticaLugar[] = [];
+  estadisticasAnuncianteTiempoPromedioConData: any = null;
+  estadisticasAnuncianteTiempoPromedioSinData: any = null;
+
+  estadisticasAnuncianteCantidadVistasConData: any = null;
+  estadisticasAnuncianteCantidadVistasSinData: any = null;
+
   anuncioActualIndex = 0;
   filtroTiempo: 'todas' | 'mes' | 'semana' | 'dia' = 'todas';
 
@@ -50,9 +66,17 @@ export class estadisticasComponent implements OnInit {
     this.loadLugares();
     this.logLoadTime();
     this.cargarInfoUsuario(this.idUsuario);
-      
-    console.log('Cargando estadisticas...');
-    this.cargarEstadisticas();
+  }
+
+  // NUEVO: Implementar AfterViewInit
+  ngAfterViewInit(): void {
+    console.log('🎯 AfterViewInit - Canvas disponible:', !!this.graficaVisitas);
+    // Esperar un tick para asegurar que el DOM esté completamente renderizado
+    setTimeout(() => {
+      if (this.estadisticasConsolidadas && this.estadisticasConsolidadas.length > 0) {
+        this.renderizarGrafica();
+      }
+    }, 100);
   }
 
   toggleSidebar(): void {
@@ -67,9 +91,12 @@ export class estadisticasComponent implements OnInit {
         
         const filtrados = data.filter(lugar => lugar.id_usuario === this.idUsuario);
         this.todosLosLugares = filtrados;
-        this.lugares = [...filtrados]; // Usamos spread para evitar mutar la referencia
+        this.lugares = [...filtrados];
 
         this.lugares.forEach(lugar => this.cargarImagenesLugar(lugar));
+
+        // Cargar estadísticas para todos los lugares
+        this.cargarEstadisticasConsolidadas();
 
         this.isLoading = false;
         console.log('✅ Lugares filtrados para el anunciante:', this.lugares);
@@ -83,30 +110,79 @@ export class estadisticasComponent implements OnInit {
     );
   }
 
+  // Nueva función para cargar estadísticas consolidadas
+  cargarEstadisticasConsolidadas(): void {
+    const promesasEstadisticas = this.lugares.map(lugar => 
+      this.httpLaravelService.Service_Get_Estadisticas_tiempo_promedio(lugar.id_lugar).toPromise()
+        .then(resp => ({
+          id_lugar: lugar.id_lugar,
+          nombre_lugar: lugar.nombre,
+          datos: resp
+        }))
+        .catch(err => ({
+          id_lugar: lugar.id_lugar,
+          nombre_lugar: lugar.nombre,
+          datos: { success: false, message: 'Error de conexión' },
+          error: err
+        }))
+    );
 
+    Promise.all(promesasEstadisticas).then(resultados => {
+      console.log('📊 Estadísticas consolidadas:', resultados);
+      this.procesarEstadisticasConsolidadas(resultados);
+      
+      // IMPORTANTE: Solo renderizar si el canvas está disponible
+      if (this.graficaVisitas && this.graficaVisitas.nativeElement) {
+        this.renderizarGrafica();
+      } else {
+        console.warn('⚠️ Canvas no disponible, esperando...');
+        setTimeout(() => {
+          if (this.graficaVisitas && this.graficaVisitas.nativeElement) {
+            this.renderizarGrafica();
+          }
+        }, 500);
+      }
+    });
+  }
+
+  procesarEstadisticasConsolidadas(resultados: any[]): void {
+    this.estadisticasConsolidadas = [];
+    
+    resultados.forEach((resultado: any) => {
+      if (resultado.datos && resultado.datos.success && resultado.datos.data) {
+        const data = resultado.datos.data;
+        this.estadisticasConsolidadas.push({
+          nombre_lugar: resultado.nombre_lugar,
+          id_lugar: resultado.id_lugar,
+          tiempo_promedio: parseFloat(data.tiempo_promedio) || 0,
+          total_visitas: parseInt(data.total_visitas_consideradas) || 0,
+          tiempo_total: parseFloat(data.tiempo_total_acumulado) || 0
+        });
+      }
+    });
+
+    console.log('📈 Datos consolidados procesados:', this.estadisticasConsolidadas);
+  }
 
   crearAnuncio() {
     console.log('/crear-actualizar-anuncio', this.idUsuario)
     this.router.navigate(['/crear-actualizar-anuncio', this.idUsuario]);
   }
 
-    cerrarSesion(): void {
-      console.log('Intentando cerrar sesión...');
-    
-      this.httpLaravelService.Service_Cerrar_seccion().subscribe({
-        next: (resp: any) => {
-          console.log('✅ Sesión cerrada correctamente:', resp);
-          // Navegar a login y cerrar diálogo
-          this.router.navigate(['/login'])
-        },
-        error: (err) => {
-          console.error('❌ Error al cerrar sesión:', err);
-          // Opcional: mostrar alerta al usuario
-          Swal.fire('Error', 'No se pudo cerrar sesión, intenta de nuevo.', 'error');
-        }
-      });
-    }
+  cerrarSesion(): void {
+    console.log('Intentando cerrar sesión...');
   
+    this.httpLaravelService.Service_Cerrar_seccion().subscribe({
+      next: (resp: any) => {
+        console.log('✅ Sesión cerrada correctamente:', resp);
+        this.router.navigate(['/login'])
+      },
+      error: (err) => {
+        console.error('❌ Error al cerrar sesión:', err);
+        Swal.fire('Error', 'No se pudo cerrar sesión, intenta de nuevo.', 'error');
+      }
+    });
+  }
 
   vistaDetalladaAnuncio(id: number | string) {
     const idEntero = parseInt(id.toString(), 10);
@@ -163,266 +239,339 @@ export class estadisticasComponent implements OnInit {
     lugar.url = imgs[currentIndex].url;
   }
 
-cargarInfoUsuario(idUsuario: Number) {
-  this.httpLaravelService.Service_Get('usuario', this.idUsuario).subscribe(
-    (respuesta: any) => {
-      if (respuesta.estatus === 1) {
-        this.usuario = respuesta.data;
-        console.log('✅ Usuario:', this.usuario);
+  cargarInfoUsuario(idUsuario: Number) {
+    this.httpLaravelService.Service_Get('usuario', this.idUsuario).subscribe(
+      (respuesta: any) => {
+        if (respuesta.estatus === 1) {
+          this.usuario = respuesta.data;
+          console.log('✅ Usuario:', this.usuario);
+        }
       }
-    }
-  );
-}
+    );
+  }
 
-mostrarTodos(): void {
+  mostrarTodos(): void {
     this.router.navigate(['home-anunciante', this.idUsuario]);
-}
+  }
 
-mostrarPagados(): void {
+  mostrarPagados(): void {
     this.router.navigate(['home-anunciante', this.idUsuario, 1]);
-}
+  }
 
-mostrarNoPagados(): void {
+  mostrarNoPagados(): void {
     this.router.navigate(['home-anunciante', this.idUsuario, 2]);
-}
+  }
 
+  AlertaModificarCuenta(){
+    this.router.navigate(['/modificar-info-usuario', this.idUsuario, 1]);
+  }
 
-AlertaModificarCuenta(){
-  this.router.navigate(['/modificar-info-usuario', this.idUsuario, 1]);
-}
-
-cargarEstadisticas(): void {
-
-  /*
-  // Datos de prueba - simular respuesta del servidor
-  const datosPrueba = {
-    success: true,
-    data: {
-      id_usuario: "1",
-      nombre_usuario: "usuario",
-      total_lugares: 3,
-      resumen: {
-        total_visitas: 15,
-        tiempo_promedio: "45.33",
-        tiempo_total: "680",
-        usuarios_unicos: 5
+  cargarEstadisticasTiempoPromedio(id_lugar: number): void {  
+    this.httpLaravelService.Service_Get_Estadisticas_tiempo_promedio(id_lugar).subscribe({
+      next: (resp) => {
+        if (resp.success) {
+          console.log(`📊 Estadísticas (Tiempo promedio) del lugar con el id = ${id_lugar}:`, resp);
+          this.estadisticasAnuncianteTiempoPromedioConData = resp.data;
+        } else {
+          console.warn(`❌ No hay estadísticas para el lugar con id = ${id_lugar}`);
+          this.estadisticasAnuncianteTiempoPromedioSinData = { id_lugar, mensaje: resp.message };
+        }
       },
-      visitas_por_dia: [
-        { fecha: this.getFechaHoy(), visitas: 3, tiempo_promedio: "42.50", id_lugar: 12 },
-        { fecha: this.getFechaAyer(), visitas: 5, tiempo_promedio: "47.20", id_lugar: 12 },
-        { fecha: this.getFechaSemanaPasada(), visitas: 4, tiempo_promedio: "38.75", id_lugar: 12 },
-        { fecha: this.getFechaHoy(), visitas: 2, tiempo_promedio: "51.00", id_lugar: 9 },
-        { fecha: this.getFechaAyer(), visitas: 1, tiempo_promedio: "35.50", id_lugar: 9 }
-      ],
-      visitas_por_lugar: [
-        { id_lugar: 12, nombre: "Gimnasio el don alexito prueba", total_visitas: 12, tiempo_promedio: "42.81", tiempo_total: "513.75" },
-        { id_lugar: 9, nombre: "Gimnasio PowerFit prueba", total_visitas: 3, tiempo_promedio: "43.25", tiempo_total: "129.75" }
-      ]
+      error: (err) => {
+        console.error("⚠️ Error al cargar estadísticas (Tiempo promedio)", err);
+        this.estadisticasAnuncianteTiempoPromedioSinData = { id_lugar, mensaje: 'Error de conexión con el servidor' };
+      }
+    });
+  }
+
+  cargarEstadisticasCantidadVistas(id_lugar: number): void {  
+    this.httpLaravelService.Service_Get_Estadisticas_Cantidad_Vistas(id_lugar).subscribe({
+      next: (resp) => {
+        console.log(`📊 Estadísticas (Cantidad vistas) del lugar con el id = ${id_lugar}:`, resp);
+        this.estadisticasAnuncianteCantidadVistasConData = resp.data;
+      },
+      error: (err) => {
+        console.error("❌ Error al cargar estadísticas (Cantidad vistas)", err);
+      }
+    });
+  }
+
+  // Función para filtrar datos consolidados según el filtro de tiempo
+  get visitasFiltradas(): EstadisticaLugar[] {
+    if (!this.estadisticasConsolidadas || this.estadisticasConsolidadas.length === 0) {
+      return [];
     }
-  };
 
-  console.log('📊 Usando datos de prueba:', datosPrueba);
-  this.estadisticasAnunciante = datosPrueba.data;
-  */
-  
-  // También puedes mantener la llamada real al servidor comentada:
-  
-  this.httpLaravelService.Service_Get_Estadisticas_Por_Anunciante(this.idUsuario).subscribe({
-    next: (resp) => {
-      console.log(`📊 Estadísticas del Anunciante ${this.idUsuario}:`, resp);
-      this.estadisticasAnunciante = resp.data;
-    },
-    error: (err) => {
-      console.error("❌ Error al cargar estadísticas", err);
+    // Para el gráfico de pastel, no necesitamos filtrar por tiempo
+    // Solo devolvemos los datos consolidados
+    return this.estadisticasConsolidadas;
+  }
+
+  // Método para obtener el total de visitas
+  getTotalVisitas(): number {
+    if (!this.estadisticasConsolidadas || this.estadisticasConsolidadas.length === 0) {
+      return 0;
     }
-  });
-  
-}
-
-// Métodos auxiliares para generar fechas de prueba
-private getFechaHoy(): string {
-  const hoy = new Date();
-  return hoy.toISOString().split('T')[0];
-}
-
-private getFechaAyer(): string {
-  const ayer = new Date();
-  ayer.setDate(ayer.getDate() - 1);
-  return ayer.toISOString().split('T')[0];
-}
-
-private getFechaSemanaPasada(): string {
-  const semanaPasada = new Date();
-  semanaPasada.setDate(semanaPasada.getDate() - 7);
-  return semanaPasada.toISOString().split('T')[0];
-}
-
-get anuncioActual() {
-  return this.estadisticasAnunciante?.visitas_por_lugar?.[this.anuncioActualIndex] || null;
-}
-
-cambiarAnuncio(direccion: number) {
-  const total = this.estadisticasAnunciante?.visitas_por_lugar?.length || 0;
-  if (total > 0) {
-    this.anuncioActualIndex = (this.anuncioActualIndex + direccion + total) % total;
-    // No resetear el filtro para mantener la consistencia de la UI
+    return this.estadisticasConsolidadas.reduce((total: number, lugar: EstadisticaLugar) => total + lugar.total_visitas, 0);
   }
-}
 
-get visitasActuales() {
-  if (!this.anuncioActual) return [];
-  switch (this.filtroTiempo) {
-    case 'semana': return this.agruparPorSemana(this.anuncioActual.visitas_por_dia || []);
-    case 'mes': return this.agruparPorMes(this.anuncioActual.visitas_por_dia || []);
-    default: return this.anuncioActual.visitas_por_dia || [];
-  }
-}
-
-cambiarFiltro(filtro: 'todas' | 'mes' | 'semana' | 'dia') {
-  this.filtroTiempo = filtro;
-}
-
-agruparPorSemana(visitasPorDia: any[]) {
-  const semanasMap = new Map<string, any>();
-
-  visitasPorDia.forEach(v => {
-    const fecha = new Date(v.fecha);
-    const anio = fecha.getFullYear();
-    // Obtener número de semana ISO simple (puedes mejorar)
-    const semana = this.getSemanaISO(fecha);
-    const key = `${anio}-W${semana}`;
-
-    if (!semanasMap.has(key)) {
-      semanasMap.set(key, { fecha: key, visitas: 0, tiempo_promedio: 0, total_tiempo: 0 });
+  // Método para obtener el tiempo promedio general
+  getPromedioTiempo(): number {
+    if (!this.estadisticasConsolidadas || this.estadisticasConsolidadas.length === 0) {
+      return 0;
     }
-    const entry = semanasMap.get(key);
-    entry.visitas += v.visitas;
-    entry.total_tiempo += v.tiempo_promedio * v.visitas; // suma ponderada para promedio
-  });
+    
+    let tiempoTotal = 0;
+    let visitasTotal = 0;
+    
+    this.estadisticasConsolidadas.forEach((lugar: EstadisticaLugar) => {
+      tiempoTotal += lugar.tiempo_total;
+      visitasTotal += lugar.total_visitas;
+    });
+    
+    return visitasTotal > 0 ? tiempoTotal / visitasTotal : 0;
+  }
 
-  const resultado = Array.from(semanasMap.values());
-  resultado.forEach(e => {
-    e.tiempo_promedio = (e.total_tiempo / e.visitas) || 0;
-    delete e.total_tiempo;
-  });
-
-  return resultado;
-}
-
-agruparPorMes(visitasPorDia: any[]) {
-  const mesesMap = new Map<string, any>();
-
-  visitasPorDia.forEach(v => {
-    const fecha = new Date(v.fecha);
-    const anio = fecha.getFullYear();
-    const mes = fecha.getMonth() + 1; // enero=0
-    const key = `${anio}-${mes.toString().padStart(2, '0')}`;
-
-    if (!mesesMap.has(key)) {
-      mesesMap.set(key, { fecha: key, visitas: 0, tiempo_promedio: 0, total_tiempo: 0 });
+  // Método para generar colores dinámicamente
+  generarColores(cantidad: number): string[] {
+    const coloresBase = [
+      '#4a90e2', // Azul
+      '#e24a86', // Rosa
+      '#50c0a8', // Verde
+      '#e2a84a', // Naranja
+      '#9b59b6', // Púrpura
+      '#1abc9c', // Turquesa
+      '#f39c12', // Amarillo
+      '#e74c3c', // Rojo
+      '#34495e', // Gris azulado
+      '#16a085'  // Verde oscuro
+    ];
+    
+    const colores = [];
+    for (let i = 0; i < cantidad; i++) {
+      colores.push(coloresBase[i % coloresBase.length]);
     }
-    const entry = mesesMap.get(key);
-    entry.visitas += v.visitas;
-    entry.total_tiempo += v.tiempo_promedio * v.visitas;
-  });
-
-  const resultado = Array.from(mesesMap.values());
-  resultado.forEach(e => {
-    e.tiempo_promedio = (e.total_tiempo / e.visitas) || 0;
-    delete e.total_tiempo;
-  });
-
-  return resultado;
-}
-
-// ISO week number quick calc helper
-getSemanaISO(fecha: Date) {
-  const target = new Date(fecha.valueOf());
-  const dayNr = (fecha.getDay() + 6) % 7;
-  target.setDate(target.getDate() - dayNr + 3);
-  const firstThursday = target.valueOf();
-  target.setMonth(0, 1);
-  if (target.getDay() !== 4) {
-    target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
-  }
-  return 1 + Math.ceil((firstThursday - target.valueOf()) / 604800000);
-}
-
-get visitasFiltradas(): VisitaPorDia[] {
-  if (!this.estadisticasAnunciante || !this.anuncioActual) {
-    return [];
+    return colores;
   }
 
-  // Obtener el ID del lugar actual
-  const idLugarActual = this.anuncioActual.id_lugar;
-  
-  // Filtrar visitas por día que correspondan al lugar actual
-  const visitasDelLugar = (this.estadisticasAnunciante.visitas_por_dia || [])
-    .filter((v: VisitaPorDia) => v.id_lugar === idLugarActual);
-
-  // Si no hay id_lugar en los datos, asumir que todas son del lugar actual
-  const visitasFiltradas = visitasDelLugar.length > 0 
-    ? visitasDelLugar
-    : (this.estadisticasAnunciante.visitas_por_dia || []);
-
-  // Aplicar filtro temporal
-  const ahora = new Date();
-  let resultado: VisitaPorDia[];
-
-  switch(this.filtroTiempo) {
-    case 'dia':
-      resultado = visitasFiltradas.filter((v: VisitaPorDia) => 
-        new Date(v.fecha).toDateString() === ahora.toDateString());
-      break;
-    case 'semana':
-      const inicioSemana = new Date(ahora);
-      inicioSemana.setDate(ahora.getDate() - 7);
-      resultado = visitasFiltradas.filter((v: VisitaPorDia) => 
-        new Date(v.fecha) >= inicioSemana);
-      break;
-    case 'mes':
-      const inicioMes = new Date(ahora);
-      inicioMes.setMonth(ahora.getMonth() - 1);
-      resultado = visitasFiltradas.filter((v: VisitaPorDia) => 
-        new Date(v.fecha) >= inicioMes);
-      break;
-    default:
-      resultado = visitasFiltradas;
+  cambiarFiltro(filtro: 'todas' | 'mes' | 'semana' | 'dia') {
+    this.filtroTiempo = filtro;
+    this.renderizarGrafica(); // Re-renderizar gráfica al cambiar filtro
   }
 
-  return resultado;
-}
-
-getColorForBar(index: number): string {
-  const colors = ['#4a90e2', '#50c0a8', '#e2a84a', '#e24a86'];
-  return colors[index % colors.length];
-}
-
-calcularAltura(tiempoPromedio: string | number): string {
-  // Convertir a número si es string
-  const tiempo = typeof tiempoPromedio === 'string' 
-    ? parseFloat(tiempoPromedio.replace(',', '.')) 
-    : tiempoPromedio;
-  
-  // Validar que sea un número válido y positivo
-  if (isNaN(tiempo)) {
-    console.warn('Valor no numérico para tiempo_promedio:', tiempoPromedio);
-    return '2px'; // Altura mínima
+  irAyuda(){
+    this.router.navigate(['/ayuda-anunciante', this.idUsuario]);
   }
-  
-  // Convertir minutos a píxeles (1 minuto = 5px)
-  return (tiempo * 5) + 'px';
+
+  // MEJORAR: renderizarGrafica con más validaciones
+  private renderizarGrafica(): void {
+    console.log('🎨 Intentando renderizar gráfica...');
+    
+    // Validación completa del canvas
+    if (!this.graficaVisitas || !this.graficaVisitas.nativeElement) {
+      console.error('❌ Canvas no disponible');
+      return;
+    }
+
+    const canvas = this.graficaVisitas.nativeElement;
+    const ctx = canvas.getContext('2d');
+    
+    if (!ctx) {
+      console.error('❌ No se pudo obtener contexto 2D del canvas');
+      return;
+    }
+
+    console.log('✅ Canvas y contexto disponibles');
+
+    // Destruir gráfico anterior si existe
+    if (this.chart) {
+      console.log('🗑️ Destruyendo gráfico anterior');
+      this.chart.destroy();
+    }
+
+    const datosParaGrafica = this.visitasFiltradas;
+    
+    if (!datosParaGrafica || datosParaGrafica.length === 0) {
+      console.warn('⚠️ No hay datos para mostrar en la gráfica');
+      this.mostrarGraficaVacia();
+      return;
+    }
+
+    console.log('📊 Datos para gráfica:', datosParaGrafica);
+
+    // Preparar datos para el gráfico de pastel
+    const labels = datosParaGrafica.map(lugar => lugar.nombre_lugar);
+    const dataVisitas = datosParaGrafica.map(lugar => lugar.total_visitas);
+    const colores = this.generarColores(datosParaGrafica.length);
+
+    console.log('🏷️ Labels:', labels);
+    console.log('📈 Data:', dataVisitas);
+
+    try {
+      this.chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Visitas por Lugar',
+            data: dataVisitas,
+            backgroundColor: colores,
+            borderColor: '#ffffff',
+            borderWidth: 2,
+            hoverOffset: 10
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: '',
+              font: {
+                size: 18,
+                weight: 'bold'
+              },
+              padding: {
+                top: 10,
+                bottom: 30
+              }
+            },
+            legend: {
+              display: true,
+              position: 'right' as const,
+              labels: {
+                padding: 15,
+                font: {
+                  size: 12
+                },
+                generateLabels: (chart: Chart) => {
+                  const data = chart.data;
+                  if (data.labels?.length && data.datasets.length) {
+                    return (data.labels as string[]).map((label: string, i: number) => {
+                      const dataset = data.datasets[0];
+                      const visitas = dataset.data[i] as number;
+                      const tiempo = datosParaGrafica[i]?.tiempo_promedio || 0;
+                      const backgroundColor = Array.isArray(dataset.backgroundColor) 
+                        ? dataset.backgroundColor[i] as string
+                        : dataset.backgroundColor as string;
+                      return {
+                        text: `${label}`,
+                        fillStyle: backgroundColor,
+                        strokeStyle: dataset.borderColor as string,
+                        lineWidth: dataset.borderWidth as number,
+                        index: i
+                      };
+                    });
+                  }
+                  return [];
+                }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context: any) {
+                  const lugar = datosParaGrafica[context.dataIndex];
+                  const total = (context.dataset.data as number[]).reduce((a: number, b: number) => a + b, 0);
+                  const porcentaje = ((context.parsed / total) * 100).toFixed(1);
+                  return [
+                  ];
+                }
+              }
+            }
+          },
+          layout: {
+            padding: {
+              left: 20,
+              right: 20,
+              top: 20,
+              bottom: 20
+            }
+          }
+        }
+      });
+
+      this.chartInitialized = true;
+      console.log('✅ Gráfico de pastel renderizado exitosamente');
+      
+    } catch (error) {
+      console.error('❌ Error al crear el gráfico:', error);
+      this.mostrarGraficaVacia();
+    }
+  }
+
+    private mostrarGraficaVacia(): void {
+    if (!this.graficaVisitas || !this.graficaVisitas.nativeElement) {
+      return;
+    }
+    
+    const ctx = this.graficaVisitas.nativeElement.getContext('2d');
+    if (!ctx) return;
+
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
+    this.chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Sin datos'],
+        datasets: [{
+          label: 'No hay datos disponibles',
+          data: [0],
+          backgroundColor: '#cccccc'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: 'No hay datos disponibles para mostrar',
+            font: { size: 14 }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 1
+          }
+        }
+      }
+    });
+  }
+
+    // AGREGAR: Método para forzar re-renderizado
+  public forzarRenderizadoGrafica(): void {
+    setTimeout(() => {
+      if (this.estadisticasConsolidadas && this.estadisticasConsolidadas.length > 0) {
+        this.renderizarGrafica();
+      }
+    }, 100);
+  }
+
+  // MODIFICAR: Destruir gráfico en OnDestroy
+  ngOnDestroy(): void {
+    if (this.chart) {
+      this.chart.destroy();
+    }
+  }
+
 }
 
-irAyuda(){
-  this.router.navigate(['/ayuda-anunciante', this.idUsuario]);
-}
-
-}
-
+// Interfaces
 interface VisitaPorDia {
   fecha: string;
   visitas: number;
   tiempo_promedio: string | number;
-  id_lugar?: number; // Opcional porque en los datos reales no está presente
+  id_lugar?: number;
+}
+
+interface EstadisticaLugar {
+  nombre_lugar: string;
+  id_lugar: number;
+  tiempo_promedio: number;
+  total_visitas: number;
+  tiempo_total: number;
 }

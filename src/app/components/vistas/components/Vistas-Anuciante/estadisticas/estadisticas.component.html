@@ -67,106 +67,80 @@
   </div>
 </nav>
 
-<body>
-<div class="card-container" *ngIf="estadisticasAnunciante">
-  <div class="card">
-  <div class="ad-name">
-    Grafico de todos los anuncios
+<!-- Contenido principal -->
+<main class="main-content" [class.sidebar-closed]="!sidebarAbierto">
+<div class="container">
+<!-- Loading indicator -->
+<div *ngIf="isLoading" class="loading-indicator">
+<i class="fas fa-spinner fa-spin"></i>
+Cargando estadísticas...
+</div>
+
+<!-- Error message -->
+<div *ngIf="errorMessage && !isLoading" class="error-message">
+{{ errorMessage }}
+</div>
+
+<!-- Contenido principal cuando no está cargando -->
+<div *ngIf="!isLoading && !errorMessage" class="estadisticas-container">
+<div class="card">
+  <!-- Título principal -->
+  <div class="card-title">
+    📊 Distribución de Visitas por Lugar
   </div>
 
-<div class="tabs">
-  <button class="tab-button" 
-          [class.active]="filtroTiempo === 'todas'" 
-          (click)="cambiarFiltro('todas')">
-    Todas
-  </button>
-  <button class="tab-button" 
-          [class.active]="filtroTiempo === 'mes'" 
-          (click)="cambiarFiltro('mes')">
-    Último Mes
-  </button>
-  <button class="tab-button" 
-          [class.active]="filtroTiempo === 'semana'" 
-          (click)="cambiarFiltro('semana')">
-    Última Semana
-  </button>
-  <button class="tab-button" 
-          [class.active]="filtroTiempo === 'dia'" 
-          (click)="cambiarFiltro('dia')">
-    Hoy
-  </button>
-</div>
+  <!-- Contenedor del gráfico -->
+  <div class="grafica-container">
+    <canvas #graficaVisitas width="800" height="400"></canvas>
+  </div>
 
-<!-- Gráfico de visitas -->
-<div class="graph-wrapper" *ngIf="visitasFiltradas?.length">
-  <div class="graph-content">
-    <!-- Etiquetas de duración -->
-    <div class="duration-labels">
-      <span>60m</span>
-      <span>45m</span>
-      <span>30m</span>
-      <span>15m</span>
-      <span>0m</span>
+  <!-- Resumen de estadísticas -->
+  <div class="stats-summary" *ngIf="estadisticasConsolidadas && estadisticasConsolidadas.length > 0">
+    <div class="stat-card">
+      <div class="stat-value">{{ getTotalVisitas() }}</div>
+      <div class="stat-label">Total de Visitas</div>
     </div>
-    
-    <!-- Contenedor del gráfico -->
-    <div class="line-chart">
-      <div class="chart-grid">
-        <!-- Líneas de la cuadrícula -->
-        <div class="grid-line" *ngFor="let level of [75, 150, 225, 300]" 
-             [style.bottom]="level + 'px'"></div>
-      </div>
-      
-      <!-- Líneas de las visitas -->
-      <div class="visit-line" 
-          *ngFor="let visita of visitasFiltradas; let i = index"
-          [style.height]="calcularAltura(visita.tiempo_promedio)"
-          [style.backgroundColor]="getColorForBar(i)"
-          [title]="'Visita ' + (i+1) + ': ' + visita.tiempo_promedio + ' min - ' + (visita.fecha | date:'medium')">
-        <span class="visit-label">{{visita.tiempo_promedio | number:'1.0-1'}}m</span>
-      </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ getPromedioTiempo() | number:'1.1-1' }} min</div>
+      <div class="stat-label">Tiempo Promedio General</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ lugares.length }}</div>
+      <div class="stat-label">Anuncios Totales</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ estadisticasConsolidadas.length }}</div>
+      <div class="stat-label">Anuncios con Visitas</div>
     </div>
   </div>
-</div>
 
-<!-- Sin datos -->
-<div *ngIf="!visitasFiltradas?.length" class="no-data-message">
-  No hay datos disponibles para el período seleccionado.
-</div>
-
-<hr>
-
-    <div class="header-ad-info">
-      <div class="ad-navigation">
-        <button class="nav-button prev-button" (click)="cambiarAnuncio(-1)">
-          <span class="arrow">‹</span>
-        </button>
-        <div class="ad-name">
-          {{ anuncioActual?.nombre }}
+  <!-- Tabla detallada de estadísticas -->
+  <div class="detailed-stats" *ngIf="estadisticasConsolidadas && estadisticasConsolidadas.length > 0">
+    <h3>Detalle por Lugar</h3>
+    <div class="stats-table">
+      <div class="table-header">
+        <div class="header-cell">Lugar</div>
+        <div class="header-cell">Visitas</div>
+        <div class="header-cell">Tiempo Promedio</div>
+        <div class="header-cell">Tiempo Total</div>
+      </div>
+      <div class="table-row" *ngFor="let lugar of estadisticasConsolidadas; let i = index">
+        <div class="cell" [attr.data-label]="'Lugar'">
+          <div class="color-indicator" [style.background-color]="generarColores(estadisticasConsolidadas.length)[i]"></div>
+          {{ lugar.nombre_lugar }}
         </div>
-        <button class="nav-button next-button" (click)="cambiarAnuncio(1)">
-          <span class="arrow">›</span>
-        </button>
+        <div class="cell" [attr.data-label]="'Visitas'">{{ lugar.total_visitas }}</div>
+        <div class="cell" [attr.data-label]="'Tiempo Promedio'">{{ lugar.tiempo_promedio | number:'1.1-1' }} min</div>
+        <div class="cell" [attr.data-label]="'Tiempo Total'">{{ lugar.tiempo_total | number:'1.1-1' }} min</div>
       </div>
     </div>
+  </div>
 
-    <div class="stats-footer">
-      <div class="stat-item">
-        <span class="stat-value">{{ anuncioActual?.tiempo_promedio }} min</span>
-        <span class="stat-label">Tiempo Promedio</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-value">{{ anuncioActual?.total_visitas }} visitas</span>
-        <span class="stat-label">Total de Sesiones</span>
-      </div>
-    </div>
-
-    <!-- Detalles de visitas -->
-    <div class="visita-details" *ngFor="let visita of visitasActuales">
-      {{ visita.fecha | date:'dd/MM/yyyy' }} - {{ visita.tiempo_promedio }} min
-    </div>
-
+  <!-- Mensaje cuando no hay datos -->
+  <div *ngIf="!estadisticasConsolidadas || estadisticasConsolidadas.length === 0" class="no-data-message">
+    <i class="material-symbols-outlined">info</i>
+    <p>No hay datos de estadísticas disponibles.</p>
+    <small>Las estadísticas aparecerán cuando los usuarios visiten tus anuncios.</small>
   </div>
 </div>
-
-</body>
+</div>

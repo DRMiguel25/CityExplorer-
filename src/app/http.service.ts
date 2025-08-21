@@ -24,6 +24,15 @@ private _url = 'http://127.0.0.1:8001/api';
     });
   }
 
+  private getHeaders2(): HttpHeaders {
+  const token = this.storage.getItem('access_token');
+  return new HttpHeaders({
+    'Authorization': `Bearer ${token}`,
+    'Accept': 'application/json'
+  });
+}
+
+
   Service_Get(Modelo: string, Dato: string | number): Observable<Lugar[]> {
     return this.http.get<Lugar[]>(`${this._url}/${Modelo}/${Dato}`, {
       headers: this.getHeaders()
@@ -211,9 +220,14 @@ Service_GetEstadisticasGenerales(): Observable<any> {
   });
 }
 
-Service_Get_Estadisticas_Por_Anunciante(idUsuario: number): Observable<any> {
-  return this.http.get(`${this._url}/estadisticas/anunciante/${idUsuario}`, {
+Service_Get_Estadisticas_tiempo_promedio(id: number): Observable<any> {
+  return this.http.get(`${this._url}/lugar/${id}/tiempo-promedio`, {
     headers: this.getHeaders()
+  });
+}
+Service_Get_Estadisticas_Cantidad_Vistas(id: number): Observable<any> {
+  return this.http.get(`${this._url}/lugar/${id}/cantidad-vistas`, {
+    headers: this.getHeaders2()
   });
 }
 
