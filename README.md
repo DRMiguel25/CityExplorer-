@@ -74,6 +74,8 @@ npm install
 npm install sweetalert2
 npm install @stripe/stripe-js
 npm install bootstrap
+npm install chart.js
+npm install ng2-charts
 ```
 
 ## ⚙️ Configuración
