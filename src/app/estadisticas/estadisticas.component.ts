@@ -17,7 +17,7 @@ export class EstadisticasComponent implements OnInit {
   ngOnInit(): void {
     this.cargarEstadisticas();
   }
-
+ 
   cargarEstadisticas(): void {
     this.httpLaravelService.Service_GetEstadisticas('lugar', 1) // Ajusta según tus necesidades
       .subscribe({
