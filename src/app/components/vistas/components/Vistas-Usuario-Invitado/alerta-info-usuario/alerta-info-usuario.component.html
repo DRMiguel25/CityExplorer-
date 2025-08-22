@@ -1,4 +1,9 @@
 <div class="profile-popup">
+  <button class="close-btn" onclick="closeProfile()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+        </button>
 
   <div class="profile-header">
     <div class="profile-avatar">
@@ -24,15 +29,15 @@
   <div class="profile-actions">
         <div class="action-item" data-action="add-account">
             
-        <div class="action-item" data-action="logout">
-            <div class="action-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="#5f6368">
-                    <path d="M17,7L15.59,5.59L13.5,7.68L11.41,5.59L10,7L12.09,9.09L10,11.18L11.41,12.59L13.5,10.5L15.59,12.59L17,11.18L14.91,9.09L17,7Z"/>
-                </svg>
+        <div class="action-item" data-action="add-account">
+                <div class="action-icon" data-action="logout">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#5f6368">
+                        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.59L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                    </svg>
+                </div>
+                <button mat-button (click)="cerrarSesion()">Cerrar sesión</button>
             </div>
-            <button mat-button (click)="cerrarSesion()">Cerrar sesión</button>
         </div>
-    </div>
 
   <div class="footer-links">
     <a href="javascript:void(0)" (click)="politicasDePrivacidad()" class="footer-link">Política de Privacidad</a>

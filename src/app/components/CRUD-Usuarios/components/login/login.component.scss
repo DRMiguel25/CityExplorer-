@@ -155,19 +155,18 @@ p {
 }
 
 .login {
-    background: linear-gradient(135deg, #00a3bf, #0089a1);
+    background: linear-gradient(135deg, #007bff, #0056b3);
     color: white;
-    box-shadow: 0 6px 20px rgba(0, 163, 191, 0.3);
+    
 }
 
 .login:hover {
-    background: linear-gradient(135deg, #0089a1, #006b7d);
+    background: linear-gradient(135deg, #007bff, #0056b3);
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(0, 163, 191, 0.4);
 }
 
 .register {
-    background: linear-gradient(135deg, #1a73e8, #0d62d1);
+    background: linear-gradient(135deg,#0d62d1, #0b56c4);
     color: white;
     box-shadow: 0 6px 20px rgba(26, 115, 232, 0.3);
 }
