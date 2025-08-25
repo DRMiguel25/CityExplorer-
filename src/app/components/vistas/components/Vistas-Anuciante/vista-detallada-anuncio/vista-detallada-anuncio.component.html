@@ -8,7 +8,14 @@
     </div>
 
     <!-- Título y subtítulo -->
-    <h1 class="title">{{ lugar.nombre }}</h1>
+    <h1 class="title">
+      {{ lugar.nombre }}
+      <br>
+      <span *ngIf="lugar.bloqueado" class="badge-bloqueado">
+        🗙 Anuncio bloqueado 🗙
+      </span>
+    </h1>
+    
     <p class="subtitle">
       {{ lugar.descripcionBreve }} •
       {{ obtenerCategoriaNombre(lugar.id_categoria) }}
