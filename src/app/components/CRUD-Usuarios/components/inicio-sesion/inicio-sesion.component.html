@@ -42,15 +42,6 @@
         <div *ngIf="f['password'].errors && f['password'].touched" class="form-text text-danger">
             <div *ngIf="f['password']?.errors?.['required']" class="text-red">La contraseña es obligatoria</div>
         </div>
-
-          <input
-      type="password"
-      id="password"
-      formControlName="password"
-      placeholder="Contraseña"
-      class="form-control"
-      [ngClass]="{'is-invalid': isValid('password')}"
-    />
     <div
       *ngIf="f['password'].errors && f['password'].touched"
       class="form-text text-danger"
@@ -68,8 +59,8 @@
       </button>
     </form>
 
-    <a href="#" class="forgot-password" (click)="Restablecer()" style="cursor: pointer">
-            ¿Olvidaste la contraseña?
-        </a>
+    <a class="forgot-password" (click)="Restablecer()" style="cursor: pointer">
+      ¿Olvidaste la contraseña?
+    </a>
   </div>
 </body>
