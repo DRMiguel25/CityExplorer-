@@ -77,6 +77,7 @@
   <div class="cards-container">
     <div class="card" *ngFor="let lugar of lugares" (click)="vistaDetalladaAnuncio(lugar.id_lugar)">
       <div class="card-header">{{ lugar.nombre }}</div>
+      <span *ngIf="lugar.bloqueado" class="badge badge-bloqueado">🗙 Anuncio bloqueado 🗙</span>
       <div class="card-img-container">
         <button class="nav-button left" (click)="cambiarImagen(lugar, -1); $event.stopPropagation()">
           <span class="material-symbols-outlined">chevron_backward</span>

@@ -529,3 +529,14 @@ body {
   letter-spacing: 1px;
   white-space: nowrap; /* evita que se parta en dos líneas */
 }
+
+.badge-bloqueado {
+  display: flex;
+  background-color: #E4004B; // Rojo vibrante
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  animation: pulse 1.5s infinite;
+}
+

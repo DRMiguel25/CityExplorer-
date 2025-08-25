@@ -9,6 +9,7 @@ export interface Lugar {
   id_categoria: number;
   id_direccion: number;
   activo: boolean | null;
+  bloqueado: boolean;
   url: string;
 
   // Agrega id_usuario si no está presente

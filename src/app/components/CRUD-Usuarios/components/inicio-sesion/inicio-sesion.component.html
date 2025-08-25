@@ -12,8 +12,8 @@
         <input type="email" id="correo" formControlName="correo" placeholder="Correo electrónico"
                class="form-control" [ngClass]="{'is-invalid': isValid('correo')}">
         <div *ngIf="f['correo'].errors && f['correo'].touched" class="form-text text-danger">
-            <div *ngIf="f['correo']?.errors?.['required']">El correo es obligatorio</div>
-            <div *ngIf="f['correo']?.errors?.['correo']">El correo no es válido</div>
+            <div *ngIf="f['correo']?.errors?.['required']" class="text-red">El correo es obligatorio</div>
+            <div *ngIf="f['correo']?.errors?.['correo']" class="text-red">El correo no es válido</div>
         </div>
 
         <!-- Contraseña -->
@@ -21,7 +21,7 @@
         <input type="password" id="password" formControlName="password" placeholder="Contraseña"
                class="form-control" [ngClass]="{'is-invalid': isValid('password')}">
         <div *ngIf="f['password'].errors && f['password'].touched" class="form-text text-danger">
-            <div *ngIf="f['password']?.errors?.['required']">La contraseña es obligatoria</div>
+            <div *ngIf="f['password']?.errors?.['required']" class="text-red">La contraseña es obligatoria</div>
         </div>
 
         <!-- Botón de inicio de sesión -->

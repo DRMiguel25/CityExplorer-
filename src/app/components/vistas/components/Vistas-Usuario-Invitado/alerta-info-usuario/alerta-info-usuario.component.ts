@@ -69,7 +69,7 @@ export class AlertaInfoUsuarioComponent implements OnInit {
 
     politicasDePrivacidad(): void {
     console.log('Navegando a políticas de privacidad');
-    this.router.navigate(['/politicas-de-privacidad']).then(() => {
+    this.router.navigate(['/politicas-de-privacidad', this.data.id_usuario, this.data.tipo_usuario]).then(() => {
       this.dialogRef.close(); // Cierra el diálogo solo si la navegación fue exitosa
     }).catch(err => {
       console.error('Error al navegar a políticas de privacidad:', err);
@@ -78,7 +78,7 @@ export class AlertaInfoUsuarioComponent implements OnInit {
 
   terminosDelServicio(): void {
     console.log('Navegando a términos del servicio');
-    this.router.navigate(['/terminos-del-servicio']).then(() => {
+    this.router.navigate(['/terminos-del-servicio', this.data.id_usuario, this.data.tipo_usuario]).then(() => {
       this.dialogRef.close(); // Cierra el diálogo solo si la navegación fue exitosa
     }).catch(err => {
       console.error('Error al navegar a términos del servicio:', err);
