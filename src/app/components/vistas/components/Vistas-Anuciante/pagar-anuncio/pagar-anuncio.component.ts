@@ -116,7 +116,7 @@ export class PagoAnuncioComponent implements AfterViewInit, OnDestroy, OnInit {
     if (cvcBox) cvcBox.textContent = '•••';
   }
 
-  // Popup para confirmar plan antes de pagar
+// Reemplaza tu función confirmarAntesDePagar() con esta versión más compacta
 confirmarAntesDePagar() {
   Swal.fire({
     title: '✨ Confirmar Pago',
@@ -125,25 +125,20 @@ confirmarAntesDePagar() {
         <p style="margin-bottom: 15px; font-size: 16px; font-weight: 500;">
            Selecciona tu plan preferido:
         </p>
-        <select id="planSelect" class="swal2-input" style="width: 100%; max-width: 320px; padding: 10px; border-radius: 8px; font-size: 15px;">
-          <option value="mensual">💳 Plan Mensual - $580 MXN (IVA incluido)</option>
-          <option value="anual">🎊 Plan Anual - $5,800 MXN (IVA incluido) - ¡2 meses gratis!</option>
+        <select id="planSelect" class="swal2-input" style="width: 100%; max-width: 100%; padding: 10px; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+          <option value="mensual">💳 Mensual - $580 MXN</option>
+          <option value="anual">🎊 Anual - $5,800 MXN (2 meses gratis!)</option>
         </select>
-        <div style="margin-top: 12px; font-size: 13px; opacity: 0.8;">
+        <div style="margin-top: 12px; font-size: 12px; opacity: 0.8;">
           💡 El plan anual incluye 2 meses adicionales sin costo
         </div>
       </div>
     `,
-    // 🔽 FONDO SÓLIDO (blanco o gris muy claro)
-    background: '#ffffff', // Fondo blanco puro
-    // Opcional: fondo gris claro moderno
-    // background: '#f8f9fa',
-
-    // 🔽 Elimina el backdrop difuminado pesado o déjalo sutil
-    backdrop: 'rgba(0, 0, 0, 0.4)', // Solo oscurece el fondo, sin blur ni textura
+    background: '#ffffff',
+    backdrop: 'rgba(0, 0, 0, 0.4)',
 
     customClass: {
-      popup: 'swal-solid-popup',        // Clase opcional para estilos extra
+      popup: 'swal-solid-popup',
       title: 'swal-solid-title',
       confirmButton: 'swal-solid-confirm',
       cancelButton: 'swal-solid-cancel'
@@ -152,7 +147,7 @@ confirmarAntesDePagar() {
     showCancelButton: true,
     confirmButtonText: '✅ Confirmar Pago',
     cancelButtonText: '❌ Cancelar',
-    buttonsStyling: false, // Para usar tus clases personalizadas
+    buttonsStyling: false,
     allowOutsideClick: false,
     allowEscapeKey: true,
     focusConfirm: false,
@@ -168,9 +163,10 @@ confirmarAntesDePagar() {
     },
 
     willOpen: (popup) => {
-      // Opcional: ajustar sombra o bordes al popup
       popup.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.15)';
       popup.style.borderRadius = '16px';
+      popup.style.maxWidth = 'calc(100vw - 40px)';
+      popup.style.width = '95%';
     }
 
   }).then((result) => {
@@ -184,16 +180,18 @@ confirmarAntesDePagar() {
         html: `
           <div style="text-align: center;">
             <p style="margin-bottom: 10px;">Iniciando pago para:</p>
-            <strong style="color: #16a34a;">${planTexto}</strong>
+            <strong style="color: #16a34a; font-size: 14px;">${planTexto}</strong>
           </div>
         `,
         timer: 1500,
         timerProgressBar: true,
         showConfirmButton: false,
-        background: '#ffffff93', // Fondo blanco limpio
+        background: '#ffffff',
         willOpen: (popup) => {
           popup.style.borderRadius = '12px';
           popup.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+          popup.style.maxWidth = 'calc(100vw - 40px)';
+          popup.style.width = '95%';
         },
         didOpen: () => {
           setTimeout(() => { 

@@ -239,174 +239,213 @@ openPrivacy() {
   this.privacidadLeida = true;
   this.verificarAceptacion();
 
-  Swal.fire({
-    title: '<strong>Aviso de Privacidad - ExploreTech</strong>',
-    icon: 'info',
-    html: `
-      <div style="text-align: left; font-family: 'Segoe UI', sans-serif; line-height: 1.7; color: #333; max-height: 80vh; overflow-y: auto; padding-right: 10px;">
-        
-        <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
-          📋 Información del Responsable
-        </h4>
-        <div style="background-color: #f8f9fa; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
-          <p><strong>Empresa:</strong> ExploreTech</p>
-          <p><strong>Domicilio:</strong> Calle Cardón 70, Palmita de Landeta, San Miguel De Allende, Guanajuato, México</p>
-          <p><strong>Correo de Soporte:</strong> <a href="mailto:exploretech.support@gmail.com" style="color: #007bff;">exploretech.support@gmail.com</a></p>
-          <p><strong>Teléfono:</strong> 4151123646</p>
-        </div>
+    Swal.fire({
+      title: '<strong>Aviso de Privacidad - ExploreTech</strong>',
+      icon: 'info',
+      html: `
+        <div style="text-align: left; font-family: 'Segoe UI', sans-serif; line-height: 1.7; color: #333; max-height: 80vh; overflow-y: auto; padding-right: 10px;">
+          
+          <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
+            📋 Información del Responsable
+          </h4>
+          <div style="background-color: #f8f9fa; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
+            <p><strong>Empresa:</strong> ExploreTech</p>
+            <p><strong>Domicilio:</strong> Calle Cardón 70, Palmita de Landeta, San Miguel De Allende, Guanajuato, México</p>
+            <p><strong>Correo de Soporte:</strong> <a href="mailto:exploretech.support@gmail.com" style="color: #007bff;">exploretech.support@gmail.com</a></p>
+            <p><strong>Teléfono:</strong> 4151123646</p>
+          </div>
 
-        <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
-          🎯 Finalidades del Tratamiento de Datos
-        </h4>
-        <p>Los datos personales que recabamos tienen las siguientes finalidades:</p>
-        <ul style="padding-left: 20px;">
-          <li>Crear una cuenta en nuestro software</li>
-          <li>Acceder a las funcionalidades del sistema según el tipo de usuario</li>
-          <li>Utilizar el sistema de promoción de negocios</li>
-          <li>Procesar pagos con tarjeta de crédito o débito</li>
-        </ul>
+          <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
+            🎯 Finalidades del Tratamiento de Datos
+          </h4>
+          <p>Los datos personales que recabamos tienen las siguientes finalidades:</p>
+          <ul style="padding-left: 20px;">
+            <li>Crear una cuenta en nuestro software</li>
+            <li>Acceder a las funcionalidades del sistema según el tipo de usuario</li>
+            <li>Utilizar el sistema de promoción de negocios</li>
+            <li>Procesar pagos con tarjeta de crédito o débito</li>
+          </ul>
 
-        <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
-          🔐 Datos Personales que Recabamos
-        </h4>
-        
-        <h5 style="color: #0056b3; margin: 12px 0 6px 0; font-size: 1em; font-weight: 500;">
-          1. Datos Recabados de Forma Directa
-        </h5>
-        <ul style="padding-left: 20px;">
-          <li><strong>Nombre completo:</strong> Identificación personal</li>
-          <li><strong>Teléfono:</strong> Contacto directo</li>
-          <li><strong>Correo electrónico:</strong> Comunicación y notificaciones</li>
-          <li><strong>Dirección completa:</strong> Calle, colonia, número, código postal</li>
-          <li><strong>Datos de tarjeta:</strong> Número, fecha de expiración, nombre del titular, CVV</li>
-        </ul>
+          <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
+            🔐 Datos Personales que Recabamos
+          </h4>
+          
+          <h5 style="color: #0056b3; margin: 12px 0 6px 0; font-size: 1em; font-weight: 500;">
+            1. Datos Recabados de Forma Directa
+          </h5>
+          <ul style="padding-left: 20px;">
+            <li><strong>Nombre completo:</strong> Identificación personal</li>
+            <li><strong>Teléfono:</strong> Contacto directo</li>
+            <li><strong>Correo electrónico:</strong> Comunicación y notificaciones</li>
+            <li><strong>Dirección completa:</strong> Calle, colonia, número, código postal</li>
+            <li><strong>Datos de tarjeta:</strong> Número, fecha de expiración, nombre del titular, CVV</li>
+          </ul>
 
-        <h5 style="color: #0056b3; margin: 12px 0 6px 0; font-size: 1em; font-weight: 500;">
-          2. Datos Recabados en Línea
-        </h5>
-        <ul style="padding-left: 20px;">
-          <li><strong>Nombre completo:</strong> Identificación en plataforma</li>
-          <li><strong>Teléfono:</strong> Verificación de cuenta</li>
-          <li><strong>Correo electrónico:</strong> Acceso y comunicaciones</li>
-          <li><strong>Dirección completa:</strong> Información de perfil</li>
-          <li><strong>Datos de tarjeta:</strong> Información financiera completa</li>
-        </ul>
+          <h5 style="color: #0056b3; margin: 12px 0 6px 0; font-size: 1em; font-weight: 500;">
+            2. Datos Recabados en Línea
+          </h5>
+          <ul style="padding-left: 20px;">
+            <li><strong>Nombre completo:</strong> Identificación en plataforma</li>
+            <li><strong>Teléfono:</strong> Verificación de cuenta</li>
+            <li><strong>Correo electrónico:</strong> Acceso y comunicaciones</li>
+            <li><strong>Dirección completa:</strong> Información de perfil</li>
+            <li><strong>Datos de tarjeta:</strong> Información financiera completa</li>
+          </ul>
 
-        <h5 style="color: #0056b3; margin: 12px 0 6px 0; font-size: 1em; font-weight: 500;">
-          3. Datos de Otras Fuentes Legales
-        </h5>
-        <ul style="padding-left: 20px;">
-          <li><strong>Directorios telefónicos:</strong> Información de contacto</li>
-          <li><strong>Directorios laborales:</strong> Datos profesionales</li>
-          <li><strong>Instituciones financieras:</strong> Datos de tarjetas (cuando sea legal)</li>
-        </ul>
+          <h5 style="color: #0056b3; margin: 12px 0 6px 0; font-size: 1em; font-weight: 500;">
+            3. Datos de Otras Fuentes Legales
+          </h5>
+          <ul style="padding-left: 20px;">
+            <li><strong>Directorios telefónicos:</strong> Información de contacto</li>
+            <li><strong>Directorios laborales:</strong> Datos profesionales</li>
+            <li><strong>Instituciones financieras:</strong> Datos de tarjetas (cuando sea legal)</li>
+          </ul>
 
-        <div style="background-color: #e8f4fd; padding: 12px; border-radius: 6px; margin: 15px 0; border-left: 4px solid #007bff;">
-          <p style="margin: 0; font-weight: 600; color: #0056b3;">
-            ⚠️ NOTA IMPORTANTE: Este proyecto NO recaba datos sensibles
+          <div style="background-color: #e8f4fd; padding: 12px; border-radius: 6px; margin: 15px 0; border-left: 4px solid #007bff;">
+            <p style="margin: 0; font-weight: 600; color: #0056b3;">
+              ⚠️ NOTA IMPORTANTE: Este proyecto NO recaba datos sensibles
+            </p>
+          </div>
+
+          <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
+            📞 Contactos para Ejercer sus Derechos
+          </h4>
+          <div style="background-color: #f8f9fa; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
+            <p><strong>Soporte General:</strong> <a href="mailto:exploretech.support@gmail.com" style="color: #007bff;">exploretech.support@gmail.com</a></p>
+            <p><strong>Ejercer Derechos ARCO:</strong> <a href="mailto:exploretech.heltp@gmail.com" style="color: #007bff;">exploretech.heltp@gmail.com</a></p>
+            <p><strong>Atención al Cliente:</strong> <a href="mailto:exploretech.atencionalcliente@gmail.com" style="color: #007bff;">exploretech.atencionalcliente@gmail.com</a></p>
+            <p><strong>Revocar Consentimiento:</strong> <a href="mailto:exploretech.atencionalcliente@gmail.com" style="color: #007bff;">exploretech.atencionalcliente@gmail.com</a></p>
+          </div>
+
+          <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
+            🚫 Cómo Limitar el Uso de sus Datos
+          </h4>
+          <h5 style="color: #0056b3; margin: 12px 0 6px 0; font-size: 1em; font-weight: 500;">
+            Para dejar de recibir promociones:
+          </h5>
+          <ul style="padding-left: 20px;">
+            <li><strong>Correo Electrónico:</strong> Desactivar notificaciones desde el último correo recibido</li>
+            <li><strong>Correo Postal:</strong> Seguir instrucciones en el material publicitario</li>
+            <li><strong>Solicitud Directa:</strong> Enviar petición a <a href="mailto:exploretech.heltp@gmail.com" style="color: #007bff;">exploretech.heltp@gmail.com</a></li>
+          </ul>
+
+          <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
+            ⚖️ Derechos ARCO (Acceso, Rectificación, Cancelación, Oposición)
+          </h4>
+          <h5 style="color: #0056b3; margin: 12px 0 6px 0; font-size: 1em; font-weight: 500;">
+            📝 Información requerida para solicitudes:
+          </h5>
+          <ul style="padding-left: 20px;">
+            <li><strong>Nombre del solicitante:</strong> Identificación completa</li>
+            <li><strong>Teléfono de contacto:</strong> Para seguimiento</li>
+            <li><strong>Asunto:</strong> Tipo de derecho que desea ejercer (Acceso, Rectificación, Cancelación u Oposición)</li>
+            <li><strong>Descripción del problema:</strong> Detalle específico de su solicitud</li>
+            <li><strong>Fecha:</strong> Fecha de la solicitud</li>
+            <li><strong>Correo adicional:</strong> Contacto alternativo (opcional)</li>
+          </ul>
+
+          <h5 style="color: #0056b3; margin: 12px 0 6px 0; font-size: 1em; font-weight: 500;">
+            ⏱️ Tiempos de Respuesta:
+          </h5>
+          <ul style="padding-left: 20px;">
+            <li><strong>Confirmación:</strong> A la brevedad posible (máximo 24 horas hábiles)</li>
+            <li><strong>Resolución Final:</strong> 7 a 21 días hábiles</li>
+            <li><strong>Medio de Respuesta:</strong> <a href="mailto:exploretech.heltp@gmail.com" style="color: #007bff;">exploretech.heltp@gmail.com</a></li>
+            <li><strong>Seguimiento:</strong> Número de ticket proporcionado para rastreo</li>
+          </ul>
+
+          <h5 style="color: #0056b3; margin: 12px 0 6px 0; font-size: 1em; font-weight: 500;">
+            📋 Procedimiento paso a paso:
+          </h5>
+          <ol style="padding-left: 20px;">
+            <li><strong>Enviar solicitud</strong> a: <a href="mailto:exploretech.heltp@gmail.com" style="color: #007bff;">exploretech.heltp@gmail.com</a></li>
+            <li><strong>Incluir toda la información</strong> requerida mencionada arriba</li>
+            <li><strong>Recibir confirmación</strong> con número de ticket</li>
+            <li><strong>Esperar resolución</strong> en el plazo establecido</li>
+            <li><strong>Recibir respuesta final</strong> por correo electrónico</li>
+          </ol>
+
+          <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
+            🔄 Revocación de Consentimiento
+          </h4>
+          <p><strong>Proceso de Revocación:</strong></p>
+          <ol style="padding-left: 20px;">
+            <li><strong>Enviar solicitud</strong> a: <a href="mailto:exploretech.atencionalcliente@gmail.com" style="color: #007bff;">exploretech.atencionalcliente@gmail.com</a></li>
+            <li><strong>Incluir información requerida</strong> (usar misma tabla de información que derechos ARCO)</li>
+            <li><strong>Tiempo de procesamiento:</strong> 7 a 21 días hábiles</li>
+            <li><strong>Confirmación:</strong> Por correo electrónico</li>
+            <li><strong>Efectos:</strong> Se suspenderá el tratamiento de datos según lo solicitado</li>
+          </ol>
+
+          <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
+            🔔 Modificaciones al Aviso
+          </h4>
+          <p><strong>Medios de Notificación:</strong></p>
+          <ul style="padding-left: 20px;">
+            <li><strong>Físico:</strong> Anuncios en establecimientos afiliados</li>
+            <li><strong>Material Impreso:</strong> Trípticos y folletos informativos</li>
+            <li><strong>Digital:</strong> Página web (sección aviso de privacidad)</li>
+            <li><strong>Correo Electrónico:</strong> Al último correo proporcionado</li>
+            <li><strong>Notificación en App:</strong> Mensaje emergente al iniciar sesión</li>
+          </ul>
+
+          <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
+            🍪 Cookies y Web Beacons
+          </h4>
+          <h5 style="color: #0056b3; margin: 12px 0 6px 0; font-size: 1em; font-weight: 500;">
+            Información que recopilamos:
+          </h5>
+          <ul style="padding-left: 20px;">
+            <li><strong>Tipo de navegador y SO:</strong> Optimización de experiencia</li>
+            <li><strong>Páginas visitadas:</strong> Análisis de navegación</li>
+            <li><strong>Vínculos seguidos:</strong> Mejora de contenido</li>
+            <li><strong>Dirección IP:</strong> Seguridad y ubicación</li>
+            <li><strong>Sitio de origen:</strong> Análisis de tráfico</li>
+            <li><strong>Tiempo de permanencia:</strong> Estadísticas de uso</li>
+            <li><strong>Preferencias de usuario:</strong> Personalización de interfaz</li>
+          </ul>
+          <p><strong>Deshabilitación:</strong> Para información sobre cómo deshabilitar cookies, contacte: <a href="mailto:exploretech.atencionalcliente@gmail.com" style="color: #007bff;">exploretech.atencionalcliente@gmail.com</a></p>
+
+          <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
+            📢 Quejas y Denuncias ante Autoridades
+          </h4>
+          <div style="background-color: #fff3cd; padding: 12px; border-radius: 6px; border-left: 4px solid #ffc107; margin: 15px 0;">
+            <p><strong>Autoridad Competente:</strong></p>
+            <p><strong>Transparencia para el Pueblo</strong> (órgano desconcentrado de la Secretaría Anticorrupción y Buen Gobierno)</p>
+            <p><strong>Página web:</strong> <a href="https://transparenciaparaelpueblo.gob.mx" target="_blank" style="color: #007bff;">https://transparenciaparaelpueblo.gob.mx</a></p>
+            <p style="font-size: 0.9em; color: #856404; font-style: italic;"></p>
+            <p><strong>Teléfono:</strong> 55 5004 2400 <span style="font-size: 0.9em; color: #856404; font-style: italic;">*(el número puede seguir operando temporalmente; verifica si hay uno nuevo oficialmente asignado)*</span></p>
+            <p><strong>Motivos de denuncia:</strong> Violaciones a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares</p>
+          </div>
+
+          <div style="background-color: #ffeaa7; padding: 10px; border-radius: 6px; border-left: 4px solid #fdcb6e; margin: 15px 0;">
+            <p style="margin: 0; color: #2d3436; font-size: 0.9em;">
+              <strong>⚠️ Nota importante:</strong> Aunque el sitio web <code>inai.org.mx</code> podría permanecer activo temporalmente para redirección o consulta de trámites anteriores, ya no es la autoridad vigente. Se recomienda verificar en la página oficial de la <strong>Secretaría Anticorrupción y Buen Gobierno</strong> la información más actualizada sobre presentación de quejas.
+            </p>
+          </div>
+
+          <div style="background-color: #ddd6fe; padding: 10px; border-radius: 6px; border-left: 4px solid #8b5cf6; margin: 15px 0;">
+            <p style="margin: 0; color: #581c87; font-size: 0.9em; font-weight: 500;">
+              📋 <strong>Cambio de autoridad:</strong> La presente autoridad sustituye al Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales (INAI), desaparecido el 9 de mayo de 2025 conforme a la Ley de Simplificación Administrativa.
+            </p>
+          </div>
+
+          <div style="background-color: #f8f9fa; padding: 12px; border-radius: 6px; margin: 15px 0;">
+            <p style="margin: 0; text-align: center;">
+              <strong>📞 Contacto Principal:</strong><br>
+              <strong>ExploreTech</strong><br>
+              📧 <a href="mailto:exploretech.support@gmail.com" style="color: #007bff; text-decoration: underline;">exploretech.support@gmail.com</a><br>
+              📧 <strong>Derechos ARCO:</strong> <a href="mailto:exploretech.heltp@gmail.com" style="color: #007bff; text-decoration: underline;">exploretech.heltp@gmail.com</a>
+            </p>
+          </div>
+
+          <p style="font-size: 0.9em; color: #666; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; text-align: center;">
+            <strong>Última actualización: 15/08/2025</strong><br>
+            © 2025 ExploreTech. Todos los derechos reservados.<br>
+            Contacto: <a href="mailto:exploretech.support@gmail.com" style="color: #007bff; text-decoration: underline;">exploretech.support@gmail.com</a>
           </p>
         </div>
-
-        <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
-          📞 Contactos para Ejercer sus Derechos
-        </h4>
-        <div style="background-color: #f8f9fa; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
-          <p><strong>Soporte General:</strong> <a href="mailto:exploretech.support@gmail.com" style="color: #007bff;">exploretech.support@gmail.com</a></p>
-          <p><strong>Ejercer Derechos ARCO:</strong> <a href="mailto:exploretech.heltp@gmail.com" style="color: #007bff;">exploretech.heltp@gmail.com</a></p>
-          <p><strong>Atención al Cliente:</strong> <a href="mailto:exploretech.atencionalcliente@gmail.com" style="color: #007bff;">exploretech.atencionalcliente@gmail.com</a></p>
-          <p><strong>Revocar Consentimiento:</strong> <a href="mailto:exploretech.atencionalcliente@gmail.com" style="color: #007bff;">exploretech.atencionalcliente@gmail.com</a></p>
-        </div>
-
-        <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
-          🚫 Cómo Limitar el Uso de sus Datos
-        </h4>
-        <h5 style="color: #0056b3; margin: 12px 0 6px 0; font-size: 1em; font-weight: 500;">
-          Para dejar de recibir promociones:
-        </h5>
-        <ul style="padding-left: 20px;">
-          <li><strong>Correo Electrónico:</strong> Desactivar notificaciones desde el último correo recibido</li>
-          <li><strong>Correo Postal:</strong> Seguir instrucciones en el material publicitario</li>
-          <li><strong>Solicitud Directa:</strong> Enviar petición a <a href="mailto:exploretech.heltp@gmail.com" style="color: #007bff;">exploretech.heltp@gmail.com</a></li>
-        </ul>
-
-        <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
-          ⚖️ Derechos ARCO (Acceso, Rectificación, Cancelación, Oposición)
-        </h4>
-        <h5 style="color: #0056b3; margin: 12px 0 6px 0; font-size: 1em; font-weight: 500;">
-          Información requerida para solicitudes:
-        </h5>
-        <ul style="padding-left: 20px;">
-          <li>Nombre del solicitante (identificación completa)</li>
-          <li>Teléfono de contacto (para seguimiento)</li>
-          <li>Asunto (tipo de derecho que desea ejercer)</li>
-          <li>Descripción del problema (detalle de su solicitud)</li>
-          <li>Fecha (fecha de la solicitud)</li>
-          <li>Correo adicional (contacto alternativo)</li>
-        </ul>
-
-        <h5 style="color: #0056b3; margin: 12px 0 6px 0; font-size: 1em; font-weight: 500;">
-          ⏱️ Tiempos de Respuesta:
-        </h5>
-        <ul style="padding-left: 20px;">
-          <li><strong>Confirmación:</strong> A la brevedad posible</li>
-          <li><strong>Resolución Final:</strong> 7 a 21 días hábiles</li>
-          <li><strong>Medio de Respuesta:</strong> <a href="mailto:exploretech.heltp@gmail.com" style="color: #007bff;">exploretech.heltp@gmail.com</a></li>
-        </ul>
-
-        <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
-          🔄 Revocación de Consentimiento
-        </h4>
-        <p><strong>Proceso de Revocación:</strong></p>
-        <ol style="padding-left: 20px;">
-          <li>Enviar solicitud a: <a href="mailto:exploretech.atencionalcliente@gmail.com" style="color: #007bff;">exploretech.atencionalcliente@gmail.com</a></li>
-          <li>Incluir información requerida (ver tabla anterior)</li>
-          <li>Tiempo de procesamiento: 7 a 21 días hábiles</li>
-          <li>Confirmación: Por correo electrónico</li>
-        </ol>
-
-        <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
-          🔔 Modificaciones al Aviso
-        </h4>
-        <p><strong>Medios de Notificación:</strong></p>
-        <ul style="padding-left: 20px;">
-          <li><strong>Físico:</strong> Anuncios en establecimientos</li>
-          <li><strong>Material Impreso:</strong> Trípticos y folletos</li>
-          <li><strong>Digital:</strong> Página web (sección aviso de privacidad)</li>
-          <li><strong>Correo Electrónico:</strong> Al último correo proporcionado</li>
-        </ul>
-
-        <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
-          🍪 Cookies y Web Beacons
-        </h4>
-        <h5 style="color: #0056b3; margin: 12px 0 6px 0; font-size: 1em; font-weight: 500;">
-          Información que recopilamos:
-        </h5>
-        <ul style="padding-left: 20px;">
-          <li><strong>Tipo de navegador y SO:</strong> Optimización de experiencia</li>
-          <li><strong>Páginas visitadas:</strong> Análisis de navegación</li>
-          <li><strong>Vínculos seguidos:</strong> Mejora de contenido</li>
-          <li><strong>Dirección IP:</strong> Seguridad y ubicación</li>
-          <li><strong>Sitio de origen:</strong> Análisis de tráfico</li>
-        </ul>
-        <p><strong>Deshabilitación:</strong> Contacto para información: <a href="mailto:exploretech.atencionalcliente@gmail.com" style="color: #007bff;">exploretech.atencionalcliente@gmail.com</a></p>
-
-        <h4 style="color: #003366; margin: 18px 0 8px 0; font-size: 1.1em; font-weight: 600;">
-          📢 Quejas y Denuncias
-        </h4>
-        <div style="background-color: #fff3cd; padding: 12px; border-radius: 6px; border-left: 4px solid #ffc107;">
-          <p><strong>Autoridad Competente:</strong></p>
-          <p><strong>IFAI</strong> - Instituto Federal de Acceso a la Información</p>
-          <p><strong>Página web:</strong> <a href="https://www.gob.mx/buengobierno" target="_blank" style="color: #007bff;">https://www.gob.mx/buengobierno</a></p>
-          <p><strong>Motivos:</strong> Violaciones a la Ley Federal de Protección de Datos Personales</p>
-        </div>
-
-        <p style="font-size: 0.9em; color: #666; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; text-align: center;">
-          <strong>Última actualización: 15/08/2025</strong><br>
-          © 2025 ExploreTech. Todos los derechos reservados.<br>
-          Contacto: <a href="mailto:exploretech.support@gmail.com" style="color: #007bff; text-decoration: underline;">exploretech.support@gmail.com</a>
-        </p>
-      </div>
-    `,
+      `,
     confirmButtonText: 'Cerrar',
     width: '85%',
     backdrop: true,

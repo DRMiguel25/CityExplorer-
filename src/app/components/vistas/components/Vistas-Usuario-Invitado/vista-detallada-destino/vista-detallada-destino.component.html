@@ -1,11 +1,15 @@
 <div class="container">
-
   <!-- Header con botón de volver y favoritos -->
   <div class="header">
-    <button class="back-btn" (click)="goBack()"> <span class="material-symbols-outlined"> arrow_back </span> </button>
-    <button class="favorite-btn" (click)="toggleFavorito()">
-      <span class="material-symbols-outlined">favorite</span>
-      <span>{{ lugar?.esFavorito ? 'Quitar de favoritos' : 'Agregar a favoritos' }}</span>
+    <button class="back-btn" (click)="goBack()" aria-label="Volver atrás"> 
+      <span class="material-symbols-outlined">arrow_back</span>
+      <span class="btn-text">Volver</span>
+    </button>
+    <button class="favorite-btn" (click)="toggleFavorito()" [attr.aria-label]="lugar?.esFavorito ? 'Quitar de favoritos' : 'Agregar a favoritos'">
+      <span class="material-symbols-outlined" [class.favorited]="lugar?.esFavorito">
+        {{ lugar?.esFavorito ? 'favorite' : 'favorite_border' }}
+      </span>
+      <span class="btn-text">{{ lugar?.esFavorito ? 'Quitar de favoritos' : 'Agregar a favoritos' }}</span>
     </button>
   </div>
 
@@ -19,22 +23,38 @@
     <!-- Galería de imágenes -->
     <div class="gallery-section">
       <div class="main-image" *ngIf="imagenes.length > 0">
-        <img [src]="imagenes[currentImageIndex].url" alt="Imagen principal del lugar" />
-        <div class="nav-arrows">
-          <div class="nav-arrow" (click)="changeImage(-1)">‹</div>
-          <div class="nav-arrow" (click)="changeImage(1)">›</div>
+        <img [src]="imagenes[currentImageIndex].url" 
+             [alt]="'Imagen ' + (currentImageIndex + 1) + ' de ' + lugar.nombre" 
+             loading="lazy" />
+        <div class="nav-arrows" *ngIf="imagenes.length > 1">
+          <button class="nav-arrow" 
+                  (click)="changeImage(-1)" 
+                  aria-label="Imagen anterior"
+                  type="button">‹</button>
+          <button class="nav-arrow" 
+                  (click)="changeImage(1)" 
+                  aria-label="Imagen siguiente"
+                  type="button">›</button>
+        </div>
+        <div class="image-counter" *ngIf="imagenes.length > 1">
+          {{ currentImageIndex + 1 }} / {{ imagenes.length }}
         </div>
       </div>
-      <div *ngIf="imagenes.length === 0">
+      <div *ngIf="imagenes.length === 0" class="no-images">
+        <span class="material-symbols-outlined">image</span>
         <p>Este lugar aún no tiene imágenes cargadas.</p>
       </div>
-      <div class="thumbnail-grid">
-        <div *ngFor="let img of imagenes; let i = index"
-              class="thumbnail"
-              [class.active]="i === currentImageIndex"
-              (click)="currentImageIndex = i">
-          <img [src]="img.url" alt="Miniatura de imagen" />
-        </div>
+      <div class="thumbnail-grid" *ngIf="imagenes.length > 1">
+        <button *ngFor="let img of imagenes; let i = index"
+                class="thumbnail"
+                [class.active]="i === currentImageIndex"
+                (click)="currentImageIndex = i"
+                [attr.aria-label]="'Ver imagen ' + (i + 1)"
+                type="button">
+          <img [src]="img.url" 
+               [alt]="'Miniatura ' + (i + 1) + ' de ' + lugar.nombre" 
+               loading="lazy" />
+        </button>
       </div>
     </div>
 
@@ -46,17 +66,23 @@
       </div>
 
       <div class="contact-info">
-        <div class="contact-item">
+        <div class="contact-item" *ngIf="lugar.paginaWeb">
           <div class="info-label">Sitio Web</div>
-          <a [href]="lugar.paginaWeb" target="_blank" class="website-link">{{ lugar.paginaWeb }}</a>
+          <a [href]="lugar.paginaWeb" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="website-link"
+             aria-label="Abrir sitio web en nueva pestaña">{{ lugar.paginaWeb }}</a>
         </div>
-        <div class="contact-item">
+        <div class="contact-item" *ngIf="lugar.num_telefonico">
           <div class="info-label">Teléfono</div>
-          <div class="info-value">{{ lugar.num_telefonico }}</div>
+          <a [href]="'tel:' + lugar.num_telefonico" 
+             class="phone-link"
+             aria-label="Llamar a este número">{{ lugar.num_telefonico }}</a>
         </div>
       </div>
 
-      <div class="hours-grid">
+      <div class="hours-grid" *ngIf="lugar.horario_apertura && lugar.horario_cierre">
         <div class="schedule-item">
           <div class="info-label">Horario de Apertura</div>
           <div class="info-value">{{ lugar.horario_apertura }}</div>
@@ -67,7 +93,7 @@
         </div>
       </div>
 
-      <div class="info-item">
+      <div class="info-item" *ngIf="lugar.dias_servicio && lugar.dias_servicio.length > 0">
         <div class="info-label">Días de Servicio</div>
         <div class="info-value">{{ lugar.dias_servicio.join(', ') }}</div>
       </div>
@@ -92,24 +118,33 @@
   <!-- Reseñas -->
   <div class="rating-section">
     <div class="rating-header">
-      <h3 class="rating-title">Reseñas ({{ totalComentarios }})</h3>
-      <div class="rating-actions">
-        <button class="write-review-btn" (click)="crearResenia()">Escribir Reseña</button>
-        <button class="write-review-btn" (click)="listarComentarios()">Todas Las Reseñas</button>
+      <div class="rating-info">
+        <h3 class="rating-title">Reseñas ({{ totalComentarios }})</h3>
+        <div class="stars" *ngIf="promedioValoracion > 0">
+          <span class="star">{{ getEstrellas(promedioValoracion) }}</span>
+          <span class="rating-number">{{ promedioValoracion.toFixed(1) }}</span>
+        </div>
       </div>
-    </div>
-    <div class="stars">
-      <span class="star">{{ getEstrellas(promedioValoracion) }}</span>
-      <span style="margin-left: 10px; font-weight: 600; color: var(--azul-principal);">{{ promedioValoracion.toFixed(1) }}</span>
+      <div class="rating-actions">
+        <button class="write-review-btn" 
+                (click)="crearResenia()"
+                aria-label="Escribir una nueva reseña">Escribir Reseña</button>
+        <button class="write-review-btn" 
+                (click)="listarComentarios()"
+                aria-label="Ver todas las reseñas">Todas Las Reseñas</button>
+      </div>
     </div>
 
     <div *ngIf="ultimoComentario" class="review">
-      <div class="review-rating">{{ getEstrellas(ultimoComentario.valoracion) }}</div>
-      <div class="review-author">{{ ultimoComentario.usuario?.nombre ?? 'Usuario anónimo' }}</div>
+      <div class="review-header">
+        <div class="review-rating">{{ getEstrellas(ultimoComentario.valoracion) }}</div>
+        <div class="review-author">{{ ultimoComentario.usuario?.nombre ?? 'Usuario anónimo' }}</div>
+      </div>
       <div class="review-text">{{ ultimoComentario.contenido }}</div>
     </div>
 
     <div class="no-reviews" *ngIf="!ultimoComentario">
+      <span class="material-symbols-outlined">rate_review</span>
       <p>Aún no hay reseñas disponibles. ¡Sé el primero en compartir tu experiencia!</p>
     </div>
   </div>

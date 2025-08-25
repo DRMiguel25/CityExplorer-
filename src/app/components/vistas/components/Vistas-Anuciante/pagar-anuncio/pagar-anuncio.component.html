@@ -79,17 +79,17 @@
           <div id="card-number-element" class="form-control stripe-element"></div>
         </div>
 
-        <!-- Fecha de expiración y CVV -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-          <div class="form-group active">
-            <label for="card-expiry-element">Fecha de expiración</label>
-            <div id="card-expiry-element" class="form-control stripe-element"></div>
-          </div>
-          <div class="form-group active">
-            <label for="card-cvc-element">CVV</label>
-            <div id="card-cvc-element" class="form-control stripe-element"></div>
-          </div>
-        </div>
+<!-- Fecha de expiración y CVV - SECCIÓN CORREGIDA -->
+<div class="expiry-cvc-container">
+  <div class="form-group active">
+    <label for="card-expiry-element">Fecha de expiración</label>
+    <div id="card-expiry-element" class="form-control stripe-element"></div>
+  </div>
+  <div class="form-group active">
+    <label for="card-cvc-element">CVV</label>
+    <div id="card-cvc-element" class="form-control stripe-element"></div>
+  </div>
+</div>
 
         <!-- Código Postal -->
         <div class="form-group active">
@@ -142,4 +142,4 @@
     </form>
   </div>
 </div>
- 
+  
