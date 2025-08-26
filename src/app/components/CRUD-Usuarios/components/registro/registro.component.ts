@@ -40,7 +40,7 @@ export class RegistroComponent implements OnInit {
         Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)
       ]],
       id_rol: ['', Validators.required],
-      foto_perfil: [null, Validators.required],
+      foto_perfil: [''],
       acceptTerms: [false, Validators.requiredTrue]
     });
 
@@ -457,20 +457,29 @@ openPrivacy() {
 }
 
   registrar() {
+    const fotoControl = this.registroForm.get('foto_perfil');
+
     // Mantengo validaciones del form
     if (this.registroForm.invalid) {
       this.registroForm.markAllAsTouched();
       return;
     }
-
     // 🔎 Validación explícita: deben haber abierto ambos documentos
     if (!this.terminosLeidos) {
       Swal.fire('Atención', 'Debes abrir y leer los Términos y Condiciones antes de aceptar.', 'warning');
       return;
     }
-
     if (!this.privacidadLeida) {
       Swal.fire('Atención', 'Debes abrir y leer el Aviso de Privacidad antes de aceptar.', 'warning');
+      return;
+    }
+    if (!fotoControl?.value) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Oops!',
+        text: 'No puedes crear una cuenta sin foto de perfil',
+        confirmButtonText: 'Aceptar'
+      });
       return;
     }
 

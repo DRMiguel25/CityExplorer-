@@ -128,10 +128,11 @@
   </div>
 
 
-<!-- Mensaje de error si el campo es inválido -->
-<div *ngIf="isInvalid('acceptTerms')" class="textRequerido">
-  Debes aceptar los términos y condiciones
-</div>
+  <!-- Mensaje de error si el campo es inválido -->
+  <div *ngIf="isInvalid('acceptTerms')" class="textRequerido">
+    Debes aceptar los términos y condiciones
+  </div>
+
       <!-- Botón de registro -->
       <button type="submit" class="register-button" [disabled]="registroForm.invalid">
         Registrarse
