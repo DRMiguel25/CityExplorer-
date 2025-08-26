@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ayuda',
@@ -8,8 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AyudaComponent implements OnInit{
 
+  id_usuario: string | null = null;
+
+  constructor(private router: Router, private route: ActivatedRoute){}
+
   ngOnInit(): void {
     this.logLoadTime();  // 👈 mide tiempo de carga
+
+    this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
   }
 
   logLoadTime() {
@@ -49,4 +57,9 @@ toggleFAQ(event: Event) {
     symbol!.textContent = '−';
   }
 }
+
+goBack(){
+  this.router.navigate(['/home-invitado-usuario', this.id_usuario]);
+}
+
 }
