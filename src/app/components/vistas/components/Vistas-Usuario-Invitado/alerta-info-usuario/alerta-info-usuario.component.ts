@@ -101,4 +101,8 @@ export class AlertaInfoUsuarioComponent implements OnInit {
   });
 }
 
+  closeProfile(): void {
+    this.dialogRef.close();
+    console.log('vista del usuario reseña cerrada y redirigiendo a vista detallada del destino');
+  }
 }
