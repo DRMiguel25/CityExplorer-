@@ -23,14 +23,12 @@ body::before {
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(44, 95, 122, 0.08);
     width: 100%;
-    max-width: 720px;
-    margin: 20px auto; /* Centrado con márgenes */
-    padding: 30px;
+    max-width: 480px;   /* más pequeño que 720px */
+    margin: 40px auto;  /* centrado con menos espacio */
+    padding: 20px;      /* menos padding */
     border: 1px solid #D1E7F0;
-    position: static; /* Ya no bloquea scroll */
-    animation: none;  /* Sin animación de modal */
-    backdrop-filter: none; /* Sin vidrio */
 }
+
 
 /* Botón de cerrar */
 .close-btn {
