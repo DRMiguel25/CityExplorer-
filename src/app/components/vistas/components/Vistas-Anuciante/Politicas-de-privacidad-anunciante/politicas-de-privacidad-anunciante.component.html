@@ -1,1 +1,913 @@
-politicas-de-privacidad-anunciante
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Explorer - Aviso de Privacidad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  background: linear-gradient(135deg, #F0F8FF 0%, #EAF6FB 30%, #EDF3F9 70%, #EEF7FB 100%);
+  min-height: 100vh;
+  color: #1B365D;
+  position: relative;
+}
+
+/* Fondo animado con patrones sutiles */
+.background-slideshow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 15% 25%, #F3F7FA 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, #E6F0FA 0%, transparent 45%),
+    radial-gradient(circle at 45% 85%, #F5F9FD 0%, transparent 35%),
+    linear-gradient(45deg, #F0F8FF 0%, #F2F8FC 50%, #E6F1F7 100%);
+  z-index: -2;
+  animation: backgroundShift 30s ease-in-out infinite alternate;
+}
+
+@keyframes backgroundShift {
+  0% { 
+    transform: translateX(-2%) translateY(-1%) scale(1.03);
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    filter: hue-rotate(5deg);
+  }
+  100% { 
+    transform: translateX(2%) translateY(1%) scale(1);
+    filter: hue-rotate(0deg);
+  }
+}
+
+/* Capa de glassmorphism */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(240, 248, 255, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(234, 246, 251, 0.3) 0%, transparent 50%);
+  backdrop-filter: blur(0.5px);
+  z-index: -1;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Botón de regreso mejorado */
+.back-btn {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  background: #F2F8FC;
+  border: 2px solid #E6F0FA;
+  border-radius: 16px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: #4A7AA5;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 8px 32px rgba(90, 155, 212, 0.12),
+    0 4px 16px rgba(46, 89, 132, 0.08);
+}
+
+.back-btn:hover {
+  background: #F5F9FD;
+  transform: translateX(-5px) scale(1.05);
+  box-shadow: 
+    0 12px 40px rgba(90, 155, 212, 0.18),
+    0 6px 20px rgba(46, 89, 132, 0.12);
+  border-color: #5A9BD4;
+}
+
+.hero-section {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding: 4rem 0;
+}
+
+.hero-title {
+  color: #2E5984;
+  font-family: 'Poppins', sans-serif;
+  font-size: 4rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 4px 20px rgba(90, 155, 212, 0.15);
+  animation: fadeInDown 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #2E5984 0%, #5A9BD4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  color: #4A7AA5;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@keyframes fadeInDown {
+  from { 
+    opacity: 0; 
+    transform: translateY(-60px) scale(0.9); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+@keyframes fadeInUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(60px) scale(0.9); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+/* Tarjeta principal con glassmorphism avanzado */
+.terms-card {
+  background: #F5F9FD;
+  backdrop-filter: blur(30px);
+  border-radius: 32px;
+  box-shadow: 
+    0 32px 80px rgba(90, 155, 212, 0.08),
+    0 16px 40px rgba(46, 89, 132, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border: 1px solid #E6F0FA;
+  overflow: hidden;
+  animation: slideInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both;
+  position: relative;
+}
+
+/* Efectos de brillo en la tarjeta */
+.terms-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(240, 248, 255, 0.4), 
+    transparent);
+  transition: left 1.5s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.terms-card:hover::before {
+  left: 100%;
+}
+
+@keyframes slideInUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(80px) scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+/* Header con gradiente mejorado */
+.card-header {
+  background: linear-gradient(135deg, 
+    #E6F0FA 0%, 
+    #E6F1F7 30%, 
+    #F3F7FA 70%, 
+    #F2F8FC 100%);
+  color: #2E5984;
+  padding: 4rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* Patrones flotantes en el header */
+.card-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.4) 0%, transparent 45%),
+    radial-gradient(circle at 75% 75%, rgba(240, 248, 255, 0.3) 0%, transparent 45%),
+    radial-gradient(circle at 50% 10%, rgba(234, 246, 251, 0.3) 0%, transparent 40%);
+  animation: float 25s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg) scale(1); 
+    opacity: 0.8;
+  }
+  33% { 
+    transform: translateY(-20px) rotate(2deg) scale(1.05); 
+    opacity: 1;
+  }
+  66% { 
+    transform: translateY(-10px) rotate(-1deg) scale(0.98); 
+    opacity: 0.9;
+  }
+}
+
+.main-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 12px rgba(90, 155, 212, 0.1);
+}
+
+/* Badge de empresa mejorado */
+.company-badge {
+  display: inline-block;
+  background: #F0F8FF;
+  backdrop-filter: blur(15px);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+  border: 1px solid #E6F0FA;
+  box-shadow: 
+    0 8px 24px rgba(90, 155, 212, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
+
+.company-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 32px rgba(90, 155, 212, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.card-body {
+  padding: 4rem;
+  color: #1B365D;
+  position: relative;
+  z-index: 2;
+}
+
+/* Secciones con animación escalonada */
+.section {
+  margin-bottom: 4rem;
+  opacity: 0;
+  animation: fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  padding: 2rem 0;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.section:hover {
+  transform: translateY(-2px);
+}
+
+.section:nth-child(1) { animation-delay: 0.8s; }
+.section:nth-child(2) { animation-delay: 0.9s; }
+.section:nth-child(3) { animation-delay: 1.0s; }
+.section:nth-child(4) { animation-delay: 1.1s; }
+.section:nth-child(5) { animation-delay: 1.2s; }
+.section:nth-child(6) { animation-delay: 1.3s; }
+.section:nth-child(7) { animation-delay: 1.4s; }
+.section:nth-child(8) { animation-delay: 1.5s; }
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* Títulos de sección mejorados */
+.section-title {
+  color: #5A9BD4;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid #E6F0FA;
+  position: relative;
+  display: inline-block;
+  letter-spacing: -0.01em;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(135deg, #5A9BD4 0%, #4A7AA5 100%);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px;
+}
+
+.section:hover .section-title::after {
+  width: 100%;
+}
+
+/* Cajas destacadas con glassmorphism */
+.highlight-box {
+  background: #F2F8FC;
+  border: 2px solid #E6F0FA;
+  border-radius: 24px;
+  padding: 3rem;
+  margin: 2.5rem 0;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 16px 40px rgba(90, 155, 212, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.highlight-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 24px 60px rgba(90, 155, 212, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-color: #5A9BD4;
+}
+
+/* Efecto shimmer en cajas destacadas */
+.highlight-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(90, 155, 212, 0.1), 
+    transparent);
+  transition: left 1s ease;
+}
+
+.highlight-box:hover::before {
+  left: 100%;
+}
+
+/* Sección de contacto mejorada */
+.contact-section {
+  background: linear-gradient(135deg, 
+    #E6F1F7 0%, 
+    #F3F7FA 30%, 
+    #E6F0FA 70%, 
+    #EEF7FB 100%);
+  color: #2E5984;
+  padding: 4rem;
+  border-radius: 24px;
+  text-align: center;
+  margin-top: 4rem;
+  box-shadow: 
+    0 20px 60px rgba(90, 155, 212, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(240, 248, 255, 0.3) 0%, transparent 40%);
+  animation: float 20s ease-in-out infinite reverse;
+  z-index: -1;
+}
+
+.contact-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Enlaces de correo mejorados */
+.contact-email {
+  background: #F0F8FF;
+  backdrop-filter: blur(15px);
+  padding: 1.5rem 3rem;
+  border-radius: 50px;
+  display: inline-block;
+  font-weight: 600;
+  text-decoration: none;
+  color: #2E5984;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid #E6F0FA;
+  font-size: 1.1rem;
+  margin: 0.5rem;
+  box-shadow: 
+    0 8px 24px rgba(90, 155, 212, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  position: relative;
+  z-index: 1;
+}
+
+.contact-email:hover {
+  background: #F5F9FD;
+  transform: translateY(-4px) scale(1.02);
+  color: #2E5984;
+  text-decoration: none;
+  box-shadow: 
+    0 16px 40px rgba(90, 155, 212, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-color: #5A9BD4;
+}
+
+/* Indicador de scroll mejorado */
+.scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 6px;
+  background: linear-gradient(135deg, 
+    #5A9BD4 0%, 
+    #4A7AA5 50%, 
+    #2E5984 100%);
+  z-index: 1000;
+  transition: width 0.1s ease;
+  box-shadow: 0 3px 15px rgba(90, 155, 212, 0.3);
+  border-radius: 0 0 3px 0;
+}
+
+/* Mejoras tipográficas */
+p {
+  font-weight: 400;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  color: #1B365D;
+}
+
+strong {
+  font-weight: 700;
+  color: #2E5984;
+}
+
+h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #4A7AA5;
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+}
+
+/* Listas mejoradas */
+.standard-list {
+  padding-left: 2rem;
+  margin: 1.5rem 0;
+}
+
+.standard-list li {
+  margin-bottom: 1rem;
+  font-weight: 400;
+  color: #1B365D;
+  line-height: 1.7;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.standard-list li:hover {
+  color: #4A7AA5;
+}
+
+.standard-list li::marker {
+  color: #5A9BD4;
+}
+
+/* Enlaces mejorados */
+a {
+  color: #5A9BD4;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+a:hover {
+  color:#4A7AA5;
+  text-decoration: underline;
+  text-decoration-color:#E6F0FA;
+}
+
+/* Cajas de advertencia especiales */
+.highlight-box[style*="border-left"] {
+  border-left: 6px solid #ffc107 !important;
+  background: linear-gradient(135deg, 
+    rgba(255,193,7,0.05) 0%, 
+    var #F2F8FC 50%, 
+    var #F5F9FD 100%) !important;
+  position: relative;
+}
+
+.highlight-box[style*="border-left"]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(180deg, #ffc107 0%, #ff9800 100%);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .hero-title {
+    font-size: 2.8rem;
+  }
+  
+  .card-body {
+    padding: 2.5rem;
+  }
+  
+  .card-header {
+    padding: 3rem 2rem;
+  }
+  
+  .back-btn {
+    top: 1rem;
+    left: 1rem;
+    width: 50px;
+    height: 50px;
+  }
+  
+  .highlight-box {
+    padding: 2rem;
+  }
+  
+  .contact-section {
+    padding: 3rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  
+  .card-body {
+    padding: 2rem;
+  }
+  
+  .card-header {
+    padding: 2.5rem 1.5rem;
+  }
+  
+  .main-title {
+    font-size: 2rem;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .contact-email {
+    padding: 1.2rem 2rem;
+    font-size: 1rem;
+    display: block;
+    margin: 1rem 0;
+  }
+}
+
+/* Animación de entrada para todo el contenido */
+@keyframes contentEntry {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-body > * {
+  animation: contentEntry 0.6s ease-out forwards;
+}
+
+.ssc {
+    background: linear-gradient(135deg,#3182ce,#4a90e2) !important; /* Azul principal */
+    color: white;
+    border: none;
+    padding: 0.75rem 1.2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
+}
+
+.ssc:hover {
+    background-color: #1E40AF !important; /* Azul más oscuro al pasar el mouse */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(49, 130, 206, 0.4);
+}
+
+.ssc:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
+}
+
+</style>
+
+<div class="scroll-indicator"></div>
+<div class="background-slideshow"></div>
+<div class="overlay"></div>
+
+<button class="back-btn ssc" (click)="goBack()">
+    <span>←</span>
+</button>
+
+<div class="container">
+  <div class="terms-card">
+    <div class="card-header">
+        <h1 class="hero-title">City Explorer</h1>
+      <h1 class="main-title">🔒 Aviso de Privacidad</h1>
+      <div class="company-badge">ExploreTech • Protegemos tu información personal</div>
+    </div>
+
+    <div class="card-body">
+      <div class="section">
+        <h2 class="section-title">📍 Información del Responsable</h2>
+        <div class="highlight-box">
+          <p><strong>Empresa:</strong> ExploreTech</p>
+          <p><strong>Domicilio:</strong> Calle Cardón 70, Palmita de Landeta, San Miguel De Allende, Guanajuato, México</p>
+          <p><strong>Teléfono:</strong> 4151123646</p>
+          <p><strong>Soporte:</strong> <a href="mailto:exploretech.support&#64;gmail.com">exploretech.support&#64;gmail.com</a></p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">🎯 Finalidades del Tratamiento de Datos</h2>
+        <p>Los datos personales que recabamos tienen las siguientes finalidades:</p>
+        <ul class="standard-list">
+          <li>Crear una cuenta en nuestro software</li>
+          <li>Acceder a las funcionalidades según el tipo de usuario</li>
+          <li>Utilizar el sistema de promoción de negocios</li>
+          <li>Procesar pagos con tarjeta de crédito o débito</li>
+          <li>Permitir descubrir lugares destacados en San Miguel de Allende</li>
+          <li>Mejorar la experiencia del usuario y la plataforma</li>
+          <li>Comunicarnos contigo sobre actualizaciones, promociones y noticias relevantes</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">📊 Datos Personales que Recabamos</h2>
+        
+        <h3>1. Datos Recabados de Forma Directa</h3>
+        <div class="highlight-box">
+          <ul class="standard-list">
+            <li><strong>Nombre completo:</strong> Identificación personal</li>
+            <li><strong>Teléfono:</strong> Contacto directo</li>
+            <li><strong>Correo electrónico:</strong> Comunicación y notificaciones</li>
+            <li><strong>Dirección completa:</strong> Calle, colonia, número, CP</li>
+            <li><strong>Datos de tarjeta:</strong> Número, fecha de expiración, nombre del titular, CVV</li>
+          </ul>
+        </div>
+
+        <h3>2. Datos de Otras Fuentes Legales</h3>
+        <div class="highlight-box">
+          <ul class="standard-list">
+            <li><strong>Directorios telefónicos:</strong> Información de contacto</li>
+            <li><strong>Directorios laborales:</strong> Datos profesionales</li>
+            <li><strong>Instituciones financieras:</strong> Datos de tarjetas (cuando sea legal)</li>
+          </ul>
+        </div>
+
+        <div class="highlight-box" style="border-left: 4px solid #ffc107; background: rgba(255,193,7,0.1);">
+          <strong>⚠️ Nota Importante:</strong> Este proyecto NO recaba datos sensibles.
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">📞 Contactos para Ejercer tus Derechos</h2>
+        <div class="highlight-box">
+          <p><strong>Soporte General:</strong> <a href="mailto:exploretech.support&#64;gmail.com">exploretech.support&#64;gmail.com</a></p>
+          <p><strong>Derechos ARCO:</strong> <a href="mailto:exploretech.heltp&#64;gmail.com">exploretech.heltp&#64;gmail.com</a></p>
+          <p><strong>Atención al Cliente:</strong> <a href="mailto:exploretech.atencionalcliente&#64;gmail.com">exploretech.atencionalcliente&#64;gmail.com</a></p>
+          <p><strong>Revocar Consentimiento:</strong> <a href="mailto:exploretech.atencionalcliente&#64;gmail.com">exploretech.atencionalcliente&#64;gmail.com</a></p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">🚫 Cómo Limitar el Uso de tus Datos</h2>
+        <h3>Dejar de recibir promociones:</h3>
+        <ul class="standard-list">
+          <li><strong>Correo electrónico:</strong> Desactivar notificaciones desde el último correo recibido</li>
+          <li><strong>Correo postal:</strong> Seguir instrucciones del material publicitario</li>
+          <li><strong>Solicitud directa:</strong> Enviar petición a exploretech.heltp&#64;gmail.com</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">⚖️ Derechos ARCO</h2>
+        <p>Para ejercer los derechos de Acceso, Rectificación, Cancelación u Oposición, debes enviar una solicitud que incluya:</p>
+        <ul class="standard-list">
+          <li><strong>Nombre del solicitante</strong></li>
+          <li><strong>Teléfono de contacto</strong></li>
+          <li><strong>Asunto:</strong> Tipo de derecho a ejercer</li>
+          <li><strong>Descripción clara</strong> de la solicitud y documentos que lo respalden</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">🔄 Cambios en el Aviso de Privacidad</h2>
+        <p>Este Aviso puede ser modificado o actualizado en cualquier momento. Te recomendamos revisar esta página periódicamente. Se notificará a los usuarios sobre cambios importantes mediante la aplicación y los medios de contacto proporcionados.</p>
+      </div>
+
+      <div class="contact-section">
+        <h2 class="contact-title">💬 ¿Tienes alguna pregunta?</h2>
+        <p>Si tienes dudas sobre este Aviso de Privacidad o necesitas ejercer alguno de tus derechos, no dudes en contactarnos:</p>
+        <a href="mailto:exploretech.support@gmail.com" class="contact-email">Contactar Soporte</a>
+        <a href="mailto:exploretech.atencionalcliente@gmail.com" class="contact-email">Atención al Cliente</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Función para el botón de regreso
+function goBack() {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = '/';
+  }
+}
+
+// Indicador de progreso de scroll
+window.addEventListener('scroll', function() {
+  const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+  document.querySelector('.scroll-indicator').style.width = scrolled + '%';
+});
+
+// Animación de entrada suave para las secciones
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.transform = 'translateY(0)';
+      entry.target.style.opacity = '1';
+    }
+  });
+}, observerOptions);
+
+// Observar todas las secciones para animación
+document.addEventListener('DOMContentLoaded', () => {
+  const sections = document.querySelectorAll('.section');
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+});
+
+// Efecto parallax suave en el fondo
+window.addEventListener('scroll', () => {
+  const scrolled = window.pageYOffset;
+  const rate = scrolled * -0.5;
+  const backgroundSlideshow = document.querySelector('.background-slideshow');
+  if (backgroundSlideshow) {
+    backgroundSlideshow.style.transform = `translateY(${rate}px)`;
+  }
+});
+
+// Animación de hover para las cajas destacadas
+document.querySelectorAll('.highlight-box').forEach(box => {
+  box.addEventListener('mouseenter', function() {
+    this.style.transform = 'translateY(-4px) scale(1.01)';
+  });
+  
+  box.addEventListener('mouseleave', function() {
+    this.style.transform = 'translateY(0) scale(1)';
+  });
+});
+
+// Efecto de typing en el título principal (opcional)
+function typeWriter(element, text, speed = 50) {
+  let i = 0;
+  element.innerHTML = '';
+  
+  function type() {
+    if (i < text.length) {
+      element.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    }
+  }
+  type();
+}
+
+// Aplicar efecto de parallax a elementos específicos
+window.addEventListener('scroll', () => {
+  const scrollTop = window.pageYOffset;
+  
+  document.querySelectorAll('.section').forEach((section, index) => {
+    const rate = scrollTop * -0.1 * (index + 1) * 0.1;
+    section.style.transform = `translateY(${rate}px)`;
+  });
+});
+
+// Smooth scrolling para enlaces internos
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+
+// Añadir clase activa al hacer scroll
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('.section');
+  const scrollPos = window.scrollY + 200;
+  
+  sections.forEach(section => {
+    const top = section.offsetTop;
+    const height = section.offsetHeight;
+    
+    if (scrollPos >= top && scrollPos < top + height) {
+      section.classList.add('active');
+    } else {
+      section.classList.remove('active');
+    }
+  });
+});
+</script>
+
+</body>
+</html>

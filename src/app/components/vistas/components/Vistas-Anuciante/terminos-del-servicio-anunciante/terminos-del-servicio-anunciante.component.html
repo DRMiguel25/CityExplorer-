@@ -1,1 +1,697 @@
-terminos-del-servicio-anunciante
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Explorer - Términos y Condiciones</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<style>
+:root {
+  /* Ice Color Palette */
+  --blanco-hielo: #F0F8FF;
+  --alice-blue: #F0F8FF;
+  --blanco-glaciar: #EAF6FB;
+  --blanco-artico: #E6F1F7;
+  --perla-azulada: #F3F7FA;
+  --niebla-azul: #EDF3F9;
+  --azul-palido: #E6F0FA;
+  --humo-azul-claro: #F5F9FD;
+  --polar-white: #F2F8FC;
+  --blanco-boreal: #EEF7FB;
+  
+  /* Accent Colors */
+  --ice-gradient-1: #B8D4F1;
+  --ice-gradient-2: #9BC5ED;
+  --ice-accent: #5A9BD4;
+  --ice-dark: #2E5984;
+  --ice-text: #1F4788;
+  --ice-light-text: #4A6B8A;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  background: linear-gradient(135deg, var(--blanco-hielo) 0%, var(--blanco-glaciar) 50%, var(--niebla-azul) 100%);
+  min-height: 100vh;
+  color: var(--ice-text);
+}
+
+.background-slideshow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(45deg, rgba(184, 212, 241, 0.3), rgba(155, 197, 237, 0.3)),
+    radial-gradient(circle at 30% 20%, rgba(240, 248, 255, 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(234, 246, 251, 0.4) 0%, transparent 50%);
+  z-index: -2;
+  animation: backgroundShift 25s ease-in-out infinite alternate;
+}
+
+@keyframes backgroundShift {
+  0% { transform: translateX(-1%) translateY(-1%) scale(1.02); }
+  100% { transform: translateX(1%) translateY(1%) scale(1); }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(240, 248, 255, 0.1);
+  z-index: -1;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.back-btn {
+            background: linear-gradient(135deg, #4A90E2, #63B3ED);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+            background: linear-gradient(135deg, #3182CE, #4A90E2);
+        }
+
+        .back-btn:active {
+            transform: translateY(0);
+        }
+.hero-section {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 3rem 0;
+}
+
+.hero-title {
+  color: var(--ice-dark);
+  font-family: 'Poppins', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 10px rgba(90, 155, 212, 0.2);
+  animation: fadeInDown 1s ease-out;
+  letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+  color: var(--ice-light-text);
+  font-family: 'Inter', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.terms-card {
+  background: var(--polar-white);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  box-shadow: 0 25px 60px rgba(90, 155, 212, 0.08);
+  border: 1px solid rgba(184, 212, 241, 0.3);
+  overflow: hidden;
+  animation: slideInUp 1s ease-out 0.6s both;
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(60px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card-header {
+  background: linear-gradient(135deg, var(--ice-gradient-1) 0%, var(--ice-gradient-2) 100%);
+  color: var(--ice-dark);
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+  animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50% { transform: translateY(-15px) rotate(3deg) scale(1.02); }
+}
+
+.main-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  letter-spacing: -0.01em;
+}
+
+.company-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.card-body {
+  padding: 3.5rem;
+  color: var(--ice-text);
+}
+
+.section {
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.section:nth-child(1) { animation-delay: 0.8s; }
+.section:nth-child(2) { animation-delay: 0.9s; }
+.section:nth-child(3) { animation-delay: 1.0s; }
+.section:nth-child(4) { animation-delay: 1.1s; }
+.section:nth-child(5) { animation-delay: 1.2s; }
+.section:nth-child(6) { animation-delay: 1.3s; }
+.section:nth-child(7) { animation-delay: 1.4s; }
+.section:nth-child(8) { animation-delay: 1.5s; }
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.section-title {
+  color: var(--ice-accent);
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 3px solid var(--ice-gradient-1);
+  position: relative;
+  display: inline-block;
+  letter-spacing: -0.01em;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--ice-accent);
+  transition: width 0.4s ease;
+}
+
+.section:hover .section-title::after {
+  width: 100%;
+}
+
+.highlight-box {
+  background: linear-gradient(135deg, var(--blanco-hielo) 0%, var(--perla-azulada) 100%);
+  border: 2px solid var(--azul-palido);
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin: 2rem 0;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+}
+
+.highlight-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(184, 212, 241, 0.3), transparent);
+  transition: left 0.6s;
+}
+
+.highlight-box:hover::before {
+  left: 100%;
+}
+
+.pricing-section {
+  margin: 4rem 0;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin: 2.5rem 0;
+}
+
+.pricing-card {
+  background: var(--blanco-hielo);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 12px 40px rgba(90, 155, 212, 0.08);
+  border: 2px solid transparent;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(135deg, var(--ice-gradient-1) 0%, var(--ice-accent) 100%);
+}
+
+.pricing-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px rgba(90, 155, 212, 0.15);
+  border-color: var(--ice-gradient-1);
+  background: var(--polar-white);
+}
+
+.price-title {
+  color: var(--ice-accent);
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.price-amount {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--ice-dark);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.price-period {
+  color: var(--ice-light-text);
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+}
+
+.savings-badge {
+  background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 1.5rem;
+  animation: pulse 2s infinite;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-list li {
+  padding: 0.8rem 0;
+  position: relative;
+  padding-left: 2.5rem;
+  transition: color 0.3s ease;
+  font-weight: 400;
+}
+
+.feature-list li:hover {
+  color: var(--ice-accent);
+}
+
+.feature-list li::before {
+  position: absolute;
+  left: 0;
+  top: 0.8rem;
+  font-size: 1.3rem;
+}
+
+.standard-list {
+  padding-left: 2rem;
+}
+
+.standard-list li {
+  margin-bottom: 0.8rem;
+  font-weight: 400;
+}
+
+.contact-section {
+  background: linear-gradient(135deg, var(--ice-gradient-1) 0%, var(--ice-gradient-2) 100%);
+  color: var(--ice-dark);
+  padding: 3rem;
+  border-radius: 20px;
+  text-align: center;
+  margin-top: 3rem;
+  box-shadow: 0 15px 40px rgba(90, 155, 212, 0.1);
+}
+
+.contact-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.contact-email {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  padding: 1.2rem 2.5rem;
+  border-radius: 50px;
+  display: inline-block;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--ice-dark);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-size: 1.1rem;
+}
+
+.contact-email:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateY(-3px);
+  color: var(--ice-dark);
+  text-decoration: none;
+  box-shadow: 0 8px 25px rgba(90, 155, 212, 0.2);
+}
+
+.scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background: linear-gradient(135deg, var(--ice-gradient-1) 0%, var(--ice-accent) 100%);
+  z-index: 1000;
+  transition: width 0.1s ease;
+  box-shadow: 0 2px 10px rgba(90, 155, 212, 0.3);
+}
+
+/* Typography Improvements */
+p {
+  font-weight: 400;
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--ice-dark);
+}
+
+h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: var(--ice-accent);
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .card-body {
+    padding: 2rem;
+  }
+  
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .back-btn {
+    top: 1rem;
+    left: 1rem;
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  .card-header {
+    padding: 2rem 1.5rem;
+  }
+}
+.ssc {
+    background-color: #3182CE !important; /* Azul principal */
+    color: white;
+    border: none;
+    padding: 0.75rem 1.2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
+}
+
+.ssc:hover {
+    background-color: #1E40AF !important; /* Azul más oscuro al pasar el mouse */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(49, 130, 206, 0.4);
+}
+
+.ssc:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
+}
+
+</style>
+
+<div class="scroll-indicator"></div>
+<div class="background-slideshow"></div>
+<div class="overlay"></div>
+
+<button class="back-btn ssc" (click)="goBack()">
+    <span>←</span>
+</button>
+
+<div class="container">
+  <div class="hero-section">
+    <h1 class="hero-title">City Explorer</h1>
+    <p class="hero-subtitle">Términos y Condiciones de Servicio</p>
+  </div>
+
+  <div class="terms-card">
+    <div class="card-header">
+      <h1 class="main-title">Términos y Condiciones</h1>
+      <div class="company-badge">ExploreTech • San Miguel de Allende</div>
+    </div>
+    
+    <div class="card-body">
+      <div class="section">
+        <p style="text-align: center; font-size: 1.15rem; color: var(--ice-light-text); margin-bottom: 2.5rem; font-weight: 400;">
+          Estos términos y condiciones se aplican a la aplicación web interactiva desarrollada para el 
+          monitoreo y presentación de atractivos turísticos en la ciudad de San Miguel de Allende.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">ACEPTACIÓN DE LAS CONDICIONES</h2>
+        <div class="highlight-box">
+          <p>Usted acepta que, al acceder o utilizar la Aplicación, ha leído, comprendido y aceptado todos estos Términos y Condiciones. Si no está de acuerdo con todos estos Términos y Condiciones, se le prohíbe expresamente utilizar la Aplicación y debe interrumpir su uso inmediatamente.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">OBJETO DE LA APLICACIÓN</h2>
+        <p>La Aplicación ha sido diseñada con el objetivo principal de <strong>centralizar y actualizar la información turística</strong> de San Miguel de Allende (SMA). Su propósito es mejorar la experiencia de los visitantes y fomentar el desarrollo económico local y sostenible en la región.</p>
+
+        <p>La Aplicación busca abordar la problemática de la fragmentación de la información turística que los turistas enfrentan actualmente, la cual se encuentra dispersa en múltiples plataformas y fuentes no especializadas.</p>
+
+        <div class="highlight-box">
+          <h3 style="color: var(--ice-accent); margin-bottom: 1.5rem;"> Características principales:</h3>
+          <ul class="feature-list">
+            <li><strong>Categorías detalladas:</strong> Contenido organizado por intereses específicos como comida, fiesta, bebidas, relax y sitios históricos.</li>
+            <li><strong>Comunidad activa:</strong> Espacio para comentarios y valoraciones</li>
+            <li><strong>Personalización:</strong> Herramientas para guardar lugares favoritos.</li>
+            <li><strong>Sitios históricos:</strong> Acceso a información cultural detallada sobre monumentos y atracciones locales.</li>
+            <li><strong>Gestión y moderación:</strong> Un administrador responsable de mantener la calidad y seguridad del contenido publicado.</li>
+          </ul>
+        </div>
+
+        <p>El proyecto busca transformar la interacción de los turistas con el destino, facilitando la toma de decisiones informadas y promoviendo un turismo más responsable e integrador.</p>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">DERECHOS DE PROPIEDAD INTELECTUAL</h2>
+        <p>A menos que se indique lo contrario, la Aplicación, todo su código fuente, funcionalidad, diseño, contenido (texto, fotografías, gráficos) y los logotipos, marcas comerciales y de servicio contenidos en ella son propiedad exclusiva ExploreTech o han sido licenciados a este.</p>
+
+        <div class="highlight-box">
+          <p><strong>⚠️ Importante:</strong> Se prohíbe estrictamente cualquier copia, modificación no autorizada de la Aplicación o de sus marcas, intentos de extraer el código fuente, traducir o crear versiones derivadas. El contenido y las marcas se proporcionan "TAL CUAL" para su información y uso personal, no comercial.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">OBLIGACIONES DEL USUARIO</h2>
+        <p>Al utilizar la Aplicación, usted se compromete a:</p>
+        <ul class="standard-list">
+          <li>Mantener la seguridad de su dispositivo y el acceso a la Aplicación.</li>
+          <li>No utilizar la Aplicación para fines ilegales o no autorizados.</li>
+          <li>No recopilar sistemáticamente datos o contenidos sin permiso del Proveedor del Servicio.</li>
+          <li>No eludir, desactivar o interferir con las funciones de seguridad de la Aplicación.</li>
+          <li>No realizar ningún uso automatizado del sistema, como el uso de scripts para enviar comentarios o mensajes.</li>
+          <li>Participar activamente en la comunidad a través de comentarios, valoraciones y sugerencias de manera respetuosa y veraz.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">CONTRIBUCIONES Y RESEÑAS DE USUARIOS</h2>
+        <p>La Aplicación puede permitirle contribuir o participar en secciones de comentarios y valoraciones. Al crear o poner a disposición cualquier contribución (comentarios, valoraciones, sugerencias), usted declara y garantiza que su contenido es verdadero, preciso, no engañoso, y que no infringe los derechos de terceros, ni contiene material obsceno, difamatorio, ilegal o inapropiado.</p>
+
+        <div class="highlight-box">
+          <p><strong>🛡️ Moderación:</strong> El Proveedor del Servicio se reserva el derecho, a su entera discreción, de editar, eliminar o cambiar la categoría de cualquier contribución en cualquier momento y por cualquier motivo, sin previo aviso.</p>
+        </div>
+      </div>
+
+      <div class="section pricing-section">
+        <h2 class="section-title">SERVICIOS DE PUBLICIDAD PARA NEGOCIOS LOCALES</h2>
+        
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <h3 class="price-title">💳 Plan Mensual</h3>
+            <div class="price-amount">$580 <span class="price-period">MXN/mes</span></div>
+            <ul class="standard-list">
+              <li>Precio base: $500 MXN</li>
+              <li>IVA (16%): $80 MXN</li>
+            </ul>
+          </div>
+
+          <div class="pricing-card">
+            <h3 class="price-title">💰 Plan Anual</h3>
+            <div class="price-amount">$5,800 <span class="price-period">MXN/año</span></div>
+            <ul class="standard-list">
+              <li>Precio base: $5,000 MXN</li>
+              <li>IVA (16%): $800 MXN</li>
+            </ul>
+            <div class="savings-badge">
+              ¡Ahorro de $1,160 MXN! (16.7% descuento)
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <h3 style="color: var(--ice-accent); margin-bottom: 1.5rem;">📊 Comparativo de Ahorro Anual:</h3>
+          <ul class="standard-list">
+            <li><strong>Pago mensual durante 12 meses:</strong> $580 × 12 = $6,960 MXN</li>
+            <li><strong>Pago anual por adelantado:</strong> $5,800 MXN</li>
+            <li><strong>Ahorro total:</strong> $1,160 MXN (16.7% de descuento)</li>
+          </ul>
+        </div>
+
+        <p><strong>Facturación de Servicios de Publicidad:</strong> ExploreTech informa que no emite comprobantes fiscales (facturas) por los servicios de publicidad ofrecidos a través de la Aplicación. No obstante, en cumplimiento con el numeral 5.2.1.12 de la Norma Mexicana NMX-COE-001-SCFI-2018, se proporcionará a los anunciantes un comprobante de la transacción comercial que detallará los pagos realizados.</p>
+
+        <p>Los anunciantes son responsables de sus propias obligaciones fiscales y de cumplir con la normativa aplicable a su actividad empresarial. Los anunciantes deberán garantizar que sus anuncios cumplen con todas las leyes y normativas aplicables, incluyendo los derechos de propiedad intelectual y los derechos de publicidad.</p>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">RESPONSABILIDADES Y LIMITACIONES</h2>
+        <p>El Proveedor del Servicio se dedica a garantizar que la Aplicación sea lo más beneficiosa y eficiente posible. No obstante, es importante señalar que:</p>
+        
+        <ul class="standard-list">
+          <li>Algunas funciones de la Aplicación requieren una conexión a internet activa, ya sea Wi-Fi o proporcionada por su proveedor de red móvil.</li>
+          <li>Usted es responsable de cualquier cargo por el uso de datos móviles, incluidos los cargos por roaming.</li>
+          <li>El Proveedor del Servicio no asume responsabilidad si su dispositivo se queda sin batería y no puede acceder al Servicio.</li>
+          <li>Aunque el Proveedor del Servicio se esfuerza por mantener la Aplicación actualizada y precisa, se basa en terceros para proporcionar información.</li>
+          <li>El Proveedor del Servicio no será responsable por interrupciones ocasionadas por fallas en telecomunicaciones, energía eléctrica, casos fortuitos, fuerza mayor o acciones de terceros.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">SEGURIDAD Y PROTECCIÓN DE DATOS</h2>
+        <p>El Proveedor del Servicio debe garantizar una protección transparente y efectiva al Usuario y Consumidor, conforme a los estándares de seguridad que la industria dicte en términos de seguridad de la información y comercio electrónico.</p>
+
+        <div class="highlight-box">
+          <p><strong>🔒 Privacidad:</strong> La información personal que usted proporcione será almacenada y procesada por el Proveedor del Servicio para fines de servicio. Se recomienda consultar el Aviso de Privacidad de la Aplicación para entender cómo se manejan sus datos personales, en conformidad con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">ACTUALIZACIONES Y TERMINACIÓN</h2>
+        <p>El Proveedor del Servicio puede actualizar la Aplicación en cualquier momento y es su responsabilidad descargar las actualizaciones para seguir utilizándola. El Proveedor del Servicio no garantiza que siempre actualizará la Aplicación para que sea relevante o compatible con la versión específica del sistema del navegador de su dispositivo.</p>
+
+        <p>El Proveedor del Servicio puede, a su entera discreción, cesar la provisión de la Aplicación y terminar su uso en cualquier momento sin previo aviso.</p>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">CAMBIOS EN LOS TÉRMINOS</h2>
+        <p>El Proveedor del Servicio puede actualizar periódicamente estos Términos y Condiciones. Se recomienda revisar esta página regularmente para cualquier cambio. Se le notificará de cualquier cambio publican
