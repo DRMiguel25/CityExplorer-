@@ -36,6 +36,8 @@ import { ListaLugaresComponent } from '../vistas/components/Vistas-Administrador
 import { estadisticasComponent } from '../vistas/components/Vistas-Anuciante/estadisticas/estadisticas.component';
 import { AyudaAnuncianteComponent } from '../vistas/components/Vistas-Anuciante/ayuda-anunciante/ayuda-anunciante.component';
 
+import { PoliticasDePrivacidadAnuncianteComponent } from '../vistas/components/Vistas-Anuciante/Politicas-de-privacidad-anunciante/politicas-de-privacidad-anunciante.component';
+import { TerminosDelServicioAnuncianteComponent } from '../vistas/components/Vistas-Anuciante/terminos-del-servicio-anunciante/terminos-del-servicio-anunciante.component';
 const routes: Routes = [
   { path: 'inicio-sesion', component: InicioSesionComponent },
   { path: 'registro', component: RegistroComponent },
@@ -74,6 +76,8 @@ const routes: Routes = [
   { path: 'lista-lugares/:id_usuario', component: ListaLugaresComponent },
   { path: 'estadisticas/:id_usuario', component: estadisticasComponent },
   { path: 'ayuda-anunciante/:id_usuario', component: AyudaAnuncianteComponent },
+  { path: 'terminos-del-servicio-anunciante/:id_usuario', component: TerminosDelServicioAnuncianteComponent },
+  { path: 'politicas-de-privacidad-anunciante/:id_usuario', component: PoliticasDePrivacidadAnuncianteComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'restablecer-contraseña', component: RestablecerComponent }, // ✅ nueva ruta
 

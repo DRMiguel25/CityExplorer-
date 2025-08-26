@@ -207,5 +207,13 @@ AlertaModificarCuenta(){
   this.router.navigate(['/modificar-info-usuario', this.idUsuario, 1]);
 }
 
+irTerminosEelServicio(){
+  this.router.navigate(['/terminos-del-servicio-anunciante', this.idUsuario]);
+}
+
+irPoliticasDePrivacidad(){
+  this.router.navigate(['/politicas-de-privacidad-anunciante', this.idUsuario]);
+}
+
 }
   
