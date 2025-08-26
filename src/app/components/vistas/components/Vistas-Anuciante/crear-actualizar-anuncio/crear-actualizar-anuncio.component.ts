@@ -39,8 +39,8 @@ export class CrearActualizarAnuncioComponent implements OnInit {
     this.anuncioForm = this.fb.group({
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
-      imagenes: [null],
-      paginaWeb: ['', [Validators.required, Validators.pattern(/^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?(\/.*)?$/)]],
+      imagenes: [''],
+      paginaWeb: ['', [Validators.required, Validators.pattern(/^(https?:\/\/)?[^\s$.?#].[^\s]*$/)]],
       num_telefonico: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       horario_apertura: ['', Validators.required],
       horario_cierre: ['', Validators.required],
@@ -166,6 +166,16 @@ export class CrearActualizarAnuncioComponent implements OnInit {
     if (this.anuncioForm.invalid) {
       this.logErroresFormulario(this.anuncioForm);
       this.anuncioForm.markAllAsTouched();
+      return;
+    }
+    else if (this.imagenesActuales.length === 0 && this.imagenesSeleccionadas.length === 0) {
+      Swal.fire({
+        title: '🚫 Imágenes obligatorias 🚫',
+        text: 'Debes subir al menos una imagen para poder continuar.',
+        icon: 'warning',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3085d6'
+      });
       return;
     }
 

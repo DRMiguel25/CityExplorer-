@@ -307,7 +307,7 @@ input.is-invalid {
     margin-top: 8px;
     color: #DC2626;
     font-weight: 500;
-    opacity: 0;
+    opacity: 1;
     transform: translateY(-8px);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

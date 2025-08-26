@@ -46,7 +46,7 @@
       <label>Imágenes Actuales:</label>
       <div class="imagenes-actuales">
         <div *ngFor="let img of imagenesActuales" class="imagen-item">
-          <img [src]="img.url" alt="Imagen actual" class="imagen-preview">
+          <img [src]="img.url" alt="Imagen actual" class="imagen-preview" >
           <button type="button" (click)="eliminarImagen(img.id)" class="btn-eliminar">×</button>
         </div>
       </div>

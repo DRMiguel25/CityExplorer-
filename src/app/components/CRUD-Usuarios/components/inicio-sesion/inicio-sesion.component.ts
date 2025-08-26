@@ -24,12 +24,12 @@ export class InicioSesionComponent implements OnInit {
     private service: HttpLaravelService,
     private router: Router,
     private localStorage: LocalstorageService,
-    private authService: AuthService  // ← Aquí
   ) {
     this.InicioSesionFormulario = this.fb.group({
       correo: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required]]
     });
+
 
     // Solo limpiar si no hay sesión activa
     if (!this.localStorage.getItem('accessToken')) {
@@ -146,6 +146,11 @@ onLoggedin() {
         console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
       }
     });
+  }
+
+  logError(msg: string): boolean {
+    console.log(msg);
+    return true; // Para que el *ngIf no se rompa
   }
 
 }

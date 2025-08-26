@@ -1,66 +1,50 @@
-<body>
-  <!-- Fondo animado -->
-  <div class="background-slideshow"></div>
-  <div class="overlay"></div>
+<div class="background-slideshow"></div>
+<div class="overlay"></div>
 
-  <!-- Elementos flotantes -->
-  <div class="floating-elements">
-    <div class="floating-element"></div>
-    <div class="floating-element"></div>
-    <div class="floating-element"></div>
-    <div class="floating-element"></div>
+<div class="floating-elements">
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+</div>
+
+<div class="container">
+  <button class="back-button" (click)="login()" aria-label="Regresar">
+    <i class="fas fa-arrow-left"></i>
+  </button>
+
+  <div class="header-section">
+    <h1 class="title">Bienvenido</h1>
+    <p class="subtitle">Inicia sesión para continuar</p>
   </div>
 
-  <!-- Contenedor principal -->
-  <div class="container">
-    <button class="back-button" (click)="login()">
-      <i class="fas fa-arrow-left"></i>
+  <form [formGroup]="InicioSesionFormulario" (ngSubmit)="onLoggedin()" class="login-form">
+    <!-- Correo -->
+    <div class="form-group">
+      <label for="correo">Correo electrónico</label>
+      <input type="email" id="correo" formControlName="correo" placeholder="Correo electrónico"
+        class="form-control" [ngClass]="{'is-invalid': f['correo'].invalid && f['correo'].touched}">
+      <div *ngIf="f['correo'].errors && f['correo'].touched" class="form-text text-danger">
+        <div *ngIf="f['correo']?.errors?.['required'] && logError('El correo es obligatorio')">El correo es obligatorio</div>
+        <div *ngIf="f['correo']?.errors?.['email'] && logError('El correo no es válido')">El correo no es válido</div>
+      </div>
+    </div>
+
+    <!-- Contraseña -->
+    <div class="form-group">
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" formControlName="password" placeholder="Contraseña"
+        class="form-control" [ngClass]="{'is-invalid': f['password'].invalid && f['password'].touched}">
+      <div *ngIf="f['password'].errors && f['password'].touched" class="form-text text-danger">
+        <div *ngIf="f['password']?.errors?.['required'] && logError('La contraseña es obligatoria')">La contraseña es obligatoria</div>
+      </div>
+    </div>
+
+    <!-- Botón -->
+    <button type="submit" class="login-button">
+      <span>Iniciar sesión</span>
     </button>
+  </form>
 
-    <div class="header-section">
-      <h1 class="title">Bienvenido</h1>
-      <p class="subtitle">Inicia sesión para continuar</p>
-    </div>
-
-    <form class="login-form"  [formGroup]="InicioSesionFormulario" (ngSubmit)="onLoggedin()">
-      <!-- Campo de correo -->
-      <div class="form-group">
-        <label for="correo">Correo electrónico</label>
-        <input type="email" id="correo" formControlName="correo" placeholder="Correo electrónico"
-               class="form-control" [ngClass]="{'is-invalid': isValid('correo')}">
-        <div *ngIf="f['correo'].errors && f['correo'].touched" class="form-text text-danger">
-            <div *ngIf="f['correo']?.errors?.['required']" class="text-red">El correo es obligatorio</div>
-            <div *ngIf="f['correo']?.errors?.['correo']" class="text-red">El correo no es válido</div>
-        </div>
-      </div>
-
-      <!-- Campo de contraseña -->
-      <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input type="password" id="password" formControlName="password" placeholder="Contraseña"
-               class="form-control" [ngClass]="{'is-invalid': isValid('password')}">
-        <div *ngIf="f['password'].errors && f['password'].touched" class="form-text text-danger">
-            <div *ngIf="f['password']?.errors?.['required']" class="text-red">La contraseña es obligatoria</div>
-        </div>
-    <div
-      *ngIf="f['password'].errors && f['password'].touched"
-      class="form-text text-danger"
-    >
-      <div *ngIf="f['password']?.errors?.['required']">
-        La contraseña es obligatoria
-      </div>
-    </div>
-    </div>
-    
-
-      <!-- Botón de login -->
-      <button type="submit" class="login-button">
-        <span>Iniciar sesión</span>
-      </button>
-    </form>
-
-    <a class="forgot-password" (click)="Restablecer()" style="cursor: pointer">
-      ¿Olvidaste la contraseña?
-    </a>
-  </div>
-</body>
+  <a class="forgot-password" (click)="Restablecer()">¿Olvidaste la contraseña?</a>
+</div>
