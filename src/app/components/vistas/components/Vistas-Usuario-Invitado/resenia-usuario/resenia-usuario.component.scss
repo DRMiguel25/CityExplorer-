@@ -16,19 +16,37 @@ body {
 body::before {
     display: none;
 }
+.overlay {
+  position: fixed;
+  inset: 0; /* top, right, bottom, left = 0 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  /* 👇 quitamos el gris */
+  background: transparent;
+
+  z-index: 1000;
+}
+body.modal-open {
+  overflow: hidden;
+}
+
 
 /* Formulario principal */
 .modal {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(44, 95, 122, 0.08);
-    width: 100%;
-    max-width: 480px;   /* más pequeño que 720px */
-    margin: 40px auto;  /* centrado con menos espacio */
-    padding: 20px;      /* menos padding */
-    border: 1px solid #D1E7F0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(44, 95, 122, 0.08);
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh; /* 👈 límite vertical */
+  overflow-y: auto; /* 👈 scroll cuando sobrepasa altura */
+  position: relative;
+  padding: 20px;
+  border: 1px solid #D1E7F0;
 }
-
 
 /* Botón de cerrar */
 .close-btn {

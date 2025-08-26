@@ -20,9 +20,25 @@ body {
     box-shadow: 
         0 20px 40px rgba(74, 144, 226, 0.1),
         0 8px 24px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
+    overflow-y: auto;   /* ✅ Scroll vertical */
+    max-height: 90vh;   /* ✅ Limita altura a la ventana */
     backdrop-filter: blur(10px);
     border: 1px solid #D1E7F5;
+
+    /* Scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: #4A90E2 #EAF6FB;
+}
+
+.reviews-container::-webkit-scrollbar {
+    width: 8px;
+}
+.reviews-container::-webkit-scrollbar-thumb {
+    background: #4A90E2;
+    border-radius: 4px;
+}
+.reviews-container::-webkit-scrollbar-track {
+    background: #EAF6FB;
 }
 
 .close-button-container {
@@ -263,6 +279,7 @@ body {
     
     .reviews-container {
         border-radius: 16px;
+        max-height: 80vh; /* un poco más pequeño en móviles */
     }
     
     .reviews-header {
