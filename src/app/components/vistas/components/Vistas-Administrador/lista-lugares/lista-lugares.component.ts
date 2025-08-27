@@ -349,6 +349,8 @@ eleminarLugar(lugar: LugarAdministrador): void {
           // Actualizar estado local para refrescar la lista sin recargar
           lugar.activo = !lugar.activo;
           lugar.bloqueado = lugar.activo ? false : lugar.bloqueado; // opcional, si se quiere desbloquear al restaurar
+          
+          this.loadLugares();
           this.aplicarFiltros();
         },
         error: (err) => {
@@ -359,5 +361,12 @@ eleminarLugar(lugar: LugarAdministrador): void {
     }
   });
 }
+
+private recalcularTotales(): void {
+  this.totalLugares = this.lugares.length;
+  this.totalBloqueados = this.lugares.filter(l => l.bloqueado).length;
+  this.totalDisponibles = this.lugares.filter(l => l.activo && !l.bloqueado).length;
+}
+
 
 }

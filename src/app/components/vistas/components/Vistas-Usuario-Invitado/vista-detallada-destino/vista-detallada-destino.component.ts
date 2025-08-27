@@ -14,40 +14,44 @@ import Swal from 'sweetalert2';
  styleUrls: ['./vista-detallada-destino.component.scss']
 })
 export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
- lugar: any; // Aquí guardaremos los datos del lugar
- direccion: any; // Aquí guardamos los datos de la dirección
- ultimoComentario: any = null; // Aquí guardamos el último comentario
- promedioValoracion: any = null; // Aquí guardamos el promedio de valoraciones
- totalComentarios: any = null; // Aquí guardamos el total de comentarios
+  lugar: any; // Aquí guardaremos los datos del lugar
+  direccion: any; // Aquí guardamos los datos de la dirección
+  ultimoComentario: any = null; // Aquí guardamos el último comentario
+  promedioValoracion: any = null; // Aquí guardamos el promedio de valoraciones
+  totalComentarios: any = null; // Aquí guardamos el total de comentarios
 
- imagenes: any[] = [];
- currentImageIndex: number = 0;
+  imagenes: any[] = [];
+  currentImageIndex: number = 0;
 
- isLoading = true;
- 
- id_usuario: string | null = null; // Aquí guardamos el ID del usuario
- id_destino: string | null = null; // Aquí guardamos el ID del destino
- pagina_regreso: string | null = null;
+  isLoading = true;
+  
+  id_usuario: string | null = null; // Aquí guardamos el ID del usuario
+  id_destino: string | null = null; // Aquí guardamos el ID del destino
+  pagina_regreso: string | null = null;
 
- categoriasOpciones: any[] = []; 
+  tieneReseniaUsuario: boolean = false;
+  idReseniaUsuario: number = 0;
 
- // 🕒 Variables para el tracking de tiempo
- private tiempoInicio: number = 0;
- private tiempoTotal: number = 0;
- private intervaloPing: any;
- private ultimoPing: number = 0;
- private tiempoMinimo: number = 5; // Mínimo 5 segundos para registrar visita
- private intervaloGuardado: number = 30; // Guardar cada 30 segundos
- private visitaRegistrada: boolean = false;
 
- constructor(
-   private router: Router,
-   private route: ActivatedRoute,
-   private dialog: MatDialog,
-   private httpLaravelService: HttpLaravelService,
- ) {}
+   categoriasOpciones: any[] = []; 
 
- ngOnInit(): void {
+  // 🕒 Variables para el tracking de tiempo
+  private tiempoInicio: number = 0;
+  private tiempoTotal: number = 0;
+  private intervaloPing: any;
+  private ultimoPing: number = 0;
+  private tiempoMinimo: number = 5; // Mínimo 5 segundos para registrar visita
+  private intervaloGuardado: number = 30; // Guardar cada 30 segundos
+  private visitaRegistrada: boolean = false;
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private httpLaravelService: HttpLaravelService,
+  ) {}
+
+  ngOnInit(): void {
   this.route.paramMap.subscribe(params => {
    this.id_destino = this.route.snapshot.paramMap.get('id_destino');
    this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
@@ -265,7 +269,7 @@ crearResenia(): void {
 
         this.dialog.open(ReseniaUsuarioComponent, {
           width: '600px',
-          data: { id_destino: this.id_destino, id_usuario: this.id_usuario,  id_resenia: idResenia},
+          data: { id_destino: this.id_destino, id_usuario: this.id_usuario,  id_resenia: idResenia , pagina_regreso: this.pagina_regreso},
           autoFocus: true // opcional: enfoca al abrir
         });
       },
@@ -298,44 +302,58 @@ crearResenia(): void {
 obtenerValoraciones(): void {
   const modelo = 'lugar';
   const dato = `${this.id_destino}/comentarios`;
-
-  console.log('📥 Consultando valoraciones para:', modelo, dato);
+  const idUsuarioActual = this.id_usuario ? +this.id_usuario : null;
 
   this.httpLaravelService.Service_Get(modelo, dato).subscribe({
     next: (respuesta: any) => {
-      console.log('✅ Respuesta recibida de valoraciones:', respuesta);
-
-      const comentarios = respuesta?.data || [];
+      const comentarios: Comentario[] = Array.isArray(respuesta?.data) ? respuesta.data : [];
       console.log('📝 Total de comentarios recibidos:', comentarios.length);
       console.log('📃 Lista de comentarios:', comentarios);
 
-      if (Array.isArray(comentarios) && comentarios.length > 0) {
-        // Ordenar comentarios por fecha
-        const ordenados = comentarios.sort((a, b) =>
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      if (comentarios.length > 0) {
+        // Ordenar por fecha
+        const getMs = (c: Comentario) =>
+          new Date(c.fecha_creacion || (c as any).created_at || 0).getTime() || 0;
+
+        const ordenados = comentarios
+          .slice()
+          .sort((a: Comentario, b: Comentario) => getMs(b) - getMs(a));
+
+        this.ultimoComentario = ordenados[0];
+
+        // Calcular promedio
+        const suma = comentarios.reduce(
+          (acc: number, c: Comentario) => acc + Number(c.valoracion || 0),
+          0
+        );
+        this.promedioValoracion = comentarios.length ? suma / comentarios.length : 0;
+        this.totalComentarios = comentarios.length;
+
+        // Detectar si el usuario ya tiene reseña
+        this.tieneReseniaUsuario =
+          idUsuarioActual !== null &&
+          comentarios.some((c: Comentario) => Number(c.id_usuario) === idUsuarioActual);
+
+        this.idReseniaUsuario = this.tieneReseniaUsuario
+          ? Number(
+              comentarios.find((c: Comentario) => Number(c.id_usuario) === idUsuarioActual)
+                ?.id_comentario
+            ) || 0
+          : 0;
+
+        console.log(
+          this.tieneReseniaUsuario
+            ? `✅ Usuario ${idUsuarioActual} SÍ tiene reseña (id: ${this.idReseniaUsuario}).`
+            : `ℹ️ Usuario ${idUsuarioActual} NO tiene reseña.`
         );
 
-        console.log('📅 Comentarios ordenados por fecha descendente:', ordenados);
-
-        // Obtener el último comentario
-        this.ultimoComentario = ordenados[0];
-        console.log('⭐ Último comentario seleccionado:', this.ultimoComentario);
-
-        // Calcular promedio de valoraciones
-        const suma = comentarios.reduce((acc, c) => acc + (c.valoracion || 0), 0);
-        this.promedioValoracion = suma / comentarios.length;
-
-        console.log('🔢 Suma total de valoraciones:', suma);
-        console.log('📊 Promedio de valoraciones:', this.promedioValoracion);
-
-        // Total de comentarios
-        this.totalComentarios = comentarios.length;
-        console.log('🔢 Total de comentarios:', this.totalComentarios);
       } else {
         console.warn('⚠️ No hay comentarios disponibles.');
         this.ultimoComentario = 0;
         this.promedioValoracion = 0;
         this.totalComentarios = 0;
+        this.tieneReseniaUsuario = false;
+        this.idReseniaUsuario = 0;
       }
     },
     error: (error) => {
@@ -343,15 +361,29 @@ obtenerValoraciones(): void {
       this.ultimoComentario = 0;
       this.promedioValoracion = 0;
       this.totalComentarios = 0;
+      this.tieneReseniaUsuario = false;
+      this.idReseniaUsuario = 0;
     }
   });
 }
 
 getEstrellas(valoracion: number): string {
-  const estrellasLlenas = '★'.repeat(valoracion);
-  const estrellasVacias = '☆'.repeat(5 - valoracion);
-  return estrellasLlenas + estrellasVacias;
+  const estrellasEnteras = Math.floor(valoracion); // Parte entera
+  const tieneMediaEstrella = valoracion % 1 >= 0.5; // Verificamos si hay media estrella
+  const totalEstrellas = 5;
+
+  let estrellas = '★'.repeat(estrellasEnteras); // Estrellas llenas
+
+  if (tieneMediaEstrella) {
+    estrellas += '⯨'; // Media estrella (puedes cambiar por otro símbolo)
+  }
+
+  const estrellasRestantes = totalEstrellas - estrellasEnteras - (tieneMediaEstrella ? 1 : 0);
+  estrellas += '☆'.repeat(estrellasRestantes); // Estrellas vacías
+
+  return estrellas;
 }
+
 
 listarComentarios(): void {
   if (this.id_usuario != "0") {
@@ -492,4 +524,14 @@ obtenerCategoriasDesdeAPI(): void {
     }
   });
 }
+}
+
+interface Comentario {
+  id_comentario: number;
+  contenido: string;
+  valoracion: number;
+  fecha_creacion: string;
+  id_lugar: number;
+  id_usuario: number;
+  usuario?: any; // Puedes tipar mejor si quieres
 }

@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Lugar } from './lugar.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertaInfoUsuarioComponent } from '../../Vistas-Usuario-Invitado/alerta-info-usuario/alerta-info-usuario.component';
+import { LugarAdministrador } from '../lista-lugares/lugar_administrador.interface';
 
 @Component({
   selector: 'home-administrador',
@@ -119,10 +120,51 @@ export class HomeAdministradorComponent implements OnInit{
   }
 
 loadLugares(): void {
-  this.service.Service_Get('lugar', '').subscribe({
-    next: (data: Lugar[]) => {
-      this.lugares = data;
-      this.totalLugares = data.length; // 📌 Aquí tienes el total
+  this.service.Service_Get_Lugares_Administrador().subscribe({
+    next: (respuesta: any) => {
+      console.log('📩 Respuesta cruda de lugares:', respuesta);
+
+      // ✅ obtener array real
+      const lugares = respuesta?.lugares?.data || [];
+
+      // ✅ map directamente sobre "lugares" (que ya es array)
+      const adaptados: LugarAdministrador[] = lugares.map((l: any) => ({
+        id_lugar: l.id_lugar,
+        id_usuario: l.id_usuario,
+        id_categoria: l.id_categoria,
+        id_direccion: l.id_direccion,
+        nombre: l.nombre,
+        descripcion: l.descripcion,
+        paginaWeb: l.paginaWeb,
+        num_telefonico: l.num_telefonico,
+        activo: l.activo,
+        bloqueado: l.bloqueado,
+        bloqueado_por: l.bloqueado_por ?? null,
+        desbloqueado_por: l.desbloqueado_por ?? null,
+        motivo_bloqueo: l.motivo_bloqueo ?? null,
+        fecha_activacion: l.fecha_activacion ?? null,
+        fecha_bloqueo: l.fecha_bloqueo ?? null,
+        fecha_desbloqueo: l.fecha_desbloqueo ?? null,
+        activado_por_pago_id: l.activado_por_pago_id ?? null,
+        horario_apertura: l.horario_apertura,
+        horario_cierre: l.horario_cierre,
+        dias_servicio: l.dias_servicio || [],
+        imagenes: l.imagenes || [],
+        created_at: l.created_at,
+        updated_at: l.updated_at,
+        last_login: l.last_login ?? null,
+
+        // Extras
+        promedioValoracion: l.promedioValoracion ?? 0,
+        totalComentarios: l.totalComentarios ?? 0,
+        direccion: l.direccion ?? undefined,
+        usuario: l.usuario ?? undefined,
+        categoria: l.categoria ?? undefined,
+        estado_texto: l.estado_texto ?? null
+      }));
+
+      console.log('📦 Lugares procesados:', adaptados);
+      this.totalLugares = respuesta?.resumen?.total_lugares ?? adaptados.length; // 📌 Aquí tienes el total
       console.log("Total de lugares:", this.totalLugares);
       console.log("Data de lugares:", this.lugares);
     },

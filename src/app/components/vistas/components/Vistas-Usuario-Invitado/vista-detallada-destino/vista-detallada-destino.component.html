@@ -128,7 +128,7 @@
       <div class="rating-actions">
         <button class="write-review-btn" 
                 (click)="crearResenia()"
-                aria-label="Escribir una nueva reseña">Escribir Reseña</button>
+                aria-label="Escribir una nueva reseña">{{ tieneReseniaUsuario ? 'Modificar Reseña' : 'Escribir Reseña' }}</button>
         <button class="write-review-btn" 
                 (click)="listarComentarios()"
                 aria-label="Ver todas las reseñas">Todas Las Reseñas</button>

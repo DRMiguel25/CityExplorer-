@@ -14,6 +14,7 @@ export class ReseniaUsuarioComponent implements OnInit{
   id_usuario: number | null = null; // Aquí guardamos el ID del usuario
   id_destino: number | null = null; // Aquí guardamos el ID del destino
   id_resenia: number | null = null; // Aquí guardamos el ID de la reseña
+  pagina_regreso: number | null = null;
 
   contenido: string = '';
   valoracion: number = 0;
@@ -42,13 +43,14 @@ export class ReseniaUsuarioComponent implements OnInit{
    private route: ActivatedRoute,
    private httpLaravelService: HttpLaravelService,
    private dialogRef: MatDialogRef<ReseniaUsuarioComponent>, // <- agregado
-  @Inject(MAT_DIALOG_DATA) public data: { id_destino: number, id_usuario: number, id_resenia: number } // aquí llega el id
+  @Inject(MAT_DIALOG_DATA) public data: { id_destino: number, id_usuario: number, id_resenia: number, pagina_regreso: number } // aquí llega el id
  ) {}
 
   ngOnInit(): void {
     this.id_destino = this.data.id_destino
     this.id_usuario = this.data.id_usuario
     this.id_resenia = this.data.id_resenia
+    this.pagina_regreso = this.data.pagina_regreso;
 
     console.log('ID Usuario:', this.id_usuario);
     console.log('ID Destino:', this.id_destino);
@@ -129,6 +131,10 @@ enviarResenia(): void {
           confirmButtonColor: '#3085d6'
         }).then(() => {
           this.dialogRef.close();
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/vista-detallada-destino', this.id_destino, this.id_usuario, this.pagina_regreso]);
+          });
+          console.log('vista del usuario reseña cerrada y redirigiendo a vista detallada del destino');
         });
       },
       error: (error) => {
@@ -153,6 +159,10 @@ enviarResenia(): void {
           confirmButtonColor: '#3085d6'
         }).then(() => {
           this.dialogRef.close();
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/vista-detallada-destino', this.id_destino, this.id_usuario, this.pagina_regreso]);
+          });
+          console.log('vista del usuario reseña cerrada y redirigiendo a vista detallada del destino');
         });
       },
       error: (error) => {
