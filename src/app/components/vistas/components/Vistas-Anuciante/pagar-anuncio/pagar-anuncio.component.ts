@@ -117,41 +117,52 @@ export class PagoAnuncioComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
 // Reemplaza tu función confirmarAntesDePagar() con esta versión más compacta
+// Nueva función confirmarAntesDePagar con diseño ártico
 confirmarAntesDePagar() {
   Swal.fire({
-    title: '✨ Confirmar Pago',
+    title: 'Confirmar Plan de Suscripción',
     html: `
-      <div style="text-align: center; margin-bottom: 20px;">
-        <p style="margin-bottom: 15px; font-size: 16px; font-weight: 500;">
-           Selecciona tu plan preferido:
-        </p>
-        <select id="planSelect" class="swal2-input" style="width: 100%; max-width: 100%; padding: 10px; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
-          <option value="mensual">💳 Mensual - $580 MXN</option>
-          <option value="anual">🎊 Anual - $5,800 MXN (2 meses gratis!)</option>
-        </select>
-        <div style="margin-top: 12px; font-size: 12px; opacity: 0.8;">
-          💡 El plan anual incluye 2 meses adicionales sin costo
+      <div class="arctic-payment-container">
+        <div class="arctic-header">
+          <div class="frost-icon"></div>
+          <p class="arctic-subtitle">
+            Elige tu plan y activa tu anuncio premium
+          </p>
+        </div>
+        
+        <div class="arctic-plan-selector">
+          <select id="planSelect" class="arctic-select">
+            <option value="mensual">🗓️ Plan Mensual - $580 MXN</option>
+            <option value="anual">✨ Plan Anual - $5,800 MXN (¡2 meses gratis!)</option>
+          </select>
+        </div>
+         
+        
+        <div class="arctic-note">
+          <div class="note-icon">💡</div>
+          <div class="note-text">El plan anual incluye 2 meses adicionales totalmente gratis</div>
         </div>
       </div>
     `,
-    background: '#ffffff',
-    backdrop: 'rgba(0, 0, 0, 0.4)',
-
+    background: 'transparent',
+    backdrop: 'rgba(230, 241, 247, 0.85)',
+    
     customClass: {
-      popup: 'swal-solid-popup',
-      title: 'swal-solid-title',
-      confirmButton: 'swal-solid-confirm',
-      cancelButton: 'swal-solid-cancel'
+      popup: 'arctic-popup',
+      title: 'arctic-title',
+      confirmButton: 'arctic-confirm-btn',
+      cancelButton: 'arctic-cancel-btn',
+      htmlContainer: 'arctic-html-container'
     },
-
+    
     showCancelButton: true,
-    confirmButtonText: '✅ Confirmar Pago',
-    cancelButtonText: '❌ Cancelar',
+    confirmButtonText: 'Proceder al Pago',
+    cancelButtonText: 'Cancelar',
     buttonsStyling: false,
     allowOutsideClick: false,
     allowEscapeKey: true,
     focusConfirm: false,
-
+    
     preConfirm: () => {
       const planSelect = document.getElementById('planSelect') as HTMLSelectElement;
       if (!planSelect || !planSelect.value) {
@@ -161,40 +172,466 @@ confirmarAntesDePagar() {
       this.planSeleccionado = planSelect.value as 'mensual' | 'anual';
       return true;
     },
-
+    
     willOpen: (popup) => {
-      popup.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.15)';
-      popup.style.borderRadius = '16px';
-      popup.style.maxWidth = 'calc(100vw - 40px)';
-      popup.style.width = '95%';
+      // Aplicar estilos CSS dinámicamente
+      const style = document.createElement('style');
+      style.textContent = `
+        /* Variables CSS Árticas */
+        :root {
+          --blanco-hielo: #F0F8FF;
+          --alice-blue: #F0F8FF;
+          --blanco-glaciar: #EAF6FB;
+          --blanco-artico: #E6F1F7;
+          --perla-azulada: #F3F7FA;
+          --niebla-azul: #EDF3F9;
+          --azul-palido: #E6F0FA;
+          --humo-azul-claro: #F5F9FD;
+          --polar-white: #F2F8FC;
+          --blanco-boreal: #EEF7FB;
+        }
+        
+        /* Popup Principal */
+        .arctic-popup {
+          background: linear-gradient(145deg, 
+            var(--blanco-hielo) 0%, 
+            var(--polar-white) 30%, 
+            var(--blanco-glaciar) 70%, 
+            var(--alice-blue) 100%) !important;
+          border-radius: 24px !important;
+          padding: 0 !important;
+          box-shadow: 
+            0 25px 60px rgba(70, 130, 180, 0.15),
+            0 15px 35px rgba(70, 130, 180, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.7),
+            inset 0 -1px 0 rgba(70, 130, 180, 0.1) !important;
+          border: 2px solid rgba(70, 130, 180, 0.08) !important;
+          max-width: 480px !important;
+          width: 95% !important;
+          overflow: hidden !important;
+          position: relative !important;
+        }
+        
+        /* Efecto de cristal ártico */
+        .arctic-popup::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 60%;
+          background: linear-gradient(180deg, 
+            rgba(255, 255, 255, 0.4) 0%, 
+            rgba(240, 248, 255, 0.2) 50%, 
+            transparent 100%);
+          pointer-events: none;
+          z-index: 1;
+        }
+        
+        /* Título */
+        .arctic-title {
+          font-size: 1.75rem !important;
+          font-weight: 700 !important;
+          color: #2C5282 !important;
+          margin: 0 !important;
+          padding: 30px 30px 20px 30px !important;
+          text-align: center !important;
+          background: linear-gradient(135deg, #2C5282, #4682B4);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          position: relative;
+          z-index: 2;
+          text-shadow: 0 2px 4px rgba(44, 82, 130, 0.1) !important;
+        }
+        
+        /* Contenedor HTML */
+        .arctic-html-container {
+          padding: 0 30px 30px 30px !important;
+          position: relative;
+          z-index: 2;
+        }
+        
+        /* Contenedor Principal */
+        .arctic-payment-container {
+          display: flex;
+          flex-direction: column;
+          gap: 25px;
+          align-items: center;
+        }
+        
+        /* Header Ártico */
+        .arctic-header {
+          text-align: center;
+          margin-bottom: 10px;
+        }
+        
+        .frost-icon {
+          font-size: 3rem;
+          margin-bottom: 15px;
+          filter: drop-shadow(0 4px 8px rgba(70, 130, 180, 0.2));
+          animation: frostedPulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes frostedPulse {
+          0%, 100% { transform: scale(1); opacity: 0.9; }
+          50% { transform: scale(1.05); opacity: 1; }
+        }
+        
+        .arctic-subtitle {
+          color: #4682B4 !important;
+          font-size: 1.1rem !important;
+          font-weight: 500 !important;
+          margin: 0 !important;
+          line-height: 1.5 !important;
+        }
+        
+        /* Selector de Plan */
+        .arctic-plan-selector {
+          width: 100%;
+          margin: 20px 0;
+        }
+        
+        .arctic-select {
+          width: 100% !important;
+          padding: 18px 20px !important;
+          border: 2px solid rgba(70, 130, 180, 0.2) !important;
+          border-radius: 16px !important;
+          background: linear-gradient(135deg, 
+            var(--blanco-hielo) 0%, 
+            var(--humo-azul-claro) 100%) !important;
+          color: #2C5282 !important;
+          font-size: 1rem !important;
+          font-weight: 600 !important;
+          box-shadow: 
+            0 8px 25px rgba(70, 130, 180, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+          cursor: pointer !important;
+        }
+        
+        .arctic-select:focus {
+          outline: none !important;
+          border-color: #4682B4 !important;
+          background: var(--polar-white) !important;
+          box-shadow: 
+            0 0 0 4px rgba(70, 130, 180, 0.1),
+            0 12px 35px rgba(70, 130, 180, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+          transform: translateY(-2px) !important;
+        }
+        
+        .arctic-select option {
+          background: var(--blanco-hielo) !important;
+          color: #2C5282 !important;
+          padding: 12px !important;
+          font-weight: 500 !important;
+        }
+        
+        /* Beneficios */
+        .arctic-benefits {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+          gap: 15px;
+          width: 100%;
+          margin: 20px 0;
+        }
+        
+        .benefit-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 20px 15px;
+          background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.7) 0%, 
+            rgba(240, 248, 255, 0.8) 100%);
+          border: 1px solid rgba(70, 130, 180, 0.15);
+          border-radius: 16px;
+          box-shadow: 
+            0 6px 20px rgba(70, 130, 180, 0.06),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9);
+          transition: all 0.3s ease;
+        }
+        
+        .benefit-item:hover {
+          transform: translateY(-3px);
+          box-shadow: 
+            0 10px 30px rgba(70, 130, 180, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.95);
+        }
+        
+        .benefit-icon {
+          font-size: 1.5rem;
+          margin-bottom: 8px;
+          filter: drop-shadow(0 2px 4px rgba(70, 130, 180, 0.2));
+        }
+        
+        .benefit-text {
+          color: #4682B4;
+          font-weight: 600;
+          font-size: 0.9rem;
+          text-align: center;
+        }
+        
+        /* Nota Informativa */
+        .arctic-note {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 18px 20px;
+          background: linear-gradient(135deg, 
+            rgba(70, 130, 180, 0.08) 0%, 
+            rgba(70, 130, 180, 0.05) 100%);
+          border: 1px solid rgba(70, 130, 180, 0.2);
+          border-radius: 16px;
+          margin-top: 10px;
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+        }
+        
+        .note-icon {
+          font-size: 1.3rem;
+          filter: drop-shadow(0 2px 4px rgba(70, 130, 180, 0.2));
+        }
+        
+        .note-text {
+          color: #4682B4;
+          font-size: 0.95rem;
+          font-weight: 500;
+          line-height: 1.4;
+        }
+        
+        /* Botón Confirmar */
+        .arctic-confirm-btn {
+          background: linear-gradient(135deg, 
+            #4682B4 0%, 
+            #2C5282 100%) !important;
+          color: white !important;
+          border: none !important;
+          border-radius: 16px !important;
+          padding: 16px 32px !important;
+          font-weight: 700 !important;
+          font-size: 1rem !important;
+          text-transform: none !important;
+          letter-spacing: 0.5px !important;
+          box-shadow: 
+            0 12px 30px rgba(70, 130, 180, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+          position: relative !important;
+          overflow: hidden !important;
+        }
+        
+        .arctic-confirm-btn::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, 
+            transparent, 
+            rgba(255, 255, 255, 0.2), 
+            transparent);
+          transition: left 0.6s ease;
+        }
+        
+        .arctic-confirm-btn:hover {
+          background: linear-gradient(135deg, 
+            #5A9BD4 0%, 
+            #3A6BAC 100%) !important;
+          transform: translateY(-3px) !important;
+          box-shadow: 
+            0 18px 40px rgba(70, 130, 180, 0.35),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+        }
+        
+        .arctic-confirm-btn:hover::before {
+          left: 100%;
+        }
+        
+        .arctic-confirm-btn:active {
+          transform: translateY(-1px) !important;
+        }
+        
+        /* Botón Cancelar */
+        .arctic-cancel-btn {
+          background: var(--niebla-azul) !important;
+          color: #4682B4 !important;
+          border: 2px solid rgba(70, 130, 180, 0.2) !important;
+          border-radius: 16px !important;
+          padding: 14px 30px !important;
+          font-weight: 600 !important;
+          font-size: 1rem !important;
+          transition: all 0.3s ease !important;
+          box-shadow: 
+            0 6px 20px rgba(70, 130, 180, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+        }
+        
+        .arctic-cancel-btn:hover {
+          background: var(--blanco-artico) !important;
+          border-color: rgba(70, 130, 180, 0.3) !important;
+          transform: translateY(-2px) !important;
+          box-shadow: 
+            0 10px 25px rgba(70, 130, 180, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+        }
+        
+        /* Contenedor de Botones */
+        .swal2-actions {
+          gap: 20px !important;
+          margin-top: 30px !important;
+          padding: 0 !important;
+        }
+        
+        /* Animaciones de entrada */
+        .arctic-popup.swal2-show {
+          animation: arcticShow 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+        
+        @keyframes arcticShow {
+          0% {
+            opacity: 0;
+            transform: scale(0.8) translateY(40px);
+          }
+          60% {
+            opacity: 0.9;
+            transform: scale(1.02) translateY(-10px);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+          .arctic-popup {
+            margin: 20px !important;
+            max-width: calc(100vw - 40px) !important;
+          }
+          
+          .arctic-title {
+            font-size: 1.5rem !important;
+            padding: 25px 20px 15px 20px !important;
+          }
+          
+          .arctic-html-container {
+            padding: 0 20px 25px 20px !important;
+          }
+          
+          .arctic-benefits {
+            grid-template-columns: 1fr;
+            gap: 12px;
+          }
+          
+          .benefit-item {
+            flex-direction: row;
+            justify-content: flex-start;
+            padding: 15px;
+            text-align: left;
+          }
+          
+          .benefit-icon {
+            margin-right: 12px;
+            margin-bottom: 0;
+            font-size: 1.3rem;
+          }
+          
+          .arctic-note {
+            flex-direction: column;
+            text-align: center;
+            gap: 8px;
+          }
+          
+          .swal2-actions {
+            flex-direction: column !important;
+            width: 100% !important;
+          }
+          
+          .arctic-confirm-btn,
+          .arctic-cancel-btn {
+            width: 100% !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .frost-icon {
+            font-size: 2.5rem;
+          }
+          
+          .arctic-select {
+            font-size: 0.95rem !important;
+            padding: 16px 18px !important;
+          }
+          
+          .arctic-note {
+            padding: 15px 18px;
+          }
+          
+          .note-text {
+            font-size: 0.9rem;
+          }
+        }
+      `;
+      
+      document.head.appendChild(style);
     }
-
+    
   }).then((result) => {
     if (result.isConfirmed) {
       const planTexto = this.planSeleccionado === 'anual'
         ? 'Plan Anual - $5,800 MXN (¡Incluye 2 meses gratis!)'
         : 'Plan Mensual - $580 MXN';
-
+      
+      // Alerta de procesamiento con el mismo tema ártico
       Swal.fire({
-        title: 'Procesando...',
+        title: 'Procesando Pago',
         html: `
-          <div style="text-align: center;">
-            <p style="margin-bottom: 10px;">Iniciando pago para:</p>
-            <strong style="color: #16a34a; font-size: 14px;">${planTexto}</strong>
+          <div style="text-align: center; padding: 20px;">
+            <div style="font-size: 3rem; margin-bottom: 20px; animation: spin 2s linear infinite;">💵</div>
+            <p style="color: #4682B4; font-weight: 600; margin-bottom: 10px;">
+              Iniciando proceso de pago para:
+            </p>
+            <div style="
+              background: linear-gradient(135deg, var(--blanco-hielo), var(--polar-white));
+              padding: 15px 20px;
+              border-radius: 12px;
+              border: 1px solid rgba(70, 130, 180, 0.2);
+              box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            ">
+              <strong style="color: #2C5282; font-size: 1.1rem;">${planTexto}</strong>
+            </div>
           </div>
+          <style>
+            @keyframes spin {
+              from { transform: rotate(0deg); }
+              to { transform: rotate(360deg); }
+            }
+          </style>
         `,
         timer: 1500,
         timerProgressBar: true,
         showConfirmButton: false,
-        background: '#ffffff',
+        background: 'linear-gradient(145deg, var(--blanco-hielo), var(--polar-white))',
+        customClass: {
+          popup: 'arctic-processing-popup'
+        },
         willOpen: (popup) => {
-          popup.style.borderRadius = '12px';
-          popup.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
-          popup.style.maxWidth = 'calc(100vw - 40px)';
-          popup.style.width = '95%';
+          const style = document.createElement('style');
+          style.textContent = `
+            .arctic-processing-popup {
+              border-radius: 20px !important;
+              border: 2px solid rgba(70, 130, 180, 0.1) !important;
+              box-shadow: 
+                0 20px 50px rgba(70, 130, 180, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+            }
+          `;
+          document.head.appendChild(style);
         },
         didOpen: () => {
-          setTimeout(() => { 
+          setTimeout(() => {
             this.handlePayment(new Event('submit'));
           }, 1500);
         }
@@ -202,6 +639,7 @@ confirmarAntesDePagar() {
     }
   });
 }
+
 
 
   async handlePayment(event: Event): Promise<void> {
