@@ -36,14 +36,23 @@
       <span class="material-symbols-outlined icon">cancel</span>
       <span class="label">Anuncios No Pagados</span>
     </a>
-   <a class="nav-item" [class.activo]="botonActivo === 'estadisticas'">
-  <span class="material-symbols-outlined">insights</span>
-  <span class="label">Estadísticas</span>
-</a>
-<a class="nav-item" [class.activo]="botonActivo === 'ayuda'" (click)="irAyuda()">
-  <span class="material-symbols-outlined">help</span>
-  <span class="label">Ayuda</span>
-</a>
+    <a class="nav-item" [class.activo]="botonActivo === 'estadisticas'">
+      <span class="material-symbols-outlined">insights</span>
+      <span class="label">Estadísticas</span>
+    </a>
+    <a class="nav-item" (click)="irPoliticasDePrivacidad()">
+      <span class="material-symbols-outlined">shield_lock</span>
+      <span class="label">Políticas de privacidad</span>
+    </a>
+
+    <a class="nav-item" (click)="irTerminosEelServicio()">
+      <span class="material-symbols-outlined">gavel</span>
+      <span class="label">Términos del servicio</span>
+    </a>
+    <a class="nav-item" [class.activo]="botonActivo === 'ayuda'" (click)="irAyuda()">
+      <span class="material-symbols-outlined">help</span>
+      <span class="label">Ayuda</span>
+    </a>
   </div>
   
 

@@ -558,6 +558,15 @@ export class estadisticasComponent implements OnInit {
     }
   }
 
+
+irTerminosEelServicio(){
+  this.router.navigate(['/terminos-del-servicio-anunciante', this.idUsuario]);
+}
+
+irPoliticasDePrivacidad(){
+  this.router.navigate(['/politicas-de-privacidad-anunciante', this.idUsuario]);
+}
+
 }
 
 // Interfaces

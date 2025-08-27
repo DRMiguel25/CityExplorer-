@@ -39,14 +39,6 @@ export class PoliticasDePrivacidadAnuncianteComponent implements OnInit{
 }
 
 goBack(){
-  if (this.TipoUsuario === "1"){
-    this.router.navigate(['/home-anunciante', this.id_usuario]);
-  }
-  else if (this.TipoUsuario === "2"){
-    this.router.navigate(['/home-invitado-usuario', this.id_usuario]);
-  }
-  else if (this.TipoUsuario === "3"){
-    this.router.navigate(['/home-administrador', this.id_usuario]);
-  }
+  this.router.navigate(['/home-anunciante', this.id_usuario]);
 }
 }
