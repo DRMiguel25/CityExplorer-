@@ -34,9 +34,6 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
     this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
     const id = this.route.snapshot.paramMap.get('id_anuncio');
 
-    console.log('ID Usuario:', this.id_usuario);
-    console.log('ID Anuncio:', id);
-
     if (id) {
       this.id_anuncio = +id;
       this.obtenerLugar(+id);
@@ -52,7 +49,6 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
       (data) => {
         this.lugar = data;
         this.isLoading = false;
-        console.log('Lugar cargado:', this.lugar);
         this.obtenerDireccion(this.lugar.id_direccion);
       },
       (error) => {
@@ -66,7 +62,6 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
     this.httpLaravelService.Service_Get(`direccion/${idDireccion}`, '').subscribe(
       (data) => {
         this.direccion = data;
-        console.log('Dirección cargada:', this.direccion);
       },
       (error) => {
         console.error('Error al cargar la dirección:', error);
@@ -89,7 +84,6 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
 
   modificarAnuncio(): void {
     if (this.id_anuncio && this.lugar.id_lugar) {
-      console.log('Modificando anuncio con id:', this.id_anuncio, 'y usuario:', this.id_usuario);
       this.router.navigate(['/crear-actualizar-anuncio', this.id_anuncio, this.id_usuario]);
     } else {
       console.error('Datos incompletos para modificar.');
@@ -139,7 +133,6 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
       cancelButtonColor: '#d33'
     }).then((result) => {
       this.router.navigate(['/pagar-anuncio', this.lugar.id_lugar, this.id_usuario]);
-      console.log('Pagando anuncio con id:', this.lugar.id_lugar);
     });
   }
 
@@ -147,9 +140,9 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
     window.addEventListener('load', () => {
       const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
       if (navEntry) {
-        console.log('⏱️ Tiempo total de carga (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
-        console.log('🧱 Tiempo de render (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
-        console.log('🌐 Tiempo de respuesta (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
+        console.log('⏱️ Tiempo total de carga en vista detallada anuncio (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
+        console.log('🧱 Tiempo de render en vista detallada anuncio (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
+        console.log('🌐 Tiempo de respuesta en vista detallada anuncio (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
       } else {
         const timing = performance.timing;
         const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
@@ -162,7 +155,6 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
     this.httpLaravelService.Service_Get(`lugar/${idLugar}/imagenes`, '').subscribe({
       next: (data) => {
         if (Array.isArray(data)) {
-          console.log('🖼️ Imágenes del lugar:', data);
           this.imagenes = data;
         }
       },
@@ -182,7 +174,6 @@ export class VistaDetalladaAnuncioComponent implements OnInit {
     this.httpLaravelService.Service_Get('categorias', '').subscribe({
       next: (resp: any) => {
         this.categoriasOpciones = resp.data;
-        console.log('📦 Categorías obtenidas:', this.categoriasOpciones);
       },
       error: (error) => {
         console.error('❌ Error al obtener categorías:', error);

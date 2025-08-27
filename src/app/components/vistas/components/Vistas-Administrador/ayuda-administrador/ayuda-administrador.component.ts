@@ -28,9 +28,9 @@ export class AyudaAdministradorComponent implements OnInit{
   window.addEventListener('load', () => {
     const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
     if (navEntry) {
-      console.log('⏱️ Tiempo total de carga en ayuda (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
-      console.log('🧱 Tiempo de render en ayuda (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
-      console.log('🌐 Tiempo de respuesta ayuda (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
+      console.log('⏱️ Tiempo total de carga en ayuda administrador (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
+      console.log('🧱 Tiempo de render en ayuda administrador (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
+      console.log('🌐 Tiempo de respuesta ayuda administrador (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
     } else {
       // Fallback para navegadores antiguos
       const timing = performance.timing;

@@ -88,7 +88,6 @@ export class HomeAdministradorComponent implements OnInit{
       (respuesta: any) => {  // 👈 Cast a any aquí, no tocamos el servicio
         if (respuesta.estatus === 1) {
           this.usuario = respuesta.data;
-          console.log('✅ Usuario:', this.usuario);
           this.nombreCompleto = (this.usuario.nombre+" "+this.usuario.apellidoP+" "+this.usuario.apellidoM)
         } else {
           console.warn('⚠️ La API respondió sin éxito:', respuesta);
@@ -103,7 +102,6 @@ export class HomeAdministradorComponent implements OnInit{
     cargarUsuarios(): void {
     this.service.Service_Get_Usuarios_Admin().subscribe({
       next: (respuesta) => {
-        console.log('📦 Usuarios recibidos:', respuesta);
         this.usuarios = respuesta.data; // 👈 solo la lista de usuarios
 
         this.usuariosfiltrados = respuesta.data; // 👈 solo la lista de usuarios filtrados
@@ -122,8 +120,6 @@ export class HomeAdministradorComponent implements OnInit{
 loadLugares(): void {
   this.service.Service_Get_Lugares_Administrador().subscribe({
     next: (respuesta: any) => {
-      console.log('📩 Respuesta cruda de lugares:', respuesta);
-
       // ✅ obtener array real
       const lugares = respuesta?.lugares?.data || [];
 
@@ -163,10 +159,7 @@ loadLugares(): void {
         estado_texto: l.estado_texto ?? null
       }));
 
-      console.log('📦 Lugares procesados:', adaptados);
       this.totalLugares = respuesta?.resumen?.total_lugares ?? adaptados.length; // 📌 Aquí tienes el total
-      console.log("Total de lugares:", this.totalLugares);
-      console.log("Data de lugares:", this.lugares);
     },
     error: (error) => {
       console.error('❌ Error al cargar lugares:', error);

@@ -66,11 +66,7 @@ export class CrearActualizarAnuncioComponent implements OnInit {
     this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
     this.id_anuncio = this.route.snapshot.paramMap.get('id_anuncio');
 
-    console.log('📌 ID Usuario:', this.id_usuario);
-    console.log('📌 ID Anuncio:', this.id_anuncio);
-
     if (this.id_anuncio != null && this.id_anuncio !== '0') {
-      console.log('🔎 Buscando información del anuncio...');
       this.cargarAnuncio(this.id_anuncio);
     }
 
@@ -82,7 +78,6 @@ export class CrearActualizarAnuncioComponent implements OnInit {
 
     this.service.Service_Get('lugar', id).subscribe({
       next: (anuncio: any) => {
-        console.log('✅ Anuncio recibido del backend:', anuncio);
 
         if (!anuncio) {
           console.warn('⚠️ No se encontró anuncio con ese ID.');
@@ -94,7 +89,6 @@ export class CrearActualizarAnuncioComponent implements OnInit {
 
         // Si el backend te devuelve las imágenes:
         if (anuncio.imagenes) {
-          console.log('🧩 Imágenes crudas del backend:', anuncio.imagenes);
           this.imagenesActuales = anuncio.imagenes.map((img: any, index: number) => {
             const id = img.id ?? img.id_imagen ?? index;
             console.log(`📎 Imagen mapeada: id=${id}, url=${img.url}`);
@@ -103,14 +97,11 @@ export class CrearActualizarAnuncioComponent implements OnInit {
               url: img.url
             };
           });
-          console.log('🖼️ Imágenes actuales normalizadas:', this.imagenesActuales);
         }
 
         // Ahora carga la dirección
-        console.log(`🔁 Haciendo GET a: direccion/${anuncio.id_direccion}`);
         this.service.Service_Get('direccion', anuncio.id_direccion).subscribe({
           next: (direccion: any) => {
-            console.log('✅ Dirección recibida:', direccion);
 
             // Setear valores en el formulario
             this.anuncioForm.patchValue({
@@ -136,8 +127,6 @@ export class CrearActualizarAnuncioComponent implements OnInit {
                 codigo_postal: direccion.codigo_postal
               }
             });
-
-            console.log('✅ Formulario rellenado correctamente con datos del anuncio.');
           },
           error: (error) => {
             console.error('❌ Error al cargar la dirección:', error);
@@ -154,7 +143,6 @@ export class CrearActualizarAnuncioComponent implements OnInit {
     this.service.Service_Get('categorias', '').subscribe({
       next: (resp: any) => {
         this.categoriasOpciones = resp.data;
-        console.log('📦 Categorías obtenidas:', this.categoriasOpciones);
       },
       error: (error) => {
         console.error('❌ Error al obtener categorías:', error);
@@ -189,7 +177,6 @@ export class CrearActualizarAnuncioComponent implements OnInit {
   crearAnuncio(): void {
     const formData = this.prepararFormData();
 
-    console.log('📦 Enviando FormData (creación)...');
     for (const pair of formData.entries()) {
       console.log(`🔹 ${pair[0]}:`, pair[1]);
     }
@@ -210,13 +197,10 @@ export class CrearActualizarAnuncioComponent implements OnInit {
     const formData = this.prepararFormData();
 
     // 👉 Agregar imágenes a eliminar si el usuario marcó alguna
-    console.log('📤 IDs de imágenes a eliminar:', this.imagenesAEliminar);
-
     this.imagenesAEliminar.forEach((id: number) => {
       formData.append('imagenes_a_eliminar[]', id.toString());
     });
 
-    console.log('📦 Enviando FormData (actualización)...');
     for (const pair of formData.entries()) {
       console.log(`🔹 ${pair[0]}:`, pair[1]);
     }
@@ -286,7 +270,6 @@ export class CrearActualizarAnuncioComponent implements OnInit {
       data.append('imagenes[]', img);
     });
 
-    console.log('🛠️ Datos que se mandarán en FormData:');
     data.forEach((value, key) => {
       console.log(`🔸 ${key}:`, value);
     });
@@ -328,25 +311,18 @@ export class CrearActualizarAnuncioComponent implements OnInit {
         reader.readAsDataURL(archivo);
       });
 
-      console.log('📸 Imágenes seleccionadas:', this.imagenesSeleccionadas);
-      console.log('🖼️ Previews generados:', this.imagenesPreview);
     }
   }
 
   // ✅ MÉTODO AGREGADO: Para eliminar imágenes seleccionadas (nuevas)
-  eliminarImagenSeleccionada(index: number): void {
-    console.log('🗑️ Eliminando imagen seleccionada en índice:', index);
-    
+  eliminarImagenSeleccionada(index: number): void {    
     this.imagenesSeleccionadas.splice(index, 1);
     this.imagenesPreview.splice(index, 1);
     
-    console.log('📸 Imágenes seleccionadas después de eliminar:', this.imagenesSeleccionadas);
-    console.log('🖼️ Previews después de eliminar:', this.imagenesPreview);
   }
 
   // ✅ MÉTODO CORREGIDO: Para eliminar imágenes actuales (existentes)
   eliminarImagen(idImagen: any): void {
-    console.log('🗑️ Intentando eliminar imagen con ID:', idImagen);
 
     if (typeof idImagen !== 'number') {
       console.warn('⚠️ ID inválido al eliminar imagen:', idImagen);
@@ -355,8 +331,6 @@ export class CrearActualizarAnuncioComponent implements OnInit {
 
     this.imagenesAEliminar.push(idImagen);
     this.imagenesActuales = this.imagenesActuales.filter(img => img.id !== idImagen);
-    console.log('🗑️ Imágenes marcadas para eliminar:', this.imagenesAEliminar);
-    console.log('🖼️ Imágenes actuales restantes:', this.imagenesActuales);
   }
 
   isInvalid(controlPath: string): boolean {
@@ -365,7 +339,6 @@ export class CrearActualizarAnuncioComponent implements OnInit {
   }
 
   goBack(): void {
-    console.log("navegando a home-anunciante con el id: "+this.id_usuario)
     this.router.navigate(['/home-anunciante', this.id_usuario]);
   }
 
@@ -386,11 +359,11 @@ export class CrearActualizarAnuncioComponent implements OnInit {
     window.addEventListener('load', () => {
       const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
       if (navEntry) {
-        console.log('⏱️ Tiempo de carga:', navEntry.domComplete.toFixed(2), 'ms');
+        console.log('⏱️ Tiempo de carga crear actualizar anuncio:', navEntry.domComplete.toFixed(2), 'ms');
       } else {
         const timing = performance.timing;
         const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
-        console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
+        console.log('⏱️ Tiempo total de carga crear actualizar anuncio (fallback):', totalLoadTime, 'ms');
       }
     });
   }

@@ -46,7 +46,6 @@ private _url = 'http://127.0.0.1:8001/api';
   }
 
   Service_Post(Modelo: string, Dato: string | number, Parametros: any): Observable<any> {
-    console.log(`${this._url}/${Modelo}/${Dato}`, Parametros);
     return this.http.post(`${this._url}/${Modelo}/${Dato}`, Parametros, {
       headers: this.getHeaders()
     });
@@ -106,13 +105,10 @@ private _url = 'http://127.0.0.1:8001/api';
 
     const token = this.storage.getItem('access_token'); // o tu token fijo para pruebas
 
-
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Accept': 'application/json'
     });
-
-    console.log(`Enviando PATCH a ${url} con datos:`, data);
 
     // Importante: cuando envías FormData, **no pongas Content-Type explícito** para que Angular lo asigne automáticamente
     return this.http.patch(url, data, { headers });
@@ -128,7 +124,6 @@ private _url = 'http://127.0.0.1:8001/api';
     });
 
     const url = `${this._url}/${controller}/${metodo}`;
-    console.log("📡 POST Auth a:", url);
 
     return this.http.post(url, formData, { headers });
   }
@@ -238,7 +233,6 @@ Service_Get_Lugares_Administrador(): Observable<any> {
 }
 
 Service_toggle_Lugares_Administrador(id: number): Observable<any> {
-  console.log(`mandando a llamar a la ruta: ${this._url}/admin/lugares/${id}/toggle`);
   return this.http.patch(`${this._url}/admin/lugares/${id}/toggle`, {
     headers: this.getHeaders()
   });
@@ -263,6 +257,12 @@ Service_Cerrar_seccion(): Observable<any> {
 
 Service_Get_lugares_anunciante(): Observable<any> {
   return this.http.get(`${this._url}/lugar/listaLugares`, {
+    headers: this.getHeaders()
+  });
+}
+
+Service_Get_comentario(id: number): Observable<any> {
+  return this.http.get(`${this._url}/comentarios/${id}`, {
     headers: this.getHeaders()
   });
 }

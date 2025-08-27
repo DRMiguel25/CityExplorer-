@@ -35,13 +35,10 @@ export class ModificarInfoUsuarioComponent implements OnInit {
 
       this.TipoUsuario = tipoUsuario;
       if (this.TipoUsuario === 1){
-        console.log("tipo de usuario: anunciante...");
       }
       else if (this.TipoUsuario === 2){
-        console.log("tipo de usuario: usuario normal...");
       }
       else if (this.TipoUsuario === 3){
-        console.log("tipo de usuario: usuario administrador...");
       }
     } else {
       console.error('ID de usuario no válido:', id);
@@ -84,8 +81,6 @@ export class ModificarInfoUsuarioComponent implements OnInit {
         if (data.foto_perfil) {
           this.fotoPreviewUrl = 'http://localhost:8001/storage/' + this.usuarioForm.value.foto_perfil;
         }
-
-        console.log("info del usuario:", this.usuarioForm.value);
       },
       error => console.error('Error al obtener usuario:', error)
     );
@@ -175,9 +170,9 @@ export class ModificarInfoUsuarioComponent implements OnInit {
     window.addEventListener('load', () => {
       const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
       if (navEntry) {
-        console.log('⏱️ DOM completo:', navEntry.domComplete.toFixed(2), 'ms');
-        console.log('🧱 DOM content loaded:', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
-        console.log('🌐 Respuesta:', navEntry.responseEnd.toFixed(2), 'ms');
+        console.log('⏱️ DOM completo en modificar info usuario:', navEntry.domComplete.toFixed(2), 'ms');
+        console.log('🧱 DOM content loaded en modificar info usuario:', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
+        console.log('🌐 Respuesta en modificar info usuario:', navEntry.responseEnd.toFixed(2), 'ms');
       }
     });
   }

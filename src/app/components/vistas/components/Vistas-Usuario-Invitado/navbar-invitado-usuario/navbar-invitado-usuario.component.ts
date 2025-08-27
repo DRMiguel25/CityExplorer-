@@ -27,7 +27,6 @@ export class navbarInvitadoUsuarioComponent {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id_usuario');
       this.id_usuario = id ? Number(id) : 0;
-      console.log('👤 ID de usuario desde la URL:', this.id_usuario);
       if (this.id_usuario != 0){
         this.cargarInfoUsuario();
       }
@@ -38,7 +37,6 @@ export class navbarInvitadoUsuarioComponent {
   }
 
   goHome(): void {
-    console.log('Navegando a home-invitado-usuario', this.id_usuario);
     this.router.navigate(['/home-invitado-usuario', this.id_usuario]);
   }
 
@@ -72,13 +70,11 @@ export class navbarInvitadoUsuarioComponent {
   }
 
   toggleMenu(): void {
-    console.log('Toggling menu...'); // Para depuración
     const navMenu = document.querySelector('.nav-menu');
     const hamburger = document.querySelector('.hamburger');
     if (navMenu && hamburger) {
       navMenu.classList.toggle('active');
       hamburger.classList.toggle('active');
-      console.log('Classes toggled:', navMenu.classList, hamburger.classList); // Para depuración
     } else {
       console.error('No se encontraron los elementos .nav-menu o .hamburger');
     }
@@ -105,7 +101,6 @@ export class navbarInvitadoUsuarioComponent {
     (respuesta: any) => {  // 👈 Cast a any aquí, no tocamos el servicio
       if (respuesta.estatus === 1) {
         this.usuario = respuesta.data;
-        console.log('✅ Usuario:', this.usuario);
       } else {
         console.warn('⚠️ La API respondió sin éxito:', respuesta);
       }

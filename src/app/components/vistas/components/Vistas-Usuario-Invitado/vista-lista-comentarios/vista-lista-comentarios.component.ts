@@ -28,7 +28,6 @@ export class VistaListaComentariosComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_destino = this.data.id_destino
-    console.log('id_destino recibido:', this.id_destino);
 
     if (this.id_destino) {
       this.obtenerComentarios();
@@ -57,9 +56,6 @@ export class VistaListaComentariosComponent implements OnInit {
           this.promedioValoracion = +(suma / comentarios.length).toFixed(1);
           this.totalComentarios = comentarios.length;
 
-          console.log('✅ Lista de comentarios:', this.listaComentarios);
-          console.log(`⭐ Promedio: ${this.promedioValoracion} estrellas`);
-          console.log(`📝 Total comentarios: ${this.totalComentarios}`);
         } else {
           this.listaComentarios = [];
           this.promedioValoracion = null;
@@ -94,7 +90,6 @@ export class VistaListaComentariosComponent implements OnInit {
 }
 
 volverAtras(): void {
-  console.log('Volviendo atrás con history.back()');
   this.dialogRef.close();
 }
 

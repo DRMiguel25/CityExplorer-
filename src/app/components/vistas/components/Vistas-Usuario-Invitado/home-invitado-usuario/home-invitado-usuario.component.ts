@@ -37,7 +37,6 @@ export class HomeInvitadoUsuarioComponent implements OnInit, OnDestroy {
   }
   
   home() {
-    console.log('home...');
     this.router.navigate(['/login']);
   }
   

@@ -99,7 +99,6 @@ export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
  // 🕒 MÉTODOS DE TRACKING DE TIEMPO
 
  private iniciarTrackingTiempo(): void {
-   console.log('🕒 Iniciando tracking de tiempo para destino:', this.id_destino);
    this.tiempoInicio = Date.now();
    this.ultimoPing = this.tiempoInicio;
    this.tiempoTotal = 0;
@@ -116,13 +115,11 @@ export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
      const tiempoTranscurrido = Date.now() - this.ultimoPing;
      this.tiempoTotal += tiempoTranscurrido;
      this.ultimoPing = 0; // Marcar como pausado
-     console.log('⏸️ Tracking pausado. Tiempo acumulado:', Math.floor(this.tiempoTotal / 1000), 'segundos');
    }
  }
 
  private reanudarTrackingTiempo(): void {
    this.ultimoPing = Date.now();
-   console.log('▶️ Tracking reanudado');
  }
 
  private actualizarTiempoVisita(): void {
@@ -132,7 +129,6 @@ export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
      this.ultimoPing = Date.now();
 
      const segundosTotal = Math.floor(this.tiempoTotal / 1000);
-     console.log('🕒 Tiempo de visita actualizado:', segundosTotal, 'segundos');
 
      // Guardar en BD si ha pasado suficiente tiempo
      if (segundosTotal >= this.tiempoMinimo) {
@@ -153,7 +149,6 @@ export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
    }
 
    const segundosTotal = Math.floor(this.tiempoTotal / 1000);
-   console.log('🏁 Finalizando tracking. Tiempo total:', segundosTotal, 'segundos');
 
    // Guardar tiempo final si es significativo
    if (segundosTotal >= this.tiempoMinimo) {
@@ -173,11 +168,8 @@ export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
      tiempo_visita: tiempoSegundos
    };
 
-   console.log('💾 Guardando estadística de visita:', datosVisita);
-
    this.httpLaravelService.Service_Post('estadisticas-visitas', '', datosVisita).subscribe({
      next: (response) => {
-       console.log('✅ Estadística de visita guardada:', response);
        this.visitaRegistrada = true;
      },
      error: (error) => {
@@ -193,11 +185,9 @@ export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
      (data) => {
        this.lugar = data;
        this.isLoading = false;
-       console.log('Lugar cargado:', this.lugar);
        this.obtenerDireccion(this.lugar.id_direccion); // Llamada para obtener la dirección
      },
      (error) => {
-       console.log("id_destino:", id_destino);
        console.error('Error al cargar el lugar:', error);
        Swal.fire('Error', 'No se pudo cargar la información del lugar. Intenta más tarde.', 'error');
        this.isLoading = false;
@@ -210,7 +200,6 @@ export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
    this.httpLaravelService.Service_Get_Direccion_Publica(idDireccion).subscribe(
      (data) => {
        this.direccion = data;
-       console.log('Dirección cargada (pública):', this.direccion);
      },
      (error) => {
        console.error('Error al cargar la dirección pública:', error);
@@ -223,19 +212,15 @@ export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
  goBack() {
   if(this.pagina_regreso == "1"){
     this.router.navigate(['/destino-vista', this.id_usuario]);
-    console.log("navegardo a destino-vista", this.id_usuario);
   }
   else if(this.pagina_regreso == "2"){
     this.router.navigate(['/categorias', this.id_usuario]);
-    console.log("navegardo a categorias", this.id_usuario);
   }
   else if(this.pagina_regreso == "3"){
     this.router.navigate(['/favoritos-usuarios', this.id_usuario]);
-    console.log("navegardo a favoritos-usuarios", this.id_usuario);
   }
   else{
    this.router.navigate(['/home-invitado-usuario', this.id_usuario]); // Navega a la página de inicio del usuario invitado
-   console.log("navegardo a home-invitado-usuario", this.id_usuario);
   }
  }
 
@@ -247,8 +232,6 @@ export class VistaDetalladaDestinoComponent implements OnInit, OnDestroy {
 
 crearResenia(): void {
   if (this.id_usuario != "0") {
-    console.log('🔎 Buscando si el usuario ya tiene reseña previa...');
-
     const modelo = 'lugar';
     const dato = `${this.id_destino}/comentarios`;
 
@@ -262,10 +245,6 @@ crearResenia(): void {
         );
 
         const idResenia = comentarioDelUsuario ? comentarioDelUsuario.id_comentario : 0;
-
-        console.log(`📝 Redirigiendo con id_resenia: ${idResenia}`);
-
-        //this.router.navigate(['/resenia-usuario', this.id_destino, this.id_usuario, idResenia]);
 
         this.dialog.open(ReseniaUsuarioComponent, {
           width: '600px',
@@ -307,8 +286,6 @@ obtenerValoraciones(): void {
   this.httpLaravelService.Service_Get(modelo, dato).subscribe({
     next: (respuesta: any) => {
       const comentarios: Comentario[] = Array.isArray(respuesta?.data) ? respuesta.data : [];
-      console.log('📝 Total de comentarios recibidos:', comentarios.length);
-      console.log('📃 Lista de comentarios:', comentarios);
 
       if (comentarios.length > 0) {
         // Ordenar por fecha
@@ -340,12 +317,6 @@ obtenerValoraciones(): void {
                 ?.id_comentario
             ) || 0
           : 0;
-
-        console.log(
-          this.tieneReseniaUsuario
-            ? `✅ Usuario ${idUsuarioActual} SÍ tiene reseña (id: ${this.idReseniaUsuario}).`
-            : `ℹ️ Usuario ${idUsuarioActual} NO tiene reseña.`
-        );
 
       } else {
         console.warn('⚠️ No hay comentarios disponibles.');
@@ -387,7 +358,6 @@ getEstrellas(valoracion: number): string {
 
 listarComentarios(): void {
   if (this.id_usuario != "0") {
-    console.log('Navegando a la lista de comentarios para el lugar con ID:',this.id_destino,this.id_destino);
     this.dialog.open(VistaListaComentariosComponent, {
       width: '600px',
       data: { id_destino: this.id_destino, id_usuario: this.id_usuario},
@@ -439,7 +409,6 @@ toggleFavorito(): void {
 
   this.httpLaravelService.Service_Post('favoritos', 'toggle', body).subscribe({
     next: (res) => {
-      console.log('✅ Favorito toggle:', res);
       const fueAgregado = res.action === 'added';
       this.lugar.esFavorito = fueAgregado; // opcional, puedes marcar esto en tu objeto para cambiar el icono
 
@@ -478,7 +447,6 @@ obtenerImagenes(idLugar: number): void {
   this.httpLaravelService.Service_Get(`lugar/${idLugar}`, 'imagenes').subscribe({
     next: (data) => {
       if (Array.isArray(data)) {
-        console.log('🖼️ Imágenes del lugar:', data);
         this.imagenes = data;
       }
     },
@@ -497,7 +465,6 @@ obtenerCategoriasDesdeAPI(): void {
     this.httpLaravelService.Service_Get('categorias', '').subscribe({
       next: (resp: any) => {
         this.categoriasOpciones = resp.data;
-        console.log('📦 Categorías obtenidas:', this.categoriasOpciones);
       },
       error: (error) => {
         console.error('❌ Error al obtener categorías:', error);
@@ -516,7 +483,6 @@ obtenerCategoriasDesdeAPI(): void {
       if (resp && resp.success) {
         this.lugar = this.lugar || {}; // aseguramos que lugar exista
         this.lugar.esFavorito = resp.es_favorito;
-        console.log('Estado favorito cargado:', resp.es_favorito);
       }
     },
     error: (err) => {

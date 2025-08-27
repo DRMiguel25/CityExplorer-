@@ -21,18 +21,14 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log('Iniciar sesión');
     this.router.navigate(['/inicio-sesion']);
   }
 
   register() {
-    console.log('Ir a registro');
     this.router.navigate(['/registro']);
   }
 
-  homeScreen() {
-    console.log('Navegar como invitado - verificando términos');
-    
+  homeScreen() {    
     // 🔍 Verificar si ya leyó ambos documentos
     if (!this.terminosLeidosInvitado) {
       this.mostrarMensajeTerminos();

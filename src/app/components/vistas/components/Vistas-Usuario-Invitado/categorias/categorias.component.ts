@@ -41,7 +41,6 @@ export class CategoriasComponent implements OnInit, OnDestroy {
     if (categorias === 'Ayuda') {
       this.router.navigate(['/ayuda']);
     } else {
-      console.log('Navegando a la vista de categorías:', categorias, 'con ID de usuario:', this.id);
       this.router.navigate(['/categoria-vista', categorias, this.id]);
     }
   }
@@ -93,7 +92,6 @@ export class CategoriasComponent implements OnInit, OnDestroy {
     this.service.Service_Get('categorias', '').subscribe({
       next: (resp: any) => {
         this.listaCategorias = resp.data; // <- solo tomamos el array
-        console.log('📦 Lista de categorías obtenidas:', this.listaCategorias);
       },
       error: (error) => {
         console.error('❌ Error al obtener categorías:', error);

@@ -35,7 +35,6 @@ export class FavoritosUsuariosComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
-    console.log('ID de usuario:', this.id_usuario);
 
     if (this.id_usuario) {
       this.obtenerFavoritos();
@@ -81,7 +80,6 @@ export class FavoritosUsuariosComponent implements OnInit {
   }
 
   vistaDetalladaDestino(id: number | string): void {
-  console.log('ID del destino:', id);
   const idEntero = parseInt(id.toString(), 10);
 
   if (isNaN(idEntero)) {
@@ -113,7 +111,6 @@ cargarImagenesPorLugar(idLugar: number): void {
 
   this.httpLaravelService.Service_GetImagenes(idLugar).subscribe({
     next: (data) => {
-      console.log(`🖼️ Imágenes crudas para lugar ${idLugar}:`, data);
       // Extraemos solo la URL de cada objeto
       this.imagenesPorLugar[idLugar] = data.map(imgObj => imgObj.url);
       this.indicesImagen[idLugar] = 0;
@@ -140,7 +137,6 @@ cambiarImagen(idLugar: number, direccion: number): void {
     this.httpLaravelService.Service_Get('categorias', '').subscribe({
       next: (resp: any) => {
         this.listaCategorias = resp.data;
-        console.log('📦 Categorías:', this.listaCategorias);
       },
       error: (error) => {
         console.error('❌ Error al obtener categorías:', error);
@@ -208,7 +204,6 @@ cambiarImagen(idLugar: number, direccion: number): void {
       this.obtenerComentarios(fav.lugar.id_lugar);
     });
 
-    console.log('📂 Favoritos filtrados dinámicamente:', this.favoritosFiltrados);
   }
 
 

@@ -37,14 +37,13 @@ export class HomeAnuncianteComponent implements OnInit {
     private httpLaravelService: HttpLaravelService,
     private route: ActivatedRoute
   ) {}
-irAEstadisticas() {
-  this.router.navigate(['/estadisticas', this.idUsuario]);
-}
+  
+  irAEstadisticas() {
+    this.router.navigate(['/estadisticas', this.idUsuario]);
+  }
   ngOnInit(): void {
     this.idUsuario = Number(this.route.snapshot.paramMap.get('id_usuario'));
     this.idFiltrado = Number(this.route.snapshot.paramMap.get('id_filtrado'));
-
-    console.log("tipo de filtrado: "+this.idFiltrado);
 
     if (isNaN(this.idUsuario)) {
       console.error('ID de usuario inválido en la URL');
@@ -60,10 +59,8 @@ irAEstadisticas() {
   }
 
   loadLugares(): void {
-    console.log('🔄 Iniciando carga de lugares...');
     this.httpLaravelService.Service_Get_lugares_anunciante().subscribe(
       (data: Lugar[]) => {
-        console.log('📦 Datos recibidos desde el backend:', data);
 
         const filtrados = data.filter(lugar => lugar.id_usuario === this.idUsuario);
         this.todosLosLugares = filtrados;
@@ -102,7 +99,6 @@ irAEstadisticas() {
   
     this.httpLaravelService.Service_Cerrar_seccion().subscribe({
       next: (resp: any) => {
-        console.log('✅ Sesión cerrada correctamente:', resp);
         // Navegar a login y cerrar diálogo
         this.router.navigate(['/login'])
       },
@@ -175,7 +171,6 @@ cargarInfoUsuario(idUsuario: Number) {
     (respuesta: any) => {
       if (respuesta.estatus === 1) {
         this.usuario = respuesta.data;
-        console.log('✅ Usuario:', this.usuario);
       }
     }
   );
@@ -184,19 +179,16 @@ cargarInfoUsuario(idUsuario: Number) {
 mostrarTodos(): void {
   this.lugares = [...this.todosLosLugares];
   this.botonActivo = 'todos';
-  console.log('🌐 Mostrando todos los anuncios:', this.lugares);
 }
 
 mostrarPagados(): void {
   this.lugares = this.todosLosLugares.filter(lugar => lugar.activo);
   this.botonActivo = 'pagados';
-  console.log('💰 Mostrando anuncios pagados:', this.lugares);
 }
 
 mostrarNoPagados(): void {
   this.lugares = this.todosLosLugares.filter(lugar => !lugar.activo);
   this.botonActivo = 'nopagados';
-  console.log('❌ Mostrando anuncios no pagados:', this.lugares);
 }
 
 irAyuda(){

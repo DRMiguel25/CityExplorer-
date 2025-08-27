@@ -53,7 +53,6 @@ export class CategoriaVistaComponent implements OnInit {
     this.httpLaravelService.Service_Get('categorias', '').subscribe({
       next: (resp: any) => {
         this.categoriasOpciones = resp.data;
-        console.log('📦 Categorías obtenidas:', this.categoriasOpciones);
         this.listaCategorias = resp.data;
 
         // Si ya teníamos una categoría seleccionada, vuelve a filtrar
@@ -87,7 +86,6 @@ export class CategoriaVistaComponent implements OnInit {
         this.lugares = data.filter(
           (l: Lugar) => l.id_categoria === idCategoria && l.activo
         );
-        console.log(`Lugares activos para '${nombreCategoria}':`, this.lugares);
 
         // 👉 Aquí cargamos las imágenes por cada lugar
         this.lugares.forEach(lugar => {
@@ -107,7 +105,6 @@ export class CategoriaVistaComponent implements OnInit {
       console.error('ID inválido:', id);
       return;
     }
-    console.log("navegando a vista-detallada-destino", idEntero, this.id_usuario);
     this.router.navigate(['/vista-detallada-destino', idEntero, this.id_usuario, 2]);
   }
 
@@ -131,7 +128,6 @@ export class CategoriaVistaComponent implements OnInit {
 
     this.httpLaravelService.Service_GetImagenes(idLugar).subscribe({
       next: (data) => {
-        console.log(`🖼️ Imágenes crudas para lugar ${idLugar}:`, data);
         // Extraemos solo la URL de cada objeto
         this.imagenesPorLugar[idLugar] = data.map(imgObj => imgObj.url);
         this.indicesImagen[idLugar] = 0;
@@ -150,7 +146,6 @@ export class CategoriaVistaComponent implements OnInit {
       this.cargarImagenesPorLugar(idLugar);
       return;
     }
-
     const total = imagenes.length;
     const actual = this.indicesImagen[idLugar] ?? 0;
     this.indicesImagen[idLugar] = (actual + direccion + total) % total;

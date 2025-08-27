@@ -28,15 +28,15 @@ export class ListaUsuariosComponent implements OnInit {
 
   ngOnInit(): void {
     this.idUsuario = Number(this.route.snapshot.paramMap.get('id_usuario'));
-    console.log("id del usuario: "+this.idUsuario);
 
     this.cargarUsuarios();
+
+    this.logLoadTime();
   }
 
   cargarUsuarios(): void {
     this.httpLaravel.Service_Get_Usuarios_Admin().subscribe({
       next: (respuesta) => {
-        console.log('📦 Usuarios recibidos:', respuesta);
         this.usuarios = respuesta.data; // 👈 solo la lista de usuarios
 
         this.usuariosfiltrados = respuesta.data; // 👈 solo la lista de usuarios filtrados
@@ -96,7 +96,6 @@ buscarUsuarios(event: Event): void {
 bloquearDesbloquearUsuario(usuario: any): void {
   this.httpLaravel.toggleEstadoUsuario(usuario.id_usuario).subscribe({
     next: (response) => {
-      console.log('✅ Usuario actualizado:', response);
 
       // Alternar el estado localmente para reflejar el cambio
       usuario.bloqueado = !usuario.bloqueado;
@@ -112,4 +111,19 @@ goBack(){
   this.router.navigate([`/home-administrador`,this.idUsuario]);
 }
 
+logLoadTime() {
+    window.addEventListener('load', () => {
+      const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+      if (navEntry) {
+        console.log('⏱️ Tiempo total de carga en lista usuarios (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
+        console.log('🧱 Tiempo de render en lista usuarios (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
+        console.log('🌐 Tiempo de respuesta lista usuarios (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
+      } else {
+        // Fallback para navegadores antiguos
+        const timing = performance.timing;
+        const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
+        console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
+      }
+    });
+  }
 }

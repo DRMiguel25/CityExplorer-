@@ -24,9 +24,9 @@ export class TerminosDelServicioAnuncianteComponent implements OnInit{
   window.addEventListener('load', () => {
     const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
     if (navEntry) {
-      console.log('⏱️ Tiempo total de carga en terminos del servicio (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
-      console.log('🧱 Tiempo de render en terminos del servicio (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
-      console.log('🌐 Tiempo de respuesta terminos del servicio (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
+      console.log('⏱️ Tiempo total de carga en terminos del servicio anunciante (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
+      console.log('🧱 Tiempo de render en terminos del servicio anunciante (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
+      console.log('🌐 Tiempo de respuesta terminos del servicio anunciante (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
     } else {
       // Fallback para navegadores antiguos
       const timing = performance.timing;

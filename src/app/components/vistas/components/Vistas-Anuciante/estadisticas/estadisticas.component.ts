@@ -60,7 +60,7 @@ export class estadisticasComponent implements OnInit {
   ngOnInit(): void {
     this.idUsuario = Number(this.route.snapshot.paramMap.get('id_usuario'));
     if (isNaN(this.idUsuario)) {
-      console.error('ID de usuario inválido en la URL');
+      console.error('ID de usuario inválido');
       return;
     }
     this.loadLugares();
@@ -70,7 +70,6 @@ export class estadisticasComponent implements OnInit {
 
   // NUEVO: Implementar AfterViewInit
   ngAfterViewInit(): void {
-    console.log('🎯 AfterViewInit - Canvas disponible:', !!this.graficaVisitas);
     // Esperar un tick para asegurar que el DOM esté completamente renderizado
     setTimeout(() => {
       if (this.estadisticasConsolidadas && this.estadisticasConsolidadas.length > 0) {
@@ -84,11 +83,8 @@ export class estadisticasComponent implements OnInit {
   }
 
   loadLugares(): void {
-    console.log('🔄 Iniciando carga de lugares...');
     this.httpLaravelService.Service_Get('lugar', '').subscribe(
-      (data: Lugar[]) => {
-        console.log('📦 Datos recibidos desde el backend:', data);
-        
+      (data: Lugar[]) => {        
         const filtrados = data.filter(lugar => lugar.id_usuario === this.idUsuario);
         this.todosLosLugares = filtrados;
         this.lugares = [...filtrados];
@@ -99,8 +95,6 @@ export class estadisticasComponent implements OnInit {
         this.cargarEstadisticasConsolidadas();
 
         this.isLoading = false;
-        console.log('✅ Lugares filtrados para el anunciante:', this.lugares);
-
       },
       (error) => {
         this.isLoading = false;
@@ -128,7 +122,6 @@ export class estadisticasComponent implements OnInit {
     );
 
     Promise.all(promesasEstadisticas).then(resultados => {
-      console.log('📊 Estadísticas consolidadas:', resultados);
       this.procesarEstadisticasConsolidadas(resultados);
       
       // IMPORTANTE: Solo renderizar si el canvas está disponible
@@ -147,7 +140,6 @@ export class estadisticasComponent implements OnInit {
 
   procesarEstadisticasConsolidadas(resultados: any[]): void {
     this.estadisticasConsolidadas = [];
-    
     resultados.forEach((resultado: any) => {
       if (resultado.datos && resultado.datos.success && resultado.datos.data) {
         const data = resultado.datos.data;
@@ -160,8 +152,6 @@ export class estadisticasComponent implements OnInit {
         });
       }
     });
-
-    console.log('📈 Datos consolidados procesados:', this.estadisticasConsolidadas);
   }
 
   crearAnuncio() {
@@ -170,11 +160,8 @@ export class estadisticasComponent implements OnInit {
   }
 
   cerrarSesion(): void {
-    console.log('Intentando cerrar sesión...');
-  
     this.httpLaravelService.Service_Cerrar_seccion().subscribe({
       next: (resp: any) => {
-        console.log('✅ Sesión cerrada correctamente:', resp);
         this.router.navigate(['/login'])
       },
       error: (err) => {
@@ -197,9 +184,9 @@ export class estadisticasComponent implements OnInit {
     window.addEventListener('load', () => {
       const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
       if (navEntry) {
-        console.log('⏱️ Tiempo total de carga en home anunciante (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
-        console.log('🧱 Tiempo de render en home anunciante (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
-        console.log('🌐 Tiempo de respuesta home anunciante (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
+        console.log('⏱️ Tiempo total de carga en estadisticas (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
+        console.log('🧱 Tiempo de render en estadisticas (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
+        console.log('🌐 Tiempo de respuesta estadisticas (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
       } else {
         const timing = performance.timing;
         const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
@@ -244,7 +231,6 @@ export class estadisticasComponent implements OnInit {
       (respuesta: any) => {
         if (respuesta.estatus === 1) {
           this.usuario = respuesta.data;
-          console.log('✅ Usuario:', this.usuario);
         }
       }
     );
@@ -270,7 +256,6 @@ export class estadisticasComponent implements OnInit {
     this.httpLaravelService.Service_Get_Estadisticas_tiempo_promedio(id_lugar).subscribe({
       next: (resp) => {
         if (resp.success) {
-          console.log(`📊 Estadísticas (Tiempo promedio) del lugar con el id = ${id_lugar}:`, resp);
           this.estadisticasAnuncianteTiempoPromedioConData = resp.data;
         } else {
           console.warn(`❌ No hay estadísticas para el lugar con id = ${id_lugar}`);
@@ -287,7 +272,6 @@ export class estadisticasComponent implements OnInit {
   cargarEstadisticasCantidadVistas(id_lugar: number): void {  
     this.httpLaravelService.Service_Get_Estadisticas_Cantidad_Vistas(id_lugar).subscribe({
       next: (resp) => {
-        console.log(`📊 Estadísticas (Cantidad vistas) del lugar con el id = ${id_lugar}:`, resp);
         this.estadisticasAnuncianteCantidadVistasConData = resp.data;
       },
       error: (err) => {
@@ -364,9 +348,7 @@ export class estadisticasComponent implements OnInit {
   }
 
   // MEJORAR: renderizarGrafica con más validaciones
-  private renderizarGrafica(): void {
-    console.log('🎨 Intentando renderizar gráfica...');
-    
+  private renderizarGrafica(): void {    
     // Validación completa del canvas
     if (!this.graficaVisitas || !this.graficaVisitas.nativeElement) {
       console.error('❌ Canvas no disponible');
@@ -381,11 +363,9 @@ export class estadisticasComponent implements OnInit {
       return;
     }
 
-    console.log('✅ Canvas y contexto disponibles');
 
     // Destruir gráfico anterior si existe
     if (this.chart) {
-      console.log('🗑️ Destruyendo gráfico anterior');
       this.chart.destroy();
     }
 
@@ -397,15 +377,10 @@ export class estadisticasComponent implements OnInit {
       return;
     }
 
-    console.log('📊 Datos para gráfica:', datosParaGrafica);
-
     // Preparar datos para el gráfico de pastel
     const labels = datosParaGrafica.map(lugar => lugar.nombre_lugar);
     const dataVisitas = datosParaGrafica.map(lugar => lugar.total_visitas);
     const colores = this.generarColores(datosParaGrafica.length);
-
-    console.log('🏷️ Labels:', labels);
-    console.log('📈 Data:', dataVisitas);
 
     try {
       this.chart = new Chart(ctx, {
@@ -492,7 +467,6 @@ export class estadisticasComponent implements OnInit {
       });
 
       this.chartInitialized = true;
-      console.log('✅ Gráfico de pastel renderizado exitosamente');
       
     } catch (error) {
       console.error('❌ Error al crear el gráfico:', error);

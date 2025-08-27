@@ -44,7 +44,6 @@ export class InicioSesionComponent implements OnInit {
     this.service.Service_Get('usuarios', '').subscribe({
       next: (usuarios) => {
         this.listaUsuarios = usuarios;  // 👈 Guarda los usuarios en la variable global
-        console.log('📦 Lista de usuarios:', this.listaUsuarios);
       },
       error: (err) => {
         console.error('❌ Error al obtener usuarios públicos:', err);
@@ -67,7 +66,6 @@ onLoggedin() {
 
       if (data.estatus) {
         localStorage.setItem('access_token', data.access_token);
-        console.log('✅ access token:', data.access_token);
 
         const userId = data.data?.id_usuario;
         const rolId = data.data?.id_rol;
@@ -123,12 +121,10 @@ onLoggedin() {
   }
 
   login() {
-    console.log('inicio');
     this.router.navigate(['/login']);  // Redirige a la ruta de inicio-sesion
   }
 
   Restablecer() {
-    console.log('restablecer contraseña');
     this.router.navigate(['/restablecer-contraseña']);  // Redirige a la ruta de restablecer-contraseña
   }
   

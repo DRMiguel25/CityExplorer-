@@ -46,7 +46,6 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.id_usuario = this.route.snapshot.paramMap.get('id_usuario');
-    console.log('ID del usuario:', this.id_usuario);
 
     this.obtenerCategoriasDesdeAPI();
     this.loadLugares();
@@ -102,11 +101,11 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
     window.addEventListener('load', () => {
       const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
       if (navEntry) {
-        console.log('⏱️ Tiempo total de carga:', navEntry.domComplete.toFixed(2), 'ms');
+        console.log('⏱️ Tiempo total de carga destino vista:', navEntry.domComplete.toFixed(2), 'ms');
       } else {
         const timing = performance.timing;
         const totalLoadTime = timing.loadEventEnd - timing.navigationStart;
-        console.log('⏱️ Tiempo total de carga (fallback):', totalLoadTime, 'ms');
+        console.log('⏱️ Tiempo total de carga destino vista (fallback):', totalLoadTime, 'ms');
       }
     });
   }
@@ -115,7 +114,6 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
     this.httpLaravelService.Service_Get('lugar', '').subscribe({
       next: (data: Lugar[]) => {
         this.lugares = data.filter(lugar => lugar.activo === true);
-        console.log('✅ Lugares activos:', this.lugares);
 
         this.lugares.forEach(lugar => {
           this.cargarImagenesLugar(lugar);
@@ -163,7 +161,6 @@ export class DestinosVistaComponent implements OnInit, OnDestroy {
     this.httpLaravelService.Service_Get('categorias', '').subscribe({
       next: (resp: any) => {
         this.listaCategorias = resp.data;
-        console.log('📦 Categorías:', this.listaCategorias);
       },
       error: (error) => {
         console.error('❌ Error al obtener categorías:', error);

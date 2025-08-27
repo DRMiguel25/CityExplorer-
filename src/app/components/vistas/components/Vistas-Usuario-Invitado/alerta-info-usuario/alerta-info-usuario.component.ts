@@ -21,14 +21,9 @@ export class AlertaInfoUsuarioComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('ID recibido desde el diálogo:', this.data.id_usuario);
-
-    console.log('Tipo de usuario: ', this.data.tipo_usuario);
-
     this.apiService.Service_Get('usuario', this.data.id_usuario).subscribe(
       respuesta => {
         this.usuario = respuesta;
-        console.log('Datos del usuario:', this.usuario);
       },
       error => {
         console.error('Error al obtener usuario:', error);
@@ -40,11 +35,8 @@ export class AlertaInfoUsuarioComponent implements OnInit {
   }
 
   cerrarSesion(): void {
-  console.log('Intentando cerrar sesión...');
-
   this.apiService.Service_Cerrar_seccion().subscribe({
     next: (resp: any) => {
-      console.log('✅ Sesión cerrada correctamente:', resp);
       // Navegar a login y cerrar diálogo
       this.router.navigate(['/login']).then(() => {
         this.dialogRef.close();
@@ -59,7 +51,6 @@ export class AlertaInfoUsuarioComponent implements OnInit {
 }
 
   vistaInfoUsuario(): void {
-    console.log('Navegando a modificar información del usuario ' + this.data.id_usuario + '...');
     this.router.navigate(['/modificar-info-usuario', this.data.id_usuario, this.data.tipo_usuario]).then(() => {
       this.dialogRef.close(); // Cierra el diálogo solo si la navegación fue exitosa
     }).catch(err => {
@@ -68,7 +59,6 @@ export class AlertaInfoUsuarioComponent implements OnInit {
   }
 
     politicasDePrivacidad(): void {
-    console.log('Navegando a políticas de privacidad');
     this.router.navigate(['/politicas-de-privacidad', this.data.id_usuario, this.data.tipo_usuario]).then(() => {
       this.dialogRef.close(); // Cierra el diálogo solo si la navegación fue exitosa
     }).catch(err => {
@@ -77,7 +67,6 @@ export class AlertaInfoUsuarioComponent implements OnInit {
   }
 
   terminosDelServicio(): void {
-    console.log('Navegando a términos del servicio');
     this.router.navigate(['/terminos-del-servicio', this.data.id_usuario, this.data.tipo_usuario]).then(() => {
       this.dialogRef.close(); // Cierra el diálogo solo si la navegación fue exitosa
     }).catch(err => {
@@ -103,6 +92,5 @@ export class AlertaInfoUsuarioComponent implements OnInit {
 
   closeProfile(): void {
     this.dialogRef.close();
-    console.log('vista del usuario reseña cerrada y redirigiendo a vista detallada del destino');
   }
 }

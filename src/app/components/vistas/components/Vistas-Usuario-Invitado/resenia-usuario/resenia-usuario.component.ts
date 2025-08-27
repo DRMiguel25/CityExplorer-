@@ -52,15 +52,12 @@ export class ReseniaUsuarioComponent implements OnInit{
     this.id_resenia = this.data.id_resenia
     this.pagina_regreso = this.data.pagina_regreso;
 
-    console.log('ID Usuario:', this.id_usuario);
-    console.log('ID Destino:', this.id_destino);
-    console.log('ID Reseña:', this.id_resenia);
-
     // Cambiar el título dependiendo si es creación o edición
     if (this.id_resenia === 0) {
       this.tituloResenia = "Crear una reseña";
     } else {
       this.tituloResenia = "Modificar tu reseña";
+      this.obtenerComentario(this.id_resenia);
     }
 
     if (this.id_destino) {
@@ -81,7 +78,6 @@ export class ReseniaUsuarioComponent implements OnInit{
     this.httpLaravelService.Service_Get_Lugar_Publico(id).subscribe({
       next: (data) => {
         this.lugar = data;
-        console.log('Lugar:', this.lugar);
       },
       error: (err) => {
         console.error('Error al obtener lugar:', err);
@@ -94,10 +90,8 @@ export class ReseniaUsuarioComponent implements OnInit{
     if (!this.lugar) return 'help';
     
     const id = this.lugar.id_categoria;
-    console.log('ID de categoría:', id);
     // Busca la clave (icono) correspondiente al ID
     const icono = Object.entries(this.icons).find(([_, valor]) => valor === id);
-    console.log('Icono encontrado:', icono);
     return icono ? icono[0] : 'help';
   }
 
@@ -123,7 +117,6 @@ enviarResenia(): void {
     // Actualizar reseña existente
     this.httpLaravelService.Service_Put('comentarios', this.id_resenia, comentario).subscribe({
       next: (respuesta) => {
-        console.log('Reseña actualizada correctamente:', respuesta);
         Swal.fire({
           icon: 'success',
           title: '¡Reseña modificada!',
@@ -134,7 +127,6 @@ enviarResenia(): void {
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
             this.router.navigate(['/vista-detallada-destino', this.id_destino, this.id_usuario, this.pagina_regreso]);
           });
-          console.log('vista del usuario reseña cerrada y redirigiendo a vista detallada del destino');
         });
       },
       error: (error) => {
@@ -151,7 +143,6 @@ enviarResenia(): void {
     // Crear nueva reseña
     this.httpLaravelService.Service_Post('comentarios', '', comentario).subscribe({
       next: (respuesta) => {
-        console.log('Reseña enviada correctamente:', respuesta);
         Swal.fire({
           icon: 'success',
           title: '¡Reseña enviada!',
@@ -162,7 +153,6 @@ enviarResenia(): void {
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
             this.router.navigate(['/vista-detallada-destino', this.id_destino, this.id_usuario, this.pagina_regreso]);
           });
-          console.log('vista del usuario reseña cerrada y redirigiendo a vista detallada del destino');
         });
       },
       error: (error) => {
@@ -182,7 +172,6 @@ enviarResenia(): void {
 
   closeModal(): void {
     this.dialogRef.close();
-    console.log('vista del usuario reseña cerrada y redirigiendo a vista detallada del destino');
   }
 
     logLoadTime() {
@@ -200,5 +189,34 @@ enviarResenia(): void {
     }
   });
 }
+
+obtenerComentario(id_comentario: number): void {
+  if (!id_comentario) {
+    console.warn('⚠️ No se proporcionó un ID de comentario');
+    return;
+  }
+
+  this.httpLaravelService.Service_Get_comentario(id_comentario).subscribe({
+    next: (respuesta: any) => {
+      const comentario: any = respuesta?.data;
+      if (comentario) {
+        // Llenar campos del modal
+        this.contenido = comentario.contenido;
+        this.valoracion = comentario.valoracion;
+        this.id_resenia = comentario.id_comentario;
+
+        // Cambiar título si es edición
+        this.tituloResenia = 'Modificar tu reseña';
+      } else {
+        console.warn('⚠️ No se encontró el comentario');
+      }
+    },
+    error: (error) => {
+      console.error('❌ Error al obtener el comentario:', error);
+      Swal.fire('Error', 'No se pudo cargar la reseña', 'error');
+    }
+  });
+}
+
 
 }

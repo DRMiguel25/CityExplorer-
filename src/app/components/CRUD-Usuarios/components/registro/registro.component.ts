@@ -529,9 +529,9 @@ openPrivacy() {
     window.addEventListener('load', () => {
       const [navEntry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
       if (navEntry) {
-        console.log('⏱️ Tiempo total de carga (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
-        console.log('🧱 Tiempo de render (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
-        console.log('🌐 Tiempo de respuesta (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
+        console.log('⏱️ Tiempo total de carga registro (domComplete):', navEntry.domComplete.toFixed(2), 'ms');
+        console.log('🧱 Tiempo de render registro (domContentLoaded):', navEntry.domContentLoadedEventEnd.toFixed(2), 'ms');
+        console.log('🌐 Tiempo de respuesta registro (responseEnd):', navEntry.responseEnd.toFixed(2), 'ms');
       } else {
         const timing = performance.timing;
         const loadTime = timing.loadEventEnd - timing.navigationStart;

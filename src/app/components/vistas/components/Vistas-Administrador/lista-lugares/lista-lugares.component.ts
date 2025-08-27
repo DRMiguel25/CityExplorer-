@@ -48,7 +48,6 @@ export class ListaLugaresComponent implements OnInit{
   ){}
   ngOnInit(): void {
     this.idUsuario = Number(this.route.snapshot.paramMap.get('id_usuario'));
-    console.log("id del usuario: "+this.idUsuario);
 
     this.logLoadTime();  // 👈 mide tiempo de carga
     this.loadLugares();
@@ -89,8 +88,6 @@ export class ListaLugaresComponent implements OnInit{
 loadLugares(): void {
   this.service.Service_Get_Lugares_Administrador().subscribe({
     next: (respuesta: any) => {
-      console.log('📩 Respuesta cruda de lugares:', respuesta);
-
       // ✅ obtener array real
       const lugares = respuesta?.lugares?.data || [];
 
@@ -130,9 +127,6 @@ loadLugares(): void {
         estado_texto: l.estado_texto ?? null
       }));
 
-
-      console.log('📦 Lugares procesados:', adaptados);
-
       // Guardar en la UI
       this.lugares = adaptados;
       this.totalLugares = respuesta?.resumen?.total_lugares ?? adaptados.length;
@@ -169,7 +163,6 @@ loadLugares(): void {
     this.service.Service_Get('categorias', '').subscribe({
       next: (resp: any) => {
         this.listaCategorias = resp.data; // <- solo tomamos el array
-        console.log('📦 Lista de categorías obtenidas:', this.listaCategorias);
       },
       error: (error) => {
         console.error('❌ Error al obtener categorías:', error);
@@ -215,7 +208,6 @@ loadLugares(): void {
   this.service.Service_Get_Direccion_Publica(idDireccion).subscribe(
     (data) => {
       lugar.direccion = data; // 👈 guardamos la dirección directamente en el lugar
-      console.log(`Dirección cargada para ${lugar.nombre}:`, lugar.direccion);
     },
     (error) => {
       console.error('Error al cargar la dirección pública:', error);
@@ -232,7 +224,6 @@ cargarInfoUsuario(lugar: LugarAdministrador) {
     (respuesta: any) => {
       if (respuesta.estatus === 1) {
         lugar.usuario = respuesta.data;  // 👈 guardamos directamente en el lugar
-        console.log(`✅ Usuario cargado para ${lugar.nombre}:`, lugar.usuario);
       } else {
         console.warn('⚠️ La API respondió sin éxito:', respuesta);
       }
@@ -297,8 +288,6 @@ toggleLugar(lugar: LugarAdministrador): void {
     if (result.isConfirmed) {
       this.service.Service_toggle_Lugares_Administrador(lugar.id_lugar).subscribe({
         next: (resp: any) => {
-          console.log('✅ Toggle realizado:', resp);
-
           // Cambiar estado local (importante!)
           lugar.bloqueado = !lugar.bloqueado;
 
@@ -361,12 +350,5 @@ eleminarLugar(lugar: LugarAdministrador): void {
     }
   });
 }
-
-private recalcularTotales(): void {
-  this.totalLugares = this.lugares.length;
-  this.totalBloqueados = this.lugares.filter(l => l.bloqueado).length;
-  this.totalDisponibles = this.lugares.filter(l => l.activo && !l.bloqueado).length;
-}
-
 
 }
